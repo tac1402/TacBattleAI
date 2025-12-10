@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TAC.Camera
+namespace Tac.Camera
 {
 	public class AgentCamera : MonoBehaviour
 	{

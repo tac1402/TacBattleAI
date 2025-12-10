@@ -2,9 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-//using TAC.BuildSystem;
-
-namespace TAC.Camera
+namespace Tac.Camera
 {
     public class FastController : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace TAC.UI
+namespace Tac.Wireframe
 {
 
     public class Wireframe : MonoBehaviour
