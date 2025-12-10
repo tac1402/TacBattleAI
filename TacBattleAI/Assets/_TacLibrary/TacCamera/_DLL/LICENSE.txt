@@ -1,6 +1,6 @@
-// TacStandart.dll
+// TacCamera.dll
 // Author: Sergej Jakovlev <tac1402@gmail.com>
-// Copyright (C) 2024 Sergej Jakovlev
+// Copyright (C) 2024-26 Sergej Jakovlev
 
 // You can use this library for educational purposes only;
 // this library cannot be used for commercial purposes
