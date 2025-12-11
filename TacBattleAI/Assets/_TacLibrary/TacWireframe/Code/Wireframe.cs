@@ -85,17 +85,13 @@ namespace Tac.Wireframe
 				WireframeRender[i].SetActive(true);
             }
         }
-
-
-        public enum WireframeMode
-        {
-            Hide = 0,
-            Red = 1,
-            Green = 2,
-            Gray = 3
-        }
-
-
     }
+	public enum WireframeMode
+	{
+		Hide = 0,
+		Red = 1,
+		Green = 2,
+		Gray = 3
+	}
 
 }

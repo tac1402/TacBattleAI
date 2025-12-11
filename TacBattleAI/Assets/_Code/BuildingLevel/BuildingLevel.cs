@@ -33,7 +33,7 @@ public class BuildingLevel : MonoBehaviour
 			Wireframe[] wireframes = List[Level - 1].ShowWireframe[i].GetComponentsInChildren<Wireframe>();
 			for (int j = 0; j < wireframes.Length; j++) 
 			{
-				wireframes[j].Show(Wireframe.WireframeMode.Gray);
+				wireframes[j].Show(WireframeMode.Gray);
 			}
 		}
 		for (int i = 0; i < List[Level - 1].HideWireframe.Count; i++)

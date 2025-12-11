@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tac.Camera
 {
-	public class AgentCamera : MonoBehaviour
+	public partial class TopCamera : MonoBehaviour
 	{
 		public float Smoothness = 4;
 		public Vector2 Sensitivity = new Vector2(4, 4);

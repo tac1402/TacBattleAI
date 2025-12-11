@@ -26,7 +26,7 @@ namespace Tac.Camera
         public List<LimitCircle> WorldLimit;
 
         public UnityEngine.Camera CurrentCamera;
-        private AgentCamera currentFastCamera;
+        private TopCamera currentFastCamera;
 
         public Transform CameraTarget;
 
@@ -96,7 +96,7 @@ namespace Tac.Camera
                     }
                     if (CurrentCamera != null)
                     {
-                        currentFastCamera = CurrentCamera.gameObject.GetComponent<AgentCamera>();
+                        currentFastCamera = CurrentCamera.gameObject.GetComponent<TopCamera>();
                     }
                 }
 
