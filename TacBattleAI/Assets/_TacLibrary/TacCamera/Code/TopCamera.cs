@@ -196,6 +196,12 @@ namespace Tac.Camera
 
 		public void OnDrawGizmos()
 		{
+			//OnDrawGizmos1();
+			OnDrawGizmos2();
+		}
+
+		public void OnDrawGizmos1()
+		{
 			Debug.DrawLine(idealPosition, debugEnd, debugIsCollider ? Color.red : Color.yellow);
 
 			if (camera != null)

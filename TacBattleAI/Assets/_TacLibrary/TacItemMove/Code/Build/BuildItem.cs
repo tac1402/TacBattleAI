@@ -46,8 +46,6 @@ public partial class BuildItem : MonoBehaviour
 		}
 	}
 
-	private Vector3 oldDiscretePosition;
-
 	private void Awake()
 	{
 		StartCoroutine(TaskMoveGhost());
@@ -87,7 +85,7 @@ public partial class BuildItem : MonoBehaviour
 			{
 				MoveGhost();
 			}
-			yield return new WaitForSeconds(0.3f);
+			yield return new WaitForSeconds(0.1f);
 		}
 	}
 
@@ -98,14 +96,26 @@ public partial class BuildItem : MonoBehaviour
 	{
 		if (ModelObjectToPlace != null)
 		{
-			Vector3 terrainPoint = TopCamera.GetTerrain(Input.mousePosition).Item1;
+			//Vector3 terrainPoint = TopCamera.GetTerrain(Input.mousePosition).Item1;
 
-			Vector3 newPosition = new Vector3(terrainPoint.x, terrainPoint.y, terrainPoint.z);
-			Vector3 newDiscretePosition = ModelObjectToPlace.GetDiscrete(newPosition, DiscreteType);
 
-			MoveGhostObject(newDiscretePosition);
+			List<Bounds> boundList = new List<Bounds>();
+			for (int i = 0; i < objectToPlace.Collider.Length; i++)
+			{
+				if (objectToPlace.Collider[i] != null)
+				{
+					boundList.Add(objectToPlace.Collider[i].bounds);
+				}
+			}
+			(Vector3 terrainPoint, GameObject buildObj) = TopCamera.GetAllowBuildPoint(Input.mousePosition, boundList);
 
-			oldDiscretePosition = newDiscretePosition;
+			if (buildObj != null)
+			{
+				Vector3 newPosition = new Vector3(terrainPoint.x, terrainPoint.y, terrainPoint.z);
+				Vector3 newDiscretePosition = ModelObjectToPlace.GetDiscrete(newPosition, DiscreteType);
+
+				MoveGhostObject(newDiscretePosition);
+			}
 		}
 	}
 

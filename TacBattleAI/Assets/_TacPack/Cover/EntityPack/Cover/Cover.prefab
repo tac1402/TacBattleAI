@@ -131,7 +131,7 @@ MonoBehaviour:
     ViewCorrect: []
     TurnSize: {x: 1, y: 1}
     CurrentTurn: 1
-  DefaultTurn: 1
+  DefaultTurn: 0
   AllowTurn: 1
 --- !u!114 &7114947666560097576
 MonoBehaviour:
