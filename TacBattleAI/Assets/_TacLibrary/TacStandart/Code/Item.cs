@@ -1,10 +1,6 @@
 // Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
-// Это общий класс из категории Common, если используете другие компоненты - просто удалите его и оставьте только в одном
-// Предпочтительно оставить в компоненте ItemCreate
-// Используется в компонентах ItemTurn, ItemMove, Connector
-
 using UnityEngine;
 
 namespace Tac
