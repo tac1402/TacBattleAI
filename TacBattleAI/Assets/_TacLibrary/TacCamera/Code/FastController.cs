@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
 namespace Tac.Camera
@@ -48,9 +49,9 @@ namespace Tac.Camera
 
         void Update()
         {
-            if (IsPointerOverUI() == false)
+            //if (IsPointerOverUI() == false)
             {
-                float mouseScrollWheel = Input.GetAxisRaw("Mouse ScrollWheel");
+                float mouseScrollWheel = InputScroll.y; // Input.GetAxisRaw("Mouse ScrollWheel");
                 float zoomChange = 0.0f;
                 if (mouseScrollWheel != 0.0f)
                 {
@@ -107,14 +108,14 @@ namespace Tac.Camera
                     Vector2 newPosition;
                     if (currentFastCamera.IsCollision != 0)
                     {
-                        newPosition = new Vector2(Input.GetAxisRaw("Horizontal") * -2 * Speed.x * Time.unscaledDeltaTime,
-                            Input.GetAxisRaw("Vertical") * -2 * Speed.x * Time.unscaledDeltaTime);
+                        newPosition = new Vector2(InputMove.x * -2 * Speed.x * Time.unscaledDeltaTime,
+                            InputMove.y * -2 * Speed.x * Time.unscaledDeltaTime);
                         //NotificationT.AddNotification(Notification.AvoidCollisions);
                     }
                     else
                     {
-                        newPosition = new Vector2(Input.GetAxisRaw("Horizontal") * Speed.x * Time.unscaledDeltaTime,
-                            Input.GetAxisRaw("Vertical") * Speed.x * Time.unscaledDeltaTime);
+                        newPosition = new Vector2(InputMove.x * Speed.x * Time.unscaledDeltaTime,
+							InputMove.y * Speed.x * Time.unscaledDeltaTime);
                     }
 
                     if (newPosition.x != 0 || newPosition.y != 0)
@@ -183,17 +184,37 @@ namespace Tac.Camera
         }
 
 
-		public bool IsPointerOverUI()
+		/*public bool IsPointerOverUI()
 		{
 			PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-			eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+            Vector3 mousePosition = Mouse.current.position.ReadValue();
+			eventDataCurrentPosition.position = new Vector2(mousePosition.x, mousePosition.y);
 			List<RaycastResult> results = new List<RaycastResult>();
 			EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
 			return results.Count > 0;
+		}*/
+
+		public Vector2 InputMove = Vector2.zero;
+		public Vector2 InputLook = Vector2.zero;
+		public Vector2 InputScroll = Vector2.zero;
+
+		public void OnMove(InputAction.CallbackContext value)
+        {
+			InputMove = value.ReadValue<Vector2>();
+		}
+		public void OnLook(InputAction.CallbackContext value)
+		{
+            InputLook = value.ReadValue<Vector2>();
+		}
+
+        public void OnScroll(InputAction.CallbackContext value)
+        {
+			InputScroll = value.ReadValue<Vector2>();
 		}
 	}
 
-    [System.Serializable]
+	[System.Serializable]
     public enum LimitType
     {
         Square,

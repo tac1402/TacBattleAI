@@ -2,6 +2,7 @@
 // Copyright (C) 2025-26 Sergej Jakovlev
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Tac.Camera
 {
@@ -54,7 +55,7 @@ namespace Tac.Camera
 		{
 			//if (Time.deltaTime != 0) // не пауза
 			{
-				if (Input.GetMouseButton(1))
+				if (Mouse.current.rightButton.isPressed)
 				{
 					UpdateCameraInput();
 				}
@@ -64,8 +65,8 @@ namespace Tac.Camera
 
 		public void UpdateCameraInput()
 		{
-			float locMouseX = Input.GetAxisRaw("Mouse X");
-			float locMouseY = Input.GetAxisRaw("Mouse Y");
+			float locMouseX = FastController.InputLook.x; // Input.GetAxisRaw("Mouse X");
+			float locMouseY = FastController.InputLook.y; // Input.GetAxisRaw("Mouse Y");
 			NewCoord.x -= locMouseY * Sensitivity.x;
 			NewCoord.y += locMouseX * Sensitivity.y;
 

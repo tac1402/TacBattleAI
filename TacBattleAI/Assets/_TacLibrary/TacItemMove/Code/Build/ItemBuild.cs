@@ -6,6 +6,7 @@ using Tac.ItemCreate;
 using Tac.ItemMove;
 using Tac.Wireframe;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 [Component(typeof(TopCamera), typeof(GhostCache), typeof(ItemCollision))]
@@ -17,12 +18,6 @@ public partial class ItemBuild : MonoBehaviour
 
 	public GameObject Grid;
 	public XYZ DiscreteType = XYZ.XYZ;
-
-	[Tooltip("Key to press to start (or next) add line point")]
-	public KeyCode placeKey = KeyCode.Mouse0;
-
-	[Tooltip("Key to press end build")]
-	public KeyCode placeEndKey = KeyCode.Mouse1;
 
 	private Item2 ModelObjectToPlace;
 	private Item2 objectToPlace;
@@ -59,14 +54,14 @@ public partial class ItemBuild : MonoBehaviour
 	{
 		if (IsBuildMode)
 		{
-			if (Input.GetKeyDown(KeyCode.Escape))
+			if (Keyboard.current[Key.Escape].wasPressedThisFrame)
 			{
 				ResetObjectToPlace();
 			}
 		}
 		if (TopCamera.IsUsingUI() == false && ModelObjectToPlace != null)
 		{
-			if (Input.GetKeyDown(placeEndKey))
+			if (Mouse.current.rightButton.wasPressedThisFrame)
 			{
 				if (objectToPlace != null)
 				{
@@ -74,7 +69,7 @@ public partial class ItemBuild : MonoBehaviour
 				}
 			}
 
-			if (Input.GetKeyDown(placeKey))
+			if (Mouse.current.leftButton.wasPressedThisFrame)
 			{
 				PlaceObject();
 			}
@@ -112,7 +107,7 @@ public partial class ItemBuild : MonoBehaviour
 					boundList.Add(objectToPlace.Colliders[i].bounds);
 				}
 			}
-			(Vector3 terrainPoint, GameObject buildObj) = TopCamera.GetAllowBuildPoint(Input.mousePosition, boundList);
+			(Vector3 terrainPoint, GameObject buildObj) = TopCamera.GetAllowBuildPoint(Mouse.current.position.ReadValue(), boundList);
 
 			if (buildObj != null)
 			{
