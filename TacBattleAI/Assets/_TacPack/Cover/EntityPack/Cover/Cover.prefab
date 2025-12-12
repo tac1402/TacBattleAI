@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5816215840642951382}
   - component: {fileID: 168674683305257149}
   - component: {fileID: 328356202780121430}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 3520115204269769680}
   - component: {fileID: 3359069004465194611}
   - component: {fileID: 7114947666560097576}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Cover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 8160655933063897102}
   - component: {fileID: 8482360773948852332}
   - component: {fileID: 4689801465735264489}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 7786362393007796370}
   - component: {fileID: 6163315018486134960}
   - component: {fileID: 5679057286632181227}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Collider2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 4450392803508791453}
   - component: {fileID: 2730247675648052915}
   - component: {fileID: 1007404979240437791}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Wireframe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2074977063008991396}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

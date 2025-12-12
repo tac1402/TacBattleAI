@@ -24,7 +24,7 @@ namespace Tac.ItemMove
 				objectToPlace = value;
 				if (objectToPlace != null)
 				{
-					objectToPlace.Collider = objectToPlace.GetComponentsInChildren<Collider>();
+					objectToPlace.Colliders = objectToPlace.GetComponentsInChildren<Collider>();
 				}
 			}
 		}
@@ -87,11 +87,11 @@ namespace Tac.ItemMove
 			isCollissionError = false;
 
 			List<Collider> entityColliders = new List<Collider>();
-			for (int i = 0; i < ObjectToPlace.Collider.Length; i++)
+			for (int i = 0; i < ObjectToPlace.Colliders.Length; i++)
 			{
-				GameObject colliderObj = ObjectToPlace.Collider[i].gameObject;
+				GameObject colliderObj = ObjectToPlace.Colliders[i].gameObject;
 				//BoxCollider box = colliderObj.GetComponent<BoxCollider>();
-				Collider[] c = Physics.OverlapBox(colliderObj.transform.position, ObjectToPlace.Collider[i].bounds.size / 2f,
+				Collider[] c = Physics.OverlapBox(colliderObj.transform.position, ObjectToPlace.Colliders[i].bounds.size / 2f,
 													colliderObj.transform.rotation, EntityLayer, QueryTriggerInteraction.Collide);
 
 				for (int j = 0; j < c.Length; j++)
@@ -143,9 +143,9 @@ namespace Tac.ItemMove
 					Gizmos.color = Color.blue;
 				}
 
-				for (int i = 0; i < ObjectToPlace.Collider.Length; i++)
+				for (int i = 0; i < ObjectToPlace.Colliders.Length; i++)
 				{
-					Gizmos.DrawWireCube(ObjectToPlace.Collider[i].bounds.center, ObjectToPlace.Collider[i].bounds.size);
+					Gizmos.DrawWireCube(ObjectToPlace.Colliders[i].bounds.center, ObjectToPlace.Colliders[i].bounds.size);
 				}
 			}
 		}
@@ -159,12 +159,12 @@ namespace Tac
 	{
 		public bool AllowMove = true;
 		public Wireframe.Wireframe Wireframe;
-		public Collider[] Collider;
+		public Collider[] Colliders;
 
 
 		public void Init()
 		{
-			Collider = GetComponentsInChildren<Collider>();
+			Colliders = GetComponentsInChildren<Collider>();
 			Wireframe = gameObject.GetComponent<Wireframe.Wireframe>();
 		}
 

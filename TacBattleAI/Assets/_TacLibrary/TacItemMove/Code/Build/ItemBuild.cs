@@ -105,11 +105,11 @@ public partial class ItemBuild : MonoBehaviour
 
 			//Это сложный случай с проверкой, где можно строить
 			List<Bounds> boundList = new List<Bounds>();
-			for (int i = 0; i < objectToPlace.Collider.Length; i++)
+			for (int i = 0; i < objectToPlace.Colliders.Length; i++)
 			{
-				if (objectToPlace.Collider[i] != null)
+				if (objectToPlace.Colliders[i] != null)
 				{
-					boundList.Add(objectToPlace.Collider[i].bounds);
+					boundList.Add(objectToPlace.Colliders[i].bounds);
 				}
 			}
 			(Vector3 terrainPoint, GameObject buildObj) = TopCamera.GetAllowBuildPoint(Input.mousePosition, boundList);

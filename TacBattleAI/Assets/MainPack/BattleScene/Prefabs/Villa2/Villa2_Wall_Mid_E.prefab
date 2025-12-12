@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 411262}
   - component: {fileID: 6517666}
   - component: {fileID: 381797563430324505}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Villa2_Wall_Mid_E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 3118546868635467647}
   - component: {fileID: 1687077723059860197}
   - component: {fileID: 3912926918026564733}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 3537954092591192891}
   - component: {fileID: 6169785246028748387}
   - component: {fileID: 8226858855824339383}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Wireframe
   m_TagString: Untagged
   m_Icon: {fileID: 0}

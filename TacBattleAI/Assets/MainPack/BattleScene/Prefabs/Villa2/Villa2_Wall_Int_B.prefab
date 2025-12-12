@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3322886}
   - component: {fileID: 2339702}
   - component: {fileID: 6417700}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Villa2_Wall_Int_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
