@@ -7,10 +7,14 @@ using Tac.ItemMove;
 using Tac.Wireframe;
 using UnityEngine;
 
-public partial class BuildItem : MonoBehaviour
+
+[Component(typeof(TopCamera), typeof(GhostCache), typeof(ItemCollision))]
+public partial class ItemBuild : MonoBehaviour
 {
 	public TopCamera TopCamera;
 	public GhostCache GhostCache;
+	public ItemCollision ItemCollision;
+
 	public GameObject Grid;
 	public XYZ DiscreteType = XYZ.XYZ;
 
@@ -85,7 +89,7 @@ public partial class BuildItem : MonoBehaviour
 			{
 				MoveGhost();
 			}
-			yield return new WaitForSeconds(0.1f);
+			yield return new WaitForSeconds(0.3f);
 		}
 	}
 
@@ -96,9 +100,10 @@ public partial class BuildItem : MonoBehaviour
 	{
 		if (ModelObjectToPlace != null)
 		{
+			//Это простой случай установки на террайне
 			//Vector3 terrainPoint = TopCamera.GetTerrain(Input.mousePosition).Item1;
 
-
+			//Это сложный случай с проверкой, где можно строить
 			List<Bounds> boundList = new List<Bounds>();
 			for (int i = 0; i < objectToPlace.Collider.Length; i++)
 			{
@@ -111,13 +116,17 @@ public partial class BuildItem : MonoBehaviour
 
 			if (buildObj != null)
 			{
-				Vector3 newPosition = new Vector3(terrainPoint.x, terrainPoint.y, terrainPoint.z);
-				Vector3 newDiscretePosition = ModelObjectToPlace.GetDiscrete(newPosition, DiscreteType);
-
-				MoveGhostObject(newDiscretePosition);
+				allowHeight = terrainPoint.y;
 			}
+
+			Vector3 newPosition = new Vector3(terrainPoint.x, allowHeight, terrainPoint.z);
+			Vector3 newDiscretePosition = ModelObjectToPlace.GetDiscrete(newPosition, DiscreteType);
+
+			MoveGhostObject(newDiscretePosition);
 		}
 	}
+	float allowHeight = 0;
+
 
 	/// <summary>
 	/// Передвижение по поверхности прототипа строимого объекта
@@ -127,6 +136,8 @@ public partial class BuildItem : MonoBehaviour
 		if (objectToPlace != null)
 		{
 			objectToPlace.transform.position = argNewDiscretePosition;
+
+			ItemCollision.OnItemMove(objectToPlace);
 		}
 	}
 
@@ -178,7 +189,8 @@ public partial class BuildItem : MonoBehaviour
 		ghostObject.transform.SetParent(null);
 
 		objectToPlace = ghostObject.GetComponent<Item2>();
-		objectToPlace.Collider = ghostObject.GetComponentsInChildren<Collider>();
+		objectToPlace.Init();
+		//objectToPlace.Collider = ghostObject.GetComponentsInChildren<Collider>();
 
 		objectToPlace.SetTurn();
 		objectToPlace.WireframeShow(WireframeMode.Green);

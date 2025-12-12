@@ -17,6 +17,8 @@ namespace Tac.Camera
 
 		public float MaxHeight = 1000;
 
+		public Dictionary<string, bool> MoveError = new Dictionary<string, bool>();
+
 
 		public bool IsUsingUI()
 		{

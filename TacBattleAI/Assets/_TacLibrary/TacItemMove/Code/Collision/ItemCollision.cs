@@ -12,7 +12,7 @@ namespace Tac.ItemMove
 	[Component(typeof(ItemCollision), typeof(Wireframe.Wireframe), typeof(TopCamera))]
 	public class ItemCollision : MonoBehaviour
 	{
-		public TopCamera CameraManager;
+		public TopCamera TopCamera;
 		public LayerMask EntityLayer;
 
 		private Item2 objectToPlace;
@@ -37,7 +37,7 @@ namespace Tac.ItemMove
 			// for Debug
 			//objectToPlace.Collider = objectToPlace.GetComponentsInChildren<Collider>();
 
-			//CameraManager.MoveError.Add("Collision", false);
+			TopCamera.MoveError.Add("Collision", false);
 
 			//CameraManager.OnShowError += OnShowError;
 		}
@@ -70,6 +70,18 @@ namespace Tac.ItemMove
 			}
 		}
 
+		public void OnItemMove(Item2 argItem)
+		{
+			if (argItem != null)
+			{
+				if (argItem.AllowMove == false) { return; }
+
+				ObjectToPlace = argItem;
+				ControlBox();
+				TopCamera.MoveError["Collision"] = isCollissionError;
+				OnShowError(isCollissionError);
+			}
+		}
 		private void ControlBox()
 		{
 			isCollissionError = false;
@@ -78,8 +90,8 @@ namespace Tac.ItemMove
 			for (int i = 0; i < ObjectToPlace.Collider.Length; i++)
 			{
 				GameObject colliderObj = ObjectToPlace.Collider[i].gameObject;
-				BoxCollider box = colliderObj.GetComponent<BoxCollider>();
-				Collider[] c = Physics.OverlapBox(colliderObj.transform.position, box.bounds.size / 2f,
+				//BoxCollider box = colliderObj.GetComponent<BoxCollider>();
+				Collider[] c = Physics.OverlapBox(colliderObj.transform.position, ObjectToPlace.Collider[i].bounds.size / 2f,
 													colliderObj.transform.rotation, EntityLayer, QueryTriggerInteraction.Collide);
 
 				for (int j = 0; j < c.Length; j++)
@@ -95,10 +107,13 @@ namespace Tac.ItemMove
 			{
 				newItem = Item2.GetItem(entityColliders[i].gameObject);
 
+				if (newItem == null)
+				{
+					isCollissionError = true;
+				}
 				if (newItem != null && (newItem.ObjectId != ObjectToPlace.ObjectId || newItem.GhostId != ObjectToPlace.GhostId))
 				{
 					isCollissionError = true;
-
 				}
 
 				if (isCollissionError == true)
@@ -142,14 +157,17 @@ namespace Tac
 {
 	public partial class Item2 : Item
 	{
+		public bool AllowMove = true;
 		public Wireframe.Wireframe Wireframe;
 		public Collider[] Collider;
 
 
-		public void InitCollider()
+		public void Init()
 		{
 			Collider = GetComponentsInChildren<Collider>();
+			Wireframe = gameObject.GetComponent<Wireframe.Wireframe>();
 		}
+
 		public void ShowMoveErrorWireframe(bool argIsError)
 		{
 			if (Wireframe != null)

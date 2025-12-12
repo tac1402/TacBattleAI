@@ -121,6 +121,7 @@ MonoBehaviour:
   ModelType: 0
   GhostId: 0
   DiscreteStep: {x: 1, y: 1, z: 1}
+  AllowMove: 1
   Wireframe: {fileID: 0}
   Collider:
   - {fileID: 0}
