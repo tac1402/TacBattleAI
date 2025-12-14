@@ -23,7 +23,7 @@ namespace Tac
 Но что делать, если вы реализуете компонент, который перемещает сущность по некоторым правилам? А другой компонент его вращает. При этом у вас есть проекты, где нужно только перемещение, где нужно только вращение, и проекты где нужно и то и другое. Вот правильный подход с нулевым оверхедом. Partial классы обеспечивают вам возможность просто копировать в проект нужные компоненты и не создавать оверхед архитектурные надстройки. Это удивительно просто.
 
 ```csharp
-TacItemMove.cs
+//TacItemMove.cs
 public partial class Item2 : Item
 {
 	public bool AllowMove = true;
@@ -37,7 +37,7 @@ namespace Tac.ItemMove
 }
 ```
 ```csharp
-TacItemRotate.cs
+//TacItemRotate.cs
 public partial class Item2 : Item
 {
 	public bool AllowRotate = true;
