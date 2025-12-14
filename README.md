@@ -59,7 +59,8 @@ namespace Tac.ItemRotate
 
 # Обучающие материалы на youtube-канале
 
-1. https://www.youtube.com/watch?v=9XOY1fUcUPg (Основы _легкой_ компонентной архитектуры, так же объясняется TacWireframe, другие компоненты только базис, который уже еще больше упрощен)
+1. https://www.youtube.com/watch?v=OD5WpfnhSU0 - Partial-подход - это легкая архитектура и убийца ECS like архитектуры
+2. https://www.youtube.com/watch?v=9XOY1fUcUPg (Основы _легкой_ компонентной архитектуры, так же объясняется TacWireframe, другие компоненты только базис, который уже еще больше упрощен)
 
 
 # Использованные ассеты
