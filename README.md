@@ -24,10 +24,6 @@ namespace Tac
 
 ```csharp
 //TacItemMove.cs
-public partial class Item2 : Item
-{
-	public bool AllowMove = true;
-}
 namespace Tac.ItemMove
 {
 	public class ItemMove
@@ -35,18 +31,28 @@ namespace Tac.ItemMove
 	    public void Move(Item2 item, ... ) { ... }
 	}
 }
+namespace Tac
+{
+	public partial class Item2 : Item
+	{
+		public bool AllowMove = true;
+	}
+}
 ```
 ```csharp
 //TacItemRotate.cs
-public partial class Item2 : Item
-{
-	public bool AllowRotate = true;
-}
 namespace Tac.ItemRotate
 {
 	public class ItemRotate
 	{
 	    public void Rotate(Item2 item, ... ) { ... }
+	}
+}
+namespace Tac
+{
+	public partial class Item2 : Item
+	{
+		public bool AllowRotate = true;
 	}
 }
 ```
