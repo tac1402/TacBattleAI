@@ -2,6 +2,8 @@ title: TacLibrary
 description: Documentation of TacLibrary
 remote_theme: just-the-docs
 
+nav_enabled: true
+
 url: https://just-the-docs.github.io
 
 aux_links:
