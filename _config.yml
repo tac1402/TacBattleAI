@@ -1,14 +1,13 @@
-title: TacLibrary
-description: Documentation of TacLibrary
-#remote_theme: just-the-docs
-remote_theme: pages-themes/tactile@v0.2.0
+site_name: MyDoc
+site_url: https://tac1402.github.io/TacBattleAI/
 
-nav_enabled: true
+theme:
+  name: readthedocs
 
-url: https://tac1402.github.io
-
-aux_links:
-  Template Repository: https://github.com/tac1402/TacBattleAI
+nav:
+  - Home: index.md
+  - About: about.md
 
 plugins:
-  - jekyll-remote-theme
+  - search
+
