@@ -1,5 +1,5 @@
 site_name: MyDoc
-site_url: https://username.github.io/repository/
+site_url: https://tac1402.github.io/TacBattleAI/
 
 theme:
   name: material
@@ -13,7 +13,6 @@ nav:
   - API: api.md
   - FAQ: faq.md
 
-# Дополнительные возможности темы Material
 plugins:
   - search
 
