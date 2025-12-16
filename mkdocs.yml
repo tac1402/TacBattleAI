@@ -1,16 +1,15 @@
-site_name: Моя документация
+site_name: MyDoc
 site_url: https://username.github.io/repository/
 
 theme:
   name: material
 
-# Навигация в боковой панели
 nav:
-  - Главная: index.md
-  - Установка: getting-started/installation.md
-  - Использование: 
-    - Основы: getting-started/basics.md
-    - Расширенные возможности: getting-started/advanced.md
+  - Main: index.md
+  - Install: getting-started/installation.md
+  - aaa: 
+    - ccc: getting-started/basics.md
+    - test: getting-started/advanced.md
   - API: api.md
   - FAQ: faq.md
 
