@@ -4,7 +4,7 @@ remote_theme: just-the-docs
 
 nav_enabled: true
 
-url: https://just-the-docs.github.io
+url: https://tac1402.github.io
 
 aux_links:
-  Template Repository: https://github.com/just-the-docs/just-the-docs-template
+  Template Repository: https://github.com/tac1402/TacBattleAI
