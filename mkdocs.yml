@@ -2,22 +2,12 @@ site_name: MyDoc
 site_url: https://tac1402.github.io/TacBattleAI/
 
 theme:
-  name: material
+  name: readthedocs
 
 nav:
-  - Main: index.md
-  - Install: getting-started/installation.md
-  - aaa: 
-    - ccc: getting-started/basics.md
-    - test: getting-started/advanced.md
-  - API: api.md
-  - FAQ: faq.md
+  - Home: index.md
+  - About: about.md
 
 plugins:
   - search
 
-markdown_extensions:
-  - admonition
-  - codehilite
-  - toc:
-      permalink: true
