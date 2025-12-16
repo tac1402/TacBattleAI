@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Установка"
-nav_order: 1                  # Порядок ВНУТРИ РАЗДЕЛА
+nav_order: 1 
 ---
 
 # Установка
