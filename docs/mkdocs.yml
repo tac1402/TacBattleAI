@@ -1,0 +1,25 @@
+site_name: Моя документация
+site_url: https://username.github.io/repository/
+
+theme:
+  name: material
+
+# Навигация в боковой панели
+nav:
+  - Главная: index.md
+  - Установка: getting-started/installation.md
+  - Использование: 
+    - Основы: getting-started/basics.md
+    - Расширенные возможности: getting-started/advanced.md
+  - API: api.md
+  - FAQ: faq.md
+
+# Дополнительные возможности темы Material
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
