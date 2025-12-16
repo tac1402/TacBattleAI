@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "Установка"
+title: Test
 nav_order: 1 
 ---
 
-# Установка
+# MyTest
 
 Процесс установки состоит из нескольких шагов.
 
