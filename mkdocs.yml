@@ -12,3 +12,7 @@ nav:
     - Item: TacStandart/Item.md
     - ModelTypes: TacStandart/ModelTypes.md
     - Component: TacStandart/Component.md
+  - TacItemCreate:
+    - ItemCreate: TacItemCreate/ItemCreate.md
+    - EntityType: TacItemCreate/EntityType.md
+    - ChostCache: TacItemCreate/ChostCache.md
