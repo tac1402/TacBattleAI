@@ -9,6 +9,6 @@ nav:
   - О библиотеке: index.md
   - Архитектурная легкость: simplicity.md
   - TacStandart: TacStandart.md
-    - Item: Item.md
-    - ModelTypes: ModelTypes.md
+    - Item: TacStandart/Item.md
+    - ModelTypes: TacStandart/ModelTypes.md
 
