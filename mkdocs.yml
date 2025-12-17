@@ -15,4 +15,4 @@ nav:
   - TacItemCreate:
     - ItemCreate: TacItemCreate/ItemCreate.md
     - EntityType: TacItemCreate/EntityType.md
-    - ChostCache: TacItemCreate/ChostCache.md
+    - GhostCache: TacItemCreate/GhostCache.md

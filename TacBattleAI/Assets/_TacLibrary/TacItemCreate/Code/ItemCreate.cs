@@ -9,7 +9,6 @@ using UnityEngine;
 
 namespace Tac.ItemCreate
 {
-	[Component(typeof(ItemCreate))]
 	public class ItemCreate : MonoBehaviour
 	{
 		public List<EntityType> WorldLevel;
