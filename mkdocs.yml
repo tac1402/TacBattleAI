@@ -3,6 +3,7 @@ site_url: https://tac1402.github.io/TacBattleAI/
 
 theme:
   name: readthedocs
+  locale: ru
 
 nav:
   - Home: index.md
