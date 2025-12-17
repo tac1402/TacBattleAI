@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tac.ItemCreate
 {
-	[Component(typeof(GhostCache), typeof(ItemCreate))]
+	[Component(typeof(ItemCreate))]
 	public class GhostCache : MonoBehaviour
 	{
 		public ItemCreate ItemCreate;

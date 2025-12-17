@@ -9,7 +9,7 @@ using Tac.Camera;
 
 namespace Tac.ItemMove
 {
-	[Component(typeof(ItemCollision), typeof(Wireframe.Wireframe), typeof(TopCamera))]
+	[Component(typeof(Wireframe.Wireframe), typeof(TopCamera))]
 	public class ItemCollision : MonoBehaviour
 	{
 		public TopCamera TopCamera;

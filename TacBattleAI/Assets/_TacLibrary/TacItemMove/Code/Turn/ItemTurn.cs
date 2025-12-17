@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Tac.ItemMove
 {
-	[Component(typeof(ItemTurn), typeof(TopCamera))]
+	[Component(typeof(TopCamera))]
 	public class ItemTurn : MonoBehaviour
 	{
 		public KeyCode RotateKey = KeyCode.Mouse1;
