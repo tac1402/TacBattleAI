@@ -1,6 +1,0 @@
----
-title: TacStandart
----
-
-# Библиотека TacStandart
-

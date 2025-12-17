@@ -8,7 +8,7 @@ theme:
 nav:
   - О библиотеке: index.md
   - Архитектурная легкость: simplicity.md
-  - TacStandart: TacStandart.md
+  - TacStandart: 
     - Item: TacStandart/Item.md
     - ModelTypes: TacStandart/ModelTypes.md
 
