@@ -1,10 +1,48 @@
 ---
 title: Wireframe
 ---
-Часто 
+
+Использует шейдер для показа вместо текстурированного меша только его сетку. В префаб объекта помещается не только его основной вид, но и иерархия отображающая сетку. 
+
+Компонент расширяет [Item2](../../Item2).
+
+# Свойства
+
+## List<GameObject\> MainRender 
+
+Список объектов, которые нужно показывать без сетки
+
+## List<GameObject\> WireframeRender
+
+Список объектов, которые показывают сетку
+
+## Wireframe Red/Green/Gray
+
+Испольжуются материалы для отображения сетки разных цветов красной/зеленной/серой
+
+## CurrentMode
+
+Текущий режим отображения.
 
 ```csharp
-  [Component(typeof(TopCamera), typeof(GhostCache), typeof(ItemCollision))]
-  public partial class ItemBuild : MonoBehaviour
-  { ... }
+public enum WireframeMode
+{
+	Hide = 0,
+	Red = 1,
+	Green = 2,
+	Gray = 3
+}
 ```
+
+# Методы
+
+## Show/Hide
+
+_Show(WireframeMode argMode)_ Показывает сетку определенного цвета вместо основных текстур. 
+
+_Hide()_ Скрывает сетку и возвращает основные текстуры
+
+
+
+
+
