@@ -39,18 +39,22 @@ public class World : MonoBehaviour
 
 ## CreateObject
 __CreateObject(string argModelName, float argX, float argY, float? Height, ModelTypes argModelType = ModelTypes.Model, GameObject argParent = null)__
+
 Создать объект в сцене по имени модели, позиции в которую его нужно поместить, типу модели и иерархии в сцене. Если в модели [Item.GroupId](../../TacStandart/Item) будет отличаться от -1, в качестве иерархии будет выбран соответствующий уровень в мире (WorldLevel). Перекрывает Unity-метод Instantiate().
 
 ## DestroyObject
 __DestroyObject(GameObject argObject)__
+
 Уничтожает объект. Перекрывает Unity-метод Destroy().
 
 ## GetModel
 __GameObject GetModel(string argModelName, ModelTypes argModelType = ModelTypes.Model)__
+
 Позволяет получить модель/префаб, который записан под определенными именем модели и типом. Для разных типов может использовать одинаковое имя. Это удобно использовать, когда модели представляют собой модели одной группы. Например, труба - это обычная модель, а поворот трубы - это та же труба, с теми же свойствами, что и у основной модели, с единственным различием, что при постройки она ведет себя как поворот, а не как прямой участок.
 
 ## AddModel
 __AddModel(GameObject argModel)__
+
 Позволяет программным путем дополнить список всех моделей Models
 
 
