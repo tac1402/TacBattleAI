@@ -2,7 +2,7 @@ site_name: TacLibrary
 site_url: https://tac1402.github.io/TacBattleAI/
 
 theme:
-  name: readthedocs
+  name: material
   locale: ru
 
 nav:
