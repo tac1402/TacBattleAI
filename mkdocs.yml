@@ -6,6 +6,6 @@ theme:
   locale: ru
 
 nav:
-  - Home: index.md
+  - Архитектурная легкость: simplicity.md
   - About: about.md
 
