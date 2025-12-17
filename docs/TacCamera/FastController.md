@@ -2,11 +2,12 @@
 title: FastController
 ---
 
+Упрощенный аналог Unity Character Controller, который просто управляет камерой (без персонажа).
 
 Управление клавишами обеспечивается принимая ввод пользователя через UnityEngine.InputSystem. Используется: 
-* WASD - направляет камеру в соответствующую сторону
-* Right Button Mouse - при нажатии поворачивает камеру (принимает [TopCamera](../../TopCamera.md))
-* Scroll Mouse - приближает/отдаляяет камеру
+1. WASD - направляет камеру в соответствующую сторону (обрабатывает FastController)
+2. Right Button Mouse - при нажатии поворачивает камеру (обрабатывает [TopCamera](../../TopCamera.md))
+3. Scroll Mouse - приближает/отдаляяет камеру (обрабатывает FastController)
   
 # Свойства
 ## bool AllowMove
