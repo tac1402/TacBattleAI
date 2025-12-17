@@ -6,6 +6,7 @@ theme:
   locale: ru
 
 nav:
+  - О библиотеке: index.md
   - Архитектурная легкость: simplicity.md
   - About: about.md
 
