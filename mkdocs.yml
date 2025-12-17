@@ -18,7 +18,7 @@ nav:
     - EntityType: TacItemCreate/EntityType.md
     - GhostCache: TacItemCreate/GhostCache.md
   - TacCamera
-    - TopCamera: TopCamera/TopCamera.md
+    - TopCamera: TacCamera/TopCamera.md
     - FastController: TacCamera/FastController.md
   - TacWireframe
     Wireframe: TacWireframe/Wireframe.md

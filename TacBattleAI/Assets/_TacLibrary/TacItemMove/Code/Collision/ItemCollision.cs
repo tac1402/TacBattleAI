@@ -158,7 +158,6 @@ namespace Tac
 	public partial class Item2 : Item
 	{
 		public bool AllowMove = true;
-		public Wireframe.Wireframe Wireframe;
 		public Collider[] Colliders;
 
 		/// <summary>
@@ -166,10 +165,9 @@ namespace Tac
 		/// </summary>
 		public int GhostId;
 
-		public void Init()
+		public void InitColliders()
 		{
 			Colliders = GetComponentsInChildren<Collider>();
-			Wireframe = gameObject.GetComponent<Wireframe.Wireframe>();
 		}
 
 		public static Item2 GetItem(GameObject go)
@@ -190,37 +188,5 @@ namespace Tac
 			return retItem;
 		}
 
-		public void ShowMoveErrorWireframe(bool argIsError)
-		{
-			if (Wireframe != null)
-			{
-				if (argIsError == true)
-				{
-					WireframeShow(WireframeMode.Red);
-				}
-				else
-				{
-					WireframeShow(WireframeMode.Green);
-				}
-			}
-		}
-
-		public void WireframeShow(WireframeMode argMode)
-		{
-			if (gameObject != null)
-			{
-				if (Wireframe != null)
-				{
-					if (Wireframe.IsMaterial(argMode))
-					{
-						Wireframe.Show(argMode);
-					}
-					else
-					{
-						Wireframe.Hide();
-					}
-				}
-			}
-		}
 	}
 }

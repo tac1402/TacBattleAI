@@ -3,12 +3,11 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Tac.Wireframe;
 using UnityEngine;
-
 
 namespace Tac.Wireframe
 {
-
     public class Wireframe : MonoBehaviour
     {
 		public List<GameObject> MainRender;
@@ -19,11 +18,6 @@ namespace Tac.Wireframe
 		public Material WireframeGray;
 
 		public WireframeMode CurrentMode;
-
-        void Start()
-        {
-
-        }
 
         public void Hide()
         {
@@ -55,7 +49,6 @@ namespace Tac.Wireframe
 			}
 			return ret;
         }
-
 
 		public void Show(WireframeMode argMode)
         {
@@ -94,4 +87,51 @@ namespace Tac.Wireframe
 		Gray = 3
 	}
 
+}
+
+namespace Tac
+{
+	public partial class Item2 : Item
+	{
+		public Wireframe.Wireframe Wireframe;
+
+
+		public void InitWireframe()
+		{
+			Wireframe = gameObject.GetComponent<Wireframe.Wireframe>();
+		}
+
+		public void ShowMoveErrorWireframe(bool argIsError)
+		{
+			if (Wireframe != null)
+			{
+				if (argIsError == true)
+				{
+					WireframeShow(WireframeMode.Red);
+				}
+				else
+				{
+					WireframeShow(WireframeMode.Green);
+				}
+			}
+		}
+
+		public void WireframeShow(WireframeMode argMode)
+		{
+			if (gameObject != null)
+			{
+				if (Wireframe != null)
+				{
+					if (Wireframe.IsMaterial(argMode))
+					{
+						Wireframe.Show(argMode);
+					}
+					else
+					{
+						Wireframe.Hide();
+					}
+				}
+			}
+		}
+	}
 }

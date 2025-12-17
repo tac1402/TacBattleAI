@@ -186,7 +186,8 @@ namespace Tac.ItemMove
 			ghostObject.transform.SetParent(null);
 
 			objectToPlace = ghostObject.GetComponent<Item2>();
-			objectToPlace.Init();
+			objectToPlace.InitColliders();
+			objectToPlace.InitWireframe();
 			//objectToPlace.Collider = ghostObject.GetComponentsInChildren<Collider>();
 
 			objectToPlace.SetTurn();

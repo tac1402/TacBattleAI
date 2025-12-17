@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 107
+  controlID: 41
   draggingID: 0
 --- !u!114 &3
 MonoBehaviour:
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 53
+  controlID: 42
   draggingID: 0
 --- !u!114 &10
 MonoBehaviour:
@@ -633,7 +633,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_Code
+    - Assets/_TacLibrary
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -643,29 +643,32 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_Code
+  - Assets/_TacLibrary
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 53}
+    scrollPos: {x: 0, y: 85}
     m_SelectedIDs:
-    - m_Data: 84660
+    - m_Data: 93684
     m_LastClickedID:
-      m_Data: 84660
+      m_Data: 93684
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 93670
-    - m_Data: 93672
-    - m_Data: 93674
-    - m_Data: 93676
-    - m_Data: 93678
-    - m_Data: 93680
-    - m_Data: 93682
-    - m_Data: 93684
-    - m_Data: 93686
+    - m_Data: 84382
+    - m_Data: 84384
+    - m_Data: 84386
+    - m_Data: 84388
+    - m_Data: 84390
+    - m_Data: 84392
+    - m_Data: 84394
+    - m_Data: 84396
+    - m_Data: 84398
+    - m_Data: 84400
+    - m_Data: 84402
+    - m_Data: 84404
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -698,15 +701,18 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 93670
-    - m_Data: 93672
-    - m_Data: 93674
-    - m_Data: 93676
-    - m_Data: 93678
-    - m_Data: 93680
-    - m_Data: 93682
-    - m_Data: 93684
-    - m_Data: 93686
+    - m_Data: 84382
+    - m_Data: 84384
+    - m_Data: 84386
+    - m_Data: 84388
+    - m_Data: 84390
+    - m_Data: 84392
+    - m_Data: 84394
+    - m_Data: 84396
+    - m_Data: 84398
+    - m_Data: 84400
+    - m_Data: 84402
+    - m_Data: 84404
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -733,10 +739,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs:
-    - m_Data: 84712
-    m_LastClickedInstanceID: 84712
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: []
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs:
     - m_Data: 54580
     m_RenameOverlay:
@@ -864,7 +869,7 @@ MonoBehaviour:
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -1294
+      - m_Data: -25514
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1615,7 +1620,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 679
-    width: 1341
+    width: 1430
     height: 307
   m_SerializedDataModeController:
     m_DataMode: 0
