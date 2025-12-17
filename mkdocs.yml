@@ -11,4 +11,4 @@ nav:
   - TacStandart: 
     - Item: TacStandart/Item.md
     - ModelTypes: TacStandart/ModelTypes.md
-
+    - Component: TacStandart/Component.md
