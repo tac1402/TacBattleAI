@@ -19,14 +19,14 @@ public class World : MonoBehaviour
 
 # Свойства класса
 
-## List<EntityType> WorldLevel
-Через этот список задаются все логические уровни/группы объектов в сцене. Как правило, в сцене есть объект World, который включает в себя дочерние элементы, например, Nature, Building, Agents. При создании модели будет проверено свойство Item.GroupId и если оно не равно -1, то все объекты такого типа будут помещаться как дочерние элементы уровня/группы.
+## List\<EntityType\> WorldLevel
+Через этот список задаются все логические уровни/группы объектов в сцене. Как правило, в сцене есть объект World, который включает в себя дочерние элементы, например, Nature, Building, Agents. При создании модели будет проверено свойство [Item.GroupId](TacStandart\Item) и если оно не равно -1, то все объекты такого типа будут помещаться как дочерние элементы уровня/группы.
 
-## List<GameObject> Models
+## List\<GameObject\> Models
 Этот список заполняется всеми видами моделей, которые потом будут динамически создаваться. Этот список, как правило в редакторе Unity, заполняется ссылками на префабы. 
 
 ## int ObjectIdBegin
-Компонент ItemCreate обеспечивает уникальную идентификацию объектов, заполняя свойство Item.ObjectId. Но некоторые объекты удобно создавать прямо в редакторе, в таком случае Item.ObjectId заполняется самим разработчиком. А свойство ObjectIdBegin (default = 100) указывает с какого идентификатора будет нумероваться создаваемые динамически объекты.
+Компонент ItemCreate обеспечивает уникальную идентификацию объектов, заполняя свойство [Item.ObjectId](TacStandart\Item). Но некоторые объекты удобно создавать прямо в редакторе, в таком случае Item.ObjectId заполняется самим разработчиком. А свойство ObjectIdBegin (default = 100) указывает с какого идентификатора будет нумероваться создаваемые динамически объекты.
 
 ## int PredeffinedObjectId
 В ряде случаев, при создании объекта нужно прямо задать его идентификацию. Тогда перед вызовом CreateObject(), нужно задать это свойство равное требуемому идентификатору. 
@@ -36,16 +36,20 @@ public class World : MonoBehaviour
 ## GetNewId()
 Получить следующий идентификатор объекта
 
-## CreateObject(string argModelName, float argX, float argY, float? Height, ModelTypes argModelType = ModelTypes.Model, GameObject argParent = null)
-Создать объект в сцене по имени модели, позиции в которую его нужно поместить, типу модели и иерархии в сцене. Если в модели Item.GroupId будет отличаться от -1, в качестве иерархии будет выбран соответствующий уровень в мире (WorldLevel). Перекрывает Unity-метод Instantiate().
+## CreateObject
+__CreateObject(string argModelName, float argX, float argY, float? Height, ModelTypes argModelType = ModelTypes.Model, GameObject argParent = null)__
+Создать объект в сцене по имени модели, позиции в которую его нужно поместить, типу модели и иерархии в сцене. Если в модели [Item.GroupId](TacStandart\Item) будет отличаться от -1, в качестве иерархии будет выбран соответствующий уровень в мире (WorldLevel). Перекрывает Unity-метод Instantiate().
 
-## DestroyObject(GameObject argObject)
+## DestroyObject
+__DestroyObject(GameObject argObject)__
 Уничтожает объект. Перекрывает Unity-метод Destroy().
 
-## GameObject GetModel(string argModelName, ModelTypes argModelType = ModelTypes.Model)
+## GetModel
+__GameObject GetModel(string argModelName, ModelTypes argModelType = ModelTypes.Model)__
 Позволяет получить модель/префаб, который записан под определенными именем модели и типом. Для разных типов может использовать одинаковое имя. Это удобно использовать, когда модели представляют собой модели одной группы. Например, труба - это обычная модель, а поворот трубы - это та же труба, с теми же свойствами, что и у основной модели, с единственным различием, что при постройки она ведет себя как поворот, а не как прямой участок.
 
-## AddModel(GameObject argModel)
+## AddModel
+__AddModel(GameObject argModel)__
 Позволяет программным путем дополнить список всех моделей Models
 
 
