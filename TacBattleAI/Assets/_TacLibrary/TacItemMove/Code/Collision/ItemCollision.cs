@@ -161,11 +161,33 @@ namespace Tac
 		public Wireframe.Wireframe Wireframe;
 		public Collider[] Colliders;
 
+		/// <summary>
+		/// Идентификатор, еще не построенного/ не существующего объекта в мире
+		/// </summary>
+		public int GhostId;
 
 		public void Init()
 		{
 			Colliders = GetComponentsInChildren<Collider>();
 			Wireframe = gameObject.GetComponent<Wireframe.Wireframe>();
+		}
+
+		public static Item2 GetItem(GameObject go)
+		{
+			Item2 retItem = null;
+			if (go != null)
+			{
+				retItem = go.GetComponent<Item2>();
+				if (retItem == null)
+				{
+					BuildPart part = go.GetComponent<BuildPart>();
+					if (part != null)
+					{
+						retItem = part.Main;
+					}
+				}
+			}
+			return retItem;
 		}
 
 		public void ShowMoveErrorWireframe(bool argIsError)

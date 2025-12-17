@@ -12,7 +12,18 @@ nav:
     - Item: TacStandart/Item.md
     - ModelTypes: TacStandart/ModelTypes.md
     - Component: TacStandart/Component.md
+    - Item2: TacStandart/Item2.md
   - TacItemCreate:
     - ItemCreate: TacItemCreate/ItemCreate.md
     - EntityType: TacItemCreate/EntityType.md
     - GhostCache: TacItemCreate/GhostCache.md
+  - TacCamera
+    - TopCamera: TopCamera/TopCamera.md
+    - FastController: TacCamera/FastController.md
+  - TacWireframe
+    Wireframe: TacWireframe/Wireframe.md
+  - TacItemMove
+    - ItemTurn: TacItemMove/ItemTurn.md
+    - TopCameraExt: TacItemMove/TopCamera_.md
+    - ItemCollision: TacItemMove/ItemCollision.md
+    - ItemBuild: TacItemMove/ItemBuild.md

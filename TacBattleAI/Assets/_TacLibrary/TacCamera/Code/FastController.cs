@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
 
 namespace Tac.Camera
 {
