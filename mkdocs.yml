@@ -1,4 +1,4 @@
-site_name: MyDoc
+site_name: TacLibrary
 site_url: https://tac1402.github.io/TacBattleAI/
 
 theme:
@@ -8,8 +8,3 @@ nav:
   - Home: index.md
   - About: about.md
 
-plugins:
-  - search
-  - exclude:
-      glob:
-        - .nojekyll 
