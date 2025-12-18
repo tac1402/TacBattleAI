@@ -2,14 +2,19 @@
 title: TurnInfo
 ---
 
-Описание поворотов, которые может делать объект. Расширяется компонентом [ItemTurn](../../TacItemMove/ItemTurn) встраивая (инекция) в сущность [Item2](../../TacStandart/Item2).
+Описание поворотов, которые может делать объект. Расширяется компонентом [ItemTurn](../../TacItemMove/ItemTurn) встраивая (инекция через partial) в сущность [Item2](../../TacStandart/Item2).
 
 ```csharp
+namespace Tac.ItemMove
+{
+	public class TurnInfo
+	{
 		public List<TurnType> TurnSeq; // Список всех возможных поворотов, на которые можно повернуть сущность (см. ниже TurnType)
 		public List<Vector2> ViewCorrect; // Сдвиг модели, который нужно выполнить вместе с поворотом (можно использовать если в у модели пивот находится не в центре)
 		public TurnType CurrentTurn; // Текущий заданный поворот
-    public TurnType Turn() { ... } // Ищет CurrentTurn в списке TurnSeq и возвращает следующий вид поворота
-
+    	public TurnType Turn() { ... } // Ищет CurrentTurn в списке TurnSeq и возвращает следующий вид поворота
+	}
+}
 ```
 
 # TurnType
