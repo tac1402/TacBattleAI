@@ -22,6 +22,8 @@ namespace Tac
 
 # Tac.ItemTurn
 
+Встраивает список возможных поворотов [TurnInfo](../../TacItemMove/TurnInfo) в сущность. Перечисление можно изменять под ваш проект.
+
 ```csharp
 namespace Tac
 {
@@ -29,13 +31,45 @@ namespace Tac
 	{
 		public GameObject Pivot; // Точка вокруг которой будет происходить вращение. GameObject определяется пустым в префабе устанавливая только координаты.
 		public GameObject View; // Уровень в префабе, который отображается в сцене
-		public [TurnInfo](../../TacItemMove/TurnInfo) Turn; // Описание возможных поворотов 
+		public TurnInfo Turn; // Описание возможных поворотов 
 		public bool DefaultTurn = true; // По умолчанию обечпечивает поворот по горизонтали на 0, 90, 180, 270 градусов, если нужно переопределить, установите = false
 		public bool AllowTurn = true; // Можно ли поварачивать объект
 
 		public void TurnNext() { ... } // Осуществить следующий поворот
 		public void SetTurn() { ... } // Осуществить текущий поворот, заданный в Turn.CurrentTurn
 		public virtual void SetTurn(TurnType argRotateIndex) { ... } // Осуществить произвольный поворот, передав соответствующий индекс argRotateIndex из списка возможны поворотов TurnType
+	}
+}
+```
+
+# Tac.ItemMove
+
+## ItemCollision
+
+```csharp
+namespace Tac
+{
+	public partial class Item2 : Item
+	{
+		public bool AllowMove = true; // Можно ли перемещать объект
+		public Collider[] Colliders; // Список всех коллайдеро объекта, вызвав InitColliders() вы заполните их автоматически
+		public int GhostId; // Идентификатор, еще не построенного/ не существующего объекта в мире
+
+		public void InitColliders() // Требует инициализации, чтобы собрать в массив Colliders все коллайдеры объекта (включая дочерние объекты)
+		public static Item2 GetItem(GameObject go) // находит сущность в объекте go, если он не имеет компонента Item2 ищет компонент BuildPart, который указывает на главный объект, который содержит Item2
+	}
+}
+```
+
+## ItemBuild
+
+```csharp
+namespace Tac
+{
+	public partial class Item2 : Item
+	{
+		public Vector3 DiscreteStep = Vector3.one; // Определяет шаг дискретности по всем осям, по умолчанию =1, используется при строительстве, позволяя размещать строимые объекты только учитывая дискретную сетку
+		public Vector3 GetDiscrete(Vector3 argValue, XYZ argXYZ) { ... } // Дискретизирует вектор argValue в соответствии с указанными осями argXYZ для которых нужно выполнить дискретизацию
 	}
 }
 ```
