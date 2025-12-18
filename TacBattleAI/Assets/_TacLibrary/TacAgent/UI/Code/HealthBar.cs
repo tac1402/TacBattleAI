@@ -2,14 +2,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(FollowCamera))]
+[RequireComponent(typeof(FollowCameraRotation))]
 public class HealthBar : MonoBehaviour
 {
 	public Image Image;
 	public Text Text;
 
 	public float AnimationSpeed = 1.0f;
-    public bool ShowPercentage = false;
+	public bool ShowText = false;
+	public bool ShowPercentage = false;
     public MaxValue CurrentHealth;
 
 	float finalValue;
@@ -20,7 +21,7 @@ public class HealthBar : MonoBehaviour
 
     void Update()
     {
-        if (Text != null)
+        if (Text != null && ShowText == true)
         {
             if (ShowPercentage)
             {

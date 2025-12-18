@@ -1,10 +1,6 @@
 using UnityEngine;
 
-
-/// <summary>
-/// Поворачивает UI по направлению к камере
-/// </summary>
-public class FollowCamera : MonoBehaviour
+public class FollowCameraRotation : MonoBehaviour
 {
     [SerializeField] Transform target;
 

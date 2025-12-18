@@ -12,7 +12,6 @@ public class StatusBar : MonoBehaviour
 
 	private Renderer renderer;
 
-
 	public void Init()
 	{
 		if (Status != null)
