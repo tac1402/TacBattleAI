@@ -46,7 +46,7 @@ namespace Tac.ItemMove
 		{
 			if (ObjectToPlace != null)
 			{
-				ObjectToPlace.ShowMoveErrorWireframe(argError);
+				ObjectToPlace.ShowError(argError);
 			}
 		}
 

@@ -101,7 +101,7 @@ namespace Tac
 			Wireframe = gameObject.GetComponent<Wireframe.Wireframe>();
 		}
 
-		public void ShowMoveErrorWireframe(bool argIsError)
+		public void ShowError(bool argIsError)
 		{
 			if (Wireframe != null)
 			{

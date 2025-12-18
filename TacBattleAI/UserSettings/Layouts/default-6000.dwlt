@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 43
+    y: 0
     width: 1920
     height: 36
   m_SerializedDataModeController:
@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 676
+    y: 621
     width: 1430
     height: 310
   m_SerializedDataModeController:
@@ -669,7 +669,6 @@ MonoBehaviour:
     - m_Data: 84598
     - m_Data: 84600
     - m_Data: 84602
-    - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -747,8 +746,8 @@ MonoBehaviour:
     - m_Data: 54580
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Women10
-      m_OriginalName: Women10
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -756,10 +755,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 84910
+        m_Data: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 5}
@@ -795,8 +794,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1431
-    y: 79
+    x: 1432
+    y: 24
     width: 488
     height: 907
   m_SerializedDataModeController:
@@ -847,7 +846,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 79
+    y: 24
     width: 518
     height: 571
   m_SerializedDataModeController:
@@ -917,8 +916,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 519
-    y: 79
+    x: 520
+    y: 24
     width: 910
     height: 571
   m_SerializedDataModeController:
@@ -1409,7 +1408,7 @@ MonoBehaviour:
   m_Position:
     m_Target: {x: 801.1519, y: -52.772842, z: 244.92583}
     speed: 2
-    m_Value: {x: 0.2619598, y: 1.3405632, z: -0.0574615}
+    m_Value: {x: 801.1519, y: -52.772842, z: 244.92583}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1457,11 +1456,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.16809197, y: -0.4547093, z: 0.08783089, w: 0.8702161}
     speed: 2
-    m_Value: {x: 0.05125717, y: -0.94814956, z: 0.2038861, w: 0.2383605}
+    m_Value: {x: -0.16809197, y: 0.4547093, z: -0.08783089, w: -0.870216}
   m_Size:
     m_Target: 106.37313
     speed: 2
-    m_Value: 1.9493313
+    m_Value: 106.37313
   m_Ortho:
     m_Target: 0
     speed: 2

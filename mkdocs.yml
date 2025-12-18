@@ -23,6 +23,7 @@ nav:
   - TacWireframe:
     - Wireframe: TacWireframe/Wireframe.md
   - TacItemMove:
+    - TurnInfo: TacItemMove/TurnInfo.md
     - ItemTurn: TacItemMove/ItemTurn.md
     - TopCameraExt: TacItemMove/TopCamera_.md
     - ItemCollision: TacItemMove/ItemCollision.md
