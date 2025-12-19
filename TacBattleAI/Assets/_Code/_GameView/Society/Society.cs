@@ -3,6 +3,7 @@ using UnityEngine;
 
 using Tac;
 using Tac.ItemCreate;
+using Tac.Person;
 
 public partial class Society : MonoBehaviour
 {
@@ -17,6 +18,18 @@ public partial class Society : MonoBehaviour
 		PersonName.LoadName(rnd);
 	}
 
+	public void AddModel()
+	{
+		for (int i = 0; i < MenModel.Count; i++)
+		{
+			ItemCreate.AddModel(MenModel[i]);
+		}
+		for (int i = 0; i < WomenModel.Count; i++)
+		{
+			ItemCreate.AddModel(WomenModel[i]);
+		}
+	}
+
 	public Person CreatePerson(GenderType argGenderType, Vector2_ argPosition)
 	{
 		Person person = null;
@@ -25,7 +38,7 @@ public partial class Society : MonoBehaviour
 			int menIndex = rnd.Next(0, MenModel.Count);
 
 			Item menId = MenModel[menIndex].GetComponent<Item>();
-			GameObject menObj = ItemCreate.CreateObject(menId.ModelName, argPosition.x, argPosition.y, 0);
+			GameObject menObj = ItemCreate.CreateObject(menId.ModelName, argPosition.x, argPosition.y);
 			person = menObj.GetComponent<Person>();
 
 			person.Gender = GenderType.Men;
@@ -35,7 +48,7 @@ public partial class Society : MonoBehaviour
 			int womenIndex = rnd.Next(0, WomenModel.Count);
 
 			Item womenId = WomenModel[womenIndex].GetComponent<Item>();
-			GameObject womenObj = ItemCreate.CreateObject(womenId.ModelName, argPosition.x, argPosition.y, 0);
+			GameObject womenObj = ItemCreate.CreateObject(womenId.ModelName, argPosition.x, argPosition.y);
 			person = womenObj.GetComponent<Person>();
 
 			person.Gender = GenderType.Women;

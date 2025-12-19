@@ -1,0 +1,8 @@
+---
+title: AgentAnimator
+---
+Компонент 
+
+```csharp
+
+```

@@ -729,6 +729,7 @@ GameObject:
   - component: {fileID: 8477437113702721995}
   - component: {fileID: 8910006491366711989}
   - component: {fileID: 173526490624959515}
+  - component: {fileID: -5072691272341041371}
   - component: {fileID: 7263504566743606421}
   - component: {fileID: 3147386940726924503}
   m_Layer: 6
@@ -804,6 +805,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
+--- !u!114 &-5072691272341041371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673473511930260974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ea89b93c6fc2542b7e881458454c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tac.Person.AgentAnimatorPerson
+  IsMove: 0
 --- !u!114 &7263504566743606421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -827,7 +841,11 @@ MonoBehaviour:
   WalkTarget: {x: 0, y: 0, z: 0}
   Path: {fileID: 0}
   SelectionUI: {fileID: 1842323805159265442}
+  TargetId: 0
+  IsBusy: 0
+  UseHealthState: 0
   DebugName: 
+  Gender: 0
 --- !u!136 &3147386940726924503
 CapsuleCollider:
   m_ObjectHideFlags: 0

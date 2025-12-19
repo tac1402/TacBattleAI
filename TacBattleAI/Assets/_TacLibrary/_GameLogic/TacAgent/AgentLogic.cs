@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using Tac.HealthSystem;
 
 namespace Tac.Agent
 {
     public partial class Agent
     {
+
 		/// <summary>
 		/// Место назначения (куда идти)
 		/// </summary>

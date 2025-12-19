@@ -1,3 +1,6 @@
+// Author: Sergej Jakovlev <tac1402@gmail.com>
+// Copyright (C) 2025-26 Sergej Jakovlev
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,12 +66,11 @@ namespace Tac.Agent
 		/// </summary>
 		public Vector3 WalkTarget = Vector3.zero;
 
-		private System.Random rnd;
+		private System.Random rnd = new System.Random();
 
 
-		public void Init(System.Random argRnd)
+		public void Init()
 		{
-			rnd = argRnd;
 			HealthState = new HealthState(rnd);
 			Precision.State = 70;
 			Charge.State = 100;
@@ -89,20 +91,6 @@ namespace Tac.Agent
 			StartCoroutine(Tick());
 		}
 
-		public void Update()
-		{
-			if (agent != null && agent.enabled == true)
-			{
-				if (agent.velocity.magnitude > 0.01f)
-				{
-					agentAnimator.Move();
-				}
-				else
-				{
-					agentAnimator.Stop();
-				}
-			}
-		}
 
 		/// <summary>
 		/// Двигаться к 
@@ -136,9 +124,6 @@ namespace Tac.Agent
 			}
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
 		public void CheckWalkEnd()
 		{
 			if (WalkTarget == Vector3.zero) { return; }

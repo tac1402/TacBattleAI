@@ -14,6 +14,11 @@ namespace Tac.ItemCreate
 		public List<EntityType> WorldLevel;
 
 		/// <summary>
+		/// Настоящая структура террайна, может использоваться .SampleHeight() чтобы получить именно высоту террайна, а не соответствующего слоя
+		/// </summary>
+		public Terrain WorldTerrain;
+
+		/// <summary>
 		/// Все модели 
 		/// </summary>
 		public List<GameObject> Models = new List<GameObject>();
@@ -93,7 +98,8 @@ namespace Tac.ItemCreate
 				// Выставим ему требуемую позицию
 				if (Height == null)
 				{
-					locObject.transform.position = new Vector3(argX, locModel.transform.position.y, argY);
+					float currentHeight = WorldTerrain.SampleHeight(new Vector3(argX, 0, argY));
+					locObject.transform.position = new Vector3(argX, currentHeight +locModel.transform.position.y, argY);
 				}
 				else
 				{
@@ -129,6 +135,11 @@ namespace Tac.ItemCreate
 		public GameObject CreateObject(string argModelName)
 		{
 			return CreateObject(argModelName, 0, 0, null, 0);
+		}
+
+		public GameObject CreateObject(string argModelName, float argX, float argY)
+		{
+			return CreateObject(argModelName, argX, argY, null);
 		}
 
 		public event Change DelayDelete;
