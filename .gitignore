@@ -62,3 +62,5 @@ Install/
 site/
 /TacShootSim/
 /TacShootSimTest/
+
+.hg/
