@@ -14,6 +14,7 @@ nav:
     - ModelTypes: TacStandart/ModelTypes.md
     - Component: TacStandart/Component.md
     - Item2: TacStandart/Item2.md
+    - Vector: TacStandart/Vector.md
   - TacItemCreate:
     - ItemCreate: TacItemCreate/ItemCreate.md
     - EntityType: TacItemCreate/EntityType.md
@@ -29,3 +30,10 @@ nav:
     - TopCameraExt: TacItemMove/TopCamera_.md
     - ItemCollision: TacItemMove/ItemCollision.md
     - ItemBuild: TacItemMove/ItemBuild.md
+  - TacAgent:
+    - Agent: TacAgent/Agent.md
+    - AgentAnimator: TacAgent/AgentAnimator.md
+    - Eye: TacAgent/Eye.md
+  - TacPerson:
+    - Person: TacPerson/Person.md
+    - PersonName: TacPerson/PersonName.md
