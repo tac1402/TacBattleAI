@@ -13,24 +13,6 @@ namespace Tac.Agent
 		public StatusBar StatusBar;
 		public AgentAnimator agentAnimator;
 
-		public float Health
-		{
-			get
-			{
-				float ret = 0;
-				if (HealthState != null) { ret = HealthState.Health; }
-				return ret;
-			}
-		}
-		private HealthState HealthState;
-
-		/// <summary>
-		/// Мертв ли
-		/// </summary>
-		public bool IsDead
-		{
-			get { return Health == 0; }
-		}
 
 		/// <summary>
 		/// Заряд

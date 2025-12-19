@@ -10,7 +10,6 @@ namespace Tac.ItemMove
 	{
 		public List<TurnType> TurnSeq;
 		public List<Vector2> ViewCorrect;
-		public Vector2 TurnSize = Vector2.one;
 		public TurnType CurrentTurn;
 
 		/// <summary>

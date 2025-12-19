@@ -151,8 +151,8 @@ namespace Tac.Camera
                                 bool allowMove = true;
                                 for (int i = 0; i < WorldLimit.Count; i++)
                                 {
-                                    Vector2 p = new Vector2(nextPosition.x, nextPosition.z);
-                                    float d = Vector2.Distance(p, WorldLimit[i].Center);
+                                    Vector2_ p = new Vector2_(nextPosition.x, nextPosition.z);
+                                    float d = Vector2_.Distance(p, WorldLimit[i].Center);
 
                                     if (d >= WorldLimit[i].Radius)
                                     {
@@ -218,12 +218,5 @@ namespace Tac.Camera
     {
         Square,
         Сircle
-    }
-
-    [System.Serializable]
-    public class LimitCircle
-    {
-        public Vector2 Center;
-        public float Radius;
     }
 }
