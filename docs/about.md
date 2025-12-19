@@ -1,5 +1,0 @@
----
-title: About Document
----
-
-# About
