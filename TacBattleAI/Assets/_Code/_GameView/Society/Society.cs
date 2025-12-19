@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Tac;
 using Tac.ItemCreate;
-using Tac.DConvert;
 
 public partial class Society : MonoBehaviour
 {
@@ -24,8 +24,8 @@ public partial class Society : MonoBehaviour
 		{
 			int menIndex = rnd.Next(0, MenModel.Count);
 
-			PrefabId menId = MenModel[menIndex].GetComponent<PrefabId>();
-			GameObject menObj = ItemCreate.CreateObject(menId.PrefabName, argPosition.x, argPosition.y, 0);
+			Item menId = MenModel[menIndex].GetComponent<Item>();
+			GameObject menObj = ItemCreate.CreateObject(menId.ModelName, argPosition.x, argPosition.y, 0);
 			person = menObj.GetComponent<Person>();
 
 			person.Gender = GenderType.Men;
@@ -34,8 +34,8 @@ public partial class Society : MonoBehaviour
 		{
 			int womenIndex = rnd.Next(0, WomenModel.Count);
 
-			PrefabId womenId = WomenModel[womenIndex].GetComponent<PrefabId>();
-			GameObject womenObj = ItemCreate.CreateObject(womenId.PrefabName, argPosition.x, argPosition.y, 0);
+			Item womenId = WomenModel[womenIndex].GetComponent<Item>();
+			GameObject womenObj = ItemCreate.CreateObject(womenId.ModelName, argPosition.x, argPosition.y, 0);
 			person = womenObj.GetComponent<Person>();
 
 			person.Gender = GenderType.Women;
