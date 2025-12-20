@@ -1,0 +1,8 @@
+---
+title: AgentLogic
+---
+Компонент 
+
+```csharp
+
+```

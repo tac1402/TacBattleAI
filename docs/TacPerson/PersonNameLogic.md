@@ -1,0 +1,8 @@
+---
+title: PersonNameLogic
+---
+Компонент 
+
+```csharp
+
+```

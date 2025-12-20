@@ -34,6 +34,7 @@ nav:
     - ItemBuild: TacItemMove/ItemBuild.md
   - TacAgent:
     - Agent: TacAgent/Agent.md
+    - AgentLogic: TacAgent/AgentLogic.md
     - AgentAnimator: TacAgent/AgentAnimator.md
     - Eye: TacAgent/Eye.md
   - TacHealth:
@@ -42,5 +43,7 @@ nav:
     - VitalSystems: TacHealth/VitalSystems.md
     - HealthState: TacHealth/HealthState.md
   - TacPerson:
+    - PersonLogic: TacPerson/PersonLogic.md
     - Person: TacPerson/Person.md
+    - PersonNameLogic: TacPerson/PersonNameLogic.md
     - PersonName: TacPerson/PersonName.md

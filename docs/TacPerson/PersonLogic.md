@@ -1,0 +1,8 @@
+---
+title: PersonLogic
+---
+Компонент 
+
+```csharp
+
+```
