@@ -1,0 +1,8 @@
+---
+title: HealthState
+---
+Компонент 
+
+```csharp
+
+```

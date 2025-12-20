@@ -36,6 +36,11 @@ nav:
     - Agent: TacAgent/Agent.md
     - AgentAnimator: TacAgent/AgentAnimator.md
     - Eye: TacAgent/Eye.md
+  - TacHealth:
+    - BodyParts: TacHealth/BodyParts.md
+    - PhysicalSkill: TacHealth/PhysicalSkill.md
+    - VitalSystems: TacHealth/VitalSystems.md
+    - HealthState: TacHealth/HealthState.md
   - TacPerson:
     - Person: TacPerson/Person.md
     - PersonName: TacPerson/PersonName.md

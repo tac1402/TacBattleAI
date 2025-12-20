@@ -94,7 +94,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 337
-    height: 656
+    height: 661
   m_MinSize: {x: 201, y: 226}
   m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 16}
@@ -118,9 +118,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 656
+    y: 661
     width: 1431
-    height: 277
+    height: 272
   m_MinSize: {x: 231, y: 276}
   m_MaxSize: {x: 10001, y: 10026}
   m_ActualView: {fileID: 14}
@@ -246,7 +246,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1431
-    height: 656
+    height: 661
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
@@ -270,7 +270,7 @@ MonoBehaviour:
     x: 337
     y: 0
     width: 1094
-    height: 656
+    height: 661
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 17}
@@ -606,9 +606,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 680
+    y: 685
     width: 1430
-    height: 251
+    height: 246
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -633,7 +633,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_TacLibrary/TacCamera/_DLL
+    - Assets/_TacLibrary/TacStandart/Code
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -643,18 +643,18 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_TacLibrary/TacCamera/_DLL
+  - Assets/_TacLibrary/TacStandart/Code
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 241}
+    scrollPos: {x: 0, y: 379}
     m_SelectedIDs:
-    - m_Data: 85086
+    - m_Data: 93538
     m_LastClickedID:
-      m_Data: 85086
+      m_Data: 93538
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 93234
@@ -673,6 +673,10 @@ MonoBehaviour:
     - m_Data: 93260
     - m_Data: 93262
     - m_Data: 93264
+    - m_Data: 93266
+    - m_Data: 93268
+    - m_Data: 93270
+    - m_Data: 93272
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -721,6 +725,10 @@ MonoBehaviour:
     - m_Data: 93260
     - m_Data: 93262
     - m_Data: 93264
+    - m_Data: 93266
+    - m_Data: 93268
+    - m_Data: 93270
+    - m_Data: 93272
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -748,9 +756,9 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: 91660
-    m_LastClickedInstanceID: 91660
-    m_HadKeyboardFocusLastEvent: 0
+    - m_Data: 37510
+    m_LastClickedInstanceID: 37510
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 54580
     m_RenameOverlay:
@@ -857,7 +865,7 @@ MonoBehaviour:
     x: 0
     y: 24
     width: 336
-    height: 630
+    height: 635
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -878,10 +886,7 @@ MonoBehaviour:
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -211796
-      - m_Data: -1296
-      - m_Data: 46340
-      - m_Data: 47104
+      - m_Data: -1294
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -931,7 +936,7 @@ MonoBehaviour:
     x: 338
     y: 24
     width: 1092
-    height: 630
+    height: 635
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0

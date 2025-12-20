@@ -1,0 +1,8 @@
+---
+title: PhysicalSkill
+---
+Компонент 
+
+```csharp
+
+```

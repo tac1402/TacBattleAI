@@ -1,0 +1,8 @@
+---
+title: BodyParts
+---
+Компонент 
+
+```csharp
+
+```

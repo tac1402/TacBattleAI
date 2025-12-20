@@ -1,0 +1,8 @@
+---
+title: VitalSystems
+---
+Компонент 
+
+```csharp
+
+```
