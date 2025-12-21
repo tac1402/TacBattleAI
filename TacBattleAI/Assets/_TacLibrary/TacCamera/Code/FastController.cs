@@ -74,8 +74,13 @@ namespace Tac.Camera
                 Speed.y = ZoomY + ZoomChangeY;
             }
 
-            float currentHeight = WorldTerrain.SampleHeight(transform.position);
-            transform.position = new Vector3(transform.localPosition.x, Speed.y + currentHeight, transform.localPosition.z);
+
+            float currentHeight = 0;
+            if (WorldTerrain != null)
+            {
+				currentHeight = WorldTerrain.SampleHeight(transform.position);
+			}
+			transform.position = new Vector3(transform.localPosition.x, Speed.y + currentHeight, transform.localPosition.z);
 
             if (light != null)
             {
