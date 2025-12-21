@@ -1,13 +1,19 @@
-[System.Serializable]
-public class LimitCircle
-{
-	public Vector2_ Center;
-	public float Radius;
+// Author: Sergej Jakovlev <tac1402@gmail.com>
+// Copyright (C) 2024 Sergej Jakovlev
 
-	public LimitCircle() { }
-	public LimitCircle(Vector2_ argCenter, float argRadius)
+namespace Tac
+{
+	[System.Serializable]
+	public class LimitCircle
 	{
-		Center = argCenter;
-		Radius = argRadius;
+		public Vector2_ Center;
+		public float Radius;
+
+		public LimitCircle() { }
+		public LimitCircle(Vector2_ argCenter, float argRadius)
+		{
+			Center = argCenter;
+			Radius = argRadius;
+		}
 	}
 }

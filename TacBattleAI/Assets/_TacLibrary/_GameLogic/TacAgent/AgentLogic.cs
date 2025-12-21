@@ -15,6 +15,11 @@ namespace Tac.Agent
 		/// </summary>
 		public bool IsBusy = false;
 
+		/// <summary>
+		/// Где находится
+		/// </summary>
+		public int LocatedId = 0;
+
 
 		public bool UseHealthState = false;
 
