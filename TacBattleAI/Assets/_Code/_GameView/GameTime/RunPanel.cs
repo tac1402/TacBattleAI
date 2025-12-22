@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using Tac;
+using Tac.Society;
 
 public class RunPanel : MonoBehaviour
 {

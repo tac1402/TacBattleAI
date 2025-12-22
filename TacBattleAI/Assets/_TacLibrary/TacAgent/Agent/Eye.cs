@@ -1,5 +1,6 @@
 // Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2018-24 Sergej Jakovlev
+
 // You can use this code for educational purposes only;
 // this code or its modifications cannot be used for commercial purposes
 // or in proprietary libraries without permission from the author
