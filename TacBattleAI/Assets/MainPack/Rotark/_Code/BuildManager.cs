@@ -16,7 +16,7 @@ public class BuildManager : MonoBehaviour
 		for (int i = 0; i < allBuilding.Length; i++)
 		{
 			//allBuilding[i].ModelIndex = rnd.Next(0, AllModel.Count);
-			allBuilding[i].ChangeModel();
+			allBuilding[i].ChangeModel(AllModel[allBuilding[i].ModelIndex].model);
 		}
 
 	}
@@ -26,6 +26,5 @@ public class BuildManager : MonoBehaviour
 [Serializable]
 public class BuildModel
 {
-	public Mesh mesh;
-	public Material material;
+	public GameObject model;
 }

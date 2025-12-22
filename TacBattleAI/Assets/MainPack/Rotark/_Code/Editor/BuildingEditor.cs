@@ -29,7 +29,7 @@ public class BuildingPackEditor : Editor
         {
             for (int i = 0; i < CurrentBuilding.Length; i++)
             {
-                CurrentBuilding[i].ChangeModel();
+                //CurrentBuilding[i].ChangeModel();
                 UnityEditor.EditorUtility.SetDirty(CurrentBuilding[i]);
             }
         }
