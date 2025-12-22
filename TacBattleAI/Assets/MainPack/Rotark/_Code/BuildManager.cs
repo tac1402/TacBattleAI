@@ -13,11 +13,22 @@ public class BuildManager : MonoBehaviour
 		System.Random rnd = new System.Random();
 		BuildingChange[] allBuilding = GetComponentsInChildren<BuildingChange>();
 
-		for (int i = 0; i < allBuilding.Length; i++)
+		//int i = 0;
+		
+		/*for (int i = 0; i < allBuilding.Length; i++)
 		{
 			//allBuilding[i].ModelIndex = rnd.Next(0, AllModel.Count);
 			allBuilding[i].ChangeModel(AllModel[allBuilding[i].ModelIndex].model);
-		}
+		}*/
+
+		/*for (int i = 0; i < allBuilding.Length; i++)
+		{
+			if (allBuilding[i].ModelIndex == 100)
+			{
+				DestroyImmediate(allBuilding[i].gameObject);
+			}
+		}*/
+
 
 	}
 

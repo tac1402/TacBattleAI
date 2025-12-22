@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using Tac.Society;
 using Tac;
+using Tac.Society;
+using UnityEditor;
+using UnityEngine;
 
 public class BuildingChange : MonoBehaviour
 {
@@ -37,14 +38,14 @@ public class BuildingChange : MonoBehaviour
 		//DestroyImmediate(locBoxCollider);
 
 		//gameObject.AddComponent<Business>();
-		
+		/*
 		MeshFilter locMeshFilter = gameObject.GetComponent<MeshFilter>();
 		MeshRenderer locMeshRenderer = gameObject.GetComponent<MeshRenderer>();
 		MeshCollider meshCollider = gameObject.GetComponent<MeshCollider>();
 
 		GameObject newObject = Instantiate(argObject);
-		newObject.transform.parent = main.transform;
-
+		newObject.transform.parent = transform;
+		*/
 		/*
 		GameObject pivot = new GameObject("Pivot");
 		pivot.transform.parent = transform;
@@ -69,9 +70,34 @@ public class BuildingChange : MonoBehaviour
 		item2.GroupId = 2;
 		*/
 
-		DestroyImmediate(locMeshFilter);
-		DestroyImmediate(locMeshRenderer);
-		DestroyImmediate(meshCollider);
+		/*BuildingChange change = GetComponent<BuildingChange>();
+
+		GameObject obj = PrefabUtility.InstantiatePrefab(argObject, gameObject.transform.parent) as GameObject;
+		obj.name = gameObject.name;
+
+		obj.transform.localPosition = transform.localPosition;
+		obj.transform.localRotation = transform.localRotation;
+		obj.transform.localScale = transform.localScale;
+
+		BuildingChange change2 = obj.GetComponent<BuildingChange>();
+
+		change2.ModelIndex = change.ModelIndex;
+
+		change.ModelIndex = 100;*/
+
+		/*Business b = GetComponent<Business>();
+		BoxCollider bc = GetComponent<BoxCollider>();
+
+		if (bc != null)
+		{
+			DestroyImmediate(b);
+			DestroyImmediate(bc);
+		}*/
+
+
+
+		//DestroyImmediate(locMeshRenderer);
+		//DestroyImmediate(meshCollider);
 
 	}
 
