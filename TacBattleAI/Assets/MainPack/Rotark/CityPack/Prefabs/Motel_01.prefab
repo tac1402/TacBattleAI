@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8189796783864729377}
   - component: {fileID: 2077015702762641160}
   - component: {fileID: 5011564114395522389}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Motel_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 413338273679517980}
   - component: {fileID: -3683933300371452420}
   - component: {fileID: 8427512330610154296}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Motel_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7487160920484257071}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4114504269126896188}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}

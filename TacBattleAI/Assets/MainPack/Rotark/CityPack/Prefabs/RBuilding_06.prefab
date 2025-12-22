@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2326066279589264189}
   - component: {fileID: -8783626021781793594}
   - component: {fileID: 3003273097095946584}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RBuilding_06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5142053463664896307}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 7903256032346120929}
   - component: {fileID: 5607535584886428213}
   - component: {fileID: 1710461827768782020}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RBuilding_06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6303091313160238666}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
