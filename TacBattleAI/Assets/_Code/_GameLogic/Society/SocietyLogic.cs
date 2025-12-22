@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Tac;
+using Tac.Agent;
 using Tac.Person;
 using Tac.Society;
 
@@ -11,10 +12,28 @@ public partial class Society
 	/// Все персонажи в игре
 	/// </summary>
 	public Dictionary<int, Person> People = new Dictionary<int, Person>();
+	/// <summary>
+	/// Планы персонажей на игровой день
+	/// </summary>
+	public Dictionary<int, PersonPlan> PersonPlans = new Dictionary<int, PersonPlan>();
+
 
 	public PeopleTable peopleTable = new PeopleTable();
 
 	private PersonName PersonName = new PersonName();
+	private System.Random rnd = new System.Random();
+
+
+	public void CreateDayPlan()
+	{
+		foreach (var plan in PersonPlans.Values)
+		{
+			plan.DayPlan.Clear();
+
+			int pointIndex = rnd.Next(0, allPoints.Length);
+			plan.Add(allPoints[pointIndex]);
+		}
+	}
 
 
 	public List<Person> AddPeople(int argCount, Rect_ argLocation, bool IsFamily = true)

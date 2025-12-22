@@ -1,9 +1,10 @@
 using System.Collections.Generic;
-using UnityEngine;
-
 using Tac;
+using Tac.Agent;
 using Tac.ItemCreate;
 using Tac.Person;
+using Tac.Society;
+using UnityEngine;
 
 public partial class Society : MonoBehaviour
 {
@@ -11,11 +12,12 @@ public partial class Society : MonoBehaviour
 	public List<GameObject> WomenModel;
 	public ItemCreate ItemCreate;
 
-	private System.Random rnd = new System.Random();
+	private AgentPoint[] allPoints;
 
 	public void Init()
 	{
 		PersonName.LoadName(rnd);
+		allPoints = GetComponentsInChildren<Business>();
 	}
 
 	public void AddModel()
@@ -55,4 +57,7 @@ public partial class Society : MonoBehaviour
 		}
 		return person;
 	}
+
+
+
 }

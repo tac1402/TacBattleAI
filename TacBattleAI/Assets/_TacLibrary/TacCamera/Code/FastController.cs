@@ -130,9 +130,13 @@ namespace Tac.Camera
 
                         Vector3 nextPosition = transform.rotation * newPosition2 + transform.position;
 
-                        float y = WorldTerrain.SampleHeight(nextPosition);
+						float y = 0;
+						if (WorldTerrain != null)
+                        {
+							y = WorldTerrain.SampleHeight(nextPosition);
+						}
 
-                        if (UseLimit == true)
+						if (UseLimit == true)
                         {
                             if (Limit == LimitType.Square)
                             {

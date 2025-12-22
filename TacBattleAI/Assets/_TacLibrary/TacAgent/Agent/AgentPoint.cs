@@ -92,8 +92,7 @@ namespace Tac.Agent
 
 		private void CheckEnter()
 		{
-			Collider[] c = Physics.OverlapBox(Point.transform.position,
-												EnterSize / 2f, Quaternion.identity, AgentLayer);
+			//Collider[] c = Physics.OverlapBox(Point.transform.position, EnterSize / 2f, Quaternion.identity, AgentLayer);
 			/*for (int j = 0; j < c.Length; j++)
 			{
 				TimeSpan timeEnter = WorkingFrom.Subtract(new TimeSpan(1, 0, 0));

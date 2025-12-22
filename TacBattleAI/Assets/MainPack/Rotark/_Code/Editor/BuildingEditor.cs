@@ -5,19 +5,19 @@ using UnityEditor;
 using UnityEngine;
 
 
-[CustomEditor(typeof(Building2))]
+[CustomEditor(typeof(BuildingChange))]
 [CanEditMultipleObjects]
 public class BuildingPackEditor : Editor
 {
-    private static Building2[] CurrentBuilding;
+    private static BuildingChange[] CurrentBuilding;
 
-    public static Building2 conv(object argObject)
+    public static BuildingChange conv(object argObject)
     {
-        return argObject as Building2;
+        return argObject as BuildingChange;
     }
     public virtual void OnEnable()
     {
-        CurrentBuilding = Array.ConvertAll(targets, new Converter<object, Building2>(conv));
+        CurrentBuilding = Array.ConvertAll(targets, new Converter<object, BuildingChange>(conv));
     }
 
     public override void OnInspectorGUI()

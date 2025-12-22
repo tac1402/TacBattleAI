@@ -11,11 +11,11 @@ public class BuildManager : MonoBehaviour
 	public void Create()
 	{
 		System.Random rnd = new System.Random();
-		Building2[] allBuilding = GetComponentsInChildren<Building2>();
+		BuildingChange[] allBuilding = GetComponentsInChildren<BuildingChange>();
 
 		for (int i = 0; i < allBuilding.Length; i++)
 		{
-			allBuilding[i].ModelIndex = rnd.Next(0, AllModel.Count);
+			//allBuilding[i].ModelIndex = rnd.Next(0, AllModel.Count);
 			allBuilding[i].ChangeModel();
 		}
 

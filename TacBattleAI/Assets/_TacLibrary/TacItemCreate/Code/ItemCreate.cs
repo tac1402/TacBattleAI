@@ -98,7 +98,11 @@ namespace Tac.ItemCreate
 				// Выставим ему требуемую позицию
 				if (Height == null)
 				{
-					float currentHeight = WorldTerrain.SampleHeight(new Vector3(argX, 0, argY));
+					float currentHeight = 0;
+					if (WorldTerrain != null)
+					{
+						currentHeight = WorldTerrain.SampleHeight(new Vector3(argX, 0, argY));
+					}
 					locObject.transform.position = new Vector3(argX, currentHeight +locModel.transform.position.y, argY);
 				}
 				else

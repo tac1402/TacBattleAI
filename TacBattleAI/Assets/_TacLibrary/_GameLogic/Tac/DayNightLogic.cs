@@ -1,3 +1,6 @@
+// Author: Sergej Jakovlev <tac1402@gmail.com>
+// Copyright (C) 2025-26 Sergej Jakovlev
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,14 +28,6 @@ namespace Tac
 		private TimeMode timeMode;
 
 
-		/// <summary>
-		/// Текущие время
-		/// </summary>
-		public float CurrentTime = 6.0f;
-		/// <summary>
-		/// Текущие сутки (номер)
-		/// </summary>
-		public int CurrentDay = 1;
 
 		/// <summary>
 		/// Прошел час
@@ -94,6 +89,15 @@ namespace Tac
 
 
 #if OnlyLogic
+
+		/// <summary>
+		/// Текущие время
+		/// </summary>
+		public float currentTime = 6.0f;
+		/// <summary>
+		/// Текущие сутки (номер)
+		/// </summary>
+		public int currentDay = 1;
 
 		public void Tick(int argTickCount)
 		{
