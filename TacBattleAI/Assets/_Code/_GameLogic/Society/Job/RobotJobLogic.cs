@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tac.Agent;
 
 namespace Tac.Society
 {
@@ -15,59 +16,44 @@ namespace Tac.Society
 
 		private void NextHour(GameTime argGameTime)
 		{
-			//CheckAgent();
+			CheckAgent(argGameTime);
 		}
 
 
 		bool isDayPlanCreated = false;
-		/*private void CheckAgent()
+		private void CheckAgent(GameTime argGameTime)
 		{
-			bool allBusy = true;
-			foreach (var plan in AgentPlans)
+			if (argGameTime.Hour >= 6 && argGameTime.Hour <= 7 && isDayPlanCreated == true)
 			{
-				if (plan.Value.Person.IsBusy == false)
-				{
-					allBusy = false;
-					break;
-				}
+				isDayPlanCreated = false;
 			}
-			if (allBusy)
+
+			// Строим план на сутки в 7.00
+			if (argGameTime.Hour >= 7 && argGameTime.Hour <= 8 && isDayPlanCreated == false)
 			{
-				DayNightController.TimeMode = TimeMode.Fast;
+				CreateDayPlan();
+				isDayPlanCreated = true;
 			}
-			else
+
+			foreach (var plan in PersonPlans.Values)
 			{
-				DayNightController.TimeMode = TimeMode.Normal;
-
-				if (DayNightController.Time >= new TimeSpan(6, 0, 0) && DayNightController.Time <= new TimeSpan(7, 0, 0) && isDayPlanCreated == true)
+				if (plan.Person.IsBusy == false)
 				{
-					isDayPlanCreated = false;
-				}
-
-				// Строим план на сутки в 7.00
-				if (DayNightController.Time >= new TimeSpan(7, 0, 0) && DayNightController.Time <= new TimeSpan(8, 0, 0) && isDayPlanCreated == false)
-				{
-					CreateDayPlan();
-					isDayPlanCreated = true;
-				}
-
-
-
-				foreach (var plan in AgentPlans.Values)
-				{
-					if (plan.Person.IsBusy == false)
+					AgentPoint agentPoint = plan.Remove();
+					if (agentPoint != null)
 					{
-						AgentPoint agentPoint = plan.Remove();
-						if (agentPoint != null)
+						/*if (agentPoint.ObjectId == 3)
 						{
-							plan.Person.TargetId = agentPoint.Id;
-							plan.Person.Walk(agentPoint.PointPosition);
-							plan.Person.IsBusy = true;
-						}
+							int a = 1;
+						}*/
+
+						plan.Person.TargetId = agentPoint.ObjectId;
+						plan.Person.Walk(agentPoint.PointPosition);
+						plan.Person.IsBusy = true;
+						plan.Person.LocatedId = -1;
 					}
 				}
 			}
-		}*/
-
+		}
 	}
 }

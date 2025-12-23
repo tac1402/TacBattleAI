@@ -64,7 +64,7 @@ MonoBehaviour:
   ModelName: OBuilding_04
   ModelType: 0
   Size: {x: 10, y: 3, z: 10}
-  Point: {fileID: 0}
+  Point: {fileID: 7684236116083493397}
   TruckPoint: {fileID: 0}
   EnterSize: {x: 2, y: 2, z: 2}
   HideAgent: 1
@@ -75,7 +75,7 @@ MonoBehaviour:
   TruckLayer:
     serializedVersion: 2
     m_Bits: 0
-  WorkingHours: {x: 0, y: 0}
+  WorkingHours: {x: 8, y: 18}
   Title: 
   Info: 
 --- !u!1 &433190522756673112
@@ -252,5 +252,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1895080086967309597}
+  - {fileID: 7757217320536351981}
   m_Father: {fileID: 1691705186571674678}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7684236116083493397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7757217320536351981}
+  m_Layer: 7
+  m_Name: EnterPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7757217320536351981
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7684236116083493397}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 140997658762953539}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

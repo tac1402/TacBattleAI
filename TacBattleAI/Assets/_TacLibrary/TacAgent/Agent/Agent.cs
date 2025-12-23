@@ -45,7 +45,7 @@ namespace Tac.Agent
 		/// <summary>
 		/// Цель движения агента, если он движется
 		/// </summary>
-		public Vector3 WalkTarget = Vector3.zero;
+		public Vector3_ WalkTarget = Vector3_.zero;
 
 		private System.Random rnd = new System.Random();
 
@@ -76,19 +76,19 @@ namespace Tac.Agent
 		/// <summary>
 		/// Двигаться к 
 		/// </summary>
-		public void Walk(Vector3 argTarget, float stoppingDistance = 0.1f)
+		public void Walk(Vector3_ argTarget, float stoppingDistance = 0.1f)
 		{
 			NavMeshHit hit;
-			if (NavMesh.SamplePosition(argTarget, out hit, 100.0f, NavMesh.AllAreas))
+			if (NavMesh.SamplePosition(argTarget.To(), out hit, 100.0f, NavMesh.AllAreas))
 			{
-				argTarget = hit.position;
+				argTarget.From(hit.position);
 			}
 
 			if (agent.destination.To2() != argTarget.To2() /*&& IsDead == false*/)
 			{
 				agent.stoppingDistance = stoppingDistance;
 				WalkTarget = argTarget;
-				agent.SetDestination(argTarget);
+				agent.SetDestination(argTarget.To());
 				if (agent.isStopped)
 				{
 					agent.isStopped = false;
@@ -107,13 +107,13 @@ namespace Tac.Agent
 
 		public void CheckWalkEnd()
 		{
-			if (WalkTarget == Vector3.zero) { return; }
+			if (WalkTarget == Vector3_.zero) { return; }
 
-			float d = Vector3.Distance(transform.position, WalkTarget);
+			float d = Vector3.Distance(transform.position, WalkTarget.To());
 			if (d < 1.0)
 			{
 				agent.isStopped = true;
-				WalkTarget = Vector3.zero;
+				WalkTarget = Vector3_.zero;
 				if (OnWalkEnd != null)
 				{
 					OnWalkEnd(this);

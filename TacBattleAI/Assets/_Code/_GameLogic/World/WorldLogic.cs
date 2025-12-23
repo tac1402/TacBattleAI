@@ -68,14 +68,14 @@ public partial class World
 		//people1[0].Age = 18;
 		//people1[0].ResidencePlace = Dorm;
 		//people1[0].LearningPlace = School;
-		//Society.AddAgentPlan(people1[0], true);
+		Society.AddAgentPlan(people1[0], true);
 		List<Person> people2 = Society.AddPeople(9, new Rect_(3400, 2920, 3420, 2940), false);
 		foreach (Person person in people2)
 		{
 			//person.Age = 18;
 			//person.ResidencePlace = Dorm;
 			//person.LearningPlace = School;
-			//Society.AddAgentPlan(person);
+			Society.AddAgentPlan(person);
 		}
 
 		/*foreach (var item in AllLandlot)

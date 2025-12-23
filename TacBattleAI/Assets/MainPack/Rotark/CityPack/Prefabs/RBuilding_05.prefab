@@ -142,7 +142,39 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9198218222449359801}
+  - {fileID: 4821382920100265174}
   m_Father: {fileID: 5910559285529033668}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2011825657216799024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4821382920100265174}
+  m_Layer: 7
+  m_Name: EnterPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4821382920100265174
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011825657216799024}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5902008134760800962}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2661994169556932180
 GameObject:
@@ -208,7 +240,7 @@ MonoBehaviour:
   ModelName: RBuilding_05
   ModelType: 0
   Size: {x: 10, y: 3, z: 10}
-  Point: {fileID: 0}
+  Point: {fileID: 2011825657216799024}
   TruckPoint: {fileID: 0}
   EnterSize: {x: 2, y: 2, z: 2}
   HideAgent: 1
@@ -219,7 +251,7 @@ MonoBehaviour:
   TruckLayer:
     serializedVersion: 2
     m_Bits: 0
-  WorkingHours: {x: 0, y: 0}
+  WorkingHours: {x: 8, y: 18}
   Title: 
   Info: 
 --- !u!1 &7964272631540448953

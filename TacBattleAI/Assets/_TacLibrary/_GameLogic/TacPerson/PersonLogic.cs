@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Tac.Agent;
+using Tac.Society;
 
 namespace Tac.Person
 { 
@@ -23,6 +24,72 @@ namespace Tac.Person
 		{
 			Stats.Add("Health", 100);
 		}
+
+		#region Places
+
+		/// <summary>
+		/// Место работы
+		/// </summary>
+		public Business WorkPlace
+		{
+			get { return (GetPlace("Work") as Business); }
+			set { SetPlace("Work", value); }
+		}
+
+		/// <summary>
+		/// Место жительства
+		/// </summary>
+		public AgentPoint ResidencePlace
+		{
+			get { return GetPlace("Residence"); }
+			set { SetPlace("Residence", value); }
+		}
+		/// <summary>
+		/// Место для обучения
+		/// </summary>
+		public AgentPoint LearningPlace
+		{
+			get { return GetPlace("Learning"); }
+			set { SetPlace("Learning", value); }
+		}
+		/// <summary>
+		/// Место для прогулок
+		/// </summary>
+		public AgentPoint CenterPlace
+		{
+			get { return GetPlace("Center"); }
+			set { SetPlace("Center", value); }
+		}
+
+		/// <summary>
+		/// Места интереса
+		/// </summary>
+		public Dictionary<string, AgentPoint> Places = new Dictionary<string, AgentPoint>();
+
+		private void SetPlace(string argKey, AgentPoint argPlace)
+		{
+			if (Places.ContainsKey(argKey))
+			{
+				Places[argKey] = argPlace;
+			}
+			else
+			{
+				Places.Add(argKey, argPlace);
+			}
+		}
+		private AgentPoint GetPlace(string argKey)
+		{
+			AgentPoint ret = null;
+			if (Places.ContainsKey(argKey))
+			{
+				ret = Places[argKey];
+			}
+			return ret;
+		}
+
+		#endregion
+
+
 
 #if OnlyLogic
 		public void Init() 

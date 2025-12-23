@@ -30,6 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2104398236334561593}
+  - {fileID: 5178558713377191252}
   m_Father: {fileID: 176553261583071900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4664809909544982901
@@ -176,6 +177,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10.871798, y: 7.7975225, z: 9.41163}
   m_Center: {x: 0, y: 3.8987613, z: 1.2866296}
+--- !u!1 &6852702154304799760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5178558713377191252}
+  m_Layer: 7
+  m_Name: EnterPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5178558713377191252
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6852702154304799760}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4746492919485636628}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7674863563708117942
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +272,7 @@ MonoBehaviour:
   ModelName: RBuilding_04
   ModelType: 0
   Size: {x: 10, y: 3, z: 10}
-  Point: {fileID: 0}
+  Point: {fileID: 6852702154304799760}
   TruckPoint: {fileID: 0}
   EnterSize: {x: 2, y: 2, z: 2}
   HideAgent: 1
@@ -251,6 +283,6 @@ MonoBehaviour:
   TruckLayer:
     serializedVersion: 2
     m_Bits: 0
-  WorkingHours: {x: 0, y: 0}
+  WorkingHours: {x: 8, y: 18}
   Title: 
   Info: 

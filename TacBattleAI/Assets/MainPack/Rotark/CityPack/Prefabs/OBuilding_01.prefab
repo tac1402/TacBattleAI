@@ -144,6 +144,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.747164, y: 9.782576, z: 9.273619}
   m_Center: {x: 0, y: 4.891288, z: 0.45888376}
+--- !u!1 &6197657940752526085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8269732073268095299}
+  m_Layer: 7
+  m_Name: EnterPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8269732073268095299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6197657940752526085}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.5, y: 1, z: 6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3244358246917071243}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7747304998621015086
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +205,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1353918958269311093}
+  - {fileID: 8269732073268095299}
   m_Father: {fileID: 4003247816956964822}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8576294685000717922
@@ -240,7 +272,7 @@ MonoBehaviour:
   ModelName: OBuilding_01
   ModelType: 0
   Size: {x: 10, y: 3, z: 10}
-  Point: {fileID: 0}
+  Point: {fileID: 6197657940752526085}
   TruckPoint: {fileID: 0}
   EnterSize: {x: 2, y: 2, z: 2}
   HideAgent: 1
@@ -251,6 +283,6 @@ MonoBehaviour:
   TruckLayer:
     serializedVersion: 2
     m_Bits: 0
-  WorkingHours: {x: 0, y: 0}
+  WorkingHours: {x: 8, y: 18}
   Title: 
   Info: 

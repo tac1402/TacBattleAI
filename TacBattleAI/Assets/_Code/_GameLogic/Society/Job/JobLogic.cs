@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Tac.Person;
+using Unity.VisualScripting;
 
 namespace Tac.Society
 {
@@ -19,6 +20,17 @@ namespace Tac.Society
 		public void AddPersonPlan(Person.Person argPerson)
 		{
 			PersonPlans.Add(argPerson.ObjectId, new PersonPlan(argPerson));
+		}
+
+
+		public void CreateDayPlan()
+		{
+			foreach (var plan in PersonPlans.Values)
+			{
+				plan.DayPlan.Clear();
+
+				plan.Add(plan.Person.WorkPlace);
+			}
 		}
 
 

@@ -12,7 +12,7 @@ namespace Tac.Society
 		public List<GameObject> WomenModel;
 		public ItemCreate.ItemCreate ItemCreate;
 
-		private AgentPoint[] allPoints;
+		private Business[] allPoints;
 
 		public void Init()
 		{
@@ -28,6 +28,16 @@ namespace Tac.Society
 			PersonName.LoadName(rnd);
 			allPoints = GetComponentsInChildren<Business>();
 		}
+
+		public void InitWorkPlace()
+		{
+			foreach (Person.Person p in People.Values)
+			{
+				int pointIndex = rnd.Next(0, allPoints.Length);
+				p.WorkPlace = allPoints[pointIndex];
+			}
+		}
+
 		public void NextHour(GameTime argGameTime)
 		{
 			/*ChangeSalaryDeficit();

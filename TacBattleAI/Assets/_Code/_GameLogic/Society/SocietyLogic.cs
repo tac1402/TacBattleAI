@@ -29,16 +29,6 @@ namespace Tac.Society
 		private System.Random rnd = new System.Random();
 
 
-		public void CreateRobotDayPlan()
-		{
-			foreach (var plan in RobotJob.PersonPlans.Values)
-			{
-				plan.DayPlan.Clear();
-
-				int pointIndex = rnd.Next(0, allPoints.Length);
-				plan.Add(allPoints[pointIndex]);
-			}
-		}
 
 		public void AddAgentPlan(Person.Person argAgent, bool IsPlayer = false)
 		{

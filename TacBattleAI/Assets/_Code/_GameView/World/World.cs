@@ -36,7 +36,8 @@ public partial class World : MonoBehaviour
 		//GameObject rock = ItemCreate.CreateObject("Rock_A", 490, 485, 12);
 
 		CreateWorld();
-		Society.CreateRobotDayPlan();
+		Society.InitWorkPlace();
+		Society.RobotJob.CreateDayPlan();
 
 		RunPanel.Init(DayNight, Society);
 
