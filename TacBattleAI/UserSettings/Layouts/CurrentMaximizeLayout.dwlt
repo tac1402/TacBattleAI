@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 2058
+  controlID: 10247
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 2002
+  controlID: 10248
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 1992
+  controlID: 10249
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -253,6 +253,10 @@ MonoBehaviour:
         m_Data: 0
       m_ExpandedIDs:
       - m_Data: -1294
+      - m_Data: 47680
+      - m_Data: 60000
+      - m_Data: 60682
+      - m_Data: 61548
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -817,9 +821,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 3461.1511, y: 11.619186, z: 2812.796}
+    m_Target: {x: 4090.146, y: 437.66907, z: 3439.0828}
     speed: 2
-    m_Value: {x: 3461.1511, y: 11.619186, z: 2812.796}
+    m_Value: {x: 4090.146, y: 437.66907, z: 3439.0828}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -865,13 +869,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.482
   m_Rotation:
-    m_Target: {x: -0.42425945, y: -0.1047203, z: 0.049503557, w: -0.89813495}
+    m_Target: {x: -0.114726655, y: -0.88409317, z: 0.3437423, w: -0.29515696}
     speed: 2
-    m_Value: {x: -0.42424685, y: -0.104717195, z: 0.04950209, w: -0.8981083}
+    m_Value: {x: -0.11472325, y: -0.88406694, z: 0.34373212, w: -0.2951482}
   m_Size:
-    m_Target: 90.82699
+    m_Target: 7.1036773
     speed: 2
-    m_Value: 90.82699
+    m_Value: 7.1036773
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1019,7 +1023,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/MainPack/Rotark/CityPack/Prefabs
+    - Assets/_TacPack/Person/Men
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1029,18 +1033,18 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/MainPack/Rotark/CityPack/Prefabs
+  - Assets/_TacPack/Person/Men
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 553}
+    scrollPos: {x: 0, y: 180}
     m_SelectedIDs:
-    - m_Data: 72404
+    - m_Data: 742916
     m_LastClickedID:
-      m_Data: 72404
+      m_Data: 742916
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 72364
@@ -1049,24 +1053,20 @@ MonoBehaviour:
     - m_Data: 72370
     - m_Data: 72372
     - m_Data: 72374
-    - m_Data: 72376
-    - m_Data: 72378
     - m_Data: 72380
     - m_Data: 72382
     - m_Data: 72384
     - m_Data: 72386
-    - m_Data: 72388
     - m_Data: 72390
     - m_Data: 72392
     - m_Data: 72394
-    - m_Data: 72396
     - m_Data: 72398
-    - m_Data: 72400
     - m_Data: 72402
     - m_Data: 72404
     - m_Data: 72406
     - m_Data: 72408
     - m_Data: 72410
+    - m_Data: 72566
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1151,8 +1151,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: []
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs:
+    - m_Data: 62992
+    m_LastClickedInstanceID: 62992
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 54580
@@ -1187,8 +1188,8 @@ MonoBehaviour:
     - m_Data: 105292
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: RBuilding_01
-      m_OriginalName: RBuilding_01
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1196,10 +1197,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 62686
+        m_Data: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 10}
@@ -1210,7 +1211,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 61}
+    m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 232
@@ -1322,7 +1323,7 @@ MonoBehaviour:
     m_CachedPref: 397
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -1
+  m_LastInspectedObjectInstanceID: 62992
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour
@@ -11,7 +12,16 @@ public class BuildManager : MonoBehaviour
 	public void Create()
 	{
 		System.Random rnd = new System.Random();
-		BuildingChange[] allBuilding = GetComponentsInChildren<BuildingChange>();
+		//BuildingChange[] allBuilding = GetComponentsInChildren<BuildingChange>();
+
+		/*
+		Street[] streets = GetComponentsInChildren<Street>();
+		for (int i = 0; i < streets.Length; i++)
+		{
+			NavMeshModifier navMesh = streets[i].gameObject.AddComponent<NavMeshModifier>();
+			navMesh.overrideArea = true;
+			navMesh.area = 4;
+		}*/
 
 		//int i = 0;
 		
