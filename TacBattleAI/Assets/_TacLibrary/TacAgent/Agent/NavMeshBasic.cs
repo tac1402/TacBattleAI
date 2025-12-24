@@ -10,7 +10,7 @@ namespace Tac.Agent
 {
 	public class NavMeshBasic : MonoBehaviour
 	{
-		public NavMeshSurface surface;
+		public NavMeshSurface Surface;
 
 		private void Start()
 		{
@@ -20,16 +20,16 @@ namespace Tac.Agent
 
 		public void CreateSurface()
 		{
-			if (surface != null)
+			if (Surface != null)
 			{
-				surface.BuildNavMesh();
+				Surface.BuildNavMesh();
 			}
 		}
 		public void UpdateSurface()
 		{
-			if (surface != null)
+			if (Surface != null)
 			{
-				surface.UpdateNavMesh(surface.navMeshData);
+				Surface.UpdateNavMesh(Surface.navMeshData);
 			}
 		}
 	}

@@ -44,7 +44,7 @@ namespace Tac.Society
 		}
 
 
-		public List<Person.Person> AddPeople(int argCount, Rect_ argLocation, bool IsFamily = true)
+		public List<Person.Person> AddPerson(int argCount, Rect_ argLocation, bool IsFamily = true)
 		{
 			List<Person.Person> ret = new List<Person.Person>();
 			RandomWorld randomWorld = new RandomWorld();
