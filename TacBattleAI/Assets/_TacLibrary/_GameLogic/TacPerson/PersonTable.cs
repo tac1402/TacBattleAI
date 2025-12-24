@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using Tac.UI;
-using Tac.Person;
 
-namespace Tac.Society
+namespace Tac.Person
 {
 
 	public class PeopleTable
 	{
-		List<Person.Person> allPeople = new List<Person.Person>();
+		List<Person> allPeople = new List<Person>();
 		public TableUI tableUI;
 
 		public void Assign(TableUI argTableUI)
@@ -16,7 +15,7 @@ namespace Tac.Society
 			tableUI = argTableUI;
 		}
 
-		public void Add(Person.Person argPerson)
+		public void Add(Person argPerson)
 		{
 			allPeople.Add(argPerson);
 		}

@@ -29,7 +29,7 @@ public class RunPanel : MonoBehaviour
 		DayNight.NextHour += OnNextHour;
 		Society = argSociety;
 
-		//Name.text = "Ваш персонаж: " + Society.People[Society.PlayerPersonId].Name;
+		Name.text = "Ваш персонаж: " + Society.People[Society.PlayerPersonId].Name;
 		//AgentSelection.OnAgentTap(Society.People[Society.PlayerPersonId]);
 	}
 

@@ -12,7 +12,7 @@ namespace Tac.Society
 		public List<GameObject> WomenModel;
 		public ItemCreate.ItemCreate ItemCreate;
 
-		private Business[] allPoints;
+		public Business[] AllBusiness;
 
 		public void Init()
 		{
@@ -26,15 +26,15 @@ namespace Tac.Society
 
 
 			PersonName.LoadName(rnd);
-			allPoints = GetComponentsInChildren<Business>();
+			AllBusiness = GetComponentsInChildren<Business>();
 		}
 
 		public void InitWorkPlace()
 		{
 			foreach (Person.Person p in People.Values)
 			{
-				int pointIndex = rnd.Next(0, allPoints.Length);
-				p.WorkPlace = allPoints[pointIndex];
+				int pointIndex = rnd.Next(0, AllBusiness.Length);
+				p.WorkPlace = AllBusiness[pointIndex];
 			}
 		}
 

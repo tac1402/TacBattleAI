@@ -7,6 +7,7 @@ theme:
 
 nav:
   - О библиотеке: index.md
+  - Архитектура библиотеки: architecture.md
   - Архитектурная легкость: simplicity.md
   - Отделение логики: separation.md
   - TacStandart: 
