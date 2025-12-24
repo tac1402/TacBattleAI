@@ -84,3 +84,6 @@ title: Architecture
 
 ## Детализация архитектуры
 
+![alt](https://tac1402.github.io/TacBattleAI/Diagramm/MainConceptDetails.jpg)
+
+На этой диаграмме показаны уже классы Tac-библиотек, которые помогают реализовать представленный концепт. 
