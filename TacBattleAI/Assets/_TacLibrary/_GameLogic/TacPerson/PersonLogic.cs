@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using Tac.Agent;
 using Tac.Society;
+using UnityEngine.InputSystem.Utilities;
 
 namespace Tac.Person
 { 
@@ -19,6 +20,30 @@ namespace Tac.Person
 		public Dictionary<string, float> Skills = new Dictionary<string, float>();
 
 		public GenderType Gender = GenderType.Unknow;
+
+
+		public List<NamedValue> Info = new List<NamedValue>();
+		public string InfoTxt
+		{
+			get
+			{
+				string ret = "";
+				foreach (var item in Stats)
+				{
+					ret += item.Key + "\t = " + item.Value.ToString("F2") + "\n";
+				}
+				foreach (var item in Skills)
+				{
+					ret += item.Key + "\t = " + item.Value.ToString("F2") + "\n";
+				}
+				//ret += "Education" + "\t = " + Education.ToString("F1") + "\n";
+				//ret += "WorkExperience" + "\t = " + WorkExperience.ToString("F0") + "\n";
+				return ret;
+			}
+		}
+
+
+
 
 		public virtual void AddStatsSkills()
 		{

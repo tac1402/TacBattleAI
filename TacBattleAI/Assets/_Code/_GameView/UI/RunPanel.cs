@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using Tac;
+using Tac.Agent;
+using Tac.Person;
 using Tac.Society;
 
 public class RunPanel : MonoBehaviour
@@ -18,7 +20,7 @@ public class RunPanel : MonoBehaviour
 
 	private DayNight DayNight;
 	private Society Society;
-	//public AgentSelection AgentSelection;
+	public AgentSelection AgentSelection;
 
 
 	public void Init(DayNight argDayNight, Society argSociety)
@@ -30,7 +32,7 @@ public class RunPanel : MonoBehaviour
 		Society = argSociety;
 
 		Name.text = "Ваш персонаж: " + Society.People[Society.PlayerPersonId].Name;
-		//AgentSelection.OnAgentTap(Society.People[Society.PlayerPersonId]);
+		AgentSelection.OnAgentTap(Society.People[Society.PlayerPersonId]);
 	}
 
 	private void OnNextHour(GameTime argGameTime)
@@ -77,7 +79,6 @@ public class RunPanel : MonoBehaviour
 
 	private void OnNextDay(GameTime argGameTime)
 	{
-		/*
 		if (AgentSelection.SelectedAgent == null)
 		{
 			AgentSelection.OnAgentTap(Society.People[Society.PlayerPersonId]);
@@ -93,7 +94,6 @@ public class RunPanel : MonoBehaviour
 
 		DayNight.Pause = true;
 		gameObject.SetActive(true);
-		*/
 	}
 
 	public void NextDay()

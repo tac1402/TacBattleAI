@@ -23,11 +23,11 @@ namespace Tac.Person
 			{
 				name = value;
 				DebugName = name;
-				/*StatusBar statusBar = SelectionUI.GetComponent<StatusBar>();
+				StatusBar statusBar = SelectionUI.GetComponent<StatusBar>();
 				if (statusBar != null)
 				{ 
 					statusBar.HealthBar.Text.text = name;
-				}*/
+				}
 			}
 		}
 

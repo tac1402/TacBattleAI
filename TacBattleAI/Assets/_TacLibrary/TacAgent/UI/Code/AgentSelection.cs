@@ -1,16 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using Tac.ItemMove;
+using Tac.Camera;
 using UnityEngine;
-
-
+using UnityEngine.InputSystem;
 
 namespace Tac.Agent
 {
-	//[Component(typeof(TopCamera))]
+	[Component(typeof(Agent), typeof(TopCamera))]
 	public class AgentSelection : MonoBehaviour
     {
-		//public DragCamera CameraManager;
+		public TopCamera TopCamera;
 
 		private Agent selectedAgent;
 		public Agent SelectedAgent
@@ -49,8 +48,8 @@ namespace Tac.Agent
 
 		void Awake()
 		{
-			//CameraManager.InitAgent = true;
-			//CameraManager.OnAgentTap += OnAgentTap;
+			TopCamera.InitAgent = true;
+			TopCamera.OnAgentTap += OnAgentTap;
 		}
 
 		public void OnAgentTap(Agent argAgent)
@@ -76,11 +75,11 @@ namespace Tac.Agent
 
 }
 
-namespace Tac.ItemMove
+namespace Tac.Camera
 {
-	public delegate void AgentInfo(Tac.Agent.Agent argAgent);
+	public delegate void AgentInfo(Agent.Agent argAgent);
 
-	/*public partial class DragCamera
+	public partial class TopCamera
 	{
 		public LayerMask AgentLayer;
 
@@ -95,30 +94,27 @@ namespace Tac.ItemMove
 				initAgent = value;
 				if (initAgent)
 				{
-					OnUpdate += DragCamera_OnUpdate;
+					OnUpdate += Camera_OnUpdateAgent;
 				}
             }
 		}
 
-		private TacAgentLearning.Agent selectedAgent;
+		private Agent.Agent selectedAgent;
 
 
-		private void DragCamera_OnUpdate()
+		private void Camera_OnUpdateAgent()
 		{
 			UpdateAgentTap();
 		}
 
 		private void UpdateAgentTap()
 		{
-			if (Input.GetMouseButtonUp(0) == false) { return; }
+			if (Mouse.current.leftButton.wasPressedThisFrame == false) { return; }
 
-			if (isPanningSceneStarted) { return; }
-			if (isDraggingItem) { return; }
-
-			GameObject go = GetAgent(Input.mousePosition);
+			GameObject go = GetAgent(Mouse.current.position.ReadValue());
 			if (go != null)
 			{
-				TacAgentLearning.Agent agentTapped = go.GetComponent<TacAgentLearning.Agent>();
+				Agent.Agent agentTapped = go.GetComponent<Agent.Agent>();
 
 				if (agentTapped != null)
 				{
@@ -151,11 +147,11 @@ namespace Tac.ItemMove
 
 		public GameObject GetAgent(Vector2 touch)
 		{
-			Ray ray = Camera.ScreenPointToRay(touch);
+			Ray ray = camera.ScreenPointToRay(touch);
 			return GetRaycast(ray, AgentLayer).Item2;
 		}
 
 
-	}*/
+	}
 
 }

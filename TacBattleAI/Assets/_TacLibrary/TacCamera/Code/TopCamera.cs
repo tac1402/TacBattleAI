@@ -13,6 +13,8 @@ namespace Tac.Camera
 		public Vector2 Limit = new Vector2(-70, 80);
 		public Vector3 CameraShift;
 
+		public event Change OnUpdate;
+
 		//[HideInInspector]
 		public Vector2 CurrentCoord;
 		public FastController FastController;
@@ -53,13 +55,18 @@ namespace Tac.Camera
 
 		void LateUpdate()
 		{
-			//if (Time.deltaTime != 0) // не пауза
+			if (Mouse.current.rightButton.isPressed)
 			{
-				if (Mouse.current.rightButton.isPressed)
-				{
-					UpdateCameraInput();
-				}
-				UpdateCamera();
+				UpdateCameraInput();
+			}
+			UpdateCamera();
+		}
+
+		private void Update()
+		{
+			if (OnUpdate != null)
+			{
+				OnUpdate();
 			}
 		}
 

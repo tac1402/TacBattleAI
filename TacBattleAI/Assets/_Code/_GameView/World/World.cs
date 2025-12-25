@@ -4,6 +4,7 @@ using Tac;
 using Tac.Agent;
 using Tac.ItemCreate;
 using Tac.Society;
+using Tac.UI;
 
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,6 +16,7 @@ public partial class World : MonoBehaviour
 
 	private ItemCreate ItemCreate;
 	private RunPanel RunPanel;
+	private InfoPanelManager InfoPanelManager;
 
 	private void Start()
 	{
@@ -31,6 +33,8 @@ public partial class World : MonoBehaviour
 		if (ui != null)
 		{
 			RunPanel = ui.GetComponentInChildren<RunPanel>(true);
+			InfoPanelManager = ui.GetComponentInChildren<InfoPanelManager>(true);
+			InfoPanelManager.Init();
 		}
 
 		//GameObject rock = ItemCreate.CreateObject("Rock_A", 490, 485, 12);
