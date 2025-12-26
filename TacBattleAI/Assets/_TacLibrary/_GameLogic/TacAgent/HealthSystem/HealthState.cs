@@ -39,7 +39,7 @@ namespace Tac.HealthSystem
 			CalcHealth();
         }
 
-        public void SetBodyParts()
+        public virtual void SetBodyParts()
         {
             // Влияние частей тела на здоровье
             Body.Add(BodyParts.Head, new BodyPartState(100, 14));
@@ -86,7 +86,7 @@ namespace Tac.HealthSystem
             Body[BodyParts.ForearmLeft].AddSystemDependency(System[VitalSystems.Сirculatory]);
         }
 
-        public void SetVitalSystems()
+        public virtual void SetVitalSystems()
         {
             int SpeedDefault = 5;
 
@@ -105,7 +105,7 @@ namespace Tac.HealthSystem
 		/// <summary>
 		/// Рачет показания здоровья
 		/// </summary>
-		public void CalcHealth()
+		public virtual void CalcHealth()
         {
 			// Очистка влияния зависимостей перед пересчетом повреждений при вызове Injury()
 			foreach (BodyPartState part in Body.Values)

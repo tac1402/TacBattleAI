@@ -1,5 +1,6 @@
 // Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2016 Sergej Jakovlev
+
 // You can use this code for educational purposes only;
 // this code or its modifications cannot be used for commercial purposes
 // or in proprietary libraries without permission from the author
@@ -31,7 +32,7 @@ namespace Tac.HealthSystem
 		}
 
 		/// <summary>
-		/// Зависимое от здоровья состояние умения
+		/// Штрафы на умение, например, вызванные здоровьем 
 		/// </summary>
 		public float DependencyState;
 
@@ -61,7 +62,7 @@ namespace Tac.HealthSystem
 		/// </summary>
 		public float MaxState;
 
-		public PhysicalSkill(float argMinState, float argMaxState)
+		public PhysicalSkill(float argMinState = 0, float argMaxState = 100)
 		{
 			MinState = argMinState;
 			MaxState = argMaxState;
