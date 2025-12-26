@@ -23,7 +23,6 @@ public partial class World : MonoBehaviour
 		ItemCreate = GetComponent<ItemCreate>();
 		DayNight = GetComponent<DayNight>();
 		Society = GetComponent<Society>();
-		Society.DayNight = DayNight;
 
 		Society.AddModel();
 		ItemCreate.Init();
@@ -46,6 +45,8 @@ public partial class World : MonoBehaviour
 		RunPanel.Init(DayNight, Society);
 
 		UpdateSurface();
+
+		DayNight.NextHour += AgentWalkEmulation;
 	}
 
 	public void CreateWorld()

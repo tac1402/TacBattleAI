@@ -1,0 +1,8 @@
+---
+title: AgentInPoint
+---
+Компонент 
+
+```csharp
+
+```

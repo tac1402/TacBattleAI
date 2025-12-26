@@ -14,16 +14,16 @@ namespace Tac.Society
 			DayNight.NextHour += NextHour;
 		}
 
-		private void NextHour(GameTime argGameTime)
+		public void NextHour(GameTime argGameTime)
 		{
-			//CheckAgent();
+			CheckAgent();
 		}
 
 		bool isDayPlanCreated = false;
-		/*private void CheckAgent()
+		private void CheckAgent()
 		{
-
-			if (DayNightController.Time >= new TimeSpan(6, 0, 0) && DayNightController.Time <= new TimeSpan(7, 0, 0) && isDayPlanCreated == true)
+			/*
+			if (DayNight.Time >= new TimeSpan(6, 0, 0) && DayNightController.Time <= new TimeSpan(7, 0, 0) && isDayPlanCreated == true)
 			{
 				isDayPlanCreated = false;
 			}
@@ -61,7 +61,8 @@ namespace Tac.Society
 					}
 				}
 			}
-		}*/
+			*/
+		}
 
 	}
 }

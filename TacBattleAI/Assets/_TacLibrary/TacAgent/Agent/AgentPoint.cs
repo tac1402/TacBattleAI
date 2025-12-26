@@ -15,19 +15,12 @@ namespace Tac.Agent
 		{
 			get { return Point.transform.position.To_(); }
 		}
-		public GameObject TruckPoint;
-		public Vector3_ TruckPointPosition
-		{
-			get { return TruckPoint.transform.position.To_(); }
-		}
-
 
 		public Vector3 EnterSize = new Vector3(2, 2, 2);
 		public bool HideAgent = true;
 		public Vector3 TruckPointSize = new Vector3(4, 2, 4);
 
 		public LayerMask AgentLayer;
-		public LayerMask TruckLayer;
 
 		/// <summary>
 		/// Рабочие часы
@@ -55,8 +48,6 @@ namespace Tac.Agent
 			}
 
 			Init();
-
-			StartCoroutine(Tick());
 		}
 
 		public virtual void AddView(Agent argAgent)
@@ -77,74 +68,12 @@ namespace Tac.Agent
 		}
 
 
-
-		private IEnumerator Tick()
-		{
-			while (true)
-			{
-				CheckEnter();
-				//CheckExit();
-				CheckTruck();
-				UpdateInfo();
-				yield return new WaitForSeconds(1.0f);
-			}
-		}
-
-		private void CheckEnter()
-		{
-			//Collider[] c = Physics.OverlapBox(Point.transform.position, EnterSize / 2f, Quaternion.identity, AgentLayer);
-			/*for (int j = 0; j < c.Length; j++)
-			{
-				TimeSpan timeEnter = WorkingFrom.Subtract(new TimeSpan(1, 0, 0));
-				if (DayNightController.Time >= timeEnter && DayNightController.Time <= WorkingTill)
-				{
-					Agent agent = c[j].gameObject.GetComponent<Agent>();
-
-					if (agent.TargetId == Id)
-					{
-						if (CheckAgentToEnter(agent))
-						{
-							Add(agent);
-						}
-					}
-				}
-			}*/
-
-		}
-
-		protected void CheckExit(GameTime argGameTime)
-		{
-			if (Agents.Count > 0)
-			{
-				int tmpAgentCount = Agents.Count;
-				for (int i = 0; i < tmpAgentCount; i++)
-				{
-					AgentInPoint ap = Agents.Peek();
-					bool retExit = CheckAgentToExit(ap.Agent);
-
-					if (argGameTime.Hour >= WorkingTill)
-					{
-						Agent agent = Remove();
-					}
-					else if (retExit == true)
-					{
-						Agent agent = Remove();
-					}
-				}
-			}
-		}
-
 		void OnDrawGizmos()
 		{
 			if (Point != null)
 			{
 				Gizmos.color = Color.blue;
 				Gizmos.DrawWireCube(Point.transform.position, EnterSize);
-			}
-			if (TruckPoint != null)
-			{
-				Gizmos.color = Color.cyan;
-				Gizmos.DrawWireCube(TruckPoint.transform.position, TruckPointSize);
 			}
 		}
 

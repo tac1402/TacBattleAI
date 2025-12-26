@@ -16,14 +16,8 @@ namespace Tac.Society
 
 		public void Init()
 		{
-			DayNight.NextHour += NextHour;
-
 			RobotJob = GetComponent<RobotJob>();
-			RobotJob.Init(DayNight);
-
 			PlayerJob = GetComponent<PlayerJob>();
-			PlayerJob.Init(DayNight);
-
 
 			PersonName.LoadName(rnd);
 			AllBusiness = GetComponentsInChildren<Business>();
@@ -40,6 +34,9 @@ namespace Tac.Society
 
 		public void NextHour(GameTime argGameTime)
 		{
+			PlayerJob.NextHour(argGameTime);
+			RobotJob.NextHour(argGameTime);
+
 			/*ChangeSalaryDeficit();
 			CheckJob();
 			CalcScore();

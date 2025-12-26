@@ -1,7 +1,9 @@
 //#define OnlyLogic
 
 using System.Collections.Generic;
+using System.Linq;
 using Tac;
+using Tac.Agent;
 using Tac.Person;
 using Tac.Society;
 
@@ -27,6 +29,17 @@ public partial class World
 		}
 	}
 
+	public void AgentWalkEmulation(GameTime argGameTime)
+	{
+		Society.NextHour(argGameTime);
+
+		List<Agent> agents = Society.People.Values.ToList<Agent>();
+		foreach (AgentPoint building in Society.AllBusiness)
+		{
+			building.Tick(argGameTime, agents);
+		}
+	}
+
 #if OnlyLogic
 
 	public void Init()
@@ -36,23 +49,6 @@ public partial class World
 		Society = new Society();
 		Society.DayNight = DayNight;
 		Society.Init();
-
-		DayNight.NextHour += AgentWalkEmulation;
-	}
-
-	public void AgentWalkEmulation(GameTime argGameTime)
-	{
-		Society.NextHour(argGameTime);
-
-		List<Agent> agents = Society.People.Values.ToList<Agent>();
-		foreach (Landlot landlot in AllLandlot.Values) 
-		{
-			foreach (AgentPoint building in landlot.Building)
-			{
-				building.Tick(argGameTime, agents);
-			}
-		}
-
 	}
 
 #endif

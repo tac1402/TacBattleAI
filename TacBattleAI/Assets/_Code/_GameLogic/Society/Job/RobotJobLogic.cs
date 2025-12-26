@@ -7,14 +7,8 @@ namespace Tac.Society
 {
 	public partial class RobotJob : Job
 	{
-		public override void Init(DayNight argDayNight)
-		{
-			base.Init(argDayNight);
 
-			DayNight.NextHour += NextHour;
-		}
-
-		private void NextHour(GameTime argGameTime)
+		public void NextHour(GameTime argGameTime)
 		{
 			CheckAgent(argGameTime);
 		}

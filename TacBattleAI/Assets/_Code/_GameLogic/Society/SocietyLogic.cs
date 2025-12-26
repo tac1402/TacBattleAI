@@ -15,7 +15,6 @@ namespace Tac.Society
 
 		public RobotJob RobotJob;
 		public PlayerJob PlayerJob;
-		public DayNight DayNight;
 
 		/// <summary>
 		/// Идентификатор персонажа игрока

@@ -11,7 +11,7 @@ namespace Tac.Agent
 
 		public Queue<AgentInPoint> Agents = new Queue<AgentInPoint>();
 
-		//public DayNightController DayNightController;
+		public DayNight DayNight;
 
 		/*protected virtual void ChangeType() { }
 		private PropertyType propertyType = PropertyType.None;
@@ -28,7 +28,7 @@ namespace Tac.Agent
 
 		public virtual void Init() 
 		{
-			//DayNightController.NextHour += Work;
+			DayNight.NextHour += Work;
 		}
 		public virtual void Work(GameTime argGameTime) { }
 
@@ -72,7 +72,7 @@ namespace Tac.Agent
 			argAgent.LocatedId = ObjectId;
 			AgentInPoint point = new AgentInPoint();
 			point.Agent = argAgent;
-			//point.EnterTime = DayNightController.DateTimeNow;
+			point.EnterTime = DayNight.DateTimeNow;
 			Agents.Enqueue(point);
 
 			AddView(argAgent);
@@ -86,6 +86,58 @@ namespace Tac.Agent
 			ap.Agent.LocatedId = 0;
 			ap.Agent.TargetId = 0;
 			return ap.Agent;
+		}
+
+		private void CheckExit(GameTime argGameTime)
+		{
+			if (Agents.Count > 0)
+			{
+				int tmpAgentCount = Agents.Count;
+				for (int i = 0; i < tmpAgentCount; i++)
+				{
+					AgentInPoint ap = Agents.Peek();
+					bool retExit = CheckAgentToExit(ap.Agent);
+
+					if (argGameTime.Hour >= WorkingTill)
+					{
+						Agent agent = Remove();
+					}
+					else if (retExit == true)
+					{
+						Agent agent = Remove();
+					}
+				}
+			}
+		}
+
+		private void CheckEnter(GameTime argGameTime, List<Agent> argAllAgent)
+		{
+			if (ObjectId == 3)
+			{
+				int a = 1;
+			}
+
+			List<Agent> tmpAgents = argAllAgent.FindAll(x => x.TargetId == ObjectId);
+
+			for (int j = 0; j < tmpAgents.Count; j++)
+			{
+				int timeEnter = WorkingFrom - 1;
+				if (argGameTime.Hour >= timeEnter && argGameTime.Hour <= WorkingTill)
+				{
+					if (CheckAgentToEnter(tmpAgents[j]))
+					{
+						Add(tmpAgents[j]);
+					}
+				}
+			}
+		}
+
+		public void Tick(GameTime argGameTime, List<Agent> argAllAgent)
+		{
+			CheckEnter(argGameTime, argAllAgent);
+			CheckExit(argGameTime);
+			CheckTruck();
+			UpdateInfo();
 		}
 
 
