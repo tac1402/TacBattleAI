@@ -8,6 +8,6 @@ title: AgentInPoint
 	public class AgentInPoint
 	{
 		public Agent Agent; // Агент
-		public DateTime EnterTime; // Время добавления/прихода агента в очередь/точку.
+		public GameTime EnterTime; // Игровое время добавления/прихода агента в очередь/точку.
 	}
 ```
