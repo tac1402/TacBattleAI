@@ -104,6 +104,10 @@ namespace Tac.Agent
 			}
 		}
 
+#if OnlyLogic
+		public object StatusBar == null;
+#endif
+
 	}
 }
 

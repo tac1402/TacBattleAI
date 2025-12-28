@@ -9,6 +9,9 @@ using UnityEngine;
 
 namespace Tac.Agent
 {
+	/// <summary>
+	/// Зрение агента, выделяет опасные цели и препятствия
+	/// </summary>
 	public class Eye : MonoBehaviour
 	{
 		/// <summary>

@@ -11,25 +11,16 @@ namespace Tac.Agent
 
 		public Queue<AgentInPoint> Agents = new Queue<AgentInPoint>();
 
-		public DayNight DayNight;
+		/// <summary>
+		/// Время последнего обновления
+		/// </summary>
+		private GameTime LastGameTime;
 
-		/*protected virtual void ChangeType() { }
-		private PropertyType propertyType = PropertyType.None;
-
-		public PropertyType PropertyType
+		public virtual void Init()
 		{
-			get { return propertyType; }
-			set
-			{
-				propertyType = value;
-				ChangeType();
-			}
-		}*/
-
-		public virtual void Init() 
-		{
-			DayNight.NextHour += Work;
 		}
+
+
 		public virtual void Work(GameTime argGameTime) { }
 
 
@@ -49,7 +40,6 @@ namespace Tac.Agent
 				return y;
 			}
 		}
-		protected virtual void CheckTruck() { }
 
 		public virtual bool CheckAgentToEnter(Agent argAgent)
 		{
@@ -72,7 +62,7 @@ namespace Tac.Agent
 			argAgent.LocatedId = ObjectId;
 			AgentInPoint point = new AgentInPoint();
 			point.Agent = argAgent;
-			point.EnterTime = DayNight.DateTimeNow;
+			point.EnterTime = LastGameTime;
 			Agents.Enqueue(point);
 
 			AddView(argAgent);
@@ -134,9 +124,9 @@ namespace Tac.Agent
 
 		public void Tick(GameTime argGameTime, List<Agent> argAllAgent)
 		{
+			LastGameTime = argGameTime;
 			CheckEnter(argGameTime, argAllAgent);
 			CheckExit(argGameTime);
-			CheckTruck();
 			UpdateInfo();
 		}
 

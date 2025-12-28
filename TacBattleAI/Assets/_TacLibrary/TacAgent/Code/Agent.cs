@@ -68,6 +68,7 @@ namespace Tac.Agent
 			if (agent != null)
 			{
 				agent.enabled = true;
+				StartCoroutine(DrawPath());
 			}
 			StartCoroutine(Tick());
 		}
