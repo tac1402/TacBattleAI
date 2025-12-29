@@ -67,8 +67,28 @@ namespace Tac.Agent
 			argAgent.agent.velocity = new Vector3(0, 0, 0);
 		}
 
+		/// <summary>
+		/// Находится ли агент на входе
+		/// </summary>
+		public bool IsAgentInEnter(int argAgentId)
+		{
+			bool ret = false;
+			Collider[] c = Physics.OverlapBox(Point.transform.position, EnterSize / 2f, Quaternion.identity, AgentLayer);
+			for (int j = 0; j < c.Length; j++)
+			{
+				Agent agent = c[j].gameObject.GetComponent<Agent>();
 
-		void OnDrawGizmos()
+				if (agent != null && agent.ObjectId == argAgentId && agent.TargetId == ObjectId)
+				{ 
+					ret = true; 
+					break;
+				}
+			}
+			return ret;
+		}
+
+
+			void OnDrawGizmos()
 		{
 			if (Point != null)
 			{

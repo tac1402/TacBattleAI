@@ -111,12 +111,15 @@ namespace Tac.Agent
 
 			for (int j = 0; j < tmpAgents.Count; j++)
 			{
-				int timeEnter = WorkingFrom - 1;
-				if (argGameTime.Hour >= timeEnter && argGameTime.Hour <= WorkingTill)
+				if (IsAgentInEnter(tmpAgents[j].ObjectId) == true)
 				{
-					if (CheckAgentToEnter(tmpAgents[j]))
+					int timeEnter = WorkingFrom - 1;
+					if (argGameTime.Hour >= timeEnter && argGameTime.Hour <= WorkingTill)
 					{
-						Add(tmpAgents[j]);
+						if (CheckAgentToEnter(tmpAgents[j]))
+						{
+							Add(tmpAgents[j]);
+						}
 					}
 				}
 			}
@@ -143,48 +146,11 @@ namespace Tac.Agent
 		{
 			get { return Vector3_.zero; }
 		}
-		public Vector3_ TruckPointPosition
-		{
-			get { return Vector3_.zero; }
-		}
 
 		public virtual void AddView(Agent argAgent) { }
 		public void RemoveView(Agent argAgent) { }
 
-		private void CheckEnter(GameTime argGameTime, List<Agent> argAllAgent)
-		{
-			if (Id == 3)
-			{
-				int a = 1;
-			}
-
-			List<Agent> tmpAgents = argAllAgent.FindAll(x => x.TargetId == Id);
-
-			for (int j = 0; j < tmpAgents.Count; j++)
-			{
-				int timeEnter = WorkingFrom - 1 ;
-				if (argGameTime.Hour >= timeEnter && argGameTime.Hour <= WorkingTill)
-				{
-					if (CheckAgentToEnter(tmpAgents[j]))
-					{
-						Add(tmpAgents[j]);
-					}
-				}
-			}
-		}
-
-		public void Tick(GameTime argGameTime, List<Agent> argAllAgent)
-		{
-			if (Id == 1)
-			{
-				int a = 1;
-			}
-
-			CheckEnter(argGameTime, argAllAgent);
-			CheckExit(argGameTime);
-			CheckTruck();
-			UpdateInfo();
-		}
+		public bool IsAgentInEnter(int argAgentId) { return true; }
 
 #endif
 
