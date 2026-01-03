@@ -4,6 +4,7 @@
 using System.Collections;
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Tac
@@ -109,6 +110,28 @@ namespace Tac
 		{
 			TimeMode = TimeMode.Normal;
 			StartCoroutine(Tick());
+		}
+
+		private void Update()
+		{
+			if (Keyboard.current[Key.Pause].wasPressedThisFrame)
+			{
+				PausePress();
+			}
+		}
+
+		public void PausePress()
+		{
+			if (Pause == false)
+			{
+				Pause = true;
+				UnityEngine.Time.timeScale = 0;
+			}
+			else
+			{
+				Pause = false;
+				UnityEngine.Time.timeScale = PlaySpeed;
+			}
 		}
 
 		private IEnumerator Tick()

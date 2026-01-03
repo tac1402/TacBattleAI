@@ -14,7 +14,9 @@ namespace Tac.Agent
 	{
 		public NavMeshAgent agent;
 		public StatusBar StatusBar;
-		public AgentAnimator agentAnimator;
+		//public AgentAnimator agentAnimator;
+
+		public float WalkDistance;
 
 		/// <summary>
 		/// ƒвигаетс€ ли юнит к цели
@@ -42,10 +44,17 @@ namespace Tac.Agent
 		/// ¬озникает, когда агент заканчивает движение к заданной цели
 		/// </summary>
 		public event Send OnWalkEnd;
+
 		/// <summary>
 		/// ÷ель движени€ агента, если он движетс€
 		/// </summary>
 		public Vector3_ WalkTarget = Vector3_.zero;
+
+		/// <summary>
+		///  онтроль дистанции, можно использовать только внутри класса, в т.ч. partial
+		/// </summary>
+		private event Send OnCheckDistance;
+		private Vector3 previousPosition;
 
 		private System.Random rnd = new System.Random();
 
@@ -87,6 +96,7 @@ namespace Tac.Agent
 
 			if (agent.destination.To2() != argTarget.To2() /*&& IsDead == false*/)
 			{
+				WalkDistance = 0;
 				agent.stoppingDistance = stoppingDistance;
 				WalkTarget = argTarget;
 				agent.SetDestination(argTarget.To());
@@ -101,9 +111,20 @@ namespace Tac.Agent
 		{
 			while (true)
 			{
+				CheckDistance();
 				CheckWalkEnd();
 				yield return new WaitForSeconds(0.1f);
 			}
+		}
+
+		public void CheckDistance()
+		{
+			WalkDistance += Vector3.Distance(transform.position, previousPosition);
+			if (OnCheckDistance != null)
+			{
+				OnCheckDistance();
+			}
+			previousPosition = transform.position;
 		}
 
 		public void CheckWalkEnd()
@@ -115,6 +136,7 @@ namespace Tac.Agent
 			{
 				agent.isStopped = true;
 				WalkTarget = Vector3_.zero;
+				WalkDistance = 0;
 				if (OnWalkEnd != null)
 				{
 					OnWalkEnd(this);

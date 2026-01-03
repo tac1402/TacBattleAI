@@ -1,14 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
-
 using Tac;
 using Tac.Agent;
 using Tac.Person;
 using Tac.Society;
+using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 
 public class RunPanel : MonoBehaviour
 {
@@ -102,7 +103,7 @@ public class RunPanel : MonoBehaviour
 		gameObject.SetActive(false);
 	}
 
-	public void SetSpeedUp()
+	/*public void SetSpeedUp()
 	{
 		if (SpeedUp.isOn)
 		{
@@ -112,6 +113,6 @@ public class RunPanel : MonoBehaviour
 		{
 			DayNight.PlaySpeed = 2;
 		}
-	}
+	}*/
 
 }

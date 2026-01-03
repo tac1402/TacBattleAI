@@ -2054,14 +2054,14 @@ NavMeshAgent:
   m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_StoppingDistance: 0.1
+  m_AutoTraverseOffMeshLink: 0
+  m_AutoBraking: 0
+  m_AutoRepath: 0
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
+  m_WalkableMask: 24
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &8973860899597341096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2093,7 +2093,7 @@ MonoBehaviour:
   ModelType: 0
   agent: {fileID: 0}
   StatusBar: {fileID: 9068416564332056829}
-  agentAnimator: {fileID: 0}
+  WalkDistance: 0
   isMoving: 0
   WalkTarget:
     x: 0

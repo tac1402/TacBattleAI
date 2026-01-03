@@ -22,7 +22,7 @@ public partial class World
 	{
 		List<Person> people1 = Society.AddPerson(1, new Rect_(3400, 2920, 3420, 2940), false);
 		Society.AddAgentPlan(people1[0], true);
-		List<Person> people2 = Society.AddPerson(9, new Rect_(3400, 2920, 3420, 2940), false);
+		List<Person> people2 = Society.AddPerson(2, new Rect_(3400, 2920, 3420, 2940), false);
 		foreach (Person person in people2)
 		{
 			Society.AddAgentPlan(person);

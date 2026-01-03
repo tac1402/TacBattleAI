@@ -21,6 +21,11 @@ namespace Tac.Society
 
 			PersonName.LoadName(rnd);
 			AllBusiness = GetComponentsInChildren<Business>();
+
+			for (int i = 0; i < AllBusiness.Length; i++)
+			{
+				AllBusiness[i].ObjectId = ItemCreate.GetNewId();
+			}
 		}
 
 		public void InitWorkPlace()

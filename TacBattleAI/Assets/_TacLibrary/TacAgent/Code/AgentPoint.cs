@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 namespace Tac.Agent
@@ -13,8 +14,20 @@ namespace Tac.Agent
 
 		public Vector3_ PointPosition
 		{
-			get { return Point.transform.position.To_(); }
+			get { return Point.transform.position.To2().To3().To_(); } // Обнуление высоты
 		}
+
+		private Vector3 NearPosition(Vector3 position)
+		{
+			NavMeshHit hit;
+			Vector3 ret = Vector3.zero;
+			if (NavMesh.SamplePosition(position, out hit, 100.0f, NavMesh.AllAreas))
+			{
+				ret = hit.position;
+			}
+			return ret;
+		}
+
 
 		public Vector3 EnterSize = new Vector3(2, 2, 2);
 		public bool HideAgent = true;
@@ -73,7 +86,7 @@ namespace Tac.Agent
 		public bool IsAgentInEnter(int argAgentId)
 		{
 			bool ret = false;
-			Collider[] c = Physics.OverlapBox(Point.transform.position, EnterSize / 2f, Quaternion.identity, AgentLayer);
+			Collider[] c = Physics.OverlapBox(Point.transform.position, EnterSize / 2f, Point.transform.rotation, AgentLayer);
 			for (int j = 0; j < c.Length; j++)
 			{
 				Agent agent = c[j].gameObject.GetComponent<Agent>();
@@ -92,8 +105,21 @@ namespace Tac.Agent
 		{
 			if (Point != null)
 			{
+				// Сохраняем текущую матрицу Gizmos
+				Matrix4x4 originalMatrix = Gizmos.matrix;
+
+				// Устанавливаем матрицу с позицией и поворотом
+				Gizmos.matrix = Matrix4x4.TRS(
+					Point.transform.position,  // позиция
+					Point.transform.rotation,  // поворот (если нужно использовать поворот объекта Point)
+					Vector3.one                // масштаб
+				);
+
 				Gizmos.color = Color.blue;
-				Gizmos.DrawWireCube(Point.transform.position, EnterSize);
+				Gizmos.DrawWireCube(Vector3.zero, EnterSize);
+
+				// Восстанавливаем оригинальную матрицу
+				Gizmos.matrix = originalMatrix;
 			}
 		}
 
