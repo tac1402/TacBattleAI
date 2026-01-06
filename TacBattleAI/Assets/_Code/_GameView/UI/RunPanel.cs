@@ -7,8 +7,6 @@ using Tac.Person;
 using Tac.Society;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class RunPanel : MonoBehaviour

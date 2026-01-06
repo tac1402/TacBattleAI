@@ -7,12 +7,6 @@ namespace Tac.Society
 {
 	public partial class PlayerJob : Job
 	{
-		public override void Init(DayNight argDayNight)
-		{
-			base.Init(argDayNight);
-
-			DayNight.NextHour += NextHour;
-		}
 
 		public void NextHour(GameTime argGameTime)
 		{

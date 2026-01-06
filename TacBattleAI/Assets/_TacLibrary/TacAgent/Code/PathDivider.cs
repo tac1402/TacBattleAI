@@ -1,6 +1,7 @@
 // Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,19 +15,22 @@ namespace Tac.Agent
 		private PathDivider divider;
 		private Vector3 agentStartPosition;
 
-		public void WalkTeleport(Vector3_ argTarget)
-		{ 
-			divider = new PathDivider();
-			divider.DividePath(agent, transform.position, argTarget.To(), 60f);
+		public void WalkTeleport()
+		{
+			if (PathStatus == 2)
+			{
+				divider = new PathDivider();
+				divider.DividePath(this, 30f);
 
-			Gradient gradient = divider.CreatePhaseGradient(new Color[] { Color.green, Color.red, Color.green });
-			Path.colorGradient = gradient;
-			agentStartPosition = agent.transform.position;
+				Gradient gradient = divider.CreatePhaseGradient(new Color[] { Color.green, Color.red, Color.green });
+				PathRender.colorGradient = gradient;
+				agentStartPosition = agent.transform.position;
 
-			Walk(argTarget);
-			hasTeleported = false;
+				Walk();
+				hasTeleported = false;
 
-			OnCheckDistance += Teleport_OnCheckDistance;
+				OnCheckDistance += Teleport_OnCheckDistance;
+			}
 		}
 
 		/// <summary>
@@ -34,9 +38,6 @@ namespace Tac.Agent
 		/// </summary>
 		private void Teleport_OnCheckDistance(params object[] argInfo)
 		{
-			Vector3 agentWorldOffset = transform.parent.position - agentStartPosition;
-			Path.gameObject.transform.localPosition = -agentWorldOffset;
-
 			// Начал движение, но еще не телепортировался
 			if (agent.hasPath == false || hasTeleported == true) return;
 
@@ -48,10 +49,10 @@ namespace Tac.Agent
 
 		void ExecuteTeleport()
 		{
-			Vector3 savedDestination = agent.destination;
+			//Vector3 savedDestination = agent.destination;
 
 			// Останавливаем агента
-			agent.isStopped = true;
+			//agent.isStopped = true;
 
 			agent.nextPosition = transform.position;
 
@@ -59,9 +60,9 @@ namespace Tac.Agent
 			agent.Warp(divider.teleportPoint);
 
 			// Продолжаем движение к той же цели
-			agent.isStopped = false;
+			//agent.isStopped = false;
 
-			agent.SetDestination(savedDestination);
+			agent.SetDestination(TargetPoint.To());
 
 			hasTeleported = true;
 		}
@@ -72,64 +73,53 @@ namespace Tac.Agent
 	{
 		public float safetyMargin = 0.1f; // 10% погрешность
 
-		private NavMeshPath path;
-
 		public float totalPathLength;
 		public float firstSegmentLength;
 		public float lastSegmentLength;
 		public Vector3 teleportPoint;
 
-		public void DividePath(NavMeshAgent agent, Vector3 startPos, Vector3 endPos, float totalGameTime)
+		public void DividePath(Agent argAgent, float totalGameTime)
 		{
-			path = new NavMeshPath();
-			bool isPath = NavMesh.CalculatePath(startPos, endPos, NavMesh.AllAreas, path);
+			totalPathLength = CalculatePathLength(argAgent.PathPoints); // Вычисляем общую длину пути
 
-			if (isPath)
+			float availableRealTime = totalGameTime / 2f; // Половина времени на каждый отрезок
+			float safeTime = availableRealTime * (1f - safetyMargin); // Минус 10%
+
+			// Вычисляем максимальную длину для первого и последнего отрезков
+			float maxWalkLength = argAgent.agent.speed * safeTime;
+
+			// Проверяем, достаточно ли длины пути
+			if (totalPathLength <= maxWalkLength * 2f)
 			{
-				totalPathLength = CalculatePathLength(path.corners); // Вычисляем общую длину пути
-
-				float availableRealTime = totalGameTime / 2f; // Половина времени на каждый отрезок
-				float safeTime = availableRealTime * (1f - safetyMargin); // Минус 10%
-
-				// Вычисляем максимальную длину для первого и последнего отрезков
-				float maxWalkLength = agent.speed * safeTime;
-
-				// Проверяем, достаточно ли длины пути
-				if (totalPathLength <= maxWalkLength * 2f)
-				{
-					// Если путь короткий, делим его пополам
-					firstSegmentLength = totalPathLength / 2f;
-					lastSegmentLength = totalPathLength / 2f;
-				}
-				else
-				{
-					// Если путь длинный, используем максимальную длину
-					firstSegmentLength = maxWalkLength;
-					lastSegmentLength = maxWalkLength;
-				}
-
-
-				teleportPoint = GetPointAtDistance(path.corners, totalPathLength - lastSegmentLength);
+				// Если путь короткий, делим его пополам
+				firstSegmentLength = totalPathLength / 2f;
+				lastSegmentLength = totalPathLength / 2f;
+			}
+			else
+			{
+				// Если путь длинный, используем максимальную длину
+				firstSegmentLength = maxWalkLength;
+				lastSegmentLength = maxWalkLength;
 			}
 
-
+			teleportPoint = GetPointAtDistance(argAgent.PathPoints, totalPathLength - lastSegmentLength);
 		}
 
-		private float CalculatePathLength(Vector3[] corners)
+		private float CalculatePathLength(List<Vector3> corners)
 		{
 			float length = 0f;
-			for (int i = 0; i < corners.Length - 1; i++)
+			for (int i = 0; i < corners.Count - 1; i++)
 			{
 				length += Vector3.Distance(corners[i], corners[i + 1]);
 			}
 			return length;
 		}
 
-		private Vector3 GetPointAtDistance(Vector3[] corners, float targetDistance)
+		private Vector3 GetPointAtDistance(List<Vector3> corners, float targetDistance)
 		{
 			float accumulated = 0f;
 
-			for (int i = 0; i < corners.Length - 1; i++)
+			for (int i = 0; i < corners.Count - 1; i++)
 			{
 				Vector3 start = corners[i];
 				Vector3 end = corners[i + 1];
@@ -145,7 +135,7 @@ namespace Tac.Agent
 			}
 
 			// Если targetDistance больше длины пути, возвращаем последнюю точку
-			return corners[corners.Length - 1];
+			return corners[corners.Count - 1];
 		}
 
 		public Gradient CreatePhaseGradient(Color[] phaseColors)

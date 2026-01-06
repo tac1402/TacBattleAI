@@ -42,7 +42,10 @@ namespace Tac.Society
 						}*/
 
 						plan.Person.TargetId = agentPoint.ObjectId;
-						plan.Person.Walk(agentPoint.PointPosition);
+						plan.Person.TargetPoint = agentPoint.PointPosition;
+						plan.Person.PathStatus = 1;
+						AgentPath.Enqueue(plan.Person);
+						//plan.Person.WalkTeleport(agentPoint.PointPosition);
 						plan.Person.IsBusy = true;
 						plan.Person.LocatedId = -1;
 					}

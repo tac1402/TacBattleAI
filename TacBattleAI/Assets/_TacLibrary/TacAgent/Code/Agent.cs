@@ -3,10 +3,10 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using Tac.HealthSystem;
 using UnityEngine;
 using UnityEngine.AI;
-
-using Tac.HealthSystem;
 
 namespace Tac.Agent
 {
@@ -14,7 +14,6 @@ namespace Tac.Agent
 	{
 		public NavMeshAgent agent;
 		public StatusBar StatusBar;
-		//public AgentAnimator agentAnimator;
 
 		public float WalkDistance;
 
@@ -39,6 +38,7 @@ namespace Tac.Agent
 			}
 		}
 
+		public int PathStatus = 0; // 0 - нет пути, 1 - нужно посчитать, 2 - путь расчитан, 3 - частично расчитан
 
 		/// <summary>
 		/// Возникает, когда агент заканчивает движение к заданной цели
@@ -48,7 +48,7 @@ namespace Tac.Agent
 		/// <summary>
 		/// Цель движения агента, если он движется
 		/// </summary>
-		public Vector3_ WalkTarget = Vector3_.zero;
+		public Vector3_ TargetPoint = Vector3_.zero;
 
 		/// <summary>
 		/// Контроль дистанции, можно использовать только внутри класса, в т.ч. partial
@@ -98,12 +98,23 @@ namespace Tac.Agent
 			{
 				WalkDistance = 0;
 				agent.stoppingDistance = stoppingDistance;
-				WalkTarget = argTarget;
+				TargetPoint = argTarget;
 				agent.SetDestination(argTarget.To());
 				if (agent.isStopped)
 				{
 					agent.isStopped = false;
 				}
+			}
+		}
+
+		public void Walk(float stoppingDistance = 0.1f)
+		{
+			WalkDistance = 0;
+			agent.stoppingDistance = stoppingDistance;
+			agent.SetPath(PathFull[0]);
+			if (agent.isStopped)
+			{
+				agent.isStopped = false;
 			}
 		}
 
@@ -129,13 +140,13 @@ namespace Tac.Agent
 
 		public void CheckWalkEnd()
 		{
-			if (WalkTarget == Vector3_.zero) { return; }
+			if (TargetPoint == Vector3_.zero) { return; }
 
-			float d = Vector3.Distance(transform.position, WalkTarget.To());
-			if (d < 1.0)
+			float d = Vector3.Distance(transform.position, TargetPoint.To());
+			if (d <= agent.stoppingDistance)
 			{
 				agent.isStopped = true;
-				WalkTarget = Vector3_.zero;
+				TargetPoint = Vector3_.zero;
 				WalkDistance = 0;
 				if (OnWalkEnd != null)
 				{
@@ -169,7 +180,54 @@ namespace Tac.Agent
 			}
 		}
 
-		public LineRenderer Path;
+		public List<Vector3> PathPoints;
+		public List<NavMeshPath> PathFull;
+
+		public void CalculatePath()
+		{
+
+			if (PathStatus == 1 || PathStatus == 3)
+			{
+				Vector3 from = transform.position;
+				Vector3 to = TargetPoint.To();
+				if (PathStatus == 1)
+				{
+					PathPoints = new List<Vector3>();
+					PathFull = new List<NavMeshPath>();
+				}
+				if (PathStatus == 3)
+				{
+					NavMeshPath lastPath = PathFull[PathFull.Count - 1];
+					int lastIndex = lastPath.corners.Length - 1;
+					from = lastPath.corners[lastIndex];
+				}
+
+				NavMeshPath tmpPath = new NavMeshPath();
+				bool isPath = NavMesh.CalculatePath(from, to, NavMesh.AllAreas, tmpPath);
+
+				if (isPath)
+				{
+					if (tmpPath.status == NavMeshPathStatus.PathComplete)
+					{
+						PathStatus = 2;
+					}
+					else if (tmpPath.status == NavMeshPathStatus.PathPartial)
+					{
+						PathStatus = 3;
+					}
+
+					PathFull.Add(tmpPath);
+					for (int i = 0; i < tmpPath.corners.Length; i++)
+					{
+						PathPoints.Add(tmpPath.corners[i]);
+					}
+				}
+			}
+		}
+
+
+
+		public LineRenderer PathRender;
 		private float PathHeightOffset = 0.25f;
 
 		private IEnumerator DrawPath()
@@ -178,14 +236,14 @@ namespace Tac.Agent
 
 			while (true)
 			{
-				if (agent.path != null)
+				if (PathPoints != null)
 				{
-					if (Path != null)
+					if (PathRender != null)
 					{
-						Path.positionCount = agent.path.corners.Length;
-						for (int i = 0; i < agent.path.corners.Length; i++)
+						PathRender.positionCount = PathPoints.Count;
+						for (int i = 0; i < PathPoints.Count; i++)
 						{
-							Path.SetPosition(i, agent.path.corners[i] + Vector3.up * PathHeightOffset);
+							PathRender.SetPosition(i, PathPoints[i] + Vector3.up * PathHeightOffset);
 						}
 					}
 				}

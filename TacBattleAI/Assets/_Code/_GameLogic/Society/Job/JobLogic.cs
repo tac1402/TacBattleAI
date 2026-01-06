@@ -6,8 +6,6 @@ namespace Tac.Society
 {
 	public partial class Job
 	{
-		protected DayNight DayNight;
-
 		/// <summary>
 		/// Планы персонажей на игровой день
 		/// </summary>
@@ -29,17 +27,6 @@ namespace Tac.Society
 				plan.DayPlan.Clear();
 
 				plan.Add(plan.Person.WorkPlace);
-			}
-		}
-
-
-
-		public virtual void Init(DayNight argDayNight)
-		{
-			if (IsInit == false)
-			{
-				DayNight = argDayNight;
-				IsInit = true;
 			}
 		}
 

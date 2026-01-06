@@ -13,16 +13,6 @@ namespace Tac
 	{
 
 		/// <summary>
-		/// Длина дня в реальных секундах
-		/// </summary>
-		public float DayLengthFast = 30;
-		/// <summary>
-		/// Длина ночи в реальных секундах
-		/// </summary>
-		public float NightLengthFast = 30;
-
-
-		/// <summary>
 		/// Текстовое поле в UI в котором будет отображаться текущие время
 		/// </summary>
 		public Text GameTime;
@@ -90,10 +80,6 @@ namespace Tac
 				if (timeMode == TimeMode.Normal)
 				{
 					daySpeedMultiplier = GameDayLenght / (float)(DayLength + NightLength);
-				}
-				else if (timeMode == TimeMode.Fast)
-				{
-					daySpeedMultiplier = GameDayLenght / (float)(DayLengthFast + NightLengthFast);
 				}
 
 				if (TimeModeTxt != null)
