@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Tac.Agent;
+using Tac.Organization;
 using Tac.Person;
 
 namespace Tac.Society

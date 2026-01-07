@@ -2,9 +2,10 @@
 // Copyright (C) 2025-26 Sergej Jakovlev
 
 using System.Collections.Generic;
-using Tac.Agent;
-using Tac.Society;
 using UnityEngine.InputSystem.Utilities;
+
+using Tac.Agent;
+using Tac.Organization;
 
 namespace Tac.Person
 { 

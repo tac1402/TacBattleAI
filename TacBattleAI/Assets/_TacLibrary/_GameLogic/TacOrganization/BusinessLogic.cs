@@ -1,8 +1,7 @@
-using UnityEngine;
 
 using Tac.Agent;
 
-namespace Tac.Society
+namespace Tac.Organization
 {
 	public partial class Business : AgentPoint
 	{
