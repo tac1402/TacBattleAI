@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Tac.Organization;
 using Tac.Person;
 
 namespace Tac.Society

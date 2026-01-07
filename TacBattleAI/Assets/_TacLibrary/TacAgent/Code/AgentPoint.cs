@@ -31,7 +31,6 @@ namespace Tac.Agent
 
 		public Vector3 EnterSize = new Vector3(2, 2, 2);
 		public bool HideAgent = true;
-		public Vector3 TruckPointSize = new Vector3(4, 2, 4);
 
 		public LayerMask AgentLayer;
 

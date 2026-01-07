@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem.Utilities;
 
 using Tac.Agent;
-using Tac.Organization;
 
 namespace Tac.Person
 { 
@@ -56,9 +55,9 @@ namespace Tac.Person
 		/// <summary>
 		/// Ìוסעמ נאבמעû
 		/// </summary>
-		public Business WorkPlace
+		public AgentPoint WorkPlace
 		{
-			get { return (GetPlace("Work") as Business); }
+			get { return (GetPlace("Work")); }
 			set { SetPlace("Work", value); }
 		}
 
