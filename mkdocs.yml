@@ -14,7 +14,7 @@ nav:
     - Item: TacStandart/Item.md
     - ModelTypes: TacStandart/ModelTypes.md
     - Component: TacStandart/Component.md
-    - Item2: TacStandart/Item2.md
+    - BuildItem: TacStandart/BuildItem.md
     - Vector: TacStandart/Vector.md
     - RandomWorld: TacStandart/RandomWorld.md
     - RandomUnique: TacStandart/RandomUnique.md

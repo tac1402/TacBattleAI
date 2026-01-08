@@ -1,8 +1,8 @@
 ---
-title: Item2
+title: BuildItem
 ---
 
-Сущность второго поколения, которая наследуется от [Item](../Item) и расширяется различными компонентами. 
+Т.н. сущность второго поколения, которая наследуется от [Item](../Item) и расширяется различными компонентами. Суть в том, что эту сущность можно не только создать в сцене (это только Item), но и пользователь может выполнять над ней различные действия по 'постройке' (это уже BuildItem) - поворачивать, выбирать в каком месте разместить и т.п.
 
 
 # Tac.Wireframe
@@ -10,7 +10,7 @@ title: Item2
 ```csharp
 namespace Tac
 {
-    public partial class Item2 : Item 
+    public partial class BuildItem : Item 
     {
 		public Wireframe Wireframe; // В любую сущность встраиваться возможно показать сетку
 		public void InitWireframe() { ... } // Перед использованием требует инициализации, ищет в том же объекте компонент Wireframe
@@ -27,7 +27,7 @@ namespace Tac
 ```csharp
 namespace Tac
 {
-	public partial class Item2 : Item
+	public partial class BuildItem : Item
 	{
 		public GameObject Pivot; // Точка вокруг которой будет происходить вращение. GameObject определяется пустым в префабе устанавливая только координаты.
 		public GameObject View; // Уровень в префабе, который отображается в сцене
@@ -49,14 +49,14 @@ namespace Tac
 ```csharp
 namespace Tac
 {
-	public partial class Item2 : Item
+	public partial class BuildItem : Item
 	{
 		public bool AllowMove = true; // Можно ли перемещать объект
 		public Collider[] Colliders; // Список всех коллайдеро объекта, вызвав InitColliders() вы заполните их автоматически
 		public int GhostId; // Идентификатор, еще не построенного/ не существующего объекта в мире
 
 		public void InitColliders() // Требует инициализации, чтобы собрать в массив Colliders все коллайдеры объекта (включая дочерние объекты)
-		public static Item2 GetItem(GameObject go) // находит сущность в объекте go, если он не имеет компонента Item2 ищет компонент BuildPart, который указывает на главный объект, который содержит Item2
+		public static BuildItem GetItem(GameObject go) // находит сущность в объекте go, если он не имеет компонента BuildItem ищет компонент BuildPart, который указывает на главный объект, который содержит BuildItem
 	}
 }
 ```
@@ -66,7 +66,7 @@ namespace Tac
 ```csharp
 namespace Tac
 {
-	public partial class Item2 : Item
+	public partial class BuildItem : Item
 	{
 		public Vector3 DiscreteStep = Vector3.one; // Определяет шаг дискретности по всем осям, по умолчанию =1, используется при строительстве, позволяя размещать строимые объекты только учитывая дискретную сетку
 		public Vector3 GetDiscrete(Vector3 argValue, XYZ argXYZ) { ... } // Дискретизирует вектор argValue в соответствии с указанными осями argXYZ для которых нужно выполнить дискретизацию
