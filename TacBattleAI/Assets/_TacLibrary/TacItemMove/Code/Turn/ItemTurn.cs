@@ -14,7 +14,7 @@ namespace Tac.ItemMove
 	{
 		public KeyCode RotateKey = KeyCode.Mouse1;
 
-		private Item2 selectedItem;
+		private BuildItem selectedItem;
 
 
 		void Update()
@@ -28,7 +28,7 @@ namespace Tac.ItemMove
 			}
 		}
 
-		public void OnItemTap(Item2 argItem)
+		public void OnItemTap(BuildItem argItem)
 		{
 			selectedItem = argItem;
 		}
@@ -37,7 +37,7 @@ namespace Tac.ItemMove
 
 namespace Tac
 {
-	public partial class Item2 : Item
+	public partial class BuildItem : Item
 	{
 		public GameObject Pivot;
 		public GameObject View;

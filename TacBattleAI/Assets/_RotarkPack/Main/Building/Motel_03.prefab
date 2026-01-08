@@ -224,14 +224,9 @@ MonoBehaviour:
   ModelType: 0
   Size: {x: 10, y: 3, z: 10}
   Point: {fileID: 1357579050423664336}
-  TruckPoint: {fileID: 0}
   EnterSize: {x: 2, y: 2, z: 2}
   HideAgent: 1
-  TruckPointSize: {x: 4, y: 2, z: 4}
   AgentLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  TruckLayer:
     serializedVersion: 2
     m_Bits: 0
   WorkingHours: {x: 8, y: 18}
@@ -250,11 +245,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tac.Item2
   ObjectId: 0
-  GroupId: -1
+  GroupId: 2
   ModelName: 
   ModelType: 0
   DiscreteStep: {x: 1, y: 1, z: 1}
-  AllowMove: 1
+  AllowMove: 0
   Colliders: []
   GhostId: 0
   Pivot: {fileID: 0}
@@ -264,7 +259,7 @@ MonoBehaviour:
     ViewCorrect: []
     CurrentTurn: 0
   DefaultTurn: 1
-  AllowTurn: 1
+  AllowTurn: 0
   Wireframe: {fileID: 0}
 --- !u!1 &4455638671269259742
 GameObject:

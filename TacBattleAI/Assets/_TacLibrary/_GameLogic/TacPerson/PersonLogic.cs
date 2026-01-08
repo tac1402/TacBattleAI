@@ -2,7 +2,6 @@
 // Copyright (C) 2025-26 Sergej Jakovlev
 
 using System.Collections.Generic;
-using UnityEngine.InputSystem.Utilities;
 
 using Tac.Agent;
 
@@ -42,13 +41,6 @@ namespace Tac.Person
 			}
 		}
 
-
-
-
-		public virtual void AddStatsSkills()
-		{
-			Stats.Add("Health", 100);
-		}
 
 		#region Places
 

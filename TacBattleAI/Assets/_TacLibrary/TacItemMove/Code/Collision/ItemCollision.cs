@@ -15,8 +15,8 @@ namespace Tac.ItemMove
 		public TopCamera TopCamera;
 		public LayerMask EntityLayer;
 
-		private Item2 objectToPlace;
-		public Item2 ObjectToPlace
+		private BuildItem objectToPlace;
+		public BuildItem ObjectToPlace
 		{
 			get { return objectToPlace; }
 			set
@@ -70,7 +70,7 @@ namespace Tac.ItemMove
 			}
 		}
 
-		public void OnItemMove(Item2 argItem)
+		public void OnItemMove(BuildItem argItem)
 		{
 			if (argItem != null)
 			{
@@ -100,12 +100,12 @@ namespace Tac.ItemMove
 				}
 			}
 
-			Item2 newItem = null;
+			BuildItem newItem = null;
 			int CollissionCount = 0;
 
 			for (int i = 0; i < entityColliders.Count; i++)
 			{
-				newItem = Item2.GetItem(entityColliders[i].gameObject);
+				newItem = BuildItem.GetItem(entityColliders[i].gameObject);
 
 				if (newItem == null)
 				{
@@ -155,7 +155,7 @@ namespace Tac.ItemMove
 
 namespace Tac
 {
-	public partial class Item2 : Item
+	public partial class BuildItem : Item
 	{
 		public bool AllowMove = true;
 		public Collider[] Colliders;
@@ -170,12 +170,12 @@ namespace Tac
 			Colliders = GetComponentsInChildren<Collider>();
 		}
 
-		public static Item2 GetItem(GameObject go)
+		public static BuildItem GetItem(GameObject go)
 		{
-			Item2 retItem = null;
+			BuildItem retItem = null;
 			if (go != null)
 			{
-				retItem = go.GetComponent<Item2>();
+				retItem = go.GetComponent<BuildItem>();
 				if (retItem == null)
 				{
 					BuildPart part = go.GetComponent<BuildPart>();

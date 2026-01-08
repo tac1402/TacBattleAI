@@ -6,7 +6,7 @@ namespace Tac
 {
 	public class BuildPart : MonoBehaviour
 	{
-		public Item2 Main;
+		public BuildItem Main;
 		public GameObject MainObj;
 	}
 }

@@ -21,8 +21,8 @@ namespace Tac.ItemMove
 		public GameObject Grid;
 		public XYZ DiscreteType = XYZ.XYZ;
 
-		private Item2 ModelObjectToPlace;
-		private Item2 objectToPlace;
+		private BuildItem ModelObjectToPlace;
+		private BuildItem objectToPlace;
 
 		private bool isBuildMode;
 		public bool IsBuildMode
@@ -141,7 +141,7 @@ namespace Tac.ItemMove
 		public void SelectEntity(string argModelName)
 		{
 			GameObject locModelObj = GhostCache.ItemCreate.GetModel(argModelName);
-			Item2 locItem = locModelObj.GetComponent<Item2>();
+			BuildItem locItem = locModelObj.GetComponent<BuildItem>();
 
 			IsBuildMode = true;
 
@@ -154,7 +154,7 @@ namespace Tac.ItemMove
 		/// </summary>
 		void PlaceObject()
 		{
-			Item2 locItem = CreateObjectFromGhost(objectToPlace);
+			BuildItem locItem = CreateObjectFromGhost(objectToPlace);
 
 			ResetObjectToPlace();
 		}
@@ -185,7 +185,7 @@ namespace Tac.ItemMove
 			GhostCache.ItemCreate.PredeffinedObjectId = 0;
 			ghostObject.transform.SetParent(null);
 
-			objectToPlace = ghostObject.GetComponent<Item2>();
+			objectToPlace = ghostObject.GetComponent<BuildItem>();
 			objectToPlace.InitColliders();
 			objectToPlace.InitWireframe();
 			//objectToPlace.Collider = ghostObject.GetComponentsInChildren<Collider>();
@@ -194,12 +194,12 @@ namespace Tac.ItemMove
 			objectToPlace.WireframeShow(WireframeMode.Green);
 		}
 
-		private Item2 CreateObjectFromGhost(Item2 argItem)
+		private BuildItem CreateObjectFromGhost(BuildItem argItem)
 		{
 			GameObject gameObject = GhostCache.ItemCreate.CreateObject(argItem.ModelName,
 				argItem.gameObject.transform.position.x, argItem.gameObject.transform.position.z, argItem.gameObject.transform.position.y, argItem.ModelType);
 
-			Item2 retItem = gameObject.GetComponent<Item2>();
+			BuildItem retItem = gameObject.GetComponent<BuildItem>();
 
 			retItem.SetTurn(argItem.Turn.CurrentTurn);
 
@@ -211,7 +211,7 @@ namespace Tac.ItemMove
 
 namespace Tac
 {
-	public partial class Item2 : Item
+	public partial class BuildItem : Item
 	{
 		public Vector3 DiscreteStep = Vector3.one;
 

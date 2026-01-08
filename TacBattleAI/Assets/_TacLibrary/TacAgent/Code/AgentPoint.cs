@@ -53,7 +53,7 @@ namespace Tac.Agent
 			{ 
 				//DayNightController = world.GetComponent<DayNightController>();
 			}
-			Item2 item = GetComponent<Item2>();
+			BuildItem item = GetComponent<BuildItem>();
 			if (item != null)
 			{
 				ObjectId = item.ObjectId;

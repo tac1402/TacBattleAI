@@ -20,7 +20,7 @@ namespace Tac.UI
 		private InfoPanel CurrentPanel;
 
 		private AgentPoint currentAgentPoint;
-		private Item2 currentItem;
+		private BuildItem currentItem;
 		private Person.Person currentPerson;
 
 		private SelectionType Type = SelectionType.None;
@@ -94,7 +94,7 @@ namespace Tac.UI
 		}
 
 
-		private void OnItemTap(Item2 argItem)
+		private void OnItemTap(BuildItem argItem)
 		{
 			currentItem = argItem;
 			if (currentItem != null)
@@ -195,7 +195,7 @@ namespace Tac.UI
 
 namespace Tac.Camera
 {
-	public delegate void ItemInfo(Item2 argItem);
+	public delegate void ItemInfo(BuildItem argItem);
 
 	public partial class TopCamera
 	{
@@ -215,7 +215,7 @@ namespace Tac.Camera
 			}
 		}
 
-		private Item2 selectedItem;
+		private BuildItem selectedItem;
 
 
 		private void Camera_OnUpdateItem()
@@ -228,7 +228,7 @@ namespace Tac.Camera
 			if (Mouse.current.leftButton.wasPressedThisFrame == false) { return; }
 
 			GameObject go = GetBuilding(Mouse.current.position.ReadValue());
-			Item2 itemTapped = Item2.GetItem(go);
+			BuildItem itemTapped = BuildItem.GetItem(go);
 
 			if (itemTapped != null)
 			{

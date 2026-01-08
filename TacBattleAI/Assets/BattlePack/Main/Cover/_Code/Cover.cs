@@ -6,7 +6,7 @@ using Tac.ItemMove;
 
 namespace Tac
 {
-	public class Cover : Item2
+	public class Cover : BuildItem
 	{
 		public override void SetTurn(TurnType argRotateIndex)
 		{
