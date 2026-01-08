@@ -13,12 +13,12 @@ namespace Tac.ItemMove
 {
 	public class ItemMove
 	{
-	    public void Move(Item2 item, ... ) { ... }
+	    public void Move(BuildItem item, ... ) { ... }
 	}
 }
 namespace Tac
 {
-	public partial class Item2 : Item
+	public partial class BuildItem : Item
 	{
 		public bool AllowMove = true;
 	}
@@ -30,17 +30,17 @@ namespace Tac.ItemRotate
 {
 	public class ItemRotate
 	{
-	    public void Rotate(Item2 item, ... ) { ... }
+	    public void Rotate(BuildItem item, ... ) { ... }
 	}
 }
 namespace Tac
 {
-	public partial class Item2 : Item
+	public partial class BuildItem : Item
 	{
 		public bool AllowRotate = true;
 	}
 }
 ```
 
-Выше демонстрируется только идея использования partial. Настоящий пример см. состав класса [Item2](TacStandart/Item2.md), как он наполняется в зависимости от используемых компонентов. Так же учитывайте, что сами компоненты могут дополнять свою функциональность через исполоьзование partial. Например, см. в компоненте базовой камеры [TopCamera](TacCamera/TopCamera.md) и её расширение компонентом [TacItemMove](TacItemMove/TopCamera_.md). Таким образом, partial так же автоматически выполняет задачу встраивания, что называют [инъекцией/внедрением зависимостей](https://learn.microsoft.com/ru-ru/dotnet/core/extensions/dependency-injection), но без оверхеда. 
+Выше демонстрируется только идея использования partial. Настоящий пример см. состав класса [BuildItem](TacStandart/BuildItem.md), как он наполняется в зависимости от используемых компонентов. Так же учитывайте, что сами компоненты могут дополнять свою функциональность через исполоьзование partial. Например, см. в компоненте базовой камеры [TopCamera](TacCamera/TopCamera.md) и её расширение компонентом [TacItemMove](TacItemMove/TopCamera_.md). Таким образом, partial так же автоматически выполняет задачу встраивания, что называют [инъекцией/внедрением зависимостей](https://learn.microsoft.com/ru-ru/dotnet/core/extensions/dependency-injection), но без оверхеда. 
 
