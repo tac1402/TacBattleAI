@@ -1,0 +1,8 @@
+---
+title: AgentSelection
+---
+Компонент 
+
+```csharp
+
+```

@@ -41,6 +41,10 @@ nav:
     - Eye: TacAgent/Eye.md
     - AgentInPoint: TacAgent/AgentInPoint.md
     - AgentPoint: TacAgent/AgentPoint.md
+  - TacAgent UI:
+    - AgentSelection: TacAgent/AgentSelection.md
+    - HealthBar: TacAgent/HealthBar.md
+    - StatusBar: TacAgent/StatusBar.md
   - TacHealth:
     - BodyParts: TacHealth/BodyParts.md
     - PhysicalSkill: TacHealth/PhysicalSkill.md

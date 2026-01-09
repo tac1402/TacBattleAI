@@ -1,0 +1,8 @@
+---
+title: HealthBar
+---
+Компонент 
+
+```csharp
+
+```
