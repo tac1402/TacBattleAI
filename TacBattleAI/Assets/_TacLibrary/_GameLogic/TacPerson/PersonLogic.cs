@@ -9,6 +9,14 @@ namespace Tac.Person
 { 
 	public partial class Person : Agent.Agent
 	{
+
+		#region  Stats & Skills
+
+		/// <summary>
+		/// Изменилась информация о статах или скилах
+		/// </summary>
+		public event Change OnChangeInfo;
+
 		/// <summary>
 		/// Статы (характеристики)
 		/// </summary>
@@ -18,28 +26,81 @@ namespace Tac.Person
 		/// </summary>
 		public Dictionary<string, float> Skills = new Dictionary<string, float>();
 
+		/// <summary>
+		/// Пол (мужской или женский) персонажа
+		/// </summary>
 		public GenderType Gender = GenderType.Unknow;
 
-
+		
 		public List<NamedValue> Info = new List<NamedValue>();
 		public string InfoTxt
 		{
 			get
 			{
 				string ret = "";
-				foreach (var item in Stats)
+				foreach (var item in Info)
 				{
-					ret += item.Key + "\t = " + item.Value.ToString("F2") + "\n";
+					ret += item.Name + "\t = " + item.Value.ToString("F2") + "\n";
 				}
-				foreach (var item in Skills)
-				{
-					ret += item.Key + "\t = " + item.Value.ToString("F2") + "\n";
-				}
-				//ret += "Education" + "\t = " + Education.ToString("F1") + "\n";
-				//ret += "WorkExperience" + "\t = " + WorkExperience.ToString("F0") + "\n";
 				return ret;
 			}
 		}
+
+		public void AddSkill(string argName, float argValue = 0, bool argAddInfo = true)
+		{
+			Skills.Add(argName, argValue);
+			if (argAddInfo == true)
+			{
+				Info.Add(new NamedValue(argName, argValue));
+			}
+		}
+
+		public void AddStat(string argName, float argValue = 0, bool argAddInfo = true)
+		{
+			Stats.Add(argName, argValue);
+			if (argAddInfo == true)
+			{
+				Info.Add(new NamedValue(argName, argValue));
+			}
+		}
+
+
+
+
+		public void Change(string argName, float argValue)
+		{
+			if (argValue < 0) { argValue = 0; }
+
+			if (Stats.ContainsKey(argName))
+			{
+				Stats[argName] = argValue;
+			}
+			if (Skills.ContainsKey(argName))
+			{
+				Skills[argName] = argValue;
+			}
+			ChangeInfo(argName, argValue);
+		}
+
+		private void ChangeInfo(string argName, float argValue)
+		{
+			for (int i = 0; i < Info.Count; i++)
+			{
+				if (Info[i].Name == argName)
+				{
+					Info[i].Value = argValue;
+
+					if (OnChangeInfo != null)
+					{
+						OnChangeInfo();
+					}
+					break;
+				}
+			}
+		}
+
+
+		#endregion
 
 
 		#region Places
@@ -106,16 +167,6 @@ namespace Tac.Person
 
 		#endregion
 
-
-
-#if OnlyLogic
-		public void Init() 
-		{ 
-			AddStatsSkills();
-		}
-		public void CheckPosition() { }
-		public void Walk(Vector3_ argTarget, float stoppingDistance = 0.1f) { }
-#endif
 
 	}
 }
