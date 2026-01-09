@@ -1,0 +1,8 @@
+---
+title: InfoPanel
+---
+Компонент 
+
+```csharp
+
+```

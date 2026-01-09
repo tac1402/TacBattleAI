@@ -48,5 +48,12 @@ nav:
   - TacPerson:
     - PersonLogic: TacPerson/PersonLogic.md
     - Person: TacPerson/Person.md
+    - PersonPlan: TacPerson/PersonPlan.md
     - PersonNameLogic: TacPerson/PersonNameLogic.md
     - PersonName: TacPerson/PersonName.md
+  - TacUI:
+    - UI прототипирование: TacUI/UI.md
+    - InfoPanel: TacUI/InfoPanel.md
+    - InfoPanelManager: TacUI/InfoPanelManager.md
+    - TableUI: TacUI/TableUI.md
+
