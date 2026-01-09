@@ -25,7 +25,7 @@ title: PersonLogic
 Так же смотрите [как слинковать](../linking) моего персонажа с TacLibrary.
 
 ## Stats
-_Dictionary\<string, float> Stats_
+_Dictionary\<string, float\> Stats_
 
 Т.н. статы персонажа, любые характеристики персонажа, значения которых можно выразить числом типа float. Каждая характеристика имеет свое уникальное текстовое (string) наименование. 
 
