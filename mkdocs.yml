@@ -10,7 +10,7 @@ nav:
   - Архитектура библиотеки: architecture.md
   - Архитектурная легкость: simplicity.md
   - Отделение логики: separation.md
-  - Линковка с библиотекой: link.md
+  - Линковка с библиотекой: linking.md
   - TacStandart: 
     - Item: TacStandart/Item.md
     - ModelTypes: TacStandart/ModelTypes.md

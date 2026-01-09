@@ -22,7 +22,7 @@ title: PersonLogic
 		}
 ```
 
-Так же смотрите [как слинковать](../link) моего персонажа с TacLibrary.
+Так же смотрите [как слинковать](../linking) моего персонажа с TacLibrary.
 
 ## Stats
 _Dictionary<string, float> Stats_
