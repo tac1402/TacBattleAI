@@ -6,16 +6,21 @@ using UnityEngine.InputSystem;
 
 namespace Tac.Agent
 {
-	[Component(typeof(Agent), typeof(TopCamera))]
+	[Component(typeof(Agent), typeof(StatusBar), typeof(TopCamera))]
 	public class AgentSelection : MonoBehaviour
     {
 		public TopCamera TopCamera;
+		public StatusBar StatusBar;
+
+		public event AgentInfo OnAgentSelect;
+		public event AgentInfo OnAgentDeselect;
+
 
 		private Agent selectedAgent;
 		public Agent SelectedAgent
 		{ 
 			get { return selectedAgent; }
-			set 
+			internal set 
 			{
 				
 				if (value == null && selectedAgent != null)
@@ -39,11 +44,6 @@ namespace Tac.Agent
 				}
 			}
 		}
-		public StatusBar StatusBar;
-
-		public event AgentInfo OnAgentSelect;
-		public event AgentInfo OnAgentDeselect;
-
 
 
 		void Awake()
@@ -72,7 +72,6 @@ namespace Tac.Agent
 	{
 		public GameObject SelectionUI;
 	}
-
 }
 
 namespace Tac.Camera
@@ -83,10 +82,10 @@ namespace Tac.Camera
 	{
 		public LayerMask AgentLayer;
 
-		public event AgentInfo OnAgentTap;
+		internal event AgentInfo OnAgentTap;
 
 		private bool initAgent;
-		public bool InitAgent
+		internal bool InitAgent
 		{
 			get { return initAgent; }
 			set 
@@ -145,7 +144,10 @@ namespace Tac.Camera
 			}
 		}
 
-		public GameObject GetAgent(Vector2 touch)
+		/// <summary>
+		/// Получить агента по координатам, выполнив рейкаст
+		/// </summary>
+		internal protected GameObject GetAgent(Vector2 touch)
 		{
 			Ray ray = camera.ScreenPointToRay(touch);
 			return GetRaycast(ray, AgentLayer).Item2;

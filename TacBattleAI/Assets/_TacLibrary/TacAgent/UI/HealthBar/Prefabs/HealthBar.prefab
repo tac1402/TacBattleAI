@@ -352,6 +352,7 @@ MonoBehaviour:
   Image: {fileID: 3120546059561595694}
   Text: {fileID: 7124862089273733780}
   AnimationSpeed: 1
+  ShowText: 0
   ShowPercentage: 0
   CurrentHealth:
     Current: -10
