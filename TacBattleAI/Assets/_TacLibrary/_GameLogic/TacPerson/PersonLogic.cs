@@ -13,9 +13,9 @@ namespace Tac.Person
 		#region  Stats & Skills
 
 		/// <summary>
-		/// Изменилась информация о статах или скилах
+		/// Пол (мужской или женский) персонажа
 		/// </summary>
-		public event Change OnChangeInfo;
+		public GenderType Gender = GenderType.Unknow;
 
 		/// <summary>
 		/// Статы (характеристики)
@@ -26,13 +26,14 @@ namespace Tac.Person
 		/// </summary>
 		public Dictionary<string, float> Skills = new Dictionary<string, float>();
 
-		/// <summary>
-		/// Пол (мужской или женский) персонажа
-		/// </summary>
-		public GenderType Gender = GenderType.Unknow;
 
-		
+		/// <summary>
+		/// Информация о статах или скилах, которая поддерживается для отображения в UI
+		/// </summary>
 		public List<NamedValue> Info = new List<NamedValue>();
+		/// <summary>
+		/// Полная информация о статах и скилах, разбитая на строки для UI
+		/// </summary>
 		public string InfoTxt
 		{
 			get
@@ -45,6 +46,11 @@ namespace Tac.Person
 				return ret;
 			}
 		}
+
+		/// <summary>
+		/// Изменилась информация о статах или скилах
+		/// </summary>
+		public event Change OnChangeInfo;
 
 		public void AddSkill(string argName, float argValue = 0, bool argAddInfo = true)
 		{
@@ -64,9 +70,9 @@ namespace Tac.Person
 			}
 		}
 
-
-
-
+		/// <summary>
+		/// Сменить значение стата или скила 
+		/// </summary>
 		public void Change(string argName, float argValue)
 		{
 			if (argValue < 0) { argValue = 0; }
@@ -122,28 +128,15 @@ namespace Tac.Person
 			get { return GetPlace("Residence"); }
 			set { SetPlace("Residence", value); }
 		}
-		/// <summary>
-		/// Место для обучения
-		/// </summary>
-		public AgentPoint LearningPlace
-		{
-			get { return GetPlace("Learning"); }
-			set { SetPlace("Learning", value); }
-		}
-		/// <summary>
-		/// Место для прогулок
-		/// </summary>
-		public AgentPoint CenterPlace
-		{
-			get { return GetPlace("Center"); }
-			set { SetPlace("Center", value); }
-		}
 
 		/// <summary>
 		/// Места интереса
 		/// </summary>
 		public Dictionary<string, AgentPoint> Places = new Dictionary<string, AgentPoint>();
 
+		/// <summary>
+		/// Установить место
+		/// </summary>
 		private void SetPlace(string argKey, AgentPoint argPlace)
 		{
 			if (Places.ContainsKey(argKey))
@@ -155,6 +148,9 @@ namespace Tac.Person
 				Places.Add(argKey, argPlace);
 			}
 		}
+		/// <summary>
+		/// Получить место
+		/// </summary>
 		private AgentPoint GetPlace(string argKey)
 		{
 			AgentPoint ret = null;
