@@ -17,6 +17,7 @@ public partial class World : MonoBehaviour
 	private ItemCreate ItemCreate;
 	private RunPanel RunPanel;
 	private InfoPanelManager InfoPanelManager;
+	private SaveCatalog SaveCatalog;
 
 	private void Start()
 	{
@@ -34,6 +35,10 @@ public partial class World : MonoBehaviour
 			RunPanel = ui.GetComponentInChildren<RunPanel>(true);
 			InfoPanelManager = ui.GetComponentInChildren<InfoPanelManager>(true);
 			InfoPanelManager.Init();
+			SaveCatalog = ui.GetComponentInChildren<SaveCatalog>(true);
+			SaveManager saveManager = GetComponent<SaveManager>();
+			saveManager.World = this;
+			SaveCatalog.SaveManager = saveManager;
 		}
 
 		//GameObject rock = ItemCreate.CreateObject("Rock_A", 490, 485, 12);

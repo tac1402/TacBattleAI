@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public interface IDayNightController
+public interface IDayNight
 {
 	int CurrentDay { get; set; }
 

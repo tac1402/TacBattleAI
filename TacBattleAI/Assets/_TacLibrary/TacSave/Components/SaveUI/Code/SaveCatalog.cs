@@ -5,11 +5,14 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
+using Tac.DConvert;
+
+
 public class SaveCatalog : MonoBehaviour
 {
-    public string Version = "v1.35";
+    public string Version = "v0.01";
 
-    public IDayNightController DayNightController;
+    public IDayNight DayNight;
 
 	public TMP_InputField PlaythroughName;
 
@@ -17,8 +20,8 @@ public class SaveCatalog : MonoBehaviour
     {
         get 
         {
-            int day = DayNightController.CurrentDay;
-            string DayTxt = "Day #" + day.ToString() + " " + DayNightController.GameTime.text;
+            int day = DayNight.CurrentDay;
+            string DayTxt = "Day #" + day.ToString() + " " + DayNight.GameTime.text;
             return DayTxt;
         }
     }
@@ -62,7 +65,7 @@ public class SaveCatalog : MonoBehaviour
 		GameObject world = GameObject.Find("World");
         if (world != null)
         {
-            DayNightController = world.GetComponent<IDayNightController>();
+            DayNight = world.GetComponent<IDayNight>();
         }
 
 		LoadAllPlaythrough();

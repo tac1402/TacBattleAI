@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -273,8 +273,8 @@ MonoBehaviour:
     y: 0
     width: 389
     height: 933
-  m_MinSize: {x: 276, y: 76}
-  m_MaxSize: {x: 4001, y: 4026}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -690,7 +690,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: []
+      m_SelectedIDs:
+      - m_Data: 35854
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
@@ -1406,7 +1407,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_RotarkPack/Main/Person/Men
+    - Assets/_RotarkCode/_GameView/World
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1416,24 +1417,26 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_RotarkPack/Main/Person/Men
+  - Assets/_RotarkCode/_GameView/World
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
+    scrollPos: {x: 0, y: 223}
     m_SelectedIDs:
-    - m_Data: 73470
+    - m_Data: 73342
     m_LastClickedID:
-      m_Data: 73470
+      m_Data: 73342
     m_ExpandedIDs:
     - m_Data: 0
+    - m_Data: 73030
+    - m_Data: 73032
+    - m_Data: 73034
+    - m_Data: 73036
     - m_Data: 73038
     - m_Data: 73040
-    - m_Data: 73042
-    - m_Data: 73044
     - m_Data: 73046
     - m_Data: 73048
     - m_Data: 73050
@@ -1446,7 +1449,6 @@ MonoBehaviour:
     - m_Data: 73064
     - m_Data: 73066
     - m_Data: 73068
-    - m_Data: 73070
     - m_Data: 73072
     - m_Data: 73074
     - m_Data: 73076
@@ -1454,12 +1456,14 @@ MonoBehaviour:
     - m_Data: 73082
     - m_Data: 73084
     - m_Data: 73088
-    - m_Data: 73090
-    - m_Data: 73092
-    - m_Data: 73094
-    - m_Data: 73096
-    - m_Data: 73212
-    - m_Data: 73228
+    - m_Data: 73194
+    - m_Data: 73206
+    - m_Data: 73252
+    - m_Data: 73260
+    - m_Data: 73280
+    - m_Data: 73336
+    - m_Data: 73342
+    - m_Data: 73348
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1493,6 +1497,10 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
+    - m_Data: 73030
+    - m_Data: 73032
+    - m_Data: 73034
+    - m_Data: 73036
     - m_Data: 73038
     - m_Data: 73040
     - m_Data: 73042
@@ -1519,10 +1527,6 @@ MonoBehaviour:
     - m_Data: 73084
     - m_Data: 73086
     - m_Data: 73088
-    - m_Data: 73090
-    - m_Data: 73092
-    - m_Data: 73094
-    - m_Data: 73096
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1549,9 +1553,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: []
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs:
+    - m_Data: 35854
+    m_LastClickedInstanceID: 35854
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs:
     - m_Data: 54580
     - m_Data: 104396
@@ -1586,8 +1591,8 @@ MonoBehaviour:
     - m_Data: 63338
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Item
-      m_OriginalName: Item
+      m_Name: WorldLogic
+      m_OriginalName: WorldLogic
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1595,7 +1600,7 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 35930
+        m_Data: 36848
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
