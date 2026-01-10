@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Tac
 {
 	/// <summary>
-	/// ”ниверсальна€ сущность второго поколени€ от Tac 
+	/// ”ниверсальна€ сущность от Tac 
 	/// </summary>
-    public abstract class Item : MonoBehaviour
+	public abstract partial class Item : MonoBehaviour
     {
 		/// <summary>
 		/// ”никальный индентификатор объекта в мире

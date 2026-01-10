@@ -20,7 +20,7 @@ namespace Tac.Agent
 		public Agent SelectedAgent
 		{ 
 			get { return selectedAgent; }
-			internal set 
+			private protected set 
 			{
 				
 				if (value == null && selectedAgent != null)
@@ -147,7 +147,7 @@ namespace Tac.Camera
 		/// <summary>
 		/// Получить агента по координатам, выполнив рейкаст
 		/// </summary>
-		internal protected GameObject GetAgent(Vector2 touch)
+		protected internal virtual GameObject GetAgent(Vector2 touch)
 		{
 			Ray ray = camera.ScreenPointToRay(touch);
 			return GetRaycast(ray, AgentLayer).Item2;

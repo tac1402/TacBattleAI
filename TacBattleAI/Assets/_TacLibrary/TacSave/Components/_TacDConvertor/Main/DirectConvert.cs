@@ -774,7 +774,7 @@ namespace Tac.DConvert
 
 									if (ret == null)
 									{
-                                        ret = o.GetComponent<PrefabId>();
+                                        ret = o.GetComponent<Item>();
 								    }
 								}
 							}

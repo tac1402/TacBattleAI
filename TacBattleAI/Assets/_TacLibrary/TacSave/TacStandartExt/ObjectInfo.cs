@@ -1,5 +1,5 @@
 ﻿// Author: Sergej Jakovlev <tac1402@gmail.com>
-// Copyright (C) 2021 Sergej Jakovlev
+// Copyright (C) 2021-26 Sergej Jakovlev
 
 using System;
 

@@ -1,0 +1,102 @@
+﻿// Author: Sergej Jakovlev <tac1402@gmail.com>
+// Copyright (C) 2023 Sergej Jakovlev
+
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
+using UnityEngine;
+
+namespace Tac.DConvert
+{
+    public interface IDataSave : IPrefabId
+    {
+        Queue<ObjectInfo> Data { get; }
+        string DataTag { get; set; }
+
+        string ClassName { get; set; }
+        List<string> PropertyName { get; set; }
+
+		bool IsLoad { get; set; }
+
+		#region default
+
+		private void ClearQ()
+		{
+			Data.Clear();
+		}
+
+		public T SaveQ<T>(T propertyValue, Expression<Func<T>> propertyLambda, PredefinedTag argTag)
+		{
+			return SaveQ(propertyValue, propertyLambda, argTag.ToString());
+		}
+
+		public T SaveQ<T>(T propertyValue, Expression<Func<T>> propertyLambda, string argTag = null)
+		{
+			MemberExpression me = propertyLambda.Body as MemberExpression;
+
+			MemberExpression m1 = me;
+			ConstantExpression c1 = null;
+			string tmpClassName = "";
+			string tmpPropertyName = me.Member.Name;
+			if (ClassName == "") { PropertyName = new List<string>(); }
+
+			while (tmpClassName == "")
+			{
+				if (m1 != null && m1.Expression != null)
+				{
+					c1 = m1.Expression as ConstantExpression;
+					m1 = m1.Expression as MemberExpression;
+
+					if (m1 != null)
+					{
+						tmpPropertyName = m1.Member.Name + "." + tmpPropertyName;
+					}
+					if (c1 != null)
+					{
+						tmpClassName = c1.Type.ToString();
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
+
+			ClassName = tmpClassName;
+			if (PropertyName.Contains(tmpPropertyName) == false)
+			{
+				PropertyName.Add(tmpPropertyName);
+			}
+
+			T a = propertyValue;
+
+			if (IsLoad == false)
+			{
+				Data.Enqueue(new ObjectInfo().Add(a, argTag));
+			}
+			else
+			{
+				a = (T)Data.Dequeue().Object;
+			}
+
+			return a;
+		}
+
+
+		public void SaveData(bool argLoadMode)
+		{
+			IsLoad = argLoadMode;
+			if (argLoadMode == false)
+			{
+				ClearQ();
+			}
+			Id = SaveQ(Id, () => Id);
+			PrefabName = SaveQ(PrefabName, () => PrefabName);
+		}
+
+		#endregion
+
+
+	}
+}
