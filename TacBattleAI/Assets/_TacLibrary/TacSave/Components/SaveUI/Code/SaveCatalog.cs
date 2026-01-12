@@ -12,7 +12,7 @@ public class SaveCatalog : MonoBehaviour
 {
     public string Version = "v0.01";
 
-    public IDayNight DayNight;
+    public IDayNight IDayNight;
 
 	public TMP_InputField PlaythroughName;
 
@@ -20,9 +20,7 @@ public class SaveCatalog : MonoBehaviour
     {
         get 
         {
-            int day = DayNight.CurrentDay;
-            string DayTxt = "Day #" + day.ToString() + " " + DayNight.GameTime.text;
-            return DayTxt;
+            return IDayNight.GameDays.text + " " + IDayNight.GameTime.text;
         }
     }
 
@@ -49,14 +47,14 @@ public class SaveCatalog : MonoBehaviour
 
     public int SelectedPlaythroughId = 0;
 
-    private ISaveManager saveManager;
-    public ISaveManager SaveManager
+    private ISaveManager isaveManager;
+    public ISaveManager ISaveManager
     {
-        get { return saveManager; }
+        get { return isaveManager; }
         set
         {
-            saveManager = value;
-            saveManager.Version = Version;
+            isaveManager = value;
+            isaveManager.Version = Version;
         }
     }
 
@@ -65,7 +63,7 @@ public class SaveCatalog : MonoBehaviour
 		GameObject world = GameObject.Find("World");
         if (world != null)
         {
-            DayNight = world.GetComponent<IDayNight>();
+            IDayNight = world.GetComponent<IDayNight>();
         }
 
 		LoadAllPlaythrough();
@@ -88,7 +86,7 @@ public class SaveCatalog : MonoBehaviour
         {
             CurrentPlaythroughId++;
             Playthrough walkthrough = AddPlaythrough(CurrentPlaythroughId, PlaythroughName.text);
-            DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath);
+            DirectoryInfo di = new DirectoryInfo(ISaveManager.SaveRootDir);
             di.CreateSubdirectory(walkthrough.FullName);
         }
     }
@@ -148,9 +146,9 @@ public class SaveCatalog : MonoBehaviour
                 string fileName = Day.Replace(" : ", "_").Replace(" ", "_");
                 string dirName = AllPlaythrough[SelectedPlaythroughId].FullName;
 
-                File.WriteAllText(Application.persistentDataPath + "\\" + dirName + "\\" + fileName + ".txt", saveInfo);
+                File.WriteAllText(ISaveManager.SaveRootDir + "\\" + dirName + "\\" + fileName + ".txt", saveInfo);
 
-                SaveManager.Save(dirName, fileName);
+                ISaveManager.Save(ISaveManager.SaveRootDir + "\\" + dirName, fileName);
 				LoadAllCheckPoint(SelectedPlaythroughId);
 				//SaveGameUI.Close();
 			}
@@ -171,7 +169,7 @@ public class SaveCatalog : MonoBehaviour
 
     public void Load(string argDirName, string argFileName)
     {
-        if (SaveManager != null)
+        if (ISaveManager != null)
         {
             /*SaveGameUI.Close();
             if (MS.IsPause)
@@ -179,8 +177,8 @@ public class SaveCatalog : MonoBehaviour
                 MS.Pause(); // снятие паузы перед загрузкой
             }*/
 
-            SaveManager.LoadError += SaveManager_LoadError;
-            SaveManager.Load(argDirName, argFileName);
+            ISaveManager.LoadError += SaveManager_LoadError;
+            ISaveManager.Load(argDirName, argFileName);
         }
         else
         {
@@ -242,7 +240,7 @@ public class SaveCatalog : MonoBehaviour
 
     public void LoadAllPlaythrough()
     {
-        DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath);
+        DirectoryInfo di = new DirectoryInfo(ISaveManager.SaveRootDir);
         DirectoryInfo[] all = di.GetDirectories("???.*").OrderByDescending(fi => fi.LastWriteTime).ToArray();
 
         //FileInfo[] all = di.GetFiles("*.bin").OrderByDescending(fi => fi.LastWriteTime).ToArray();
@@ -289,7 +287,7 @@ public class SaveCatalog : MonoBehaviour
 
         if (argPlaythroughId != 0)
         {
-            DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath);
+            DirectoryInfo di = new DirectoryInfo(ISaveManager.SaveRootDir);
             FileInfo[] all = di.GetFiles(AllPlaythrough[argPlaythroughId].FullName + "\\*.bin").OrderByDescending(fi => fi.LastWriteTime).ToArray();
 
             for (int i = 0; i < all.Length; i++)
@@ -311,7 +309,7 @@ public class SaveCatalog : MonoBehaviour
 
                 string dateTime = DT(all[i].LastWriteTime);
 
-                string[] info = File.ReadAllLines(Application.persistentDataPath + "\\" + AllPlaythrough[argPlaythroughId].FullName + "\\" + fileName + ".txt");
+                string[] info = File.ReadAllLines(ISaveManager.SaveRootDir + "\\" + AllPlaythrough[argPlaythroughId].FullName + "\\" + fileName + ".txt");
 
                 AddCheckPoint(fileName, info[0], info[1], dateTime, version, support, argPlaythroughId);
             }

@@ -7,9 +7,9 @@ using Tac.Society;
 using Tac.UI;
 
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
 
-public partial class World : MonoBehaviour
+public partial class World : Item
 {
 	public List<NavMeshBasic> NavMeshBasic;
 
@@ -38,7 +38,8 @@ public partial class World : MonoBehaviour
 			SaveCatalog = ui.GetComponentInChildren<SaveCatalog>(true);
 			SaveManager saveManager = GetComponent<SaveManager>();
 			saveManager.World = this;
-			SaveCatalog.SaveManager = saveManager;
+			SaveCatalog.ISaveManager = saveManager;
+			SaveCatalog.IDayNight = DayNight as IDayNight;
 		}
 
 		//GameObject rock = ItemCreate.CreateObject("Rock_A", 490, 485, 12);
@@ -52,6 +53,24 @@ public partial class World : MonoBehaviour
 		UpdateSurface();
 
 		DayNight.NextHour += AgentWalkEmulation;
+	}
+
+	private void Update()
+	{
+		if (Keyboard.current[Key.F5].wasPressedThisFrame)
+		{
+			if (SaveCatalog != null)
+			{
+				if (SaveCatalog.gameObject.activeSelf)
+				{
+					SaveCatalog.gameObject.SetActive(false);
+				}
+				else
+				{
+					SaveCatalog.gameObject.SetActive(true);
+				}
+			}
+		}
 	}
 
 	public void CreateWorld()

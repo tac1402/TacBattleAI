@@ -6,6 +6,7 @@ namespace Tac.DConvert
 	public interface ISaveManager
 	{
 		public string Version { get; set; }
+		public string SaveRootDir { get; }
 		public event Change LoadError;
 
 		public void Save(string argDirName, string argFileName);

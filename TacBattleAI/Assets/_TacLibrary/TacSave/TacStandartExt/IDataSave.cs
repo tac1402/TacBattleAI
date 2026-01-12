@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using UnityEngine;
 
 namespace Tac.DConvert
 {
@@ -85,6 +83,11 @@ namespace Tac.DConvert
 
 
 		public void SaveData(bool argLoadMode)
+		{
+			SaveDataInner(argLoadMode);
+		}
+
+		public void SaveDataInner(bool argLoadMode)
 		{
 			IsLoad = argLoadMode;
 			if (argLoadMode == false)

@@ -4,6 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+
+using UnityEngine.UI;
+
 using Tac.DConvert;
 
 namespace Tac.DConvert
@@ -24,7 +27,7 @@ namespace Tac
 	/// <summary>
 	/// ”ниверсальна€ сущность от Tac (дополн€етс€ реализацией IPrefabId и IDataSave дл€ сохранени€)
 	/// </summary>
-	public abstract partial class Item: IPrefabId, IDataSave
+	public abstract partial class Item: IDataSave, IPrefabId
 	{
 		public int Id { get { return ObjectId; } set { ObjectId = value; } }
 		public string PrefabName { get { return ModelName; } set { ModelName = value; } }
@@ -48,7 +51,7 @@ namespace Tac
 
 		public virtual void SaveData(bool argLoadMode) 
 		{
-			(this as IDataSave).SaveData(argLoadMode);
+			(this as IDataSave).SaveDataInner(argLoadMode);
 		}
 
 		protected T SaveQ<T>(T propertyValue, Expression<Func<T>> propertyLambda, PredefinedTag argTag)
@@ -60,5 +63,21 @@ namespace Tac
 		{ 
 			return (this as IDataSave).SaveQ(propertyValue, propertyLambda, argTag);
 		}
+	}
+
+
+	public abstract partial class DayNight0 : IDayNight
+	{
+		/// <summary>
+		/// “екстовое поле в UI в котором будет отображатьс€ текущие врем€
+		/// </summary>
+		public Text gameTime;
+		public Text GameTime => gameTime;
+
+		/// <summary>
+		/// “екстовое поле в UI в котором будет отображатьс€ текущий номер суток
+		/// </summary>
+		public Text gameDays;
+		public Text GameDays => gameDays;
 	}
 }

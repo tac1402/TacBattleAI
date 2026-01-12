@@ -19,17 +19,18 @@ public partial class SaveManager : MonoBehaviour, ISaveManager
 	public string version = "v0.01";
 	public string Version { get { return version; } set { version = value; } }
 
-	public string SaveDir = "";
+	private string saveRootDir = "";
+	public string SaveRootDir { get { return saveRootDir; } }
 
 	private void Start()
 	{
 		if (InEditor)
 		{
-			SaveDir = "Assets\\";
+			saveRootDir = "Assets\\SaveTmp\\";
 		}
 		else
 		{
-			SaveDir = Application.persistentDataPath + "\\";
+			saveRootDir = Application.persistentDataPath + "\\";
 		}
 
 		dConvert = new DirectConvert();
