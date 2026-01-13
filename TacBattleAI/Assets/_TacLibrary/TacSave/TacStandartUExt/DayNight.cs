@@ -3,9 +3,11 @@
 
 namespace Tac
 {
-	public partial class DayNight : IDayNight
+	/// <summary>
+	/// Расширяется системой сохранения, реализуя IDayNight
+	/// </summary>
+	public partial class DayNight0 : IDayNight
 	{
-
 		public string GameTime
 		{
 			get
@@ -17,7 +19,6 @@ namespace Tac
 				if (gameTime != null) gameTime.text = value;
 			}
 		}
-
 		public string GameDays
 		{
 			get

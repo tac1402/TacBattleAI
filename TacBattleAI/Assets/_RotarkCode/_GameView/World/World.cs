@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Principal;
 using Tac;
 using Tac.Agent;
+using Tac.DConvert;
 using Tac.ItemCreate;
+using Tac.Person;
 using Tac.Society;
 using Tac.UI;
-using Tac.DConvert;
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -50,10 +51,9 @@ public partial class World : Item, ILoadManager
 		Society.RobotJob.CreateDayPlan();
 
 		RunPanel.Init(DayNight, Society);
+		DayNight.NextHour += AgentWalkEmulation;
 
 		UpdateSurface();
-
-		DayNight.NextHour += AgentWalkEmulation;
 	}
 
 
@@ -120,8 +120,40 @@ public partial class World : Item, ILoadManager
 	}
 
 	public void RecoverGame()
-	{ 
-	
+	{
+		ILoadManager iLoad = (this as ILoadManager);
+
+		RunPanel.Init(DayNight, Society);
+		DayNight.NextHour += AgentWalkEmulation;
+
+		UpdateSurface();
+
+		foreach (Person p in Society.People.Values)
+		{
+			if (p.IsActive == false)
+			{
+				p.IsActive = true;
+				p.Init(true);
+				p.IsActive = false;
+			}
+			else
+			{
+				p.Init(true);
+			}
+			if (p.IsBusy && p.TargetId != 0)
+			{
+				p.Walk(p.TargetPoint);
+			}
+			/*
+			p.Places.Clear();
+			foreach (var item in p.LoadPlacesId)
+			{
+				GameObject obj = iLoad.GetObject(item.Value);
+				AgentPoint ap = obj.GetComponent<AgentPoint>();
+				p.Places.Add(item.Key, ap);
+			}*/
+		}
+
 	}
 
 	#endregion

@@ -9,7 +9,12 @@ using UnityEngine.UI;
 
 namespace Tac
 {
-	public partial class DayNight: MonoBehaviour
+
+	/// <summary>
+	/// Технический объект, т.к. Юнити не позволяет добавить на сцену MonoBehaviour, который прямо реализует интерфейс
+	/// Используется системой сохранения, чтобы реализовать интерфейс IDayNight
+	/// </summary>
+	public partial class DayNight0 : MonoBehaviour
 	{
 		/// <summary>
 		/// Текстовое поле в UI в котором будет отображаться текущие время
@@ -20,6 +25,12 @@ namespace Tac
 		/// </summary>
 		public Text gameDays;
 
+	}
+	/// <summary>
+	/// Управляет игровым временем
+	/// </summary>
+	public partial class DayNight: DayNight0
+	{
 		/// <summary>
 		/// Пауза полной остановки
 		/// </summary>
@@ -65,7 +76,7 @@ namespace Tac
 			set
 			{
 				currentDay = value;
-				GameDays = "Day # " + currentDay.ToString();
+				gameDays.text = "Day # " + currentDay.ToString();
 			}
 		}
 
@@ -160,7 +171,7 @@ namespace Tac
 
 			float time = CurrentTime;
 
-			GameTime = Mathf.Floor(time).ToString("F0").PadLeft(2, '0') + " : " + minutes.ToString("F0").PadLeft(2, '0') + " " + AMPM;
+			gameTime.text = Mathf.Floor(time).ToString("F0").PadLeft(2, '0') + " : " + minutes.ToString("F0").PadLeft(2, '0') + " " + AMPM;
 
 			Time = new System.TimeSpan((int)Mathf.Floor(time), (int)Mathf.Floor(minutes), 0);
 		}

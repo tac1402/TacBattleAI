@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace Tac
 {
+	/// <summary>
+	/// Управляет игровым временем
+	/// </summary>
 	public partial class DayNight
 	{
 		public TimeSpan Time;
@@ -25,8 +28,6 @@ namespace Tac
 		public float GameDayLenght = 24;
 
 		private TimeMode timeMode;
-
-
 
 		/// <summary>
 		/// Прошел час

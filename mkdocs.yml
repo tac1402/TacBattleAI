@@ -18,7 +18,7 @@ nav:
     - EntityType: TacStandartU/EntityType.md
     - DayNight: TacStandartU/DayNight.md
     - IObject: TacStandartU/IObject.md
-    - BaundsExt: TacStandartU/BaundsExt.md
+    - BoundsExt: TacStandartU/BoundsExt.md
   - TacStandart:
     - Component: TacStandart/Component.md
     - Vector: TacStandart/Vector.md

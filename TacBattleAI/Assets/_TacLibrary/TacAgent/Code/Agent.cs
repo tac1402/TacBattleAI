@@ -59,11 +59,14 @@ namespace Tac.Agent
 		private System.Random rnd = new System.Random();
 
 
-		public void Init()
+		public void Init(bool argRecoverMode = false)
 		{
 			HealthState = new HealthState(rnd);
-			Precision.State = 70;
-			Charge.State = 100;
+			if (argRecoverMode == false)
+			{
+				Precision.State = 70;
+				Charge.State = 100;
+			}
 
 			StatusBar = GetComponentInChildren<StatusBar>();
 			if (StatusBar != null)
