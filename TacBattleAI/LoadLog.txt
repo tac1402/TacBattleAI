@@ -1,0 +1,50 @@
+1. System.Collections.Generic.List`1[Tac.Person.Person]
+4. 0
+5. Tac.Vector3_
+6. 0
+7. Men9(Clone) (UnityEngine.Transform)
+8. True
+9. Unknow
+10. Men9(Clone)
+11. False
+12. 0
+13. System.Collections.Generic.Dictionary`2[System.String,System.Single]
+14. System.Collections.Generic.Dictionary`2[System.String,System.Single]
+15. System.Collections.Generic.List`1[Tac.NamedValue]
+16. System.Collections.Generic.Dictionary`2[System.String,System.Int32]
+19. 0
+20. Tac.Vector3_
+21. 0
+22. Men4(Clone) (UnityEngine.Transform)
+23. True
+24. Unknow
+25. Men4(Clone)
+26. False
+27. 0
+28. System.Collections.Generic.Dictionary`2[System.String,System.Single]
+29. System.Collections.Generic.Dictionary`2[System.String,System.Single]
+30. System.Collections.Generic.List`1[Tac.NamedValue]
+31. System.Collections.Generic.Dictionary`2[System.String,System.Int32]
+34. 0
+35. Tac.Vector3_
+36. 0
+37. Women7(Clone) (UnityEngine.Transform)
+38. True
+39. Unknow
+40. Women7(Clone)
+41. False
+42. 0
+43. System.Collections.Generic.Dictionary`2[System.String,System.Single]
+44. System.Collections.Generic.Dictionary`2[System.String,System.Single]
+45. System.Collections.Generic.List`1[Tac.NamedValue]
+46. System.Collections.Generic.Dictionary`2[System.String,System.Int32]
+47. World (World)
+48. 1
+49. World
+50. 1
+51. 6.123342
+52. 3337
+53. System.Collections.Generic.Dictionary`2[System.Int32,Tac.Person.Person]
+54. 0
+55. 0
+56. 0

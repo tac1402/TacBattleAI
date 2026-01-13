@@ -1,8 +1,6 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Tac.Agent
 {

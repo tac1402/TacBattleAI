@@ -126,6 +126,9 @@ namespace Tac.UI
 		{
 			while (true)
 			{
+				yield return new WaitForSeconds(1.0f);
+				if (DayNight.PauseCompleteStop) { continue; }
+
 				if (CurrentPanel != null)
 				{
 					string title = "";
@@ -167,7 +170,6 @@ namespace Tac.UI
 					CurrentPanel.SetTitle(title);
 					CurrentPanel.SetInfo(info);
 				}
-				yield return new WaitForSeconds(1.0f);
 			}
 		}
 

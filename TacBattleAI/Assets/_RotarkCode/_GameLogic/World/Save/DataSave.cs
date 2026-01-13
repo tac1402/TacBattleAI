@@ -1,5 +1,6 @@
-using Tac.DConvert;
 
+
+using Tac.DConvert;
 
 public partial class World 
 {
@@ -11,7 +12,7 @@ public partial class World
 		DayNight.CurrentTime = SaveQ(DayNight.CurrentTime, () => DayNight.CurrentTime);
 
 		Society.PlayerPersonId = SaveQ(Society.PlayerPersonId, () => Society.PlayerPersonId);
-		Society.People = SaveQ(Society.People, () => Society.People);
+		Society.People = SaveQ(Society.People, () => Society.People, PredefinedTag.OnlyPrefabId);
 
 		//Society.AllBusiness = base.SaveQ(Society.AllBusiness, () => Society.AllBusiness, PredefinedTag.OnlyPrefabId);
 

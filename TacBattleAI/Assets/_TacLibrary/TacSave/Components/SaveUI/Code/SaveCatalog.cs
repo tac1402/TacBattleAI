@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Tac;
+using Tac.DConvert;
 using TMPro;
 using UnityEngine;
-
-using Tac.DConvert;
 
 
 public class SaveCatalog : MonoBehaviour
@@ -177,8 +177,9 @@ public class SaveCatalog : MonoBehaviour
                 MS.Pause(); // снятие паузы перед загрузкой
             }*/
 
-            ISaveManager.LoadError += SaveManager_LoadError;
-            ISaveManager.Load(argDirName, argFileName);
+            DayNight0.PauseCompleteStop = true;
+			ISaveManager.LoadError += SaveManager_LoadError;
+            ISaveManager.Load(ISaveManager.SaveRootDir + "\\" + argDirName, argFileName);
         }
         else
         {

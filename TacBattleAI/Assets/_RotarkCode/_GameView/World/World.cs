@@ -5,11 +5,12 @@ using Tac.Agent;
 using Tac.ItemCreate;
 using Tac.Society;
 using Tac.UI;
+using Tac.DConvert;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public partial class World : Item
+public partial class World : Item, ILoadManager
 {
 	public List<NavMeshBasic> NavMeshBasic;
 
@@ -55,6 +56,7 @@ public partial class World : Item
 		DayNight.NextHour += AgentWalkEmulation;
 	}
 
+
 	private void Update()
 	{
 		if (Keyboard.current[Key.F5].wasPressedThisFrame)
@@ -91,4 +93,36 @@ public partial class World : Item
 			}
 		}
 	}
+
+	#region ILoadManager
+
+	/// <summary>
+	/// Все объекты добавленные на сцену
+	/// </summary>
+	private Dictionary<int, GameObject> allObject = new Dictionary<int, GameObject>();
+	public Dictionary<int, GameObject> AllObject { get { return allObject; } }
+
+	public IObject IObject { get { return ItemCreate; } }
+
+	public void ResetGame()
+	{
+		(this as ILoadManager).ResetGameInner();
+		(this as ILoadManager).ResetEvent(DayNight, "NextDay");
+		(this as ILoadManager).ResetEvent(DayNight, "NextHour");
+
+		Society.People.Clear();
+
+		/*World.Society.AllBusiness.Clear();
+
+		World.Society.RobotJob.AgentPlans.Clear();
+		World.Society.PlayerJob.AgentPlans.Clear();
+		*/
+	}
+
+	public void RecoverGame()
+	{ 
+	
+	}
+
+	#endregion
 }

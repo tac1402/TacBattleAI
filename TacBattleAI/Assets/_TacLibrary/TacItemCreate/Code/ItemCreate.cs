@@ -9,9 +9,10 @@ using UnityEngine;
 
 namespace Tac.ItemCreate
 {
-	public class ItemCreate : MonoBehaviour
+	public class ItemCreate : MonoBehaviour, IObject
 	{
 		public List<EntityType> WorldLevel;
+		List<EntityType> IObject.WorldLevel => WorldLevel;
 
 		/// <summary>
 		/// Настоящая структура террайна, может использоваться .SampleHeight() чтобы получить именно высоту террайна, а не соответствующего слоя
@@ -45,7 +46,8 @@ namespace Tac.ItemCreate
 		/// <summary>
 		/// Счетчик максимального идентификатора объектов
 		/// </summary>
-		public int ObjectIdCounter = 0;
+		private int objectIdCounter = 0;
+		public int ObjectIdCounter { get { return objectIdCounter; } set { objectIdCounter = value; } }
 		public void ResetObject()
 		{
 			ObjectIdCounter = ObjectIdBegin;
@@ -57,7 +59,8 @@ namespace Tac.ItemCreate
 			return ObjectIdCounter;
 		}
 
-		public int PredeffinedObjectId;
+		private int predeffinedObjectId;
+		public int PredeffinedObjectId { get { return predeffinedObjectId; } set { predeffinedObjectId = value; } }
 
 
 		/// <summary>

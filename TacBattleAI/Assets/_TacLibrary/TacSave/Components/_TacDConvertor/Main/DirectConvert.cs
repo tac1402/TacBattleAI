@@ -12,7 +12,14 @@ namespace Tac.DConvert
 
     public class DirectConvert
     {
-        private List<ConvertInfo> ConvertInfo = new List<ConvertInfo>();
+		public bool IsDebugMode = true;
+
+        /// <summary>
+        /// Интерфейс загрузки
+        /// </summary>
+		internal ILoadManager ILoad;
+
+		private List<ConvertInfo> ConvertInfo = new List<ConvertInfo>();
         private Queue<ObjectInfo> ConvertInfoQ = new Queue<ObjectInfo>();
 
         private Dictionary<string, Type> KnowConverter = new Dictionary<string, Type>();
@@ -24,7 +31,12 @@ namespace Tac.DConvert
         private Type converterType;
         private object converter;
 
-        public DirectConvert()
+		public delegate void IndexInfo(int argIndex);
+		public event IndexInfo OnLoadStep;
+
+
+
+		public DirectConvert()
         {
             KnowConverter.Add(typeof(Vector2).ToString(), typeof(Vector2_));
             KnowConverter.Add(typeof(Vector3).ToString(), typeof(Vector3_));
@@ -192,7 +204,13 @@ namespace Tac.DConvert
 
         public void Load(string argFileName, ConvertorType argConvertorType)
         {
-            if (IsDebugMode)
+            if (ILoad == null)
+            {
+				throw new System.InvalidOperationException(
+					"You must provide an ILoadManager instance before calling this method (it cannot be null). Override the ILoadGet() method.");
+			}
+
+			if (IsDebugMode)
             {
                 if (File.Exists("LoadLog.txt"))
                 {
@@ -208,12 +226,6 @@ namespace Tac.DConvert
             bin.Close();
         }
 
-        public delegate void IndexInfo(int argIndex);
-        public event IndexInfo OnLoadStep;
-
-        public bool IsDebugMode = true;
-
-        public IEntity IEntity;
 
         private void Load(Convertor bin, bool BreakBefor = false)
         {
@@ -451,12 +463,12 @@ namespace Tac.DConvert
             GameObject gameObject = null;
             if (prefabInfoInt != null)
             {
-                gameObject = IEntity.GetObject(prefabInfoInt.Id);
+                gameObject = ILoad.GetObject(prefabInfoInt.Id);
                 if (gameObject == null)
                 {
                     if (argAllowNull == false)
                     {
-                        gameObject = IEntity.CreatePrefab(prefabInfoInt.Id, prefabInfoInt.PrefabName);
+                        gameObject = ILoad.CreatePrefab(prefabInfoInt.Id, prefabInfoInt.PrefabName);
                     }
                 }
             }
@@ -680,7 +692,7 @@ namespace Tac.DConvert
                             k++;
                         }
 
-                        directConvert.IEntity = IEntity;
+                        directConvert.ILoad = ILoad;
                         directConvert.Shema = Shema;
                         directConvert.IsDebugMode = IsDebugMode;
                         directConvert.Load(bin, true);
@@ -765,10 +777,10 @@ namespace Tac.DConvert
 
                             if (pcInt != null && pcInt.Id != 0)
                             {
-                                GameObject o = IEntity.GetObject(pcInt.Id);
+                                GameObject o = ILoad.GetObject(pcInt.Id);
                                 if (o == null)
                                 {
-                                    o = IEntity.CreatePrefab(pcInt.Id, pcInt.PrefabName);
+                                    o = ILoad.CreatePrefab(pcInt.Id, pcInt.PrefabName);
                                 }
                                 if (o != null)
                                 {
