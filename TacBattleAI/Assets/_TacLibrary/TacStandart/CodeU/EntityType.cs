@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tac.ItemCreate
+namespace Tac
 {
 	[Serializable]
 	public class EntityType

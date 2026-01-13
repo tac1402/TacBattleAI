@@ -11,19 +11,23 @@ nav:
   - Архитектурная легкость: simplicity.md
   - Отделение логики: separation.md
   - Линковка с библиотекой: linking.md
+  - Standart+Unity: StandartU.md
   - TacStandartU: 
-    - StandartU: TacStandartU/StandartU.md
     - Item: TacStandartU/Item.md
     - BuildItem: TacStandartU/BuildItem.md
+    - EntityType: TacStandartU/EntityType.md
+    - DayNight: TacStandartU/DayNight.md
+    - IObject: TacStandartU/IObject.md
+    - BaundsExt: TacStandartU/BaundsExt.md
   - TacStandart:
-    - Standart: TacStandart/Standart.md
     - Component: TacStandart/Component.md
     - Vector: TacStandart/Vector.md
+    - GameTime: TacStandart/GameTime.md
+    - NamedValue: TacStandart/NamedValue.md
     - RandomWorld: TacStandart/RandomWorld.md
     - RandomUnique: TacStandart/RandomUnique.md
   - TacItemCreate:
     - ItemCreate: TacItemCreate/ItemCreate.md
-    - EntityType: TacItemCreate/EntityType.md
     - GhostCache: TacItemCreate/GhostCache.md
   - TacCamera:
     - TopCamera: TacCamera/TopCamera.md
