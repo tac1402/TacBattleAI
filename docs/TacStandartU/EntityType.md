@@ -1,10 +1,12 @@
 ---
 title: EntityType
 ---
-Компонент [ItemCreate](../ItemCreate) требует заполнение списка видов сущностей, чтобы разделить их в сцене на соответствующие уровни.
+Описание видов моделей/сущностей в игре, которые разделены на сцене по различным уровням (дочерним gameObject у корневого элемента World).
+
+Базовая функциональность реализована компонентом [ItemCreate](../ItemCreate), а так же используется системой сохранения в через интерфейс [IObject](../../TacStandartU/IObject).
 
 ```csharp
-namespace Tac.ItemCreate
+namespace Tac
 {
 	[Serializable]
 	public class EntityType
