@@ -1,5 +1,5 @@
 ﻿// Author: Sergej Jakovlev <tac1402@gmail.com>
-// Copyright (C) 2021 Sergej Jakovlev
+// Copyright (C) 2021-26 Sergej Jakovlev
 
 using System;
 using System.Collections;
@@ -28,11 +28,14 @@ namespace Tac.DConvert
         {
             KnowConverter.Add(typeof(Vector2).ToString(), typeof(Vector2_));
             KnowConverter.Add(typeof(Vector3).ToString(), typeof(Vector3_));
-            KnowConverter.Add(typeof(Transform).ToString(), typeof(Transform_));
+			KnowConverter.Add(typeof(Tac.Vector2_).ToString(), typeof(Vector2__));
+			KnowConverter.Add(typeof(Tac.Vector3_).ToString(), typeof(Vector3__));
+			KnowConverter.Add(typeof(Transform).ToString(), typeof(Transform_));
             KnowConverter.Add(typeof(Guid).ToString(), typeof(Guid_));
-        }
+			KnowConverter.Add(typeof(Tac.NamedValue).ToString(), typeof(NamedValue_));
+		}
 
-        public SaveMetaData Connect()
+		public SaveMetaData Connect()
         {
             Meta.Shema = Shema;
             return Meta;
@@ -1023,7 +1026,7 @@ namespace Tac.DConvert
             {
                 switch (converterType.ToString())
                 {
-                    case "TAC.DConvert.Vector2_":
+                    case "Tac.DConvert.Vector2_":
                         converter = Activator.CreateInstance(converterType) as ICustomConvert<Vector2_, Vector2>;
                         if (converter != null)
                         {
@@ -1033,7 +1036,7 @@ namespace Tac.DConvert
                             }
                         }
                         break;
-                    case "TAC.DConvert.Vector3_":
+                    case "Tac.DConvert.Vector3_":
                         converter = Activator.CreateInstance(converterType) as ICustomConvert<Vector3_, Vector3>;
                         if (converter != null)
                         {
@@ -1043,7 +1046,27 @@ namespace Tac.DConvert
                             }
                         }
                         break;
-                    case "TAC.DConvert.Transform_":
+					case "Tac.DConvert.Vector2__":
+						converter = Activator.CreateInstance(converterType) as ICustomConvert<Vector2__, Tac.Vector2_>;
+						if (converter != null)
+						{
+							if (Load == false)
+							{
+								((ICustomConvert<Vector2__, Tac.Vector2_>)converter).ConvertFrom((Tac.Vector2_)argObject);
+							}
+						}
+						break;
+					case "Tac.DConvert.Vector3__":
+						converter = Activator.CreateInstance(converterType) as ICustomConvert<Vector3__, Tac.Vector3_>;
+						if (converter != null)
+						{
+							if (Load == false)
+							{
+								((ICustomConvert<Vector3__, Tac.Vector3_>)converter).ConvertFrom((Tac.Vector3_)argObject);
+							}
+						}
+						break;
+					case "Tac.DConvert.Transform_":
                         converter = Activator.CreateInstance(converterType) as ICustomConvert<Transform_, Transform>;
                         if (converter != null)
                         {
@@ -1053,7 +1076,7 @@ namespace Tac.DConvert
                             }
                         }
                         break;
-                    case "TAC.DConvert.Guid_":
+                    case "Tac.DConvert.Guid_":
                         converter = Activator.CreateInstance(converterType) as ICustomConvert<Guid_, Guid>;
                         if (converter != null)
                         {
@@ -1063,8 +1086,18 @@ namespace Tac.DConvert
                             }
                         }
                         break;
-                }
-            }
+					case "Tac.DConvert.NamedValue_":
+						converter = Activator.CreateInstance(converterType) as ICustomConvert<NamedValue_, Tac.NamedValue>;
+						if (converter != null)
+						{
+							if (Load == false)
+							{
+								((ICustomConvert<NamedValue_, Tac.NamedValue>)converter).ConvertFrom((Tac.NamedValue)argObject);
+							}
+						}
+						break;
+				}
+			}
         }
         private object ConvertorTo()
         {
@@ -1075,20 +1108,29 @@ namespace Tac.DConvert
                 {
                     switch (converterType.ToString())
                     {
-                        case "TAC.DConvert.Vector2_":
+                        case "Tac.DConvert.Vector2_":
                             ret = ((ICustomConvert<Vector2_, Vector2>)converter).ConvertTo();
                             break;
-                        case "TAC.DConvert.Vector3_":
+                        case "Tac.DConvert.Vector3_":
                             ret = ((ICustomConvert<Vector3_, Vector3>)converter).ConvertTo();
                             break;
-                        case "TAC.DConvert.Transform_":
+						case "Tac.DConvert.Vector2__":
+							ret = ((ICustomConvert<Vector2__, Tac.Vector2_>)converter).ConvertTo();
+							break;
+						case "Tac.DConvert.Vector3__":
+							ret = ((ICustomConvert<Vector3__, Tac.Vector3_>)converter).ConvertTo();
+							break;
+						case "Tac.DConvert.Transform_":
                             ret = ((ICustomConvert<Transform_, Transform>)converter).ConvertTo();
                             break;
-                        case "TAC.DConvert.Guid_":
+                        case "Tac.DConvert.Guid_":
                             ret = ((ICustomConvert<Guid_, Guid>)converter).ConvertTo();
                             break;
-                    }
-                }
+						case "Tac.DConvert.NamedValue_":
+							ret = ((ICustomConvert<NamedValue_, Tac.NamedValue>)converter).ConvertTo();
+							break;
+					}
+				}
             }
             return ret;
         }

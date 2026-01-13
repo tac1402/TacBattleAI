@@ -74,18 +74,29 @@ namespace Tac.DConvert
 					case "System.Collections.Generic.List`1[System.DateTime]":
 						writer.Write(Convert.ToDateTime(argValue));
 						break;
-					case "TAC.DConvert.Vector2_":
+					case "Tac.DConvert.Vector2_":
                         Vector2_ locVector2_ = argValue as Vector2_;
                         writer.Write(locVector2_.x);
                         writer.Write(locVector2_.y);
                         break;
-                    case "TAC.DConvert.Vector3_":
+                    case "Tac.DConvert.Vector3_":
                         Vector3_ locVector3_ = argValue as Vector3_;
                         writer.Write(locVector3_.x);
                         writer.Write(locVector3_.y);
                         writer.Write(locVector3_.z);
                         break;
-                    case "TAC.DConvert.Transform_":
+					case "Tac.DConvert.Vector2__":
+						Vector2__ locVector2__ = argValue as Vector2__;
+						writer.Write(locVector2__.x);
+						writer.Write(locVector2__.y);
+						break;
+					case "Tac.DConvert.Vector3__":
+						Vector3__ locVector3__ = argValue as Vector3__;
+						writer.Write(locVector3__.x);
+						writer.Write(locVector3__.y);
+						writer.Write(locVector3__.z);
+						break;
+					case "Tac.DConvert.Transform_":
                         Transform_ locTransform_ = argValue as Transform_;
                         writer.Write(locTransform_.position.x);
                         writer.Write(locTransform_.position.y);
@@ -97,12 +108,17 @@ namespace Tac.DConvert
                         writer.Write(locTransform_.scale.y);
                         writer.Write(locTransform_.scale.z);
                         break;
-                    case "TAC.DConvert.Guid_":
+                    case "Tac.DConvert.Guid_":
                         Guid_ locGuid_ = argValue as Guid_;
                         writer.Write(new Guid(locGuid_.Value));
                         break;
-                }
-            }
+					case "Tac.DConvert.NamedValue_":
+						NamedValue_ locNamedValue_ = argValue as NamedValue_;
+						writer.Write(locNamedValue_.Name);
+						writer.Write(locNamedValue_.Value);
+						break;
+				}
+			}
         }
 
         public int Load(int argValue, string argType)
@@ -142,24 +158,33 @@ namespace Tac.DConvert
 					case "System.DateTime":
 						ret = reader.ReadDateTime() as T;
 						break;
-					case "TAC.DConvert.Vector2_":
+					case "Tac.DConvert.Vector2_":
                         ret = new Vector2_(reader.ReadSingle(), reader.ReadSingle()) as T;
                         break;
-                    case "TAC.DConvert.Vector3_":
+                    case "Tac.DConvert.Vector3_":
                         ret = new Vector3_(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle()) as T;
                         break;
-                    case "TAC.DConvert.Transform_":
+					case "Tac.DConvert.Vector2__":
+						ret = new Vector2__(reader.ReadSingle(), reader.ReadSingle()) as T;
+						break;
+					case "Tac.DConvert.Vector3__":
+						ret = new Vector3__(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle()) as T;
+						break;
+					case "Tac.DConvert.Transform_":
                         Vector3_ locPosition = new Vector3_(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
                         Vector3_ locRotation = new Vector3_(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
                         Vector3_ locScale = new Vector3_(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 
                         ret = new Transform_(argOriginalObject as Transform, locPosition, locRotation, locScale) as T;
                         break;
-                    case "TAC.DConvert.Guid_":
+                    case "Tac.DConvert.Guid_":
                         ret = new Guid_(reader.ReadGuid()) as T;
                         break;
-                }
-            }
+					case "Tac.DConvert.NamedValue_":
+						ret = new NamedValue_(reader.ReadString(), reader.ReadSingle()) as T;
+						break;
+				}
+			}
 
 			//DebugLoad.DebugList.Add(ret.ToString());
 

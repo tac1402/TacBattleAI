@@ -63,10 +63,12 @@ public partial class World : Item
 			{
 				if (SaveCatalog.gameObject.activeSelf)
 				{
+					DayNight.PausePress();
 					SaveCatalog.gameObject.SetActive(false);
 				}
 				else
 				{
+					DayNight.PausePress();
 					SaveCatalog.gameObject.SetActive(true);
 				}
 			}

@@ -2,7 +2,8 @@
     "name": "TacDConvertor",
     "rootNamespace": "Tac.DConvert",
     "references": [
-        "GUID:e64177c8ae747af449da40aa8d249c96"
+        "GUID:e64177c8ae747af449da40aa8d249c96",
+        "GUID:c1d2520b5745bc5449186b047c60e88c"
     ],
     "includePlatforms": [
         "Editor",

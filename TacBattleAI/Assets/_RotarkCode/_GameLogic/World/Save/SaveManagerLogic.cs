@@ -16,7 +16,9 @@ public partial class SaveManager
 	{
 		dConvert.Clear();
 
-		dConvert.Set(World.Society.People, ListCreateMode.CreateFromPrefab);
+		dConvert.Set(World, ListCreateMode.UseCurrent);
+
+		//dConvert.Set(World.Society.People, ListCreateMode.CreateFromPrefab);
 
 		/*
 		dConvert.Set(PersonList, ListCreateMode.CreateFromPrefab);

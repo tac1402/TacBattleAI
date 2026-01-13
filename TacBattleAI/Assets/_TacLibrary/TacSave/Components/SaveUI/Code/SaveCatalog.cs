@@ -20,7 +20,7 @@ public class SaveCatalog : MonoBehaviour
     {
         get 
         {
-            return IDayNight.GameDays.text + " " + IDayNight.GameTime.text;
+            return IDayNight.GameDays + " " + IDayNight.GameTime;
         }
     }
 

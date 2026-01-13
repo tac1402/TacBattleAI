@@ -51,11 +51,7 @@ namespace Tac
 			set
 			{
 				currentDay = value;
-
-				if (GameDays != null)
-				{
-					GameDays.text = "Day # " + currentDay.ToString();
-				}
+				GameDays = "Day # " + currentDay.ToString();
 			}
 		}
 
@@ -150,25 +146,9 @@ namespace Tac
 
 			float time = CurrentTime;
 
-			/*if (CurrentTime <= GameNight)
-			{
-				AMPM = "NT";
-			}
-			else
-			{
-				AMPM = "DT";
-				time -= GameNight;
-			}*/
-
-			string timeString = Mathf.Floor(time).ToString("F0").PadLeft(2, '0') + " : "
-				+ minutes.ToString("F0").PadLeft(2, '0') + " " + AMPM;
+			GameTime = Mathf.Floor(time).ToString("F0").PadLeft(2, '0') + " : " + minutes.ToString("F0").PadLeft(2, '0') + " " + AMPM;
 
 			Time = new System.TimeSpan((int)Mathf.Floor(time), (int)Mathf.Floor(minutes), 0);
-
-			if (GameTime != null)
-			{
-				GameTime.text = timeString;
-			}
 		}
 	}
 }
