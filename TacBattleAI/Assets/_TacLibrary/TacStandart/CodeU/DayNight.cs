@@ -9,8 +9,22 @@ using UnityEngine.UI;
 
 namespace Tac
 {
-	public partial class DayNight: DayNight0
+	public partial class DayNight: MonoBehaviour
 	{
+		/// <summary>
+		/// “екстовое поле в UI в котором будет отображатьс€ текущие врем€
+		/// </summary>
+		public Text gameTime;
+		/// <summary>
+		/// “екстовое поле в UI в котором будет отображатьс€ текущий номер суток
+		/// </summary>
+		public Text gameDays;
+
+		/// <summary>
+		/// ѕауза полной остановки
+		/// </summary>
+		public static bool PauseCompleteStop;
+
 		/// <summary>
 		/// “екстовое поле в UI в котором будет отображатьс€ текущие прошедшие реальное врем€
 		/// </summary>

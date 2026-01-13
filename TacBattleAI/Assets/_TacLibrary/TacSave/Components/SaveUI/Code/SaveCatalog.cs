@@ -177,7 +177,7 @@ public class SaveCatalog : MonoBehaviour
                 MS.Pause(); // снятие паузы перед загрузкой
             }*/
 
-            DayNight0.PauseCompleteStop = true;
+            DayNight.PauseCompleteStop = true;
 			ISaveManager.LoadError += SaveManager_LoadError;
             ISaveManager.Load(ISaveManager.SaveRootDir + "\\" + argDirName, argFileName);
         }

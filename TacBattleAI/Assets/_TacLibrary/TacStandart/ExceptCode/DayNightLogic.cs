@@ -11,7 +11,6 @@ namespace Tac
 	{
 		public TimeSpan Time;
 
-
 		/// <summary>
 		/// Длина дня в реальных секундах
 		/// </summary>

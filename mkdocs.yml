@@ -11,11 +11,13 @@ nav:
   - Архитектурная легкость: simplicity.md
   - Отделение логики: separation.md
   - Линковка с библиотекой: linking.md
-  - TacStandart: 
-    - Item: TacStandart/Item.md
-    - ModelTypes: TacStandart/ModelTypes.md
+  - TacStandartU: 
+    - StandartU: TacStandartU/StandartU.md
+    - Item: TacStandartU/Item.md
+    - BuildItem: TacStandartU/BuildItem.md
+  - TacStandart:
+    - Standart: TacStandart/Standart.md
     - Component: TacStandart/Component.md
-    - BuildItem: TacStandart/BuildItem.md
     - Vector: TacStandart/Vector.md
     - RandomWorld: TacStandart/RandomWorld.md
     - RandomUnique: TacStandart/RandomUnique.md

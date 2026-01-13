@@ -92,7 +92,7 @@ namespace Tac.DConvert
 					LoadError();
 				}
 			}
-			DayNight0.PauseCompleteStop = false;
+			DayNight.PauseCompleteStop = false;
 		}
 
 		protected virtual bool LoadBin(string argDirName, string argFileName) { return false; }

@@ -3,7 +3,7 @@
 
 namespace Tac
 {
-	public abstract partial class DayNight0 : IDayNight
+	public partial class DayNight : IDayNight
 	{
 
 		public string GameTime

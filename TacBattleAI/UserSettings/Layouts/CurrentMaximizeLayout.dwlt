@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 71
+  controlID: 70
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 72
+  controlID: 71
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -183,8 +183,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs:
-      - m_Data: 41772
+      m_SelectedIDs: []
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
@@ -803,7 +802,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.3515369, y: -0.3611772, z: 0.1491911, w: 0.8507826}
     speed: 2
-    m_Value: {x: 0.3515165, y: -0.36115623, z: 0.14918244, w: 0.85073316}
+    m_Value: {x: -0.3515369, y: 0.3611772, z: -0.1491911, w: -0.8507825}
   m_Size:
     m_Target: 34.972843
     speed: 2
@@ -1058,7 +1057,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_TacLibrary/TacSave/Components/_TacDConvertor/Main
+    - Assets/_TacLibrary/TacStandart/Code
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1068,22 +1067,20 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_TacLibrary/TacSave/Components/_TacDConvertor/Main
+  - Assets/_TacLibrary/TacStandart/Code
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 286}
+    scrollPos: {x: 0, y: 206}
     m_SelectedIDs:
-    - m_Data: 73946
+    - m_Data: 73818
     m_LastClickedID:
-      m_Data: 73946
+      m_Data: 73818
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 73752
-    - m_Data: 73754
     - m_Data: 73756
     - m_Data: 73758
     - m_Data: 73760
@@ -1104,18 +1101,19 @@ MonoBehaviour:
     - m_Data: 73790
     - m_Data: 73792
     - m_Data: 73794
-    - m_Data: 73796
     - m_Data: 73798
     - m_Data: 73800
+    - m_Data: 73802
+    - m_Data: 73804
     - m_Data: 73806
     - m_Data: 73808
     - m_Data: 73810
     - m_Data: 73812
     - m_Data: 73814
     - m_Data: 73816
-    - m_Data: 73920
-    - m_Data: 73922
-    - m_Data: 73938
+    - m_Data: 73818
+    - m_Data: 73820
+    - m_Data: 73940
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1149,8 +1147,6 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 73752
-    - m_Data: 73754
     - m_Data: 73756
     - m_Data: 73758
     - m_Data: 73760
@@ -1182,6 +1178,8 @@ MonoBehaviour:
     - m_Data: 73812
     - m_Data: 73814
     - m_Data: 73816
+    - m_Data: 73818
+    - m_Data: 73820
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1208,10 +1206,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs:
-    - m_Data: 41772
-    m_LastClickedInstanceID: 41772
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: []
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs:
     - m_Data: 54580
     - m_Data: 104396
@@ -1246,8 +1243,8 @@ MonoBehaviour:
     - m_Data: 63338
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: IObject
-      m_OriginalName: IObject
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1255,10 +1252,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 469088
+        m_Data: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 11}
@@ -1269,7 +1266,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 52.5}
+    m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 232
