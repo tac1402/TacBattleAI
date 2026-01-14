@@ -15,6 +15,8 @@ title: SaveCatalog
 Во время инициализации в компоненте __World__ , нужно предоставить эти интерфейсы. Ниже пример кода, который это реализует. 
 
 ```csharp
+		DayNight = GetComponent<DayNight>();
+        ...
 		GameObject ui = GameObject.Find("UI");
 		if (ui != null)
 		{
