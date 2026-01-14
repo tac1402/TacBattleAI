@@ -30,11 +30,9 @@ public class SaveManager : SaveManager0
 	}
 
 	private List<Person> AllAgent = new List<Person>();
-	private List<AgentPoint> AllAgentPoint = new List<AgentPoint>();
 	private void ClearMainList()
 	{
 		AllAgent = null;
-		AllAgentPoint = null;
 	}
 
 	private void SetProtocolLoad()
