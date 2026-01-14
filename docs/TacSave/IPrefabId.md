@@ -1,5 +1,5 @@
 ---
-title: ILoadManager
+title: IPrefabId
 ---
 
 
