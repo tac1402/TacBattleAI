@@ -2,7 +2,7 @@
 title: SaveManager
 ---
 
-Ниже приведен полный пример реализации для тестовой сцены города Ротарк. Важно понимать, что сохранение и загрузка, это сложный процесс, который не ограничивается управлением записи/загрузки классом SaveManager, но это корень того управления. В нем вы описываете какие данные вы будете записывать/загружать и в каком порядке (см. SetProtocolSave()/SetProtocolLoad()). Ссылку на себя предосавляет World во время инициализации (см. пример в [SaveCatalog](../../TacSave/SaveCatalog)). Он же реализует интерфейс _ILoadManager_, который здесь предоставляется через _ILoadGet()_ (см. [ILoadManager](../../TacSave/ILoadManager)). Методы SaveBin() и LoadBin() запускают непосредственно сохранение или загрузку через прямые конвертации (систему DirectConvert).
+Ниже приведен полный пример реализации для тестовой сцены города Ротарк. Важно понимать, что сохранение и загрузка, это сложный процесс, который не ограничивается управлением записи/загрузки классом SaveManager, но это корень этого управления. В нем вы описываете какие данные вы будете записывать/загружать и в каком порядке (см. SetProtocolSave()/SetProtocolLoad()). Ссылку на себя предосавляет World во время инициализации (см. пример в [SaveCatalog](../../TacSave/SaveCatalog)). Он же реализует интерфейс _ILoadManager_, который здесь предоставляется через _ILoadGet()_ (см. [ILoadManager](../../TacSave/ILoadManager)). Методы SaveBin() и LoadBin() запускают непосредственно сохранение или загрузку через прямые конвертации (систему DirectConvert).
 
 ```csharp
 public class SaveManager : SaveManager0
@@ -28,12 +28,9 @@ public class SaveManager : SaveManager0
 
 	protected override void SaveBin(string argDirName, string argFileName)
 	{
-		DateTime begin = DateTime.Now;
 		SetProtocolSave();
-    // Выполнение сохранения системой DCovert
+        // Выполнение сохранения системой DCovert
 		dConvert.Save(argDirName + "\\" + argFileName + ".bin", ConvertorType.Text);
-		double t = (DateTime.Now - begin).TotalMilliseconds;
-		UnityEngine.Debug.Log("Save: " + t.ToString() + " ms");
 	}
 
 	private List<Person> AllAgent = new List<Person>();
@@ -47,7 +44,6 @@ public class SaveManager : SaveManager0
 	private void SetProtocolLoad()
 	{
 		dConvert.Clear();
-		dConvert.AddExternalAssembly("TacDConvertor");
 
 		//Сами агенты могу не находится на сцене, поэтому во время ResetGame все агенты будут удалены, и заново созданы из префабов 
 		dConvert.Set(AllAgent, ListCreateMode.CreateFromPrefab);
@@ -69,7 +65,7 @@ public class SaveManager : SaveManager0
 		SetProtocolLoad();
 		try
 		{
-      // Выполнение загрузки системой DConvert
+            // Выполнение загрузки системой DConvert
 			dConvert.Load(argDirName + "\\" + argFileName + ".bin", ConvertorType.Text);
 		}
 		catch (Exception ex)
