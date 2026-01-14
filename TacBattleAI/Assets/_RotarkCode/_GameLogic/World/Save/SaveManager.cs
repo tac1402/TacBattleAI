@@ -27,17 +27,11 @@ public class SaveManager : SaveManager0
 		UnityEngine.Debug.Log("Save: " + t.ToString() + " ms");
 	}
 
-	/// <summary>
-	/// Только List можно использовать для предварительной загрузки объектов в сцену, создавая из префабов (ListCreateMode.CreateFromPrefab)
-	/// (может быть пустым, но не null)
-	/// </summary>
 	private List<Person> AllAgent = new List<Person>();
-	private List<AgentPoint> AllAgentPoint = new List<AgentPoint>();
 
 	private void ClearMainList()
 	{
 		AllAgent = null;
-		AllAgentPoint = null;
 	}
 
 	private void SetProtocolLoad()
@@ -45,16 +39,8 @@ public class SaveManager : SaveManager0
 		dConvert.Clear();
 		dConvert.AddExternalAssembly("TacDConvertor");
 
-		//Сами агенты могу не находится на сцене, поэтому во время ResetGame все агенты будут удалены, и заново созданы из префабов 
-		dConvert.Set(AllAgent, ListCreateMode.CreateFromPrefab);
-
-		//Точки агентов уже находятся на сцене, поэтому их не создаем из префаба, а заполняем измененные свойства
-		AllAgentPoint = World.Society.AllAgentPoint;
-		for (int i = 0; i < AllAgentPoint.Count; i++)
-		{
-			ILoadGet().AddObject(AllAgentPoint[i].ObjectId, AllAgentPoint[i].gameObject);
-		}
-		dConvert.Set(AllAgentPoint, ListCreateMode.UseCurrent);
+		LogicBound(AllAgent);
+		SceneBound(World.Society.AllAgentPoint);
 
 		dConvert.Set(World, ListCreateMode.UseCurrent);
 
