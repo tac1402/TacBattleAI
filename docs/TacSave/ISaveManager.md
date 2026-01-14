@@ -15,3 +15,5 @@ title: ISaveManager
 		public void Load(string argDirName, string argFileName); // Загрузить из поддериктории argDirName с именем файла данных argFileName
 	}
 ```
+
+![alt](https://tac1402.github.io/TacBattleAI/Diagramm/SaveCatalog_DayNight_SaveManager.jpg)
