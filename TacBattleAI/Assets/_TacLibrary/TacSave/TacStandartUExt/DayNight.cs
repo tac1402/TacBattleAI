@@ -1,6 +1,8 @@
 // Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2026 Sergej Jakovlev
 
+using Tac.DConvert;
+
 namespace Tac
 {
 	/// <summary>
