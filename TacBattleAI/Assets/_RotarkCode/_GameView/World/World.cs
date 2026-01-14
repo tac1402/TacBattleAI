@@ -144,14 +144,14 @@ public partial class World : Item, ILoadManager
 			{
 				p.Walk(p.TargetPoint);
 			}
-			/*
+			
 			p.Places.Clear();
 			foreach (var item in p.LoadPlacesId)
 			{
 				GameObject obj = iLoad.GetObject(item.Value);
 				AgentPoint ap = obj.GetComponent<AgentPoint>();
 				p.Places.Add(item.Key, ap);
-			}*/
+			}
 		}
 
 	}

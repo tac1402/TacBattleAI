@@ -66,6 +66,11 @@ public class SaveManager : SaveManager0
 		dConvert.Set(AllAgent, ListCreateMode.CreateFromPrefab);
 
 		//Точки агентов уже находятся на сцене, поэтому их не создаем из префаба, а заполняем измененные свойства
+		AllAgentPoint = World.Society.AllAgentPoint;
+		for (int i = 0; i < AllAgentPoint.Count; i++)
+		{
+			ILoadGet().AddObject(AllAgentPoint[i].ObjectId, AllAgentPoint[i].gameObject);
+		}
 		dConvert.Set(AllAgentPoint, ListCreateMode.UseCurrent);
 
 		dConvert.Set(World, ListCreateMode.UseCurrent);
