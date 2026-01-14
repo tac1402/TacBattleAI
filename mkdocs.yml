@@ -71,6 +71,7 @@ nav:
     - SaveCatalog: TacSave/SaveCatalog.md
     - IDayNight: TacSave/IDayNight.md
     - ISaveManager: TacSave/ISaveManager.md
+    - SaveManager0: TacSave/SaveManager0.md
   - DirectConvert:
     - Сохранение игры: TacDConvert/DConvert.md
 
