@@ -8,7 +8,7 @@ namespace Tac.Society
 {
 	public partial class Job : MonoBehaviour
 	{
-		protected Queue<Agent.Agent> AgentPath = new Queue<Agent.Agent> ();
+		public Queue<Agent.Agent> AgentPath = new Queue<Agent.Agent> ();
 
 
 		private void Awake()

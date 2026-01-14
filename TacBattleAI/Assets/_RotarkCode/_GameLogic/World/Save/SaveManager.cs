@@ -2,11 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tac;
 using Tac.Agent;
 using Tac.DConvert;
 using Tac.Person;
-using Tac.Society;
 
 public class SaveManager : SaveManager0
 {
@@ -24,14 +22,6 @@ public class SaveManager : SaveManager0
 
 
 		dConvert.Set(World, ListCreateMode.UseCurrent);
-
-		//dConvert.Set(World.Society.People, ListCreateMode.CreateFromPrefab);
-
-		/*
-		dConvert.Set(PersonList, ListCreateMode.CreateFromPrefab);
-		dConvert.Set(AgentPointList, ListCreateMode.CreateFromPrefab);
-		dConvert.Set(World, ListCreateMode.UseCurrent);
-		*/
 	}
 
 

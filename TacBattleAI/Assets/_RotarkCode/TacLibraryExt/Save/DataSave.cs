@@ -17,6 +17,12 @@ namespace Tac.Agent
 			PathStatus = SaveQ(PathStatus, () => PathStatus);
 			TargetPoint = SaveQ(TargetPoint, () => TargetPoint);
 			WalkDistance = SaveQ(WalkDistance, () => WalkDistance);
+
+			PathStatus = SaveQ(PathStatus, () => PathStatus);
+			TargetId = SaveQ(TargetId, () => TargetId);
+			IsBusy = SaveQ(IsBusy, () => IsBusy);
+			LocatedId = SaveQ(LocatedId, () => LocatedId);
+			health = SaveQ(health, () => health);
 		}
 	}
 
@@ -86,8 +92,6 @@ namespace Tac.Person
 
 			Gender = SaveQ(Gender, () => Gender);
 			Name = SaveQ(Name, () => Name);
-			IsBusy = SaveQ(IsBusy, () => IsBusy);
-			TargetId = SaveQ(TargetId, () => TargetId);
 
 			Stats = SaveQ(Stats, () => Stats);
 			Skills = SaveQ(Skills, () => Skills);

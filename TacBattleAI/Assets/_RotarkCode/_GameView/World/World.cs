@@ -142,7 +142,8 @@ public partial class World : Item, ILoadManager
 			}
 			if (p.IsBusy && p.TargetId != 0)
 			{
-				p.Walk(p.TargetPoint);
+				p.PathStatus = 1;
+				Society.RobotJob.AgentPath.Enqueue(p);
 			}
 			
 			p.Places.Clear();

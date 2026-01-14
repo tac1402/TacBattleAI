@@ -67,4 +67,10 @@ nav:
     - InfoPanel: TacUI/InfoPanel.md
     - InfoPanelManager: TacUI/InfoPanelManager.md
     - TableUI: TacUI/TableUI.md
+  - TacSave:
+    - SaveCatalog: TacSave/SaveCatalog.md
+    - IDayNight: TacSave/IDayNight.md
+    - ISaveManager: TacSave/ISaveManager.md
+  - DirectConvert:
+    - Сохранение игры: TacDConvert/DConvert.md
 

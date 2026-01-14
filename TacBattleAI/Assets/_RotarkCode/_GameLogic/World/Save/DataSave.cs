@@ -15,8 +15,8 @@ public partial class World
 		Society.People = SaveQ(Society.People, () => Society.People, PredefinedTag.OnlyPrefabId);
 		Society.AllAgentPoint = SaveQ(Society.AllAgentPoint, () => Society.AllAgentPoint, PredefinedTag.OnlyPrefabId);
 
-		//Society.RobotJob.AgentPlans = SaveQ(Society.RobotJob.AgentPlans, () => Society.RobotJob.AgentPlans);
-		//Society.PlayerJob.AgentPlans = SaveQ(Society.PlayerJob.AgentPlans, () => Society.PlayerJob.AgentPlans);
+		Society.RobotJob.PersonPlans = SaveQ(Society.RobotJob.PersonPlans, () => Society.RobotJob.PersonPlans);
+		Society.PlayerJob.PersonPlans = SaveQ(Society.PlayerJob.PersonPlans, () => Society.PlayerJob.PersonPlans);
 	}
 }
 
