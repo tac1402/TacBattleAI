@@ -17,12 +17,8 @@ public class SaveManager : SaveManager0
 	private void SetProtocolSave()
 	{
 		dConvert.Clear();
-
-		AllAgent = World.Society.People.Values.ToList();
-		dConvert.Set(AllAgent);
-		AllAgentPoint = World.Society.AllAgentPoint;
-		dConvert.Set(AllAgentPoint);
-
+		dConvert.Set(World.Society.People.Values.ToList());
+		dConvert.Set(World.Society.AllAgentPoint);
 		dConvert.Set(World);
 	}
 
@@ -79,7 +75,7 @@ public class SaveManager : SaveManager0
 }
 ```
 
-Списки всех агентов (AllAgent, см. [Person](../../TacPerson/Person)) и всех зданий, где они бывают (точек агентов) (AllAgentPoint, см. [AgentPoint](../../TacAgent/AgentPoint)) это типовой пример массовых игровых концепций, которые непосредственно находятся на сцене в виде префабов имея визуальное представление в игровой сцене. Рекоммендуется все такого рода игровые концепты находящиеся непосредственно на сцене, записывать предварительно списками. Тогда в производных классах, которые вам нужно будет сохранить, будут только ссылки на них. Поэтому уже имеющейся словарь World.Society.People (преобразовав в список) и список World.Society.AllAgentPoint вначале записываем с полным содержимым (см. код выше _SetProtocolSave()_). А потом, записывая объект World, свойства содержащие эти списки будут записаны используя только уникальные идентификаторы.
+Списки всех агентов (World.Society.People, см. [Person](../../TacPerson/Person)) и всех зданий, где они бывают (точек агентов) (World.Society.AllAgentPoint, см. [AgentPoint](../../TacAgent/AgentPoint)) это типовой пример массовых игровых концепций, которые непосредственно находятся на сцене в виде префабов имея визуальное представление в игровой сцене. Рекоммендуется все такого рода игровые концепты находящиеся непосредственно на сцене, записывать предварительно списками. Тогда в производных классах, которые вам нужно будет сохранить, будут только ссылки на них. Поэтому уже имеющейся словарь World.Society.People (преобразовав в список) и список World.Society.AllAgentPoint вначале записываем с полным содержимым (см. код выше _SetProtocolSave()_). А потом, записывая объект World, свойства содержащие эти списки будут записаны используя только уникальные идентификаторы.
 
 
 
