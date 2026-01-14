@@ -42,11 +42,11 @@ namespace Tac.Agent
 			Transform = SaveQ(Transform, () => Transform);
 			AgentsList = SaveQ(AgentsList, () => AgentsList);
 
-			BuildItem item = GetComponent<BuildItem>();
+			/*BuildItem item = GetComponent<BuildItem>();
 			if (item != null)
 			{
 				item.Turn.CurrentTurn = SaveQ(item.Turn.CurrentTurn, () => item.Turn.CurrentTurn); item.SetTurn();
-			}
+			}*/
 		}
 	}
 	public partial class AgentInPoint : ConvertData

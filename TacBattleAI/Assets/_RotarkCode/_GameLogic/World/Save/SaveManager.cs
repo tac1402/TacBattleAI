@@ -10,20 +10,13 @@ public class SaveManager : SaveManager0
 {
 	public World World;
 
-
 	private void SetProtocolSave()
 	{
 		dConvert.Clear();
-
-		AllAgent = World.Society.People.Values.ToList();
-		dConvert.Set(AllAgent, ListCreateMode.CreateFromPrefab);
-		AllAgentPoint = World.Society.AllAgentPoint;
-		dConvert.Set(AllAgentPoint, ListCreateMode.CreateFromPrefab);
-
-
-		dConvert.Set(World, ListCreateMode.UseCurrent);
+		dConvert.Set(World.Society.People.Values.ToList());
+		dConvert.Set(World.Society.AllAgentPoint);
+		dConvert.Set(World);
 	}
-
 
 	protected override void SaveBin(string argDirName, string argFileName)
 	{
@@ -100,13 +93,9 @@ public class SaveManager : SaveManager0
 
 	private void DConvert_OnLoadStep(int argIndex)
 	{
-		/*if (argIndex == 0)
+		if (argIndex == 0)
 		{
-		}*/
+		}
 	}
-
-
-
-
-
 }
+
