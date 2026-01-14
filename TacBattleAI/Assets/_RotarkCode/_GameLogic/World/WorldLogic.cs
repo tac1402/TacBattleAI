@@ -34,7 +34,7 @@ public partial class World
 		Society.NextHour(argGameTime);
 
 		List<Agent> agents = Society.People.Values.ToList<Agent>();
-		foreach (AgentPoint building in Society.AllBusiness)
+		foreach (AgentPoint building in Society.AllAgentPoint)
 		{
 			building.Tick(argGameTime, agents);
 		}

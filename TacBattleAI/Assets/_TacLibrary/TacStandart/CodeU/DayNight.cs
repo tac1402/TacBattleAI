@@ -112,7 +112,7 @@ namespace Tac
 
 		private void Update()
 		{
-			if (Keyboard.current[Key.Pause].wasPressedThisFrame)
+			if (Keyboard.current[Key.Pause].wasPressedThisFrame && PauseCompleteStop == false)
 			{
 				PausePress();
 			}

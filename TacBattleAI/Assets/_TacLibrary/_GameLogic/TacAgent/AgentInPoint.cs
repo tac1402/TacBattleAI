@@ -2,7 +2,7 @@ using System;
 
 namespace Tac.Agent
 {
-	public class AgentInPoint
+	public partial class AgentInPoint
 	{
 		public Agent Agent;
 		public GameTime EnterTime;

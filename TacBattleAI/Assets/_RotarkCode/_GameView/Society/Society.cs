@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Tac.Person;
+using System.Linq;
+using Tac.Agent;
 
 namespace Tac.Society
 {
@@ -11,7 +13,7 @@ namespace Tac.Society
 		public List<GameObject> WomenModel;
 		public ItemCreate.ItemCreate ItemCreate;
 
-		public Business[] AllBusiness;
+		public List<AgentPoint> AllAgentPoint;
 
 		public void Init()
 		{
@@ -19,11 +21,11 @@ namespace Tac.Society
 			PlayerJob = GetComponent<PlayerJob>();
 
 			PersonName.LoadName(rnd);
-			AllBusiness = GetComponentsInChildren<Business>();
+			AllAgentPoint = GetComponentsInChildren<AgentPoint>().ToList();
 
-			for (int i = 0; i < AllBusiness.Length; i++)
+			for (int i = 0; i < AllAgentPoint.Count; i++)
 			{
-				AllBusiness[i].ObjectId = ItemCreate.GetNewId();
+				AllAgentPoint[i].ObjectId = ItemCreate.GetNewId();
 			}
 		}
 
@@ -31,8 +33,8 @@ namespace Tac.Society
 		{
 			foreach (Person.Person p in People.Values)
 			{
-				int pointIndex = rnd.Next(0, AllBusiness.Length);
-				p.WorkPlace = AllBusiness[pointIndex];
+				int pointIndex = rnd.Next(0, AllAgentPoint.Count);
+				p.WorkPlace = AllAgentPoint[pointIndex];
 			}
 		}
 

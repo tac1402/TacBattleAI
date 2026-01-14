@@ -70,7 +70,7 @@ public partial class World : Item, ILoadManager
 				}
 				else
 				{
-					DayNight.PausePress();
+					if (DayNight.Pause == false) { DayNight.PausePress(); }
 					SaveCatalog.gameObject.SetActive(true);
 				}
 			}

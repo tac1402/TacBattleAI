@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tac;
+using Tac.Agent;
 using Tac.DConvert;
 using Tac.Person;
 using Tac.Society;
@@ -16,8 +17,11 @@ public class SaveManager : SaveManager0
 	{
 		dConvert.Clear();
 
-		People = World.Society.People.Values.ToList();
-		dConvert.Set(People, ListCreateMode.CreateFromPrefab);
+		AllAgent = World.Society.People.Values.ToList();
+		dConvert.Set(AllAgent, ListCreateMode.CreateFromPrefab);
+		AllAgentPoint = World.Society.AllAgentPoint;
+		dConvert.Set(AllAgentPoint, ListCreateMode.CreateFromPrefab);
+
 
 		dConvert.Set(World, ListCreateMode.UseCurrent);
 
@@ -44,11 +48,13 @@ public class SaveManager : SaveManager0
 	/// Только List можно использовать для предварительной загрузки объектов в сцену, создавая из префабов (ListCreateMode.CreateFromPrefab)
 	/// (может быть пустым, но не null)
 	/// </summary>
-	private List<Person> People = new List<Person>();
+	private List<Person> AllAgent = new List<Person>();
+	private List<AgentPoint> AllAgentPoint = new List<AgentPoint>();
 
 	private void ClearMainList()
 	{
-		People = null;
+		AllAgent = null;
+		AllAgentPoint = null;
 	}
 
 	private void SetProtocolLoad()
@@ -56,9 +62,11 @@ public class SaveManager : SaveManager0
 		dConvert.Clear();
 		dConvert.AddExternalAssembly("TacDConvertor");
 
-		dConvert.Set(People, ListCreateMode.CreateFromPrefab);
+		//Сами агенты могу не находится на сцене, поэтому во время ResetGame все агенты будут удалены, и заново созданы из префабов 
+		dConvert.Set(AllAgent, ListCreateMode.CreateFromPrefab);
 
-		//dConvert.Set(AgentPointList, ListCreateMode.CreateFromPrefab);
+		//Точки агентов уже находятся на сцене, поэтому их не создаем из префаба, а заполняем измененные свойства
+		dConvert.Set(AllAgentPoint, ListCreateMode.UseCurrent);
 
 		dConvert.Set(World, ListCreateMode.UseCurrent);
 

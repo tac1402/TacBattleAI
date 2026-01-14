@@ -4,7 +4,6 @@ using Tac.Agent;
 
 namespace Tac.Person
 {
-
 	public partial class PersonPlan
 	{
 		public Person Person;
