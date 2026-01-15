@@ -51,6 +51,8 @@ public interface ILoadManager
 }
 ```
 
+Теперь World должен наследоваться от Item, т.к. компонент сохранения дореализует (см. [линковка](../linking)) у класса Item два интерфейса с полным поведением по умолчанию [IPrefabId](../../TacDConvert/IPrefabId) и [IDataSave](../../TacDConvert/IDataSave). Первый требуется для возможности идентификации объекта, а второй используется для создания протокола данных, которые подлежат сохранению.
+
 ```csharp
 public partial class World : Item, ILoadManager
 {
