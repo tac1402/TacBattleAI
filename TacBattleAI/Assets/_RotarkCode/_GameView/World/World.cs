@@ -121,8 +121,6 @@ public partial class World : Item, ILoadManager
 
 	public void RecoverGame()
 	{
-		ILoadManager iLoad = (this as ILoadManager);
-
 		RunPanel.Init(DayNight, Society);
 		DayNight.NextHour += AgentWalkEmulation;
 
@@ -140,19 +138,19 @@ public partial class World : Item, ILoadManager
 			{
 				p.Init(true);
 			}
+			// Если агент находится в пути, то пути нужно все пересчитать и
+			// добавить себя в очередь RobotJob.AgentPath для расчета пути
 			if (p.IsBusy && p.TargetId != 0)
 			{
 				p.PathStatus = 1;
 				Society.RobotJob.AgentPath.Enqueue(p);
 			}
-			
-			p.Places.Clear();
-			foreach (var item in p.LoadPlacesId)
-			{
-				GameObject obj = iLoad.GetObject(item.Value);
-				AgentPoint ap = obj.GetComponent<AgentPoint>();
-				p.Places.Add(item.Key, ap);
-			}
+
+			// В случае перекрестных ссылок, например, когда Person.Places ссылается на AgentPoint,
+			// а AgentPoint.Agents.Agent опосредованно ссылается на Person, нужно не прямо восстановить ссылки,
+			// а при сохранении будут записаны только индексы и когда уже будут восстановленны все объекты,
+			// нужно по индексам восстановить ссылки на сами объекты
+			p.Places = p.PlacesRef.Resolve(allObject);
 		}
 
 	}

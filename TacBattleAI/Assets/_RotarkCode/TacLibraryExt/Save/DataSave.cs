@@ -66,22 +66,11 @@ namespace Tac.Person
 	public partial class Person
 	{
 
-		public Dictionary<string, int> LoadPlacesId;
+		public CrossRef<AgentPoint> PlacesRef = new CrossRef<AgentPoint>();
 		public Dictionary<string, int> PlacesId
 		{
-			get
-			{
-				Dictionary<string, int> ret = new Dictionary<string, int>();
-				foreach (var item in Places)
-				{
-					if (item.Value != null)
-					{
-						ret.Add(item.Key, item.Value.Id);
-					}
-				}
-				return ret;
-			}
-			set { LoadPlacesId = value; }
+			get { return PlacesRef.GetRef(Places); }
+			set { PlacesRef.Ref = value; }
 		}
 
 		public override void SaveData(bool argLoadMode)
