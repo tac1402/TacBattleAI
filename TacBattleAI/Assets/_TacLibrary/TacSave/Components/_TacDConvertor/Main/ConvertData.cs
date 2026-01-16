@@ -31,7 +31,8 @@ namespace Tac.DConvert
 
 		public virtual void SaveData(bool argLoadMode)
 		{
-			(this as IDataSave).SaveDataInner(argLoadMode);
+			// Для объектов, на которые не ссылаются, идентификацию писать не нужно
+			(this as IDataSave).SaveDataInner(argLoadMode, false);
 		}
 
 		protected T SaveQ<T>(T propertyValue, Expression<Func<T>> propertyLambda, PredefinedTag argTag)

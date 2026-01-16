@@ -43,8 +43,9 @@ namespace Tac
 		}
 
 
-		protected Queue<K> SaveQQ<K>(Queue<K> propertyValue, string argTag = null)
+		protected Queue<K> SaveQQ<K>(Queue<K> propertyValue, Expression<Func<Queue<K>>> propertyLambda, string argTag = null)
 		{
+			(this as IDataSave).SetMeta(propertyLambda);
 			return new Queue<K>((this as IDataSave).SaveD(propertyValue.ToList(), argTag));
 		}
 

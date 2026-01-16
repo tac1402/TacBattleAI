@@ -17,8 +17,6 @@ namespace Tac.Agent
 			PathStatus = SaveQ(PathStatus, () => PathStatus);
 			TargetPoint = SaveQ(TargetPoint, () => TargetPoint);
 			WalkDistance = SaveQ(WalkDistance, () => WalkDistance);
-
-			PathStatus = SaveQ(PathStatus, () => PathStatus);
 			TargetId = SaveQ(TargetId, () => TargetId);
 			IsBusy = SaveQ(IsBusy, () => IsBusy);
 			LocatedId = SaveQ(LocatedId, () => LocatedId);
@@ -41,7 +39,7 @@ namespace Tac.Agent
 			base.SaveData(argLoadMode);
 			Transform = SaveQ(Transform, () => Transform);
 			//AgentsList = SaveQ(AgentsList, () => AgentsList);
-			Agents = SaveQQ(Agents);
+			Agents = SaveQQ(Agents, () => Agents);
 
 
 			/*BuildItem item = GetComponent<BuildItem>();
@@ -55,7 +53,7 @@ namespace Tac.Agent
 	{
 		public override void SaveData(bool argLoadMode)
 		{
-			//base.SaveData(argLoadMode); // Для объектов, на которые не ссылаются, идентификацию можно не писать
+			base.SaveData(argLoadMode);
 
 			Agent = SaveQ(Agent, () => Agent, PredefinedTag.OnlyPrefabId);
 			EnterTime = SaveQ(EnterTime, () => EnterTime);

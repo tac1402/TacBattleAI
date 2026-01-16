@@ -46,9 +46,9 @@ namespace Tac.DConvert
 
 		public void Load()
 		{
-			if (File.Exists(FileName + ".meta"))
+			if (File.Exists(FileName + ".me"))
 			{
-				string all = File.ReadAllText(FileName + ".meta");
+				string all = File.ReadAllText(FileName + ".me");
 				string[] parts = all.Replace(BeginSymbol + "\n", "").Split(EndSymbol + "\n");
 
 				string[] part1 = parts[0].Split("\n");
@@ -79,13 +79,13 @@ namespace Tac.DConvert
 				part1 += item.Key + "\t" + item.Value.ToString() + "\n";
 			}
 
-			File.Delete(FileName + ".meta");
-			File.AppendAllText(FileName + ".meta", BeginSymbol + "\n" + part1 + EndSymbol + "\n");
+			File.Delete(FileName + ".me");
+			File.AppendAllText(FileName + ".me", BeginSymbol + "\n" + part1 + EndSymbol + "\n");
 
 			List<string> shemaParts = Shema.Save();
 			for (int i = 0; i < shemaParts.Count; i++)
 			{
-				File.AppendAllText(FileName + ".meta", BeginSymbol + "\n" + shemaParts[i] + EndSymbol + "\n");
+				File.AppendAllText(FileName + ".me", BeginSymbol + "\n" + shemaParts[i] + EndSymbol + "\n");
 			}
 
 

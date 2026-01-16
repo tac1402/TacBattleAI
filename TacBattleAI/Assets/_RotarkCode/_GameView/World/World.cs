@@ -111,6 +111,7 @@ public partial class World : Item, ILoadManager
 		(this as ILoadManager).ResetEvent(DayNight, "NextHour");
 
 		Society.People.Clear();
+		InfoPanelManager.Clear();
 
 		/*World.Society.AllBusiness.Clear();
 

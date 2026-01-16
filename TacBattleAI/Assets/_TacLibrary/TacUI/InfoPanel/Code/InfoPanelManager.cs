@@ -43,6 +43,18 @@ namespace Tac.UI
 			StartCoroutine(Tick());
 		}
 
+		public void Clear()
+		{
+			if (CurrentPanel != null)
+			{
+				CurrentPanel.gameObject.SetActive(false);
+				CurrentPanel = null;
+			}
+			currentPerson = null;
+			currentItem = null;
+			currentAgentPoint = null;
+		}
+
 		private enum SelectionType
 		{
 			None = 0,

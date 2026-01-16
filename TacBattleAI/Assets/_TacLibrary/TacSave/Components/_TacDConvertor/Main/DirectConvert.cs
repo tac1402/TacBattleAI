@@ -232,7 +232,6 @@ namespace Tac.DConvert
                 //DebugLoad.DebugList = new List<string>();
             }
 
-            //Shema.Load(argFileName.Replace(".bin", ""));
             Convertor bin = GetConvertor(argConvertorType);
             bin.Open(argFileName, true);
             Load(bin);
@@ -752,6 +751,7 @@ namespace Tac.DConvert
 
                         if (argValue != null && argTag != PredefinedTag.OnlyPrefabId.ToString())
                         {
+                            data.ClassName = "";
                             data.SaveData(true);
                         }
                         else

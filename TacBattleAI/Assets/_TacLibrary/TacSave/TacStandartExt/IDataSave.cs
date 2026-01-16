@@ -66,6 +66,10 @@ namespace Tac.DConvert
 			{
 				PropertyName.Add(tmpPropertyName);
 			}
+			else
+			{
+				throw new InvalidOperationException("Duplicate property save is not allowed");
+			}
 		}
 
 		public T SaveQ<T>(T propertyValue, Expression<Func<T>> propertyLambda, string argTag = null)
@@ -95,15 +99,18 @@ namespace Tac.DConvert
 			SaveDataInner(argLoadMode);
 		}
 
-		public void SaveDataInner(bool argLoadMode)
+		public void SaveDataInner(bool argLoadMode, bool argSaveId = true)
 		{
 			IsLoad = argLoadMode;
 			if (argLoadMode == false)
 			{
 				ClearQ();
 			}
-			Id = SaveQ(Id, () => Id);
-			PrefabName = SaveQ(PrefabName, () => PrefabName);
+			if (argSaveId == true)
+			{
+				Id = SaveQ(Id, () => Id);
+				PrefabName = SaveQ(PrefabName, () => PrefabName);
+			}
 		}
 
 		#endregion

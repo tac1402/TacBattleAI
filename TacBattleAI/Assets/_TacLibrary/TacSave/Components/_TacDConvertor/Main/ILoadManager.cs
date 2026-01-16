@@ -77,7 +77,6 @@ namespace Tac.DConvert
 			}
 		}
 
-
 		public void ResetGameInner()
 		{
 			DestroyWorld();

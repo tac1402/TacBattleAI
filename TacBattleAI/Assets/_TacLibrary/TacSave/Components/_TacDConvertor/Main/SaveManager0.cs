@@ -28,6 +28,8 @@ namespace Tac.DConvert
 
 
 		protected DirectConvert dConvert;
+		protected SaveMetaData Meta;
+
 
 		private void Start()
 		{
@@ -42,6 +44,24 @@ namespace Tac.DConvert
 
 			dConvert = new DirectConvert();
 			dConvert.IsDebugMode = IsDebugMode;
+
+			Meta = dConvert.Connect();
+		}
+
+		/// <summary>
+		/// Зарегистрировать объект с уникальным Id. В отличии от добавления объекта идентификатор выделяется на основании уникальной строки
+		/// и сохраняется в мета-данных при сохранении.
+		/// </summary>
+		public void RegObject(string argObjectId, GameObject argObject)
+		{
+			int id = Meta.ReserveKey(argObjectId);
+
+			Item locItem = argObject.GetComponent<Item>();
+			if (locItem != null)
+			{
+				locItem.ObjectId = id;
+				ILoadGet().AddObject(locItem.ObjectId, argObject);
+			}
 		}
 
 		#region Save

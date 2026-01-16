@@ -21,8 +21,11 @@ public class SaveManager : SaveManager0
 	protected override void SaveBin(string argDirName, string argFileName)
 	{
 		DateTime begin = DateTime.Now;
+		Meta.Init(argDirName + "\\" + argFileName, true);
+
 		SetProtocolSave();
 		dConvert.Save(argDirName + "\\" + argFileName + ".bin", ConvertorType.Text);
+		Meta.Save();
 		double t = (DateTime.Now - begin).TotalMilliseconds;
 		UnityEngine.Debug.Log("Save: " + t.ToString() + " ms");
 	}
@@ -56,6 +59,8 @@ public class SaveManager : SaveManager0
 		bool isLoadError = false;
 
 		DateTime begin = DateTime.Now;
+		Meta.Init(argDirName + "\\" + argFileName, false);
+
 		SetProtocolLoad(); // Важно вызвать до загрузки метаданных (Meta.Init)
 		dConvert.OnLoadStep += DConvert_OnLoadStep;
 
