@@ -76,7 +76,6 @@ nav:
     - ILoadManager: TacSave/ILoadManager.md
   - DirectConvert:
     - Сохранение игры: TacDConvert/DConvert.md
-    - IPrefabId: TacDConvert/IPrefabId.md
     - IDataSave: TacDConvert/IDataSave.md
     - DataSave: TacDConvert/DataSave.md
     - CrossRef: TacDConvert/CrossRef.md

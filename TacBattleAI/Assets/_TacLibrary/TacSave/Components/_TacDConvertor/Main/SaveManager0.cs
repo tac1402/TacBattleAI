@@ -81,6 +81,7 @@ namespace Tac.DConvert
 		#region Load
 
 		public event Change LoadError;
+		public event Change LoadEnd;
 
 		public void Load(string argDirName, string argFileName)
 		{
@@ -112,6 +113,10 @@ namespace Tac.DConvert
 				{
 					LoadError();
 				}
+			}
+			if (LoadEnd != null)
+			{ 
+				LoadEnd();
 			}
 			DayNight.PauseCompleteStop = false;
 		}

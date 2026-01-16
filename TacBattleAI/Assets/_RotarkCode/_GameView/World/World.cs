@@ -15,7 +15,6 @@ public partial class World : Item, ILoadManager
 {
 	public List<NavMeshBasic> NavMeshBasic;
 
-
 	private ItemCreate ItemCreate;
 	private RunPanel RunPanel;
 	private InfoPanelManager InfoPanelManager;
@@ -43,8 +42,6 @@ public partial class World : Item, ILoadManager
 			SaveCatalog.ISaveManager = saveManager;
 			SaveCatalog.IDayNight = DayNight as IDayNight;
 		}
-
-		//GameObject rock = ItemCreate.CreateObject("Rock_A", 490, 485, 12);
 
 		CreateWorld();
 		Society.InitWorkPlace();

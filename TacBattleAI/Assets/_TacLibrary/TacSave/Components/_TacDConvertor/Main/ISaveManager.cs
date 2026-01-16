@@ -8,6 +8,7 @@ namespace Tac.DConvert
 		public string Version { get; set; }
 		public string SaveRootDir { get; }
 		public event Change LoadError;
+		public event Change LoadEnd;
 
 		public void Save(string argDirName, string argFileName);
 		public void Load(string argDirName, string argFileName);

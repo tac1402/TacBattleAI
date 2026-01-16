@@ -150,7 +150,7 @@ public class SaveCatalog : MonoBehaviour
 
                 ISaveManager.Save(ISaveManager.SaveRootDir + "\\" + dirName, fileName);
 				LoadAllCheckPoint(SelectedPlaythroughId);
-				//SaveGameUI.Close();
+                Hide();
 			}
 		}
     }
@@ -178,7 +178,8 @@ public class SaveCatalog : MonoBehaviour
             }*/
 
             DayNight.PauseCompleteStop = true;
-			ISaveManager.LoadError += SaveManager_LoadError;
+			ISaveManager.LoadError += ISaveManager_LoadError;
+			ISaveManager.LoadEnd += ISaveManager_LoadEnd;
             ISaveManager.Load(ISaveManager.SaveRootDir + "\\" + argDirName, argFileName);
         }
         else
@@ -189,7 +190,12 @@ public class SaveCatalog : MonoBehaviour
         }
     }
 
-    private void SaveManager_LoadError()
+	private void ISaveManager_LoadEnd()
+	{
+		Hide();
+	}
+
+	private void ISaveManager_LoadError()
     {
         DialogYouSure.Show("Load Error", "Во время загрузки что-то пошло не так ..", LoadErrorExit, "Ok");
     }
@@ -221,21 +227,6 @@ public class SaveCatalog : MonoBehaviour
 
     public void Open()
     {
-        /*if (EManager != null && EManager.DayNightController != null)
-        {
-            CheckPointName.text = Day;
-
-            SaveButton.SetActive(true);
-            SaveTitle.SetActive(true);
-            CheckPointName.gameObject.SetActive(true);
-        }
-        else
-        {
-            SaveButton.SetActive(false);
-            SaveTitle.SetActive(false);
-            CheckPointName.gameObject.SetActive(false);
-        }*/
-
         LoadAllPlaythrough();
     }
 

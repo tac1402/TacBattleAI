@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Tac.DConvert;
-using UnityEditor.PackageManager;
 
 namespace Tac
 {
@@ -41,7 +40,15 @@ namespace Tac
 		{
 			return (this as IDataSave).SaveQ(propertyValue, propertyLambda, argTag);
 		}
+		protected T SaveQ<T>(T propertyValue, Expression<Func<T>> propertyLambda, string argTag = null)
+		{
+			return (this as IDataSave).SaveQ(propertyValue, propertyLambda, argTag);
+		}
 
+		protected Queue<K> SaveQQ<K>(Queue<K> propertyValue, Expression<Func<Queue<K>>> propertyLambda, PredefinedTag argTag)
+		{
+			return SaveQQ(propertyValue, propertyLambda, argTag.ToString());
+		}
 
 		protected Queue<K> SaveQQ<K>(Queue<K> propertyValue, Expression<Func<Queue<K>>> propertyLambda, string argTag = null)
 		{
@@ -49,9 +56,5 @@ namespace Tac
 			return new Queue<K>((this as IDataSave).SaveD(propertyValue.ToList(), argTag));
 		}
 
-		protected T SaveQ<T>(T propertyValue, Expression<Func<T>> propertyLambda, string argTag = null)
-		{
-			return (this as IDataSave).SaveQ(propertyValue, propertyLambda, argTag);
-		}
 	}
 }
