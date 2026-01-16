@@ -3,7 +3,7 @@
 
 namespace Tac
 {
-	public class GameTime
+	public partial class GameTime
 	{
 		public int Day;
 		public int Hour;
@@ -12,6 +12,8 @@ namespace Tac
 		{
 			get { return Day.ToString() + "-" + Hour.ToString(); }
 		}
+
+		public GameTime() { }
 
 		public GameTime(int argDay, int argHour)
 		{

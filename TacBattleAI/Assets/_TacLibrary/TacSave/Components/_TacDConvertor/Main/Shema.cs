@@ -88,7 +88,7 @@ namespace Tac.DConvert
                         ret = true;
                     }
                 }
-                else if (LoadedInfo.IsList == true)
+                else if (LoadedInfo.IsList == 1)
                 {
                     if (LoadedInfo.ListType == argInfo.ListType && LoadedInfo.ListCreateMode == argInfo.ListCreateMode && LoadedInfo.Tag == argInfo.Tag)
                     {
@@ -127,7 +127,7 @@ namespace Tac.DConvert
 
                 int isList = 0;
                 int listTypeId = 0;
-                if (convertInfo.IsList)
+                if (convertInfo.IsList == 1)
                 {
                     isList = 1;
 					listTypeId = AddType(convertInfo.ListType);
@@ -136,7 +136,7 @@ namespace Tac.DConvert
                 info += keyTypeId.ToString() + "-" + valueTypeId.ToString();
                 info += "-" + isList.ToString() + "-" + listTypeId.ToString() + "-" + ((int)convertInfo.ListCreateMode).ToString();
             }
-            else if (convertInfo.IsList)
+            else if (convertInfo.IsList == 1)
             {
                 info = "2-";
 
@@ -395,7 +395,7 @@ namespace Tac.DConvert
 						Type keyType = TypeListR[keyId];
 						Type valueType = TypeListR[valueTypeId];
 						int isList = int.Parse(line[3]);
-						bool isList2 = false; if (isList == 1) { isList2 = true; }
+						byte isList2 = 0; if (isList == 1) { isList2 = 1; }
 
 						int listTypeId = int.Parse(line[4]);
 						Type listType = TypeListR[listTypeId];
@@ -412,7 +412,7 @@ namespace Tac.DConvert
 						ListCreateMode mode = (ListCreateMode)int.Parse(line[2]);
 						tag = TagListR[int.Parse(line[3])];
 
-						convertInfo = new ConvertInfo(null, null, null, true, listType, mode);
+						convertInfo = new ConvertInfo(null, null, null, 1, listType, mode);
 						convertInfo.Tag = tag;
 					}
 					else if (line[0] == "3")

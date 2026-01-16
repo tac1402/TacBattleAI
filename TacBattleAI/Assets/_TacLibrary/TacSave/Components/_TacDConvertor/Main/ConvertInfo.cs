@@ -11,7 +11,7 @@ namespace Tac.DConvert
         public Type Type;
         public object MainObject;
         
-        public bool IsList;
+        public byte IsList; // 0 - false, 1 - List, 2 - Queue
         public Type ListType;
         public ListCreateMode ListCreateMode;
 
@@ -19,20 +19,22 @@ namespace Tac.DConvert
         public Type KeyType;
         public Type ValueType;
 
+        public bool IsQueue;
+
         public string Tag;
 
         public ConvertInfo() { }
 
         public ConvertInfo(object argObject, Type argType)
-        : this(argObject, argType, null, false, null, ListCreateMode.Recreate, false, null, null) { }
+        : this(argObject, argType, null, 0, null, ListCreateMode.Recreate, false, null, null) { }
 
         public ConvertInfo(object argObject, Type argType, object argMainObject)
-        : this(argObject, argType, argMainObject, false, null, ListCreateMode.Recreate , false, null, null) { }
+        : this(argObject, argType, argMainObject, 0, null, ListCreateMode.Recreate , false, null, null) { }
 
-        public ConvertInfo(object argObject, Type argType, object argMainObject, bool argIsList, Type argListType, ListCreateMode argListCreateMode)
+        public ConvertInfo(object argObject, Type argType, object argMainObject, byte argIsList, Type argListType, ListCreateMode argListCreateMode)
         : this(argObject, argType, argMainObject, argIsList, argListType, argListCreateMode, false, null, null) { }
 
-        public ConvertInfo(object argObject, Type argType, object argMainObject, bool argIsList, Type argListType, ListCreateMode argListCreateMode,
+        public ConvertInfo(object argObject, Type argType, object argMainObject, byte argIsList, Type argListType, ListCreateMode argListCreateMode,
             bool argIsDictionary, Type argKeyType, Type argValueType)
         {
             Object = argObject;

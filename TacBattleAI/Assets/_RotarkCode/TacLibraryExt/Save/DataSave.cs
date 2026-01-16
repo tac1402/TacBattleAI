@@ -30,17 +30,19 @@ namespace Tac.Agent
 	{
 
 		// Queue система сохранений не поддерживает, поэтому используем конвертацию через список
-		public List<AgentInPoint> AgentsList
+		/*public List<AgentInPoint> AgentsList
 		{
 			get { if (Agents != null) { return Agents.ToList(); } else { return null; } }
 			set { Agents = new Queue<AgentInPoint>(value); }
-		}
+		}*/
 
 		public override void SaveData(bool argLoadMode)
 		{
 			base.SaveData(argLoadMode);
 			Transform = SaveQ(Transform, () => Transform);
-			AgentsList = SaveQ(AgentsList, () => AgentsList);
+			//AgentsList = SaveQ(AgentsList, () => AgentsList);
+			Agents = SaveQQ(Agents);
+
 
 			/*BuildItem item = GetComponent<BuildItem>();
 			if (item != null)
@@ -53,7 +55,7 @@ namespace Tac.Agent
 	{
 		public override void SaveData(bool argLoadMode)
 		{
-			base.SaveData(argLoadMode);
+			//base.SaveData(argLoadMode); // Для объектов, на которые не ссылаются, идентификацию можно не писать
 
 			Agent = SaveQ(Agent, () => Agent, PredefinedTag.OnlyPrefabId);
 			EnterTime = SaveQ(EnterTime, () => EnterTime);
@@ -102,10 +104,11 @@ namespace Tac.Person
 
 		public override void SaveData(bool argLoadMode)
 		{
-			base.SaveData(argLoadMode);
+			//base.SaveData(argLoadMode);
 			Person = SaveQ(Person, () => Person, PredefinedTag.OnlyPrefabId);
 			DayPlanList = SaveQ(DayPlanList, () => DayPlanList, PredefinedTag.OnlyPrefabId);
 		}
 	}
 
 }
+

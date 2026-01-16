@@ -43,6 +43,13 @@ namespace Tac.Society
 			PlayerJob.NextHour(argGameTime);
 			RobotJob.NextHour(argGameTime);
 
+			List<Person.Person> tmp = People.Values.ToList();
+			if (tmp[2].WorkPlace != null)
+			{
+				tmp[2].WorkPlace.Add(tmp[1]);
+			}
+
+
 			/*ChangeSalaryDeficit();
 			CheckJob();
 			CalcScore();

@@ -45,6 +45,7 @@ namespace Tac.DConvert
 			KnowConverter.Add(typeof(Transform).ToString(), typeof(Transform_));
             KnowConverter.Add(typeof(Guid).ToString(), typeof(Guid_));
 			KnowConverter.Add(typeof(Tac.NamedValue).ToString(), typeof(NamedValue_));
+			KnowConverter.Add(typeof(Tac.GameTime).ToString(), typeof(GameTime_));
 		}
 
 		public SaveMetaData Connect()
@@ -90,19 +91,26 @@ namespace Tac.DConvert
                     Type[] arguments = t.GetGenericArguments();
                     Type listType = arguments[0];
 
-                    ConvertInfo.Add(new ConvertInfo(argObject.Object, t, null, true, listType, argListCreateMode));
+                    ConvertInfo.Add(new ConvertInfo(argObject.Object, t, null, 1, listType, argListCreateMode));
                 }
-                else if (t.IsGenericType && (t.GetGenericTypeDefinition() == typeof(Dictionary<,>)))
+                else if (t.IsGenericType && (t.GetGenericTypeDefinition() == typeof(Queue<>)))
+                {
+					Type[] arguments = t.GetGenericArguments();
+					Type queueType = arguments[0];
+
+					ConvertInfo.Add(new ConvertInfo(argObject.Object, t, null, 2, queueType, argListCreateMode));
+				}
+				else if (t.IsGenericType && (t.GetGenericTypeDefinition() == typeof(Dictionary<,>)))
                 {
                     Type[] arguments = t.GetGenericArguments();
                     Type keyType = arguments[0];
                     Type valueType = arguments[1];
 
-                    bool IsList = false;
+                    byte IsList = 0;
                     Type listType = null;
                     if (valueType.IsGenericType && (valueType.GetGenericTypeDefinition() == typeof(List<>)))
                     {
-                        IsList = true;
+                        IsList = 1;
                         Type[] arguments2 = valueType.GetGenericArguments();
                         listType = arguments2[0];
                     }
@@ -172,13 +180,18 @@ namespace Tac.DConvert
                         ConvertInfo[i].IsList, ConvertInfo[i].ListType, ConvertInfo[i].Tag, bin);
                     //Shema.SaveListEnd();
                 }
-                else if (ConvertInfo[i].IsList == true)
+                else if (ConvertInfo[i].IsList == 1)
                 {
                     SaveList(ConvertInfo[i].Object, ConvertInfo[i].Type, ConvertInfo[i].Tag, bin);
                     //Shema.SaveListEnd();
                 }
-                else
-                {
+				else if (ConvertInfo[i].IsList == 2)
+				{
+					SaveQueue(ConvertInfo[i].Object, ConvertInfo[i].Type, ConvertInfo[i].Tag, bin);
+					//Shema.SaveListEnd();
+				}
+				else
+				{
                     SaveClassType(ConvertInfo[i].Object, ConvertInfo[i].Type, ConvertInfo[i].Tag, bin);
                 }
                 if (!BreakBefor) { bin.WriteBreak(); }
@@ -275,21 +288,16 @@ namespace Tac.DConvert
                     ConvertInfo[i].Object = LoadDictionary(ConvertInfo[i].Object, ConvertInfo[i].KeyType, ConvertInfo[i].ValueType,
                         ConvertInfo[i].IsList, ConvertInfo[i].ListType, ConvertInfo[i].ListCreateMode, ConvertInfo[i].Tag, bin);
                 }
-                else if (ConvertInfo[i].IsList == true)
+                else if (ConvertInfo[i].IsList == 1 || ConvertInfo[i].IsList == 2)
                 {
                     if (ConvertInfo[i].Tag == PredefinedTag.UseCurrent.ToString())
                     {
                         ConvertInfo[i].ListCreateMode = ListCreateMode.UseCurrent;
                     }
-                    /*else if (ConvertInfo[i].Tag == PredefinedTag.UseCurrentPrefabId.ToString())
-                    {
-						ConvertInfo[i].ListCreateMode = ListCreateMode.UseCurrent;
-                        ConvertInfo[i].Tag = PredefinedTag.OnlyPrefabId.ToString();
-					}*/
 
                     ConvertInfo[i].Object = LoadList(ConvertInfo[i].Object, ConvertInfo[i].ListType, ConvertInfo[i].ListCreateMode, ConvertInfo[i].Tag, bin);
                 }
-                else
+				else
                 {
                     ConvertInfo[i].Object = LoadClassType(ConvertInfo[i].Object, ConvertInfo[i].Type, ConvertInfo[i].Tag, bin);
 
@@ -301,24 +309,6 @@ namespace Tac.DConvert
                             ConvertInfo[i].Object = LoadClassType(ConvertInfo[i].Object, ConvertInfo[i].Type, "", bin, PrefabCreateMode.Prefab);
                         }
                     }
-
-                    /*if (ConvertInfo[i].Tag == PredefinedTag.SaveInCaсhe.ToString())
-					{
-						IEnumerable idList = ConvertInfo[i].Object as IEnumerable;
-
-						if (idList != null)
-                        { 
-                            foreach (var item in idList) 
-                            {
-                                IId iid = item as IId;
-                                if (iid != null)
-                                {
-                                    IEntityFactory.AddInCache(iid.Id, item);
-                                }
-							}
-						}
-
-					}*/
                 }
 
                 ConvertInfoQ.Enqueue(new ObjectInfo().Add(ConvertInfo[i].Object));
@@ -348,7 +338,7 @@ namespace Tac.DConvert
         }
 
         private IDictionary LoadDictionary<T>(T argValue, Type argKeyType, Type argValueType,
-            bool argIsList, Type argListType, ListCreateMode argListCreateMode, string argTag, Convertor bin)
+            byte argIsList, Type argListType, ListCreateMode argListCreateMode, string argTag, Convertor bin)
         {
             IDictionary locDic = argValue as IDictionary;
             if (locDic != null)
@@ -365,12 +355,12 @@ namespace Tac.DConvert
 
                     bin.ReadBreak();
                     locKey = bin.Load(locKey, argKeyType.ToString(), 0, argKeyType.IsEnum);
-                    if (argIsList == true)
+                    if (argIsList == 1)
                     {
                         locValue = LoadList(locValue, argListType, argListCreateMode, argTag, bin); ;
                     }
-                    else
-                    {
+                    else if (argIsList == 0)
+					{
                         locValue = LoadClassType(locValue, argValueType, argTag, bin);
                     }
                     locDic.Add(locKey, locValue);
@@ -397,15 +387,16 @@ namespace Tac.DConvert
 
         public string ErrorLoadInList = "";
 
+
         private IList LoadList<T>(T argValue, Type argListType, ListCreateMode argListCreateMode, string argTag, Convertor bin)
         {
-            IList locList = argValue as IList;
-            if (locList != null)
+			IList locList = argValue as IList;
+
+			if (locList != null)
             {
-                //IPrefabCreate<int, C> prefabInfoInt = null;
                 if (argListCreateMode == ListCreateMode.Recreate || argListCreateMode == ListCreateMode.CreateFromPrefab)
                 {
-                    locList.Clear();
+					locList.Clear();
                 }
 
                 bin.IndentLength++;
@@ -423,7 +414,7 @@ namespace Tac.DConvert
                     if (argListCreateMode == ListCreateMode.Recreate || argListCreateMode == ListCreateMode.CreateFromPrefab)
                     {
                         object item = CreateInstance(argListType);
-                        locList.Add(item);
+						locList.Add(item);
                     }
 
                     bin.ReadBreak();
@@ -442,11 +433,11 @@ namespace Tac.DConvert
 
                     if (argListCreateMode == ListCreateMode.CreateFromPrefab)
                     {
-                        locList[k] = GetPrefab(locListItem, argListType);
+						locList[k] = GetPrefab(locListItem, argListType);
                         locListItem = LoadClassType(locList[k], locList[k].GetType(), argTag, bin, PrefabCreateMode.Prefab);
                     }
 
-                    locList[k] = locListItem;
+					locList[k] = locListItem;
                 }
                 bin.IndentLength--;
                 ErrorLoadInList = "";
@@ -851,7 +842,7 @@ namespace Tac.DConvert
             return ret;
         }
 
-        private void SaveDictionary<T>(T argValue, Type argValueType, bool argIsList,
+        private void SaveDictionary<T>(T argValue, Type argValueType, byte argIsList,
             Type argListType, string argTag, Convertor bin)
         {
             IDictionary locDic = argValue as IDictionary;
@@ -875,12 +866,12 @@ namespace Tac.DConvert
 
                     Type keyType = tempKeys[keyIndex].GetType();
                     bin.Add(tempKeys[keyIndex], keyType.ToString(), keyType.IsEnum);
-                    if (argIsList == true)
+                    if (argIsList == 1)
                     {
                         SaveList(item, argListType, argTag, bin);
                     }
-                    else
-                    {
+                    else if (argIsList == 0)
+					{
                         SaveClassType(item, argValueType, argTag, bin);
                     }
                     keyIndex++;
@@ -891,23 +882,48 @@ namespace Tac.DConvert
         private void SaveList<T>(T argValue, Type argType, string argTag, Convertor bin)
         {
             IList locList = argValue as IList;
-            if (locList != null)
+			SaveListQueue(locList, null, argType, argTag, bin);
+		}
+
+		private void SaveQueue<T>(T argValue, Type argType, string argTag, Convertor bin)
+		{
+			ICollection locQueue = argValue as ICollection;
+			SaveListQueue(null, locQueue, argType, argTag, bin);
+		}
+
+        private void SaveListQueue(IList argList, ICollection argQueue, Type argType, string argTag, Convertor bin)
+        {
+            int locCount = 0;
+            IEnumerable iEnumerable ;
+			if (argList != null)
             {
-                bin.IndentLength++;
-                bin.WriteBreak();
+                locCount = argList.Count;
+				iEnumerable = argList as IEnumerable;
+			}
+            else
+            { 
+                locCount = argQueue.Count;
+				iEnumerable = argQueue as IEnumerable;
+			}
 
-                //Shema.SaveListInfo(locList.Count);
-                bin.Add(locList.Count, locList.Count.GetType().ToString());
-                foreach (var item in locList)
-                {
-                    bin.WriteBreak();
-                    SaveClassType(item, argType, argTag, bin);
-                }
-                bin.IndentLength--;
-            }
-        }
+			if (argList != null || argQueue != null)
+			{
+				bin.IndentLength++;
+				bin.WriteBreak();
 
-        private IDataSave OnlyId(IDataSave data)
+				//Shema.SaveListInfo(locList.Count);
+				bin.Add(locCount, locCount.GetType().ToString());
+				foreach (var item in iEnumerable)
+				{
+					bin.WriteBreak();
+					SaveClassType(item, argType, argTag, bin);
+				}
+				bin.IndentLength--;
+			}
+		}
+
+
+		private IDataSave OnlyId(IDataSave data)
         {
             IId prefabCreateInt = data as IId;
 
@@ -1108,6 +1124,16 @@ namespace Tac.DConvert
 							}
 						}
 						break;
+					case "Tac.DConvert.GameTime_":
+						converter = Activator.CreateInstance(converterType) as ICustomConvert<GameTime_, Tac.GameTime>;
+						if (converter != null)
+						{
+							if (Load == false)
+							{
+								((ICustomConvert<GameTime_, Tac.GameTime>)converter).ConvertFrom((Tac.GameTime)argObject);
+							}
+						}
+						break;
 				}
 			}
         }
@@ -1140,6 +1166,9 @@ namespace Tac.DConvert
                             break;
 						case "Tac.DConvert.NamedValue_":
 							ret = ((ICustomConvert<NamedValue_, Tac.NamedValue>)converter).ConvertTo();
+							break;
+						case "Tac.DConvert.GameTime_":
+							ret = ((ICustomConvert<GameTime_, Tac.GameTime>)converter).ConvertTo();
 							break;
 					}
 				}

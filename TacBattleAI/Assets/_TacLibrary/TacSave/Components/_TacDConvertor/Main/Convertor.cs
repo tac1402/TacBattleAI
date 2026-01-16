@@ -117,6 +117,11 @@ namespace Tac.DConvert
 						writer.Write(locNamedValue_.Name);
 						writer.Write(locNamedValue_.Value);
 						break;
+					case "Tac.DConvert.GameTime_":
+						GameTime_ locGameTime_ = argValue as GameTime_;
+						writer.Write(locGameTime_.Day);
+						writer.Write(locGameTime_.Hour);
+						break;
 				}
 			}
         }
@@ -182,6 +187,9 @@ namespace Tac.DConvert
                         break;
 					case "Tac.DConvert.NamedValue_":
 						ret = new NamedValue_(reader.ReadString(), reader.ReadSingle()) as T;
+						break;
+					case "Tac.DConvert.GameTime_":
+						ret = new GameTime_(reader.ReadInt32(), reader.ReadInt32()) as T;
 						break;
 				}
 			}

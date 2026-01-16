@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
+using Tac.DConvert;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -100,7 +101,7 @@ public class SaveCheckPoint : MonoBehaviour
         {
             string playthroughName = SaveCatalog.AllPlaythrough[PlaythroughId].FullName;
 
-            string[] allSave = Directory.GetFiles(Application.persistentDataPath + "\\" + playthroughName, FileName + "*.*");
+            string[] allSave = Directory.GetFiles(SaveCatalog.ISaveManager.SaveRootDir + "\\" + playthroughName, FileName + "*.*");
             for (int i = 0; i < allSave.Length; i++)
             {
                 File.Delete(allSave[i]);

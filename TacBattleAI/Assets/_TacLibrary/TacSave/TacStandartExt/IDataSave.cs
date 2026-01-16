@@ -29,7 +29,7 @@ namespace Tac.DConvert
 			return SaveQ(propertyValue, propertyLambda, argTag.ToString());
 		}
 
-		public T SaveQ<T>(T propertyValue, Expression<Func<T>> propertyLambda, string argTag = null)
+		public void SetMeta<T>(Expression<Func<T>> propertyLambda)
 		{
 			MemberExpression me = propertyLambda.Body as MemberExpression;
 
@@ -66,9 +66,17 @@ namespace Tac.DConvert
 			{
 				PropertyName.Add(tmpPropertyName);
 			}
+		}
 
+		public T SaveQ<T>(T propertyValue, Expression<Func<T>> propertyLambda, string argTag = null)
+		{
+			SetMeta(propertyLambda);
+			return SaveD(propertyValue, argTag);
+		}
+
+		public T SaveD<T>(T propertyValue, string argTag = null)
+		{
 			T a = propertyValue;
-
 			if (IsLoad == false)
 			{
 				Data.Enqueue(new ObjectInfo().Add(a, argTag));
@@ -77,9 +85,9 @@ namespace Tac.DConvert
 			{
 				a = (T)Data.Dequeue().Object;
 			}
-
 			return a;
 		}
+
 
 
 		public void SaveData(bool argLoadMode)
