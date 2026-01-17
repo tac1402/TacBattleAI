@@ -15,6 +15,20 @@ namespace Tac.Agent
 		public NavMeshAgent agent;
 		public StatusBar StatusBar;
 
+		public string Name
+		{
+			get { return name; }
+			set
+			{
+				name = value;
+				if (StatusBar != null)
+				{
+					StatusBar.HealthBar.Text.text = name;
+				}
+			}
+		}
+
+
 		public float WalkDistance;
 
 		/// <summary>

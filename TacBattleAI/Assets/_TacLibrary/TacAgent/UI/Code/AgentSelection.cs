@@ -35,8 +35,7 @@ namespace Tac.Agent
 
 				if (selectedAgent != null) 
 				{
-					StatusBar = selectedAgent.SelectionUI.GetComponent<StatusBar>();
-					StatusBar.Init();
+					selectedAgent.StatusBar.Init();
 					if (OnAgentSelect != null)
 					{
 						OnAgentSelect(selectedAgent);
@@ -56,21 +55,16 @@ namespace Tac.Agent
 		{
 			if (SelectedAgent != null)
 			{
-				if (SelectedAgent.SelectionUI != null) { StatusBar.Select(false); }
+				if (SelectedAgent.StatusBar != null) { SelectedAgent.StatusBar.Select(false); }
 				SelectedAgent = null;
 			}
 
 			if (argAgent != null)
 			{
 				SelectedAgent = argAgent;
-				if (SelectedAgent.SelectionUI != null) { StatusBar.Select(true); }
+				if (SelectedAgent.StatusBar != null) { SelectedAgent.StatusBar.Select(true); }
 			}
 		}
-	}
-
-	public partial class Agent
-	{
-		public GameObject SelectionUI;
 	}
 }
 

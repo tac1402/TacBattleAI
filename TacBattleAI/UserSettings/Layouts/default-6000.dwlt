@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -218,8 +218,8 @@ MonoBehaviour:
     y: 0
     width: 1300
     height: 645
-  m_MinSize: {x: 202, y: 226}
-  m_MaxSize: {x: 4002, y: 4026}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -691,7 +691,7 @@ MonoBehaviour:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs:
-      - m_Data: 34824
+      - m_Data: 44366
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
@@ -1407,7 +1407,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_TacLibrary/TacSave/Components/SaveUI/Code
+    - Assets/_TacLibrary/_GameLogic/TacPerson
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1417,18 +1417,18 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_TacLibrary/TacSave/Components/SaveUI/Code
+  - Assets/_TacLibrary/_GameLogic/TacPerson
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 415}
+    scrollPos: {x: 0, y: 186}
     m_SelectedIDs:
-    - m_Data: 73966
+    - m_Data: 93466
     m_LastClickedID:
-      m_Data: 73966
+      m_Data: 93466
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 73760
@@ -1449,7 +1449,6 @@ MonoBehaviour:
     - m_Data: 73790
     - m_Data: 73792
     - m_Data: 73794
-    - m_Data: 73796
     - m_Data: 73798
     - m_Data: 73800
     - m_Data: 73802
@@ -1462,10 +1461,8 @@ MonoBehaviour:
     - m_Data: 73816
     - m_Data: 73818
     - m_Data: 73820
-    - m_Data: 73822
     - m_Data: 73824
-    - m_Data: 73826
-    - m_Data: 73942
+    - m_Data: 73944
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1560,8 +1557,8 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: 34824
-    m_LastClickedInstanceID: 34824
+    - m_Data: 44366
+    m_LastClickedInstanceID: 44366
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 54580
@@ -1597,8 +1594,8 @@ MonoBehaviour:
     - m_Data: 63338
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: SaveCatalog
-      m_OriginalName: SaveCatalog
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1606,10 +1603,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 34824
+        m_Data: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 10}

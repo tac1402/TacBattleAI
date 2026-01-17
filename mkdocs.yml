@@ -57,7 +57,6 @@ nav:
     - VitalSystems: TacHealth/VitalSystems.md
     - HealthState: TacHealth/HealthState.md
   - TacPerson:
-    - PersonLogic: TacPerson/PersonLogic.md
     - Person: TacPerson/Person.md
     - PersonPlan: TacPerson/PersonPlan.md
     - PersonNameLogic: TacPerson/PersonNameLogic.md
