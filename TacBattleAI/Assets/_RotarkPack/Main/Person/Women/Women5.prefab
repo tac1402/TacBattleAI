@@ -1449,8 +1449,8 @@ GameObject:
   - component: {fileID: 3179798428494354419}
   - component: {fileID: 909899583473221391}
   - component: {fileID: -5243751791792118346}
-  - component: {fileID: 4904357210273354604}
   - component: {fileID: 7653468107099507299}
+  - component: {fileID: -7838376802896494441}
   m_Layer: 9
   m_Name: Women5
   m_TagString: Untagged
@@ -1537,40 +1537,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tac.Person.PersonAnimator
   IsMove: 0
---- !u!114 &4904357210273354604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4175588188177523849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26882a6b19793ae4aae1926a82406d2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectId: 0
-  GroupId: 3
-  ModelName: Women5
-  ModelType: 0
-  agent: {fileID: 0}
-  StatusBar: {fileID: 344265851753374630}
-  WalkDistance: 0
-  isMoving: 0
-  PathStatus: 0
-  TargetPoint:
-    x: 0
-    y: 0
-    z: 0
-  PathPoints: []
-  PathRender: {fileID: 6251589701377123104}
-  SelectionUI: {fileID: 7246547474776309153}
-  TargetId: 0
-  IsBusy: 0
-  LocatedId: 0
-  UseHealthState: 0
-  DebugName: 
-  Gender: 0
 --- !u!136 &7653468107099507299
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1594,6 +1560,37 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-7838376802896494441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4175588188177523849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1b0e5457d172614486f488d66afd8a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: TacLibrary::Tac.Person.Person
+  ObjectId: 0
+  GroupId: 3
+  ModelName: Women5
+  ModelType: 0
+  agent: {fileID: 0}
+  WalkDistance: 0
+  isMoving: 0
+  PathStatus: 0
+  TargetPoint:
+    x: 0
+    y: 0
+    z: 0
+  PathPoints: []
+  TargetId: 0
+  IsBusy: 0
+  LocatedId: 0
+  UseHealthState: 0
+  Gender: 2
+  Info: []
 --- !u!1 &4252202074755979278
 GameObject:
   m_ObjectHideFlags: 0
@@ -3179,11 +3176,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 860346848668807659, guid: c445cdcd0f8290a4fbc0650413aa82aa, type: 3}
   m_PrefabInstance: {fileID: 4364917366577972525}
   m_PrefabAsset: {fileID: 0}
---- !u!120 &6251589701377123104 stripped
-LineRenderer:
-  m_CorrespondingSourceObject: {fileID: 7660999557425309197, guid: c445cdcd0f8290a4fbc0650413aa82aa, type: 3}
-  m_PrefabInstance: {fileID: 4364917366577972525}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7909670909396959299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3289,24 +3281,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 735ca614e49a1284cab1eda99fd80272, type: 3}
---- !u!114 &344265851753374630 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7567129564927124453, guid: 735ca614e49a1284cab1eda99fd80272, type: 3}
-  m_PrefabInstance: {fileID: 7909670909396959299}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7246547474776309153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498ba40425e62c34c98646cb1188ecc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1234254297217201174 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8999380037416891477, guid: 735ca614e49a1284cab1eda99fd80272, type: 3}
-  m_PrefabInstance: {fileID: 7909670909396959299}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7246547474776309153 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 672201003223973346, guid: 735ca614e49a1284cab1eda99fd80272, type: 3}
   m_PrefabInstance: {fileID: 7909670909396959299}
   m_PrefabAsset: {fileID: 0}

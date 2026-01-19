@@ -13,7 +13,6 @@ namespace Tac.Agent
 	public partial class Agent : Item
 	{
 		public NavMeshAgent agent;
-		public StatusBar StatusBar;
 
 		public string Name
 		{
@@ -73,6 +72,10 @@ namespace Tac.Agent
 		private System.Random rnd = new System.Random();
 
 
+		internal StatusBar StatusBar;
+		private LineRenderer PathRender;
+		private float PathHeightOffset = 0.25f;
+
 		public void Init(bool argRecoverMode = false)
 		{
 			HealthState = new HealthState(rnd);
@@ -89,6 +92,7 @@ namespace Tac.Agent
 				StatusBar.SetHealth(HealthState.Health);
 				StatusBar.SetStamina(Charge.State);
 			}
+			PathRender = GetComponentInChildren<LineRenderer>();
 
 			agent = GetComponent<NavMeshAgent>();
 			if (agent != null)
@@ -244,8 +248,6 @@ namespace Tac.Agent
 
 
 
-		public LineRenderer PathRender;
-		private float PathHeightOffset = 0.25f;
 
 		private IEnumerator DrawPath()
 		{
