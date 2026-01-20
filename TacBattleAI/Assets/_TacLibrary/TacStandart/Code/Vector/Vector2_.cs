@@ -65,5 +65,22 @@ namespace Tac
 			width = argWidth;
 			height = argHeight;
 		}
+
+		public Rect_(Vector2_ position, Vector2_ size)
+		{
+			x = position.x;
+			y = position.y;
+			width = size.x;
+			height = size.y;
+		}
+
+		public Rect_(Vector3_ position, Vector2_ size)
+		{
+			x = position.x;
+			y = position.z;
+			width = size.x;
+			height = size.y;
+		}
+
 	}
 }

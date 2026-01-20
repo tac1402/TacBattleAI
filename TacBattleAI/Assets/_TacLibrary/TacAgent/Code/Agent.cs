@@ -94,6 +94,11 @@ namespace Tac.Agent
 			}
 			PathRender = GetComponentInChildren<LineRenderer>();
 
+			if (argRecoverMode == false)
+			{
+				AddStatsSkills();
+			}
+
 			agent = GetComponent<NavMeshAgent>();
 			if (agent != null)
 			{
@@ -103,6 +108,7 @@ namespace Tac.Agent
 			StartCoroutine(Tick());
 		}
 
+		public virtual void AddStatsSkills() { }
 
 		/// <summary>
 		/// Двигаться к 
