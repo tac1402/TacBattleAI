@@ -47,6 +47,9 @@ namespace Tac
 
 		private List<int> Used = new List<int>();
 
+		public Dictionary<int, string> IdKey = new Dictionary<int, string>();
+		public Dictionary<string, int> KeyId = new Dictionary<string, int>();
+
 		private System.Random rnd;
 
 		public RandomUnique(System.Random argRnd)
@@ -59,13 +62,31 @@ namespace Tac
 			Used.Add(argIndex);
 		}
 
+		public void MarkUsed(string argKey)
+		{
+			int index = KeyId[argKey];
+			Used.Add(index);
+		}
+
+		public void MarkUnUsed(int argIndex)
+		{ 
+			Used.Remove(argIndex);
+		}
+
+		public void MarkUnUsed(string argKey)
+		{
+			int index = KeyId[argKey];
+			Used.Remove(index);
+		}
+
 		public int Get(int argMax, GetInt getInt = null)
 		{
 			// Почти все израсходованы
-			if (UsedCount > argMax - 10) { return -1; }
+			if (UsedCount > argMax) { return -1; }
 
 			int ret = 0;
 			bool IsEnd = false;
+			int i = 0;
 			while (IsEnd == false)
 			{
 				if (getInt == null)
@@ -76,6 +97,7 @@ namespace Tac
 				{
 					ret = getInt();
 				}
+				i++;
 
 				bool IsFound = false;
 				for (int k = 0; k < Used.Count; k++)
@@ -90,9 +112,25 @@ namespace Tac
 				{
 					IsEnd = true;
 				}
+				if (i > argMax)
+				{
+					ret = -1;
+					IsEnd = true;
+				}
+
 			}
-			Used.Add(ret);
+			if (ret != -1 && Used.Contains(ret) == false)
+			{
+				Used.Add(ret);
+			}
 			return ret;
+		}
+
+		public void AddKey(string argKey)
+		{
+			int n = IdKey.Count;
+			IdKey.Add(n, argKey);
+			KeyId.Add(argKey, n);
 		}
 	}
 

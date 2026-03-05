@@ -1,0 +1,12 @@
+{
+  "name": "com.tac.tacstandart",
+  "version": "1.0.0",
+  "displayName": "TacStandart",
+  "description": "My description",
+  "author": {
+    "name": "Sergej Jakovlev",
+    "email": "tac1402@gmail.com",
+    "url": "https://github.com/tac1402/TacBattleAI"
+  }
+}
+
