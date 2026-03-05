@@ -1,0 +1,15 @@
+{
+  "name": "com.tac.tacsave",
+  "version": "1.0.0",
+  "displayName": "TacSave",
+  "description": "Allows you to save and load the game state.",
+  "dependencies": {
+    "com.tac.tacstandart": "1.0.0"
+  },
+  "author": {
+    "name": "Tac",
+    "email": "tac1402@gmail.com",
+    "url": "https://github.com/tac1402/TacBattleAI"
+  }
+}
+

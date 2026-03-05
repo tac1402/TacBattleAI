@@ -1,80 +1,87 @@
+// Author: Sergej Jakovlev <tac1402@gmail.com>
+// Copyright (C) 2026 Sergej Jakovlev
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class DialogBox : MonoBehaviour
+namespace Tac.Save
 {
-	public Text Title;
-	public Text Text;
-	public Button Button;
-
-	private List<Button> tmpButton = new List<Button>();
-
-	public virtual void Show(string title, string text, params string[] buttons)
+	public class DialogBox : MonoBehaviour
 	{
-		Show(title, text, null, buttons);
-	}
+		public Text Title;
+		public Text Text;
+		public Button Button;
 
-	public void Show(string title, string text, UnityAction<int> result, params string[] buttons)
-	{
-		for (int i = 0; i < tmpButton.Count; i++)
-		{
-			if (tmpButton[i] != null)
-			{
-				tmpButton[i].gameObject.SetActive(false);
-				Destroy(tmpButton[i].gameObject);
-			}
-		}
-		tmpButton.Clear();
+		private List<Button> tmpButton = new List<Button>();
 
-		if (Title != null)
+		public virtual void Show(string title, string text, params string[] buttons)
 		{
-			if (!string.IsNullOrEmpty(title))
-			{
-				Title.text = title;
-				Title.gameObject.SetActive(true);
-			}
-			else
-			{
-				Title.gameObject.SetActive(false);
-			}
-		}
-		if (Text != null)
-		{
-			Text.text = text;
+			Show(title, text, null, buttons);
 		}
 
-		gameObject.SetActive(true);
-		Button.gameObject.SetActive(false);
-		for (int i = 0; i < buttons.Length; i++)
+		public void Show(string title, string text, UnityAction<int> result, params string[] buttons)
 		{
-			string caption = buttons[i];
-			int index = i;
-			AddButton(caption).onClick.AddListener(delegate () {
-				gameObject.SetActive(false);
-				if (result != null)
+			for (int i = 0; i < tmpButton.Count; i++)
+			{
+				if (tmpButton[i] != null)
 				{
-					result.Invoke(index);
+					tmpButton[i].gameObject.SetActive(false);
+					Destroy(tmpButton[i].gameObject);
 				}
-			});
+			}
+			tmpButton.Clear();
+
+			if (Title != null)
+			{
+				if (!string.IsNullOrEmpty(title))
+				{
+					Title.text = title;
+					Title.gameObject.SetActive(true);
+				}
+				else
+				{
+					Title.gameObject.SetActive(false);
+				}
+			}
+			if (Text != null)
+			{
+				Text.text = text;
+			}
+
+			gameObject.SetActive(true);
+			Button.gameObject.SetActive(false);
+			for (int i = 0; i < buttons.Length; i++)
+			{
+				string caption = buttons[i];
+				int index = i;
+				AddButton(caption).onClick.AddListener(delegate ()
+				{
+					gameObject.SetActive(false);
+					if (result != null)
+					{
+						result.Invoke(index);
+					}
+				});
+			}
 		}
-	}
 
-	private Button AddButton(string text)
-	{
-		Button mButton = Instantiate(Button) as Button;
-		tmpButton.Add(mButton);
-
-		mButton.gameObject.SetActive(true);
-		mButton.onClick.RemoveAllListeners();
-		mButton.transform.SetParent(Button.transform.parent, false);
-		Text[] buttonTexts = mButton.GetComponentsInChildren<Text>(true);
-		if (buttonTexts.Length > 0)
+		private Button AddButton(string text)
 		{
-			buttonTexts[0].text = text;
+			Button mButton = Instantiate(Button) as Button;
+			tmpButton.Add(mButton);
+
+			mButton.gameObject.SetActive(true);
+			mButton.onClick.RemoveAllListeners();
+			mButton.transform.SetParent(Button.transform.parent, false);
+			Text[] buttonTexts = mButton.GetComponentsInChildren<Text>(true);
+			if (buttonTexts.Length > 0)
+			{
+				buttonTexts[0].text = text;
+			}
+			return mButton;
 		}
-		return mButton;
 	}
 }

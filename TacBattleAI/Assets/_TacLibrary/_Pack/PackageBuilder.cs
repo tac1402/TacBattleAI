@@ -6,15 +6,28 @@ public class PackageBuilder
 {
 
 	// Настройки
-	private const string SourceFolder = "Assets/_TacLibrary/TacStandart"; // папка с исходниками пакета
-	private const string TargetRoot = "../Install/TacLibrary/TacStandart"; // папка для готовых пакетов (относительно корня проекта)
-	private const string PackageName = "com.tac.tacstandart"; // должно совпадать с name в package.json
+	private static string SourceFolder = "Assets/_TacLibrary/"; // папка с исходниками пакета
+	private static string TargetRoot = "../Install/TacLibrary/"; // папка для готовых пакетов (относительно корня проекта)
 
 	[MenuItem("Tools/Build TacLibrary/TacStandart")]
-	public static void BuildPackage()
+	public static void BuildTacStandart()
 	{
+		BuildPackage("com.tac.tacstandart", "TacStandart");	
+	}
+
+	[MenuItem("Tools/Build TacLibrary/TacSave")]
+	public static void BuildTacSave()
+	{
+		BuildPackage("com.tac.tacsave", "TacSave");
+	}
+
+	public static void BuildPackage(string argPackageName, string argDirName)
+	{
+		string locSourceFolder = SourceFolder + argDirName;
+		string locTargetFolder = TargetRoot + argDirName;
+
 		// Определяем путь к исходной папке (полный)
-		string sourcePath = Path.Combine(Application.dataPath, SourceFolder.Replace("Assets/", ""));
+		string sourcePath = Path.Combine(Application.dataPath, locSourceFolder.Replace("Assets/", ""));
 		if (!Directory.Exists(sourcePath))
 		{
 			Debug.LogError($"Source folder not found: {sourcePath}");
@@ -23,7 +36,7 @@ public class PackageBuilder
 
 		// Определяем целевую папку для сборки
 		string projectPath = Path.GetDirectoryName(Application.dataPath); // корень проекта
-		string targetPath = Path.Combine(projectPath, TargetRoot, PackageName);
+		string targetPath = Path.Combine(projectPath, locTargetFolder, argPackageName);
 
 		// Создаём целевую папку (если есть, очищаем)
 		if (Directory.Exists(targetPath))
