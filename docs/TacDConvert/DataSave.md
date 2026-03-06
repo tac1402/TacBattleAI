@@ -9,7 +9,7 @@ Assets/
   TacLibraryExt/
     Save/
       DataSave.cs
-    TacLibrary.asmref 
+    TacLibrary.asmref // Выберете ссылку на TacLibrary.asmdef и отключите галочку "Use GUID"
 ```
 
 
