@@ -1,4 +1,5 @@
 using System.IO;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,13 +13,15 @@ public class PackageBuilder
 	[MenuItem("Tools/Build TacLibrary/TacStandart")]
 	public static void BuildTacStandart()
 	{
-		BuildPackage("com.tac.tacstandart", "TacStandart");	
+		BuildPackage("com.tac.tacstandart", "TacStandart");
+		DeleteMeta("com.tac.tacstandart", "TacStandart");
 	}
 
 	[MenuItem("Tools/Build TacLibrary/TacSave")]
 	public static void BuildTacSave()
 	{
 		BuildPackage("com.tac.tacsave", "TacSave");
+		DeleteMeta("com.tac.tacsave", "TacSave", new List<string> { "SaveUI" });
 	}
 
 	public static void BuildPackage(string argPackageName, string argDirName)
@@ -48,12 +51,6 @@ public class PackageBuilder
 		// Копируем все файлы из исходной папки
 		CopyAll(new DirectoryInfo(sourcePath), new DirectoryInfo(targetPath));
 
-		// Удаляем все .meta файлы в целевой папке (они не нужны в пакете)
-		foreach (string metaFile in Directory.GetFiles(targetPath, "*.meta", SearchOption.AllDirectories))
-		{
-			File.Delete(metaFile);
-		}
-
 		// Можно автоматически увеличить версию в package.json (опционально)
 		// UpdateVersion(targetPath);
 
@@ -61,16 +58,45 @@ public class PackageBuilder
 		EditorUtility.RevealInFinder(targetPath); // открываем папку в проводнике
 	}
 
+	private static void DeleteMeta(string argPackageName, string argDirName, List<string> exceptDir = null)
+	{
+		string locTargetFolder = TargetRoot + argDirName;
+		// Определяем целевую папку для сборки
+		string projectPath = Path.GetDirectoryName(Application.dataPath); // корень проекта
+		string targetPath = Path.Combine(projectPath, locTargetFolder, argPackageName);
+
+		DeleteMeta(targetPath, exceptDir);
+	}
+
+	private static void DeleteMeta(string targetPath, List<string> exceptDir = null)
+	{
+		DirectoryInfo target = new DirectoryInfo(targetPath);
+
+		// Удаляем все .meta файлы в целевой папке (они не нужны в пакете)
+		foreach (string metaFile in Directory.GetFiles(targetPath, "*.meta", SearchOption.TopDirectoryOnly))
+		{
+			File.Delete(metaFile);
+		}
+
+		// Копируем подпапки рекурсивно
+		foreach (DirectoryInfo subdir in target.GetDirectories())
+		{
+			if (exceptDir.Contains(subdir.Name) == false)
+			{
+				// Игнорируем папки, которые не нужны (например, если есть папка .git или Temp)
+				if (subdir.Name.StartsWith(".")) continue;
+
+				DeleteMeta(subdir.FullName, exceptDir);
+			}
+		}
+	}
+
 	private static void CopyAll(DirectoryInfo source, DirectoryInfo target)
 	{
 		// Копируем файлы
 		foreach (FileInfo file in source.GetFiles())
 		{
-			// Игнорируем .meta файлы сразу (можно не копировать)
-			if (file.Extension != ".meta")
-			{
-				file.CopyTo(Path.Combine(target.FullName, file.Name));
-			}
+			file.CopyTo(Path.Combine(target.FullName, file.Name));
 		}
 
 		// Копируем подпапки рекурсивно
