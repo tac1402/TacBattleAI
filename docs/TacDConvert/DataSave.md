@@ -17,4 +17,100 @@ Assets/
       TacLibrary.asmref // Выберете ссылку на TacLibrary.asmdef и отключите галочку "Use GUID"
 ```
 
+Теперь поговорим о том, что будет содержать файл DataSave.cs. Ниже полный пример двух вариантов класса DataSave.cs. Мы увидим, что основная задача инструкций сохранения это переопределение метода __SaveData()__. И базовая инструкция заключается в использовании метода __SaveQ()__ в формате 
 
+	__СвойствоДляСохранения = SaveQ(СвойствоДляСохранения, ()=>СвойствоДляСохранения)__. 
+
+Такой формат позволяет получить текущие значение __СвойстваДляСохранения__, через Linq (expression trees) получить сигнатуру __СвойстваДляСохранения__ и обратно присвоить значение в __СвойствоДляСохранения__. Таким образом, он служит сразу для 3 сценариев: сохранения, загрузки и получения мета данных.
+
+```csharp
+// Assets/Code/Save/DataSave.cs
+public partial class World 
+{
+	public override void SaveData(bool argLoadMode)
+	{
+		base.SaveData(argLoadMode);
+
+		DayNight.CurrentDay = SaveQ(DayNight.CurrentDay, () => DayNight.CurrentDay);
+		DayNight.CurrentTime = SaveQ(DayNight.CurrentTime, () => DayNight.CurrentTime);
+		Society.PlayerPersonId = SaveQ(Society.PlayerPersonId, () => Society.PlayerPersonId);
+		Society.People = SaveQ(Society.People, () => Society.People, PredefinedTag.OnlyPrefabId);
+		Society.AllAgentPoint = SaveQ(Society.AllAgentPoint, () => Society.AllAgentPoint, PredefinedTag.OnlyPrefabId);
+		Society.RobotJob.PersonPlans = SaveQ(Society.RobotJob.PersonPlans, () => Society.RobotJob.PersonPlans);
+		Society.PlayerJob.PersonPlans = SaveQ(Society.PlayerJob.PersonPlans, () => Society.PlayerJob.PersonPlans);
+	}
+}
+```
+
+```csharp
+// Assets/Code/TacLibraryExt/Save/DataSave.cs
+namespace Tac.Agent
+{
+	public partial class Agent
+	{
+		public override void SaveData(bool argLoadMode)
+		{
+			base.SaveData(argLoadMode);
+			PathStatus = SaveQ(PathStatus, () => PathStatus);
+			TargetPoint = SaveQ(TargetPoint, () => TargetPoint);
+			WalkDistance = SaveQ(WalkDistance, () => WalkDistance);
+			TargetId = SaveQ(TargetId, () => TargetId);
+			IsBusy = SaveQ(IsBusy, () => IsBusy);
+			LocatedId = SaveQ(LocatedId, () => LocatedId);
+			health = SaveQ(health, () => health);
+		}
+	}
+	public partial class AgentPoint
+	{
+		public override void SaveData(bool argLoadMode)
+		{
+			base.SaveData(argLoadMode);
+			Transform = SaveQ(Transform, () => Transform);
+			Agents = SaveQQ(Agents, () => Agents);
+		}
+	}
+	public partial class AgentInPoint : ConvertData
+	{
+		public override void SaveData(bool argLoadMode)
+		{
+			base.SaveData(argLoadMode);
+			Agent = SaveQ(Agent, () => Agent, PredefinedTag.OnlyPrefabId);
+			EnterTime = SaveQ(EnterTime, () => EnterTime);
+		}
+	}
+}
+namespace Tac.Person
+{
+	public partial class Person
+	{
+		public CrossRef<AgentPoint> PlacesRef = new CrossRef<AgentPoint>();
+		public Dictionary<string, int> PlacesId
+		{
+			get { return PlacesRef.GetRef(Places); }
+			set { PlacesRef.Ref = value; }
+		}
+		public override void SaveData(bool argLoadMode)
+		{
+			base.SaveData(argLoadMode);
+			Transform = SaveQ(Transform, () => Transform);
+			IsActive = SaveQ(IsActive, () => IsActive);
+			Gender = SaveQ(Gender, () => Gender);
+			Name = SaveQ(Name, () => Name);
+			Stats = SaveQ(Stats, () => Stats);
+			Skills = SaveQ(Skills, () => Skills);
+			Info = SaveQ(Info, () => Info);
+			PlacesId = SaveQ(PlacesId, () => PlacesId);
+		}
+	}
+	public partial class PersonPlan : ConvertData
+	{
+		public PersonPlan() { }
+		public override void SaveData(bool argLoadMode)
+		{
+			base.SaveData(argLoadMode);
+			Person = SaveQ(Person, () => Person, PredefinedTag.OnlyPrefabId);
+			DayPlan = SaveQQ(DayPlan, () => DayPlan, PredefinedTag.OnlyPrefabId);
+		}
+	}
+}
+```
