@@ -37,5 +37,55 @@ public partial class PersonPlan
 
 ```
 
-Теперь мы можем заметить, что если последовательно загружать сохраненные объекты этих классов, то окажется, что мы не можем восстановить их за один проход.
+Теперь мы можем заметить, что если последовательно загружать сохраненные объекты этих классов, то окажется, что мы не можем восстановить их за один проход. Это замкнутый круг: __Person__ ссылается на __AgentPoint__, а __AgentPoint__ (через промежуточный AgentInPoint) ссылается на __Person__.
+
+![alt](https://tac1402.github.io/TacBattleAI/Diagramm/CrossRef.jpg)
+
+Разрешить (_Resolve_) эти ссылки можно путем временной замены ссылок на идентификаторы (постоянно использовать идентификаторы, в данном случае, не рационально) для __Person.Places__. Именно, для этого в [DataSave](../../TacDConvert/DataSave) использовалась следующая конструкция: 
+
+```csharp
+namespace Tac.Person
+{
+	public partial class Person
+	{
+		public CrossRef<AgentPoint> PlacesRef = new CrossRef<AgentPoint>();
+		public Dictionary<string, int> PlacesId
+		{
+			get { return PlacesRef.GetRef(Places); }
+			set { PlacesRef.Ref = value; }
+		}
+		public override void SaveData(bool argLoadMode)
+		{
+			base.SaveData(argLoadMode);
+      ...
+			PlacesId = SaveQ(PlacesId, () => PlacesId);
+		}
+	}
+}
+```
+
+Здесь создается временная идентификация (свойство) __PlacesId__, которая использует специальный класс CrossRef. Это класс находу при обращении к словарю идентификаторов __PlacesId__, создает их используя постоянную структуру __Places__. Вот как он это делает: 
+
+```csharp
+public class CrossRef<T> where T : Item
+{
+		public Dictionary<string, int> GetRef(Dictionary<string, T> argDictionary)
+		{
+			if (Ref == null)
+			{
+				Ref = new Dictionary<string, int>();
+				foreach (var item in argDictionary)
+				{
+					if (item.Value != null)
+					{
+						Ref.Add(item.Key, item.Value.Id);
+					}
+				}
+			}
+			return Ref;
+		}
+}
+```
+В первый раз он создает, а затем использует уже созданную. А затем он просто использует тот факт, что любой базоdый класс наследуется от Item и имеет свой идентификатор Id. Он сопоставляет текстовый ключ с идентификатором. И таким образом, сохраняет вместо класса только его идентификатор. 
+
 
