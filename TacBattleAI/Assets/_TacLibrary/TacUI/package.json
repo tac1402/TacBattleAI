@@ -1,0 +1,16 @@
+{
+  "name": "com.tac.tacui",
+  "version": "1.0.0",
+  "displayName": "TacUI",
+  "description": "UI for Greybox prototyping.",
+  "dependencies": {
+    "com.tac.tacgamelogic": "1.0.0",
+    "com.tac.taccamera": "1.0.0"
+  },
+  "author": {
+    "name": "Tac",
+    "email": "tac1402@gmail.com",
+    "url": "https://github.com/tac1402/TacBattleAI"
+  }
+}
+

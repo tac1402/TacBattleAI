@@ -1,0 +1,12 @@
+{
+  "name": "com.tac.tacwireframe",
+  "version": "1.0.0",
+  "displayName": "TacWireframe",
+  "description": "Allows you to apply wireframe to a mesh.",
+  "author": {
+    "name": "Tac",
+    "email": "tac1402@gmail.com",
+    "url": "https://github.com/tac1402/TacBattleAI"
+  }
+}
+

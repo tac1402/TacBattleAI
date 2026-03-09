@@ -1,0 +1,17 @@
+{
+  "name": "com.tac.tacitemmove",
+  "version": "1.0.0",
+  "displayName": "TacItemMove",
+  "description": "Allows you to move objects in the scene.",
+  "dependencies": {
+    "com.tac.tacitemcreate": "1.0.0",
+    "com.tac.tacwireframe": "1.0.0",
+    "com.tac.taccamera": "1.0.0"
+  },
+  "author": {
+    "name": "Tac",
+    "email": "tac1402@gmail.com",
+    "url": "https://github.com/tac1402/TacBattleAI"
+  }
+}
+

@@ -24,6 +24,64 @@ public class PackageBuilder
 		DeleteMeta("com.tac.tacsave", "TacSave", new List<string> { "SaveUI" });
 	}
 
+	[MenuItem("Tools/Build TacLibrary/TacWireframe")]
+	public static void BuildTacWireframe()
+	{
+		BuildPackage("com.tac.tacwireframe", "TacWireframe");
+		DeleteMeta("com.tac.tacwireframe", "TacWireframe", new List<string> { "Material", "Shader" });
+	}
+
+	[MenuItem("Tools/Build TacLibrary/TacCamera")]
+	public static void BuildTacCamera()
+	{
+		BuildPackage("com.tac.taccamera", "TacCamera");
+		DeleteMeta("com.tac.taccamera", "TacCamera", new List<string> { "Prefab" });
+	}
+
+	[MenuItem("Tools/Build TacLibrary/TacItemCreate")]
+	public static void BuildTacItemCreate()
+	{
+		BuildPackage("com.tac.tacitemcreate", "TacItemCreate");
+		DeleteMeta("com.tac.tacitemcreate", "TacItemCreate");
+	}
+
+	[MenuItem("Tools/Build TacLibrary/TacGameLogic")]
+	public static void BuildTacGameLogic()
+	{
+		BuildPackage("com.tac.tacgamelogic", "_TacGameLogic");
+		DeleteMeta("com.tac.tacgamelogic", "_TacGameLogic");
+	}
+
+	[MenuItem("Tools/Build TacLibrary/TacUI")]
+	public static void BuildTacUI()
+	{
+		BuildPackage("com.tac.tacui", "TacUI");
+		DeleteMeta("com.tac.tacui", "TacUI", new List<string> { "Prefab" });
+	}
+
+
+	[MenuItem("Tools/Build TacLibrary/TacAgent")]
+	public static void BuildTacAgent()
+	{
+		BuildPackage("com.tac.tacagent", "TacAgent");
+		DeleteMeta("com.tac.tacagent", "TacAgent", new List<string> { "DrawLine", "HealthBar", "StatusBar" });
+	}
+
+	[MenuItem("Tools/Build TacLibrary/TacPerson")]
+	public static void BuildTacPerson()
+	{
+		BuildPackage("com.tac.tacperson", "TacPerson");
+		DeleteMeta("com.tac.tacperson", "TacPerson", new List<string> { "Resources" });
+	}
+
+	[MenuItem("Tools/Build TacLibrary/TacItemMove")]
+	public static void BuildTacItemMove()
+	{
+		BuildPackage("com.tac.tacitemmove", "TacItemMove");
+		DeleteMeta("com.tac.tacitemmove", "TacItemMove", new List<string> { "Grid" });
+	}
+
+
 	public static void BuildPackage(string argPackageName, string argDirName)
 	{
 		string locSourceFolder = SourceFolder + argDirName;

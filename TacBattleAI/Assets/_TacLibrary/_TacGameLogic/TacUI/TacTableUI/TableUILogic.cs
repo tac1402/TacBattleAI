@@ -1,9 +1,12 @@
+// Author: Sergej Jakovlev <tac1402@gmail.com>
+// Copyright (C) 2025-26 Sergej Jakovlev
+
 using System;
 using System.Collections.Generic;
 
 namespace Tac.UI
 {
-	public partial class TableUI
+	public partial class TableUI 
 	{
 		public int RowCount;
 		public List<int> columnWidth = new List<int>();

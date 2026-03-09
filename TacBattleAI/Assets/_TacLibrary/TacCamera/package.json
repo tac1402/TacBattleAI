@@ -1,0 +1,12 @@
+{
+  "name": "com.tac.taccamera",
+  "version": "1.0.0",
+  "displayName": "TacCamera",
+  "description": "Simple TopDown camera.",
+  "author": {
+    "name": "Tac",
+    "email": "tac1402@gmail.com",
+    "url": "https://github.com/tac1402/TacBattleAI"
+  }
+}
+
