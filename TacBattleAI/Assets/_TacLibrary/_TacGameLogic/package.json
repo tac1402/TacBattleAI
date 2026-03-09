@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "displayName": "TacGameLogic",
   "description": "Game logic components independent of Unity.",
-  "dependencies": {
-    "com.tac.tacui": "1.0.0",
-    "com.tac.tacagent": "1.0.0",
-    "com.tac.tacperson": "1.0.0"
-  },
   "author": {
     "name": "Tac",
     "email": "tac1402@gmail.com",

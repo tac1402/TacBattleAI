@@ -35,7 +35,7 @@ public class PackageBuilder
 	public static void BuildTacCamera()
 	{
 		BuildPackage("com.tac.taccamera", "TacCamera");
-		DeleteMeta("com.tac.taccamera", "TacCamera", new List<string> { "Prefab" });
+		DeleteMeta("com.tac.taccamera", "TacCamera", new List<string> { "Prefab", "Code" });
 	}
 
 	[MenuItem("Tools/Build TacLibrary/TacItemCreate")]
@@ -56,7 +56,6 @@ public class PackageBuilder
 	public static void BuildTacUI()
 	{
 		BuildPackage("com.tac.tacui", "TacUI");
-		DeleteMeta("com.tac.tacui", "TacUI", new List<string> { "Prefab" });
 	}
 
 
@@ -64,7 +63,7 @@ public class PackageBuilder
 	public static void BuildTacAgent()
 	{
 		BuildPackage("com.tac.tacagent", "TacAgent");
-		DeleteMeta("com.tac.tacagent", "TacAgent", new List<string> { "DrawLine", "HealthBar", "StatusBar" });
+		DeleteMeta("com.tac.tacagent", "TacAgent", new List<string> { "UI" });
 	}
 
 	[MenuItem("Tools/Build TacLibrary/TacPerson")]
