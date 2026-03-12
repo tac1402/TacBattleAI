@@ -51,7 +51,7 @@ namespace Tac.Agent
 			}
 		}
 
-		public int PathStatus = 0; // 0 - нет пути, 1 - нужно посчитать, 2 - путь расчитан, 3 - частично расчитан
+		public int PathStatus = 0; // 0 - нет пути, 1 - нужно посчитать, 2 - путь расчитан
 
 		/// <summary>
 		/// Возникает, когда агент заканчивает движение к заданной цели
@@ -138,7 +138,8 @@ namespace Tac.Agent
 		{
 			WalkDistance = 0;
 			agent.stoppingDistance = stoppingDistance;
-			agent.SetPath(PathFull[0]);
+			currentPathIndex++;
+			agent.SetDestination(PathPoints[currentPathIndex]);
 			if (agent.isStopped)
 			{
 				agent.isStopped = false;
@@ -168,19 +169,58 @@ namespace Tac.Agent
 		public void CheckWalkEnd()
 		{
 			if (TargetPoint == Vector3_.zero) { return; }
+			if (PathStatus != 2) { return; }
 
-			float d = Vector3.Distance(transform.position, TargetPoint.To());
-			if (d <= agent.stoppingDistance)
+			if (PathPoints.Count != 0 && currentPathIndex != PathPoints.Count - 1)
 			{
-				agent.isStopped = true;
-				TargetPoint = Vector3_.zero;
-				WalkDistance = 0;
-				if (OnWalkEnd != null)
+				float d1 = Distance(transform.position, PathPoints[currentPathIndex]);
+				if (d1 <= agent.stoppingDistance)
 				{
-					OnWalkEnd(this);
+					currentPathIndex++;
+					agent.SetDestination(PathPoints[currentPathIndex]);
+				}
+			}
+			else
+			{
+				float d = Distance(transform.position, TargetPoint.To());
+				if (d <= agent.stoppingDistance)
+				{
+					agent.isStopped = true;
+					TargetPoint = Vector3_.zero;
+					WalkDistance = 0;
+
+					currentPathIndex = 0;
+					PathPoints.Clear();
+					PathStatus = 0;
+
+					if (OnWalkEnd != null)
+					{
+						OnWalkEnd(this);
+					}
 				}
 			}
 		}
+
+		public int WalkDimension = 2;
+		public float Distance(Vector2 from, Vector2 to)
+		{ 
+			return Distance(from.To3(), to.To3());
+		}
+		public float Distance(Vector3 from, Vector3 to)
+		{ 
+			float distance = 0;
+			switch (WalkDimension)
+			{
+				case 2:
+					distance = Vector2.Distance(from.To2(), to.To2());
+					break;
+				case 3:
+					distance = Vector3.Distance(from, to);
+					break;
+			}
+			return distance;
+		}
+
 
 		public void Stop()
 		{
@@ -208,47 +248,18 @@ namespace Tac.Agent
 		}
 
 		public List<Vector3> PathPoints;
-		public List<NavMeshPath> PathFull;
+		private int currentPathIndex;
 
-		public void CalculatePath()
+		public void SetPath(NavMeshPath2 argPath)
 		{
-
-			if (PathStatus == 1 || PathStatus == 3)
+			if (argPath.status == NavMeshPathStatus.PathComplete)
 			{
-				Vector3 from = transform.position;
-				Vector3 to = TargetPoint.To();
-				if (PathStatus == 1)
+				for (int i = 0; i < argPath.corners.Length; i++)
 				{
-					PathPoints = new List<Vector3>();
-					PathFull = new List<NavMeshPath>();
+					PathPoints.Add(argPath.corners[i]);
 				}
-				if (PathStatus == 3)
-				{
-					NavMeshPath lastPath = PathFull[PathFull.Count - 1];
-					int lastIndex = lastPath.corners.Length - 1;
-					from = lastPath.corners[lastIndex];
-				}
-
-				NavMeshPath tmpPath = new NavMeshPath();
-				bool isPath = NavMesh.CalculatePath(from, to, NavMesh.AllAreas, tmpPath);
-
-				if (isPath)
-				{
-					if (tmpPath.status == NavMeshPathStatus.PathComplete)
-					{
-						PathStatus = 2;
-					}
-					else if (tmpPath.status == NavMeshPathStatus.PathPartial)
-					{
-						PathStatus = 3;
-					}
-
-					PathFull.Add(tmpPath);
-					for (int i = 0; i < tmpPath.corners.Length; i++)
-					{
-						PathPoints.Add(tmpPath.corners[i]);
-					}
-				}
+				currentPathIndex = 0;
+				PathStatus = 2;
 			}
 		}
 

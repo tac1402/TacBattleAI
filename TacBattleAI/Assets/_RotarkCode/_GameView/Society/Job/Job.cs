@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 namespace Tac.Society
@@ -10,9 +11,11 @@ namespace Tac.Society
 	{
 		public Queue<Agent.Agent> AgentPath = new Queue<Agent.Agent> ();
 
+		private NavMeshPathExt pathExt;
 
 		private void Awake()
 		{
+			pathExt = new NavMeshPathExt();
 			StartCoroutine(CalcPath());
 		}
 
@@ -24,9 +27,12 @@ namespace Tac.Society
 				for (int i = 0; i < AgentPath.Count; i++)
 				{
 					Agent.Agent agent = AgentPath.Peek();
-					if (agent.PathStatus == 1 || agent.PathStatus == 3)
+					if (agent.PathStatus == 1)
 					{
-						agent.CalculatePath();
+						NavMeshPath2 path = pathExt.CalculatePath(agent.transform.position, agent.TargetPoint.To());
+						agent.SetPath(path);
+
+
 						if (agent.PathStatus != 2)
 						{
 							break;
@@ -41,7 +47,6 @@ namespace Tac.Society
 				yield return new WaitForSeconds(0.1f);
 			}
 		}
-
 
 	}
 }

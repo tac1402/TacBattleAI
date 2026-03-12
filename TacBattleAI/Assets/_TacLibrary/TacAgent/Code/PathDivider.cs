@@ -54,7 +54,7 @@ namespace Tac.Agent
 			// Останавливаем агента
 			//agent.isStopped = true;
 
-			agent.nextPosition = transform.position;
+			//agent.nextPosition = transform.position;
 
 			// Телепортируем
 			agent.Warp(divider.teleportPoint);
@@ -62,7 +62,8 @@ namespace Tac.Agent
 			// Продолжаем движение к той же цели
 			//agent.isStopped = false;
 
-			agent.SetDestination(TargetPoint.To());
+			currentPathIndex = divider.teleportPrevPathIndex;
+			Walk();
 
 			hasTeleported = true;
 		}
@@ -77,6 +78,7 @@ namespace Tac.Agent
 		public float firstSegmentLength;
 		public float lastSegmentLength;
 		public Vector3 teleportPoint;
+		public int teleportPrevPathIndex;
 
 		public void DividePath(Agent argAgent, float totalGameTime)
 		{
@@ -102,7 +104,7 @@ namespace Tac.Agent
 				lastSegmentLength = maxWalkLength;
 			}
 
-			teleportPoint = GetPointAtDistance(argAgent.PathPoints, totalPathLength - lastSegmentLength);
+			(teleportPoint, teleportPrevPathIndex) = GetPointAtDistance(argAgent.PathPoints, totalPathLength - lastSegmentLength);
 		}
 
 		private float CalculatePathLength(List<Vector3> corners)
@@ -115,7 +117,7 @@ namespace Tac.Agent
 			return length;
 		}
 
-		private Vector3 GetPointAtDistance(List<Vector3> corners, float targetDistance)
+		private (Vector3, int) GetPointAtDistance(List<Vector3> corners, float targetDistance)
 		{
 			float accumulated = 0f;
 
@@ -128,14 +130,14 @@ namespace Tac.Agent
 				if (accumulated + segmentDist >= targetDistance)
 				{
 					float t = (targetDistance - accumulated) / segmentDist;
-					return Vector3.Lerp(start, end, t);
+					return (Vector3.Lerp(start, end, t), i);
 				}
 
 				accumulated += segmentDist;
 			}
 
 			// Если targetDistance больше длины пути, возвращаем последнюю точку
-			return corners[corners.Count - 1];
+			return (corners[corners.Count - 1], corners.Count - 2);
 		}
 
 		public Gradient CreatePhaseGradient(Color[] phaseColors)
