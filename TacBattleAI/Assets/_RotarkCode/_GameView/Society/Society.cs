@@ -46,6 +46,7 @@ namespace Tac.Society
 
 		public void NextHour(GameTime argGameTime)
 		{
+			oldGameTime = argGameTime;
 			PlayerJob.NextHour(argGameTime);
 			RobotJob.NextHour(argGameTime);
 

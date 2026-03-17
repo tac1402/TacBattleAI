@@ -100,9 +100,11 @@ namespace Tac.Agent
 			}
 		}
 
+		public bool DebugEnter = false;
+
 		private void CheckEnter(GameTime argGameTime, List<Agent> argAllAgent)
 		{
-			if (ObjectId == 3)
+			if (DebugEnter)
 			{
 				int a = 1;
 			}
@@ -113,14 +115,19 @@ namespace Tac.Agent
 			{
 				if (IsAgentInEnter(tmpAgents[j].ObjectId) == true)
 				{
-					int timeEnter = WorkingFrom - 1;
-					if (argGameTime.Hour >= timeEnter && argGameTime.Hour <= WorkingTill)
-					{
-						if (CheckAgentToEnter(tmpAgents[j]))
-						{
-							Add(tmpAgents[j]);
-						}
-					}
+					WalkToEnter(argGameTime, tmpAgents[j]);
+				}
+			}
+		}
+
+		public void WalkToEnter(GameTime argGameTime, Agent argAgent)
+		{
+			int timeEnter = WorkingFrom - 1;
+			if (argGameTime.Hour >= timeEnter && argGameTime.Hour <= WorkingTill)
+			{
+				if (CheckAgentToEnter(argAgent))
+				{
+					Add(argAgent);
 				}
 			}
 		}
@@ -137,11 +144,12 @@ namespace Tac.Agent
 		public GetInfoDelegate GetInfoHandler;
 		public string GetInfo()
 		{
+			string ret = Info;
 			if (GetInfoHandler != null)
 			{
-				return GetInfoHandler(ObjectId);
+				ret += "\n" + GetInfoHandler(ObjectId);
 			}
-			return "";
+			return ret;
 		}
 
 

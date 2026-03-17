@@ -1,6 +1,6 @@
 
 using System.Collections.Generic;
-
+using Tac.Agent;
 using Tac.Person;
 
 namespace Tac.Society
@@ -26,8 +26,7 @@ namespace Tac.Society
 
 		private PersonName PersonName = new PersonName();
 		private System.Random rnd = new System.Random();
-
-
+		private GameTime oldGameTime;
 
 		public void AddAgentPlan(Person.Person argAgent, bool IsPlayer = false)
 		{
@@ -86,6 +85,8 @@ namespace Tac.Society
 				person.Init();
 				person.CheckPosition();
 
+				person.OnWalkEnd += Person_OnWalkEnd;
+
 				People.Add(person.ObjectId, person);
 				peopleTable.Add(person);
 
@@ -95,5 +96,11 @@ namespace Tac.Society
 			return ret;
 		}
 
+		protected virtual void Person_OnWalkEnd(params object[] argInfo)
+		{ 
+			Agent.Agent agent = argInfo[0] as Agent.Agent;
+
+			AllAgentPoint[agent.TargetId].WalkToEnter(oldGameTime, agent);
+		}
 	}
 }

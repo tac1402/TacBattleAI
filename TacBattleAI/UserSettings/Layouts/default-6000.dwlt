@@ -1426,9 +1426,9 @@ MonoBehaviour:
   m_FolderTreeState:
     scrollPos: {x: 0, y: 207}
     m_SelectedIDs:
-    - m_Data: 73952
+    - m_Data: 73948
     m_LastClickedID:
-      m_Data: 73952
+      m_Data: 73948
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 73768
@@ -1601,8 +1601,8 @@ MonoBehaviour:
     - m_Data: 74706
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Society
-      m_OriginalName: Society
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1610,10 +1610,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 38782
+        m_Data: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 10}
