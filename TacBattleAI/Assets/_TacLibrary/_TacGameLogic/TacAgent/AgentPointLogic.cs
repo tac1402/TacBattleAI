@@ -133,6 +133,16 @@ namespace Tac.Agent
 			UpdateInfo();
 		}
 
+		public delegate string GetInfoDelegate(int argId);
+		public GetInfoDelegate GetInfoHandler;
+		public string GetInfo()
+		{
+			if (GetInfoHandler != null)
+			{
+				return GetInfoHandler(ObjectId);
+			}
+			return "";
+		}
 
 
 #if OnlyLogic

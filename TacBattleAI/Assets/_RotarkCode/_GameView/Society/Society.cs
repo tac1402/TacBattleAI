@@ -26,7 +26,13 @@ namespace Tac.Society
 			for (int i = 0; i < AllAgentPoint.Count; i++)
 			{
 				AllAgentPoint[i].ObjectId = ItemCreate.GetNewId();
+				AllAgentPoint[i].GetInfoHandler = GetAgentPointInfo;
 			}
+		}
+
+		public string GetAgentPointInfo(int argId)
+		{
+			return "AgentPointInfo";
 		}
 
 		public void InitWorkPlace()

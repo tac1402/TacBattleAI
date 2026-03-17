@@ -45,14 +45,8 @@ namespace Tac.Agent
 		}
 
 
-
 		private void Awake()
 		{
-			GameObject world = GameObject.Find("World");
-			if (world != null)
-			{ 
-				//DayNightController = world.GetComponent<DayNightController>();
-			}
 			BuildItem item = GetComponent<BuildItem>();
 			if (item != null)
 			{
@@ -61,6 +55,7 @@ namespace Tac.Agent
 
 			Init();
 		}
+
 
 		public virtual void AddView(Agent argAgent)
 		{

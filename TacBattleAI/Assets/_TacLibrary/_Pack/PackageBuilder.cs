@@ -138,7 +138,7 @@ public class PackageBuilder
 		// Копируем подпапки рекурсивно
 		foreach (DirectoryInfo subdir in target.GetDirectories())
 		{
-			if (exceptDir.Contains(subdir.Name) == false)
+			if (exceptDir == null || exceptDir.Contains(subdir.Name) == false)
 			{
 				// Игнорируем папки, которые не нужны (например, если есть папка .git или Temp)
 				if (subdir.Name.StartsWith(".")) continue;

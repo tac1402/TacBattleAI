@@ -150,28 +150,7 @@ namespace Tac.UI
 					{
 						case SelectionType.AgentPoint:
 							title = currentAgentPoint.Title;
-							/*string ownerInfo = Society.GetOwnerInfo(currentAgentPoint);
-
-							Business business = currentAgentPoint as Business;
-							string businessInfo = "";
-							if (business != null)
-							{
-								float pCompetence = business.CalcOwnerCompetence();
-								float bCompetence = business.CalcBusinessCompetence() / 10f;
-
-								int worker = (int) (pCompetence / bCompetence) + 1;
-								if (worker <= 10)
-								{
-									businessInfo = "Компетентность владельца = " + pCompetence.ToString("F1") + " позволяет нанять до " + worker.ToString() + " сотрудников\n";
-								}
-								else
-								{
-									businessInfo = "Компетентность владельца = " + pCompetence.ToString("F1") + " позволяет нанять всех сотрудников\n";
-								}
-							}
-
-							info = "Id = " + currentAgentPoint.Id.ToString() + "\n" + currentAgentPoint.Info + ownerInfo + businessInfo;
-							*/
+							info = "Id = " + currentAgentPoint.ObjectId.ToString() + "\n" + currentAgentPoint.GetInfo();
 							break;
 						case SelectionType.Person:
 							title = currentPerson.Name;
