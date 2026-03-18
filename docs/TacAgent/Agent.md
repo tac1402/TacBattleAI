@@ -17,6 +17,11 @@ _float WalkDistance (only get)_
 
 Какое расстояние в юнити метрах пройдено по пути к цели WalkTarget;
 
+## PathStatus
+_int PathStatus_
+
+0 - путь не задан, 1 - нужно рассчитать, 2 - путь расчитан
+
 ## PathPoints
 _List\<Vector3> PathPoints_
 
