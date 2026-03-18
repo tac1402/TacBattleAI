@@ -16,6 +16,18 @@ title: AgentPoint
 
 Очередь агентов, которые пришли в эту точку в порядке их прихода. 
 
+## WorkingHours && WorkingFrom && WorkingTill
+_Vector2 WorkingHours_
+_int WorkingFrom (only get)_
+_int WorkingTill (only get)_
+
+Время работы WorkingHours.x (=WorkingFrom) - от, WorkingHours.y (=WorkingTill) - до.
+
+## IsOpen()
+_bool IsOpen(int currentTime)_
+
+Открыто ли точка агента для посещения в конкретный игровой час (currentTime).
+
 ## Add()
 _Add(Agent argAgent)_
 
