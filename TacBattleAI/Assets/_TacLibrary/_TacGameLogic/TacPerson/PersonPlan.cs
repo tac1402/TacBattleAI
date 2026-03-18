@@ -19,7 +19,10 @@ namespace Tac.Person
 
 		public void CalculateActual(GameTime argGameTime)
 		{
-			var openPlaces = Person.Places.Where(pair => pair.Value.IsOpen(argGameTime.Hour)).ToDictionary(pair => pair.Key, pair => pair.Value);
+			if (Person.Places == null || Person.Places.Count == 0) { return; }
+			// +1 час на дорогу
+			var openPlaces = Person.Places.Where(pair => pair.Value.IsOpen(argGameTime.Hour + 1)).ToDictionary(pair => pair.Key, pair => pair.Value);
+			if (openPlaces.Count == 0) { return; }
 
 			// 1. Вычисляем базовый приоритет для каждого стата, который есть у агента
 			Dictionary<string, float> statPriority = new Dictionary<string, float>();
@@ -32,9 +35,15 @@ namespace Tac.Person
 				switch (statType)
 				{
 					case StatType.Critical:
-						// Критический стат: приоритет растёт квадратично при приближении к нулю
-						float deficit = 100 - statValue;
-						statPriority[statName] = deficit * deficit; // квадрат дефицита
+						// Критический стат: приоритет растёт 
+						if (statValue > 10) // 10 - означает, что нехватает на 10 часов
+						{
+							statPriority[statName] = 10f;
+						}
+						else if (statValue > 5)
+						{
+							statPriority[statName] = 1f;
+						}
 						break;
 
 					case StatType.Normal:
@@ -97,9 +106,13 @@ namespace Tac.Person
 		}
 
 		public AgentPoint GetActual()
-		{ 
-			string key = CurrentPlan.Dequeue();
-			return Person.Places[key];
+		{
+			if (CurrentPlan != null && CurrentPlan.Count > 0)
+			{
+				string key = CurrentPlan.Dequeue();
+				return Person.Places[key];
+			}
+			return null;
 		}
 
 	}

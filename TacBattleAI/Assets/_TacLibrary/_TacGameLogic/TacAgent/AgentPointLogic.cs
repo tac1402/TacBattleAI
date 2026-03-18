@@ -47,12 +47,12 @@ namespace Tac.Agent
 			if (WorkingFrom <= WorkingTill)
 			{
 				// Обычный интервал в пределах суток
-				return WorkingFrom <= currentTime && currentTime < WorkingTill;
+				return currentTime >= WorkingFrom && currentTime <= WorkingTill;
 			}
 			else
 			{
 				// Интервал переходит через полночь (например, 22:00 - 06:00)
-				return currentTime >= WorkingFrom || currentTime < WorkingTill;
+				return currentTime >= WorkingFrom || currentTime <= WorkingTill;
 			}
 		}
 
