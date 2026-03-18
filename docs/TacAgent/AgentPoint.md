@@ -26,7 +26,7 @@ _int WorkingTill (only get)_
 ## IsOpen()
 _bool IsOpen(int currentTime)_
 
-Открыто ли точка агента для посещения в конкретный игровой час (currentTime).
+Открыта ли точка агента для посещения в конкретный игровой час (currentTime).
 
 ## Add()
 _Add(Agent argAgent)_
