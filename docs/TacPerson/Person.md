@@ -65,9 +65,9 @@ _Dictionary<string, float\> Skills_
 _Различие между статами и скилами скорее просто стилистическое, но они разделены. Если стат отвечает на вопрос "Что это дает персонажу?" (существительное), то скил отвечает на вопрос "Что персонаж умеет?" (глагол)._
 
 ## AddStat()
-_AddStat(string argName, float argValue = 0, bool argAddInfo = true)_
+_AddStat(string argName, float argValue = 0, StatType argStatType = StatType.Normal, bool argAddInfo = true)_
 
-Добавить стат с именем argName и значением argValue (по умолчанию =0). По умолчанию (argAddInfo = true) добавляется в список для отображения в UI.
+Добавить стат с именем argName, значением argValue (по умолчанию =0) и типом argStatType (по умолчанию =Normal). По умолчанию (argAddInfo = true) добавляется в список для отображения в UI.
 
 ## AddSkill()
 _AddSkill(string argName, float argValue = 0, bool argAddInfo = true)_
