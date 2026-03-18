@@ -18,7 +18,7 @@ _float WalkDistance (only get)_
 Какое расстояние в юнити метрах пройдено по пути к цели WalkTarget;
 
 ## PathPoints
-_List<Vector3> PathPoints_
+_List\<Vector3> PathPoints_
 
 Рассчитанный путь агента к цели (TargetPoint).
 
