@@ -7,9 +7,4 @@ namespace Tac.DConvert
 	{
 		public string PrefabName { get; set; }
 	}
-
-	public interface IId
-	{
-		public int Id { get; set; }
-	}
 }

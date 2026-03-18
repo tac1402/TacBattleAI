@@ -9,7 +9,7 @@ namespace Tac.Agent
 		public string Title;
 		public string Info;
 
-		public Queue<AgentInPoint> Agents = new Queue<AgentInPoint>();
+		public QueueR<AgentInPoint> Agents = new QueueR<AgentInPoint>();
 
 		/// <summary>
 		/// Время последнего обновления
@@ -89,6 +89,16 @@ namespace Tac.Agent
 		public Agent Remove()
 		{
 			AgentInPoint ap = Agents.Dequeue();
+			RemoveView(ap.Agent);
+			ap.Agent.IsBusy = false;
+			ap.Agent.LocatedId = 0;
+			ap.Agent.TargetId = 0;
+			return ap.Agent;
+		}
+
+		public Agent Remove(int argAgentId)
+		{
+			AgentInPoint ap = Agents.Remove(argAgentId);
 			RemoveView(ap.Agent);
 			ap.Agent.IsBusy = false;
 			ap.Agent.LocatedId = 0;

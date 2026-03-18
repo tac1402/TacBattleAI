@@ -27,7 +27,8 @@ namespace Tac.Agent
 		{
 			base.SaveData(argLoadMode);
 			Transform = SaveQ(Transform, () => Transform);
-			Agents = SaveQQ(Agents, () => Agents);
+			Agents.ClearRemoved();
+			Agents.Queue = SaveQQ(Agents.Queue, () => Agents.Queue);
 		}
 	}
 	public partial class AgentInPoint : ConvertData
