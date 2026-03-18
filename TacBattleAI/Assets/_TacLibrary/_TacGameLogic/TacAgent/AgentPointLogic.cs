@@ -23,6 +23,7 @@ namespace Tac.Agent
 
 		public virtual void Work(GameTime argGameTime) { }
 
+		public List<NamedValue> BaseWorkPayment = new List<NamedValue>();
 
 		protected int WorkingFrom
 		{
@@ -38,6 +39,20 @@ namespace Tac.Agent
 			{
 				int y = (int)WorkingHours_.y;
 				return y;
+			}
+		}
+
+		public bool IsOpen(int currentTime)
+		{
+			if (WorkingFrom <= WorkingTill)
+			{
+				// Обычный интервал в пределах суток
+				return WorkingFrom <= currentTime && currentTime < WorkingTill;
+			}
+			else
+			{
+				// Интервал переходит через полночь (например, 22:00 - 06:00)
+				return currentTime >= WorkingFrom || currentTime < WorkingTill;
 			}
 		}
 

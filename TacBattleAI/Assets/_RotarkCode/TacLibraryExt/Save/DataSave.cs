@@ -75,7 +75,8 @@ namespace Tac.Person
 		{
 			base.SaveData(argLoadMode);
 			Person = SaveQ(Person, () => Person, PredefinedTag.OnlyPrefabId);
-			DayPlan = SaveQQ(DayPlan, () => DayPlan, PredefinedTag.OnlyPrefabId);
+			//DayPlan = SaveQQ(DayPlan, () => DayPlan, PredefinedTag.OnlyPrefabId);
+			CurrentPlan = SaveQQ(CurrentPlan, () => CurrentPlan);
 		}
 	}
 

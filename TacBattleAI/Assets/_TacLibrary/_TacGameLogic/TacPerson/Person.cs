@@ -22,6 +22,11 @@ namespace Tac.Person
 		/// </summary>
 		public Dictionary<string, float> Stats = new Dictionary<string, float>();
 		/// <summary>
+		/// “ипы важности дл€ характеристик
+		/// </summary>
+		public Dictionary<string, StatType> StatTypes = new Dictionary<string, StatType>();
+
+		/// <summary>
 		/// —килы (умени€)
 		/// </summary>
 		public Dictionary<string, float> Skills = new Dictionary<string, float>();
@@ -61,9 +66,10 @@ namespace Tac.Person
 			}
 		}
 
-		public void AddStat(string argName, float argValue = 0, bool argAddInfo = true)
+		public void AddStat(string argName, float argValue = 0, StatType argStatType = StatType.Normal, bool argAddInfo = true)
 		{
 			Stats.Add(argName, argValue);
+			StatTypes.Add(argName, argStatType);
 			if (argAddInfo == true)
 			{
 				Info.Add(new NamedValue(argName, argValue));
@@ -165,4 +171,12 @@ namespace Tac.Person
 
 
 	}
+
+	public enum StatType
+	{
+		Critical,   //  ритический (0Ц100, нельз€ допускать падени€)
+		Normal,     // ќбычный (любые значени€, не критичен)
+		Money       // ¬алюта
+	}
+
 }

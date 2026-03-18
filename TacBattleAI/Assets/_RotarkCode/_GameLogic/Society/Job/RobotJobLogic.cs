@@ -17,7 +17,7 @@ namespace Tac.Society
 		bool isDayPlanCreated = false;
 		private void CheckAgent(GameTime argGameTime)
 		{
-			if (argGameTime.Hour >= 6 && argGameTime.Hour <= 7 && isDayPlanCreated == true)
+			/*if (argGameTime.Hour >= 6 && argGameTime.Hour <= 7 && isDayPlanCreated == true)
 			{
 				isDayPlanCreated = false;
 			}
@@ -27,13 +27,15 @@ namespace Tac.Society
 			{
 				CreateDayPlan();
 				isDayPlanCreated = true;
-			}
+			}*/
 
 			foreach (var plan in PersonPlans.Values)
 			{
 				if (plan.Person.IsBusy == false)
 				{
-					AgentPoint agentPoint = plan.Remove();
+					plan.CalculateActual(argGameTime);
+
+					AgentPoint agentPoint = plan.GetActual();
 					if (agentPoint != null)
 					{
 						/*if (agentPoint.ObjectId == 3)

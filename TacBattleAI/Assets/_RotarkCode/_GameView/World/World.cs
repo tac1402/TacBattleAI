@@ -46,7 +46,6 @@ public partial class World : Item, ILoadManager
 
 		CreateWorld();
 		Society.InitWorkPlace();
-		Society.RobotJob.CreateDayPlan();
 
 		RunPanel.Init(DayNight, Society);
 		DayNight.NextHour += AgentWalkEmulation;
