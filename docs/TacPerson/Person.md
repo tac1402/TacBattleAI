@@ -43,6 +43,20 @@ _Dictionary<string, float\> Stats_
 
 Т.н. статы персонажа, любые характеристики персонажа, значения которых можно выразить числом типа float. Каждая характеристика имеет свое уникальное текстовое (string) наименование. 
 
+## StatTypes
+_Dictionary<string, StatType> StatTypes _
+
+Типы важности статов (перечислены в StatType), ключ - наименование стата.
+
+```csharp
+public enum StatType
+{
+	Critical,   // Критический (показывает сколько часов персонаж обходится без этого ресурса)
+	Normal,     // Обычный
+	Money       // Валюта
+}
+```
+
 ## Skills
 _Dictionary<string, float\> Skills_
 
