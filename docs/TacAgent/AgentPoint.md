@@ -23,6 +23,11 @@ _int WorkingTill (only get)_
 
 Время работы WorkingHours.x (=WorkingFrom) - от, WorkingHours.y (=WorkingTill) - до.
 
+## BaseWorkPayment
+_List<NamedValue> BaseWorkPayment_
+
+Список ресурсов, которые агент может получить работая в этой точке в базовых величинах. В качестве именований нужно использовать теже наименования что и в статах персонажа. 
+
 ## IsOpen()
 _bool IsOpen(int currentTime)_
 
