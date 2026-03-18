@@ -44,7 +44,7 @@ _Dictionary<string, float\> Stats_
 Т.н. статы персонажа, любые характеристики персонажа, значения которых можно выразить числом типа float. Каждая характеристика имеет свое уникальное текстовое (string) наименование. 
 
 ## StatTypes
-_Dictionary<string, StatType> StatTypes _
+_Dictionary<string, StatType> StatTypes_
 
 Типы важности статов (перечислены в StatType), ключ - наименование стата.
 
