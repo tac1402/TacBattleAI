@@ -22,7 +22,10 @@ namespace Tac.Agent
 
 
 		public virtual void Work(GameTime argGameTime) { }
-
+		/// <summary>
+		/// Список ресурсов, которые агент может получить работая в этой точке в базовых величинах.
+		/// В качестве именований нужно использовать теже наименования что и в статах персонажа. 
+		/// </summary>
 		public List<NamedValue> BaseWorkPayment = new List<NamedValue>();
 
 		protected int WorkingFrom

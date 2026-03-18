@@ -13,7 +13,7 @@ namespace Tac.Agent
 
 			PathStatus = SaveQ(PathStatus, () => PathStatus);
 			TargetPoint = SaveQ(TargetPoint, () => TargetPoint);
-			WalkDistance = SaveQ(WalkDistance, () => WalkDistance);
+			walkDistance = SaveQ(walkDistance, () => walkDistance);
 			TargetId = SaveQ(TargetId, () => TargetId);
 			IsBusy = SaveQ(IsBusy, () => IsBusy);
 			LocatedId = SaveQ(LocatedId, () => LocatedId);

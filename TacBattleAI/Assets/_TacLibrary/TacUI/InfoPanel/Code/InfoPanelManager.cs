@@ -102,6 +102,7 @@ namespace Tac.UI
 					CurrentPanel.gameObject.SetActive(true);
 				}
 				Type = argType;
+				UpdateCurrentPanel();
 			}
 		}
 
@@ -140,27 +141,31 @@ namespace Tac.UI
 			{
 				yield return new WaitForSeconds(1.0f);
 				if (DayNight.PauseCompleteStop) { continue; }
+				UpdateCurrentPanel();
+			}
+		}
 
-				if (CurrentPanel != null)
+		private void UpdateCurrentPanel()
+		{
+			if (CurrentPanel != null)
+			{
+				string title = "";
+				string info = "";
+
+				switch (Type)
 				{
-					string title = "";
-					string info = "";
-
-					switch (Type)
-					{
-						case SelectionType.AgentPoint:
-							title = currentAgentPoint.Title;
-							info = "Id = " + currentAgentPoint.ObjectId.ToString() + "\n" + currentAgentPoint.GetInfo();
-							break;
-						case SelectionType.Person:
-							title = currentPerson.Name;
-							info = currentPerson.InfoTxt;
-							break;
-					}
-
-					CurrentPanel.SetTitle(title);
-					CurrentPanel.SetInfo(info);
+					case SelectionType.AgentPoint:
+						title = currentAgentPoint.Title;
+						info = "Id = " + currentAgentPoint.ObjectId.ToString() + "\n" + currentAgentPoint.GetInfo();
+						break;
+					case SelectionType.Person:
+						title = currentPerson.Name;
+						info = currentPerson.InfoTxt;
+						break;
 				}
+
+				CurrentPanel.SetTitle(title);
+				CurrentPanel.SetInfo(info);
 			}
 		}
 

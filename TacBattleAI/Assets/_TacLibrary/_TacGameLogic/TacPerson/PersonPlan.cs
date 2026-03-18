@@ -9,7 +9,6 @@ namespace Tac.Person
 	public partial class PersonPlan
 	{
 		public Person Person;
-
 		public Queue<string> CurrentPlan;
 
 		public PersonPlan(Person argPerson)
@@ -21,7 +20,8 @@ namespace Tac.Person
 		{
 			if (Person.Places == null || Person.Places.Count == 0) { return; }
 			// +1 час на дорогу
-			var openPlaces = Person.Places.Where(pair => pair.Value.IsOpen(argGameTime.Hour + 1)).ToDictionary(pair => pair.Key, pair => pair.Value);
+			var openPlaces = Person.Places.Where(pair => pair.Value != null && pair.Value.IsOpen(argGameTime.Hour + 1))
+								.ToDictionary(pair => pair.Key, pair => pair.Value);
 			if (openPlaces.Count == 0) { return; }
 
 			// 1. Вычисляем базовый приоритет для каждого стата, который есть у агента
@@ -32,6 +32,7 @@ namespace Tac.Person
 				float statValue = stat.Value;
 				StatType statType = Person.StatTypes[statName];
 
+				statPriority.Add(statName, 0);
 				switch (statType)
 				{
 					case StatType.Critical:
@@ -102,7 +103,6 @@ namespace Tac.Person
 								  .ToList();
 
 			CurrentPlan = new Queue<string>(sortedIds);
-
 		}
 
 		public AgentPoint GetActual()

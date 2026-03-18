@@ -27,8 +27,9 @@ namespace Tac.Agent
 			}
 		}
 
+		internal float walkDistance;
 
-		public float WalkDistance;
+		public float WalkDistance { get { return walkDistance; } }
 
 		/// <summary>
 		/// Двигается ли юнит к цели
@@ -59,7 +60,7 @@ namespace Tac.Agent
 		public event Send OnWalkEnd;
 
 		/// <summary>
-		/// Цель движения агента, если он движется
+		/// Точка на карте куда движется агент
 		/// </summary>
 		public Vector3_ TargetPoint = Vector3_.zero;
 
@@ -123,7 +124,7 @@ namespace Tac.Agent
 
 			if (agent.destination.To2() != argTarget.To2() /*&& IsDead == false*/)
 			{
-				WalkDistance = 0;
+				walkDistance = 0;
 				agent.stoppingDistance = stoppingDistance;
 				TargetPoint = argTarget;
 				agent.SetDestination(argTarget.To());
@@ -136,7 +137,7 @@ namespace Tac.Agent
 
 		public void Walk(float stoppingDistance = 0.1f)
 		{
-			WalkDistance = 0;
+			walkDistance = 0;
 			agent.stoppingDistance = stoppingDistance;
 			currentPathIndex++;
 			agent.SetDestination(PathPoints[currentPathIndex]);
@@ -156,9 +157,9 @@ namespace Tac.Agent
 			}
 		}
 
-		public void CheckDistance()
+		private void CheckDistance()
 		{
-			WalkDistance += Vector3.Distance(transform.position, previousPosition);
+			walkDistance += Vector3.Distance(transform.position, previousPosition);
 			if (OnCheckDistance != null)
 			{
 				OnCheckDistance();
@@ -166,7 +167,7 @@ namespace Tac.Agent
 			previousPosition = transform.position;
 		}
 
-		public void CheckWalkEnd()
+		private void CheckWalkEnd()
 		{
 			if (TargetPoint == Vector3_.zero) { return; }
 			if (PathStatus != 2) { return; }
@@ -185,13 +186,7 @@ namespace Tac.Agent
 				float d = Distance(transform.position, TargetPoint.To());
 				if (d <= agent.stoppingDistance)
 				{
-					agent.isStopped = true;
-					TargetPoint = Vector3_.zero;
-					WalkDistance = 0;
-
-					currentPathIndex = 0;
-					PathPoints.Clear();
-					PathStatus = 0;
+					CancelTarget();
 
 					if (OnWalkEnd != null)
 					{
@@ -219,6 +214,17 @@ namespace Tac.Agent
 					break;
 			}
 			return distance;
+		}
+
+		public void CancelTarget()
+		{
+			agent.isStopped = true;
+			TargetPoint = Vector3_.zero;
+			walkDistance = 0;
+
+			currentPathIndex = 0;
+			PathPoints.Clear();
+			PathStatus = 0;
 		}
 
 
