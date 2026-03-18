@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1918
     height: 980
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -246,14 +246,14 @@ MonoBehaviour:
     y: 668
     width: 1529
     height: 256
-  m_MinSize: {x: 101, y: 126}
-  m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 18}
+  m_MinSize: {x: 231, y: 276}
+  m_MaxSize: {x: 10001, y: 10026}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
   - {fileID: 18}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -301,8 +301,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "UnityEditor.MainToolbarWindow\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 0
+    x: 1
+    y: 51
     width: 1918
     height: 36
   m_SerializedDataModeController:
@@ -670,8 +670,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Hierarchy\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 24
+    x: 1
+    y: 87
     width: 259
     height: 642
   m_SerializedDataModeController:
@@ -690,7 +690,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: []
+      m_SelectedIDs:
+      - m_Data: 32864
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
@@ -742,7 +743,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 261
-    y: 24
+    y: 87
     width: 1267
     height: 642
   m_SerializedDataModeController:
@@ -1281,7 +1282,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.27336407, y: -0.26400912, z: 0.07827678, w: -0.92171806}
     speed: 2
-    m_Value: {x: -0.2733641, y: -0.26400912, z: 0.07827678, w: -0.92171806}
+    m_Value: {x: -0.27334765, y: -0.26399326, z: 0.07827208, w: -0.9216627}
   m_Size:
     m_Target: 124.57073
     speed: 2
@@ -1406,7 +1407,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_RotarkCode/TacLibraryExt/Save
+    - Assets/_TacLibrary/_TacGameLogic/TacAgent
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1416,24 +1417,20 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_RotarkCode/TacLibraryExt/Save
+  - Assets/_TacLibrary/_TacGameLogic/TacAgent
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 303}
+    scrollPos: {x: 0, y: 191}
     m_SelectedIDs:
-    - m_Data: 73960
+    - m_Data: 74052
     m_LastClickedID:
-      m_Data: 73960
+      m_Data: 74052
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 73768
-    - m_Data: 73770
-    - m_Data: 73772
-    - m_Data: 73774
     - m_Data: 73776
     - m_Data: 73778
     - m_Data: 73780
@@ -1468,6 +1465,12 @@ MonoBehaviour:
     - m_Data: 73838
     - m_Data: 73840
     - m_Data: 73842
+    - m_Data: 73844
+    - m_Data: 73846
+    - m_Data: 73848
+    - m_Data: 73960
+    - m_Data: 1000000000
+    - m_Data: 2147483647
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1500,10 +1503,6 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 73768
-    - m_Data: 73770
-    - m_Data: 73772
-    - m_Data: 73774
     - m_Data: 73776
     - m_Data: 73778
     - m_Data: 73780
@@ -1538,6 +1537,9 @@ MonoBehaviour:
     - m_Data: 73838
     - m_Data: 73840
     - m_Data: 73842
+    - m_Data: 73844
+    - m_Data: 73846
+    - m_Data: 73848
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1565,8 +1567,8 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: 36578
-    m_LastClickedInstanceID: 36578
+    - m_Data: 32864
+    m_LastClickedInstanceID: 32864
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 54580
@@ -1603,8 +1605,8 @@ MonoBehaviour:
     - m_Data: 74706
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: AgentLogic
+      m_OriginalName: AgentLogic
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1612,10 +1614,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 0
+        m_Data: 32864
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 10}
@@ -1651,8 +1653,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Console\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 692
+    x: 1
+    y: 755
     width: 1528
     height: 230
   m_SerializedDataModeController:
@@ -1690,7 +1692,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 1530
-    y: 24
+    y: 87
     width: 388
     height: 898
   m_SerializedDataModeController:

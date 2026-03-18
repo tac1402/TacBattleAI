@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tac
 {
@@ -81,5 +82,12 @@ namespace Tac
 			Queue = newQueue;
 			removedIds.Clear();
 		}
+
+		public List<T> ToList()
+		{ 
+			ClearRemoved();
+			return Queue.ToList();
+		}
+
 	}
 }
