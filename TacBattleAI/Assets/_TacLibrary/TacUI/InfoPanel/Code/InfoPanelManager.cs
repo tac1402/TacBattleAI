@@ -107,22 +107,36 @@ namespace Tac.UI
 		}
 
 
-		private void OnItemTap(BuildItem argItem)
+		public void OnItemTap(AgentPoint argAgentPoint)
+		{
+			currentItem = null;
+			currentAgentPoint = argAgentPoint;
+			ShowHideItem();
+		}
+
+
+		public void OnItemTap(BuildItem argItem)
 		{
 			currentItem = argItem;
 			if (currentItem != null)
 			{
 				currentAgentPoint = currentItem.gameObject.GetComponent<AgentPoint>();
-				if (currentAgentPoint != null)
-				{
-					ShowHide(SelectionType.AgentPoint);
-				}
-				else
-				{
-					ShowHide(SelectionType.Item);
-				}
+				ShowHideItem();
 			}
 		}
+
+		private void ShowHideItem()
+		{
+			if (currentAgentPoint != null)
+			{
+				ShowHide(SelectionType.AgentPoint);
+			}
+			else
+			{
+				ShowHide(SelectionType.Item);
+			}
+		}
+
 
 		public void OnAgentSelect(Agent.Agent argAgent)
 		{
