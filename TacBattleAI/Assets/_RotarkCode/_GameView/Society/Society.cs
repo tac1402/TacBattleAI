@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using UnityEngine;
-
-using Tac.Person;
 using System.Linq;
 using Tac.Agent;
+using Tac.Person;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Tac.Society
 {
@@ -12,8 +12,12 @@ namespace Tac.Society
 		public List<GameObject> MenModel;
 		public List<GameObject> WomenModel;
 		public ItemCreate.ItemCreate ItemCreate;
+		public AgentSelection AgentSelection;
+
+		public GameObject PeoplePanel;
 
 		public List<AgentPoint> AllAgentPoint;
+
 
 		public void Init()
 		{
@@ -28,6 +32,36 @@ namespace Tac.Society
 				AllAgentPoint[i].ObjectId = ItemCreate.GetNewId();
 				AllAgentPoint[i].GetInfoHandler = GetAgentPointInfo;
 			}
+
+			InitLogic();
+		}
+
+		int oldKey = 0;
+		bool showPanel = false;
+		private void Update()
+		{
+			int key = 0;
+			if (Keyboard.current[Key.Digit1].wasPressedThisFrame) { key = 1; }
+
+			if (key != 0)
+			{
+				if (PeoplePanel != null) { PeoplePanel.SetActive(false); peopleTable.Hide(); }
+
+				if (oldKey == key) { showPanel = !showPanel; } else { showPanel = true; }
+
+				if (showPanel)
+				{
+					switch (key)
+					{
+						case 1:
+							PeoplePanel.SetActive(true);
+							peopleTable.Show();
+							break;
+					}
+				}
+				oldKey = key;
+			}
+
 		}
 
 		public string GetAgentPointInfo(int argId)
@@ -49,13 +83,6 @@ namespace Tac.Society
 			oldGameTime = argGameTime;
 			PlayerJob.NextHour(argGameTime);
 			RobotJob.NextHour(argGameTime);
-
-			/*
-			List<Person.Person> tmp = People.Values.ToList();
-			if (tmp[2].WorkPlace != null)
-			{
-				tmp[2].WorkPlace.Add(tmp[1]);
-			}*/
 		}
 
 
@@ -96,6 +123,16 @@ namespace Tac.Society
 			}
 			return person;
 		}
+
+		public void FindAgent(int argId)
+		{
+			AgentSelection.OnAgentTap(People[argId]);
+			AgentSelection.TopCamera.SetPosition(People[argId].transform.position);
+
+			PeoplePanel.SetActive(false); 
+			peopleTable.Hide();
+		}
+
 
 	}
 }

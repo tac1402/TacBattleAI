@@ -10,6 +10,7 @@ namespace Tac.UI
 	{
 		public int RowCount;
 		public List<int> columnWidth = new List<int>();
+		public List<ColumnType> columnType = new List<ColumnType>();
 		public List<int> fontSize = new List<int>();
 		public List<string> header = new List<string>();
 
@@ -24,17 +25,19 @@ namespace Tac.UI
 			Table = argTable;
 		}
 
-		public void AddColumn(string argColumnName, int argColumnWidth, int argFontSize = 16)
+		public void AddColumn(string argColumnName, int argColumnWidth, ColumnType argColumnType = ColumnType.Text, int argFontSize = 16)
 		{
 			header.Add(argColumnName);
 			columnWidth.Add(argColumnWidth);
 			fontSize.Add(argFontSize);
+			columnType.Add(argColumnType);
 		}
 
 		public void ClearColumn()
 		{
 			header.Clear();
 			columnWidth.Clear();
+			columnType.Clear();
 		}
 
 		public void NextPage()
@@ -79,6 +82,12 @@ namespace Tac.UI
 	public class Row
 	{
 		public List<string> Column = new List<string>();
+	}
+
+	public enum ColumnType
+	{ 
+		Text,
+		Button
 	}
 
 }

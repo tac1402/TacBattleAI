@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Tac.Agent;
 using Tac.Person;
+using Tac.UI;
 
 namespace Tac.Society
 {
@@ -27,6 +28,17 @@ namespace Tac.Society
 		private PersonName PersonName = new PersonName();
 		private System.Random rnd = new System.Random();
 		private GameTime oldGameTime;
+
+
+		public void InitLogic()
+		{
+			if (PeoplePanel != null)
+			{
+				TableUI tableUI = PeoplePanel.GetComponentInChildren<TableUI>();
+				peopleTable.Assign(tableUI, FindAgent);
+			}
+		}
+
 
 		public void AddAgentPlan(Person.Person argAgent, bool IsPlayer = false)
 		{

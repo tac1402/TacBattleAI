@@ -48,6 +48,23 @@ namespace Tac
 			return new Vector3(v.x, v.y, argZ);
 		}
 
+		/// <summary>
+		/// Задает x и z координаты не меняя остальные
+		/// </summary>
+		public static Vector3 SetXZ(this Vector3 v, Vector3 v2)
+		{
+			return SetXZ(v, v2.x, v2.z);
+		}
+
+		/// <summary>
+		/// Задает x и z координаты не меняя остальные
+		/// </summary>
+		public static Vector3 SetXZ(this Vector3 v, float argX, float argZ)
+		{
+			return new Vector3(argX, v.y, argZ);
+		}
+
+
 		public static Vector2 To2(this Vector3_ v)
 		{
 			return new Vector2(v.x, v.z);

@@ -115,6 +115,12 @@ namespace Tac.Camera
 
 		}
 
+		public void SetPosition(Vector3 argPosition)
+		{
+			transform.parent.position = argPosition;
+			NewCoord.x = Limit.y - 1;
+		}
+
 		private void SetColor(int argNumber)
 		{
 			colors[0] = Color.white;

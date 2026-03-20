@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 51b3d2b89c40acc48b35981e140c69fa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 57674304b2404434ca45f84f4b023c6a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -205,10 +205,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: TacLibrary::Tac.UI.TableUI
   TablePanel: {fileID: 4920075149348130653}
   RowPrefab: {fileID: 2488518118265009826, guid: 8a72c203c94e71c4391342b50d1541f1, type: 3}
-  CellPrefab: {fileID: 5186337846293584484, guid: aa50867af042e5a49aeda194ae1a6f0a, type: 3}
+  CellTextPrefab: {fileID: 5186337846293584484, guid: aa50867af042e5a49aeda194ae1a6f0a, type: 3}
+  CellButtonPrefab: {fileID: 3632016888159089267, guid: 9069e850c84338a40b8de3558d00305e, type: 3}
   PageInfo: {fileID: 2749086753661833118}
   RowCount: 50
   columnWidth: 
+  columnType: 
   fontSize: 
   header: []
   RowInPage: 30
@@ -744,7 +746,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 51b3d2b89c40acc48b35981e140c69fa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 57674304b2404434ca45f84f4b023c6a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

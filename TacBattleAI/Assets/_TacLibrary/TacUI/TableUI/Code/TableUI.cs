@@ -15,7 +15,8 @@ namespace Tac.UI
     {
 		public GameObject TablePanel;
 		public GameObject RowPrefab;
-		public GameObject CellPrefab;
+		public GameObject CellTextPrefab;
+		public GameObject CellButtonPrefab;
 
 		public TMP_Text PageInfo;
 
@@ -55,23 +56,46 @@ namespace Tac.UI
 			}
 		}
 
-		private void AddRow(List<string> columnText, bool argIsBold = false)
+		private void AddRow(List<string> columnText, bool argIsHeader = false)
 		{
 			GameObject row = Instantiate(RowPrefab, TablePanel.transform);
-			for (int j = 0; j < columnWidth.Count; j++)
+			for (int j = 0; j < columnType.Count; j++)
 			{
-				GameObject cell = Instantiate(CellPrefab, row.transform);
-				LayoutElement layout = cell.GetComponent<LayoutElement>();
-				layout.minWidth = columnWidth[j];
-				TMP_Text text = cell.GetComponent<TMP_Text>();
-				text.fontSize = fontSize[j];
-				text.text = columnText[j];
-				if (argIsBold)
+				GameObject cell = null;
+				if (columnType[j] == ColumnType.Text || argIsHeader == true)
 				{
-					text.fontStyle = FontStyles.Bold;
+					cell = Instantiate(CellTextPrefab, row.transform);
+					LayoutElement layout = cell.GetComponent<LayoutElement>();
+					layout.minWidth = columnWidth[j];
+					TMP_Text text = cell.GetComponent<TMP_Text>();
+					text.fontSize = fontSize[j];
+					if (argIsHeader)
+					{
+						text.fontStyle = FontStyles.Bold;
+					}
+					text.text = columnText[j];
+				}
+				else if (columnType[j] == ColumnType.Button)
+				{
+					cell = Instantiate(CellButtonPrefab, row.transform);
+					LayoutElement layout = cell.GetComponent<LayoutElement>();
+					layout.minWidth = columnWidth[j];
+					TMP_Text text = cell.GetComponentInChildren<TMP_Text>();
+					text.fontSize = fontSize[j];
+					text.text = header[j];
+					Button button = cell.GetComponent<Button>();
+					button.onClick.AddListener(() => ButtonClick(int.Parse(columnText[0])));
 				}
 			}
 			Rows.Add(row);
+		}
+
+		public delegate void ButtonClickDelegate(int argId);
+		public ButtonClickDelegate ButtonClickHandler;
+
+		private void ButtonClick(int argId) 
+		{ 
+			ButtonClickHandler(argId); 
 		}
 
 	}
