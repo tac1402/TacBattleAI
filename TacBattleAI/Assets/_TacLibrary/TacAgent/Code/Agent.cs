@@ -52,7 +52,31 @@ namespace Tac.Agent
 			}
 		}
 
-		public int PathStatus = 0; // 0 - нет пути, 1 - нужно посчитать, 2 - путь расчитан
+		public int pathStatus = 0; // 0 - нет пути, 1 - нужно посчитать, 2 - путь расчитан
+
+		public int PathStatus
+		{
+			get { return pathStatus; }
+			set
+			{
+				pathStatus = value;
+				if (StatusBar != null)
+				{
+					switch (pathStatus)
+					{ 
+						case 0:
+							StatusBar.ChangeMaterial(Color.white);
+							break;
+						case 1:
+							StatusBar.ChangeMaterial(Color.yellow);
+							break;
+						case 2:
+							StatusBar.ChangeMaterial(Color.green);
+							break;
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// Возникает, когда агент заканчивает движение к заданной цели
@@ -140,10 +164,13 @@ namespace Tac.Agent
 			walkDistance = 0;
 			agent.stoppingDistance = stoppingDistance;
 			currentPathIndex++;
-			agent.SetDestination(PathPoints[currentPathIndex]);
-			if (agent.isStopped)
+			if (PathPoints.Count > currentPathIndex)
 			{
-				agent.isStopped = false;
+				agent.SetDestination(PathPoints[currentPathIndex]);
+				if (agent.isStopped)
+				{
+					agent.isStopped = false;
+				}
 			}
 		}
 

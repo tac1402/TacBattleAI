@@ -691,7 +691,7 @@ MonoBehaviour:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs:
-      - m_Data: 44532
+      - m_Data: 36606
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
@@ -1407,7 +1407,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_TacLibrary/TacUI/InfoPanel/Code
+    - Assets/_TacLibrary/TacAgent/Code
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1417,18 +1417,18 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_TacLibrary/TacUI/InfoPanel/Code
+  - Assets/_TacLibrary/TacAgent/Code
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 732}
+    scrollPos: {x: 0, y: 240}
     m_SelectedIDs:
-    - m_Data: 74312
+    - m_Data: 74278
     m_LastClickedID:
-      m_Data: 74312
+      m_Data: 74278
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 74072
@@ -1572,8 +1572,8 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: 44532
-    m_LastClickedInstanceID: 44532
+    - m_Data: 36606
+    m_LastClickedInstanceID: 36606
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 54580
@@ -1611,8 +1611,8 @@ MonoBehaviour:
     - m_Data: 73718
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Agent
+      m_OriginalName: Agent
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1620,10 +1620,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 0
+        m_Data: 36606
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 10}
