@@ -160,7 +160,7 @@ namespace Tac.Agent
 			}
 		}
 
-		public void Tick(GameTime argGameTime, List<Agent> argAllAgent)
+		public virtual void Tick(GameTime argGameTime, List<Agent> argAllAgent)
 		{
 			LastGameTime = argGameTime;
 			CheckEnter(argGameTime, argAllAgent);

@@ -199,7 +199,7 @@ namespace Tac.Agent
 			if (TargetPoint == Vector3_.zero) { return; }
 			if (PathStatus != 2) { return; }
 
-			if (PathPoints.Count != 0 && currentPathIndex != PathPoints.Count - 1)
+			if (PathPoints.Count != 0 && currentPathIndex != PathPoints.Count - 1 && PathPoints.Count > currentPathIndex)
 			{
 				float d1 = Distance(transform.position, PathPoints[currentPathIndex]);
 				if (d1 <= agent.stoppingDistance)
