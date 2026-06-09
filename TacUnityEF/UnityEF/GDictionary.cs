@@ -72,6 +72,8 @@ namespace UnityEF
 
 		public IList<V> Values => GetAll();
 
+		public int Count => Db.Set<V>().Count();
+
 		// Для поддержки foreach
 		public IEnumerator<V> GetEnumerator() => GetAll().GetEnumerator();
 	}
