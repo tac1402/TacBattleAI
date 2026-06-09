@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Tac.Agent;
 using Tac.DConvert;
 
+/*
 namespace Tac.Agent
 {
 	public partial class Agent
@@ -80,6 +81,6 @@ namespace Tac.Person
 			CurrentPlan = SaveQQ(CurrentPlan, () => CurrentPlan);
 		}
 	}
-
+	
 }
-
+*/

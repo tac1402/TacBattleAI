@@ -1,0 +1,171 @@
+Model: 
+  EntityType: Agent
+    Properties: 
+      Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      GroupId (GroupId, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      IsBusy (IsBusy, bool) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
+      LocatedId (LocatedId, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      ModelName (ModelName, string)
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
+      TargetId (TargetId, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      UseHealthState (UseHealthState, bool) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
+      WalkDimension (WalkDimension, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      agentName (agentName, string)
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
+      isMoving (isMoving, bool) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
+      pathStatus (pathStatus, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+    Keys: 
+      Id PK
+    Annotations: 
+      ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding
+  EntityType: DayNight
+    Properties: 
+      Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      DayLength (DayLength, float) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.FloatTypeMapping
+      GameDayLenght (GameDayLenght, float) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.FloatTypeMapping
+      GroupId (GroupId, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      ModelName (ModelName, string)
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
+      NightLength (NightLength, float) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.FloatTypeMapping
+      Pause (Pause, bool) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
+      PlaySpeed (PlaySpeed, float) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.FloatTypeMapping
+      currentDay (currentDay, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      currentTime (currentTime, float) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.FloatTypeMapping
+      rm (rm, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      rs (rs, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+    Keys: 
+      Id PK
+    Annotations: 
+      ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding
+  EntityType: Person
+    Properties: 
+      Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      Gender (Gender, GenderType) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      GroupId (GroupId, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      IsBusy (IsBusy, bool) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
+      LocatedId (LocatedId, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      ModelName (ModelName, string)
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
+      TargetId (TargetId, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      UseHealthState (UseHealthState, bool) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
+      WalkDimension (WalkDimension, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      agentName (agentName, string)
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
+      isMoving (isMoving, bool) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
+      pathStatus (pathStatus, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+    Keys: 
+      Id PK
+    Annotations: 
+      ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding
+  EntityType: Society
+    Properties: 
+      Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      GroupId (GroupId, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      ModelName (ModelName, string)
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
+      PlayerPersonId (PlayerPersonId, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+    Keys: 
+      Id PK
+    Annotations: 
+      ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding
+  EntityType: World
+    Properties: 
+      Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      DayNightId (no field, Nullable<int>) Shadow FK Index
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      GroupId (GroupId, int) Required
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      ModelName (ModelName, string)
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
+      SocietyId (no field, Nullable<int>) Shadow FK Index
+        Annotations: 
+          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+    Navigations: 
+      DayNight (DayNight, DayNight) ToPrincipal DayNight
+      Society (Society, Society) ToPrincipal Society
+    Keys: 
+      Id PK
+    Foreign keys: 
+      World {'DayNightId'} -> DayNight {'Id'} ToPrincipal: DayNight
+      World {'SocietyId'} -> Society {'Id'} ToPrincipal: Society
+    Annotations: 
+      ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding
+Annotations: 
+  ProductVersion: 3.1.32

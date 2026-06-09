@@ -106,7 +106,7 @@ namespace Tac.Save
             {
                 string playthroughName = SaveCatalog.AllPlaythrough[PlaythroughId].FullName;
 
-                string[] allSave = Directory.GetFiles(SaveCatalog.ISaveManager.SaveRootDir + "\\" + playthroughName, FileName + "*.*");
+                string[] allSave = Directory.GetFiles(SaveCatalog.SaveRootDir + "\\" + playthroughName, FileName + "*.*");
                 for (int i = 0; i < allSave.Length; i++)
                 {
                     File.Delete(allSave[i]);

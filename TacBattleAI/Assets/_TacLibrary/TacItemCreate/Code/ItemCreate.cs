@@ -70,12 +70,12 @@ namespace Tac.ItemCreate
 		/// <param name="argX">Позиция по X</param>
 		/// <param name="argY">Позиция по Y</param>
 		/// <returns>Созданый объект или null если отказано</returns>
-		public GameObject CreateObject(string argModelName, float argX, float argY, float? Height, ModelTypes argModelType = ModelTypes.Model, GameObject argParent = null)
+		public GameObject CreateObject(string argModelName, float argX, float argY, float? Height, GameObject argParent = null)
 		{
 			GameObject locObject = null;
 
 			// Загрузим модель и проверим, что у неё есть компонент Item2
-			GameObject locModel = GetModel(argModelName, argModelType);
+			GameObject locModel = GetModel(argModelName);
 
 			Item locModelItem = null;
 			if (locModel != null) 
@@ -90,11 +90,11 @@ namespace Tac.ItemCreate
 				if (PredeffinedObjectId == 0)
 				{
 					ObjectIdCounter++;
-					locItem.ObjectId = ObjectIdCounter;
+					locItem.Id = ObjectIdCounter;
 				}
 				else
 				{
-					locItem.ObjectId = PredeffinedObjectId;
+					locItem.Id = PredeffinedObjectId;
 					PredeffinedObjectId = 0;
 				}
 
@@ -134,14 +134,10 @@ namespace Tac.ItemCreate
 			return locObject;
 		}
 
-		public GameObject CreateObject(string argModelName, float argX, float argY, float? Height, GameObject argParent)
-		{
-			return CreateObject(argModelName, argX, argY, Height, ModelTypes.Model, argParent);
-		}
 
 		public GameObject CreateObject(string argModelName)
 		{
-			return CreateObject(argModelName, 0, 0, null, 0);
+			return CreateObject(argModelName, 0, 0, 0);
 		}
 
 		public GameObject CreateObject(string argModelName, float argX, float argY)
@@ -189,13 +185,12 @@ namespace Tac.ItemCreate
 		/// <summary>
 		/// Получить модель по идентификации
 		/// </summary>
-		public GameObject GetModel(string argModelName, ModelTypes argModelType = ModelTypes.Model)
+		public GameObject GetModel(string argModelName)
 		{
 			GameObject retModel = null;
 			try
 			{
-				string locNameKey = argModelName + "-" + argModelType.ToString();
-				retModel = Models[IndexList[locNameKey]];
+				retModel = Models[IndexList[argModelName]];
 			}
 			catch (Exception) { }
 			return retModel;
@@ -209,7 +204,7 @@ namespace Tac.ItemCreate
 				Item locModelItem = argModel.GetComponent<Item>();
 				if (locModelItem != null)
 				{
-					string locNameKey = locModelItem.ModelName + "-" + locModelItem.ModelType.ToString();
+					string locNameKey = locModelItem.ModelName;
 
 					if (IndexList.ContainsKey(locNameKey))
 					{

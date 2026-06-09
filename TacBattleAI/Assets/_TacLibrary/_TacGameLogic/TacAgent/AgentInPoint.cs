@@ -8,6 +8,6 @@ namespace Tac.Agent
 		public Agent Agent;
 		public GameTime EnterTime;
 
-		int IId.Id { get { return Agent.ObjectId; } set { } }
+		int IId.Id { get { return Agent.Id; } set { } }
 	}
 }

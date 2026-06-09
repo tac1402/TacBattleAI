@@ -2,13 +2,14 @@
 // Copyright (C) 2025-26 Sergej Jakovlev
 
 using UnityEngine;
+using DnaCore;
 
 namespace Tac
 {
 	/// <summary>
 	/// ”ниверсальна€ сущность от Tac 
 	/// </summary>
-	public abstract partial class Item : MonoBehaviour
+	/*public abstract partial class Item : MonoBehaviour, IItemDb
     {
 		/// <summary>
 		/// ”никальный индентификатор объекта в мире
@@ -26,5 +27,9 @@ namespace Tac
 		/// “ип модели
 		/// </summary>
 		public ModelTypes ModelType = ModelTypes.Model;
-	}
+
+		private ItemDb itemDb = new ItemDb();
+
+		public ItemDb item { get { return itemDb; } }
+	}*/
 }

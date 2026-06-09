@@ -16,8 +16,9 @@ namespace Tac.Save
     public class SaveCatalog : MonoBehaviour
     {
         public string Version = "v0.01";
+        public string SaveRootDir = "";
 
-        public IDayNight IDayNight;
+		public IDayNight IDayNight;
 
         public TMP_InputField PlaythroughName;
 
@@ -52,7 +53,7 @@ namespace Tac.Save
 
         public int SelectedPlaythroughId = 0;
 
-        private ISaveManager isaveManager;
+        /*private ISaveManager isaveManager;
         public ISaveManager ISaveManager
         {
             get { return isaveManager; }
@@ -61,7 +62,7 @@ namespace Tac.Save
                 isaveManager = value;
                 isaveManager.Version = Version;
             }
-        }
+        }*/
 
         private void Start()
         {
@@ -91,7 +92,7 @@ namespace Tac.Save
             {
                 CurrentPlaythroughId++;
                 Playthrough walkthrough = AddPlaythrough(CurrentPlaythroughId, PlaythroughName.text);
-                DirectoryInfo di = new DirectoryInfo(ISaveManager.SaveRootDir);
+                DirectoryInfo di = new DirectoryInfo(SaveRootDir);
                 di.CreateSubdirectory(walkthrough.FullName);
             }
         }
@@ -151,9 +152,9 @@ namespace Tac.Save
                     string fileName = Day.Replace(" : ", "_").Replace(" ", "_");
                     string dirName = AllPlaythrough[SelectedPlaythroughId].FullName;
 
-                    File.WriteAllText(ISaveManager.SaveRootDir + "\\" + dirName + "\\" + fileName + ".txt", saveInfo);
+                    File.WriteAllText(SaveRootDir + "\\" + dirName + "\\" + fileName + ".txt", saveInfo);
 
-                    ISaveManager.Save(ISaveManager.SaveRootDir + "\\" + dirName, fileName);
+                    //ISaveManager.Save(ISaveManager.SaveRootDir + "\\" + dirName, fileName);
                     LoadAllCheckPoint(SelectedPlaythroughId);
                     Hide();
                 }
@@ -174,20 +175,14 @@ namespace Tac.Save
 
         public void Load(string argDirName, string argFileName)
         {
-            if (ISaveManager != null)
+            /*if (ISaveManager != null)
             {
-                /*SaveGameUI.Close();
-                if (MS.IsPause)
-                {
-                    MS.Pause(); // снятие паузы перед загрузкой
-                }*/
-
                 DayNight.PauseCompleteStop = true;
                 ISaveManager.LoadError += ISaveManager_LoadError;
                 ISaveManager.LoadEnd += ISaveManager_LoadEnd;
                 ISaveManager.Load(ISaveManager.SaveRootDir + "\\" + argDirName, argFileName);
             }
-            else
+            else*/
             {
                 //MS.LoadSaveGameInFreeMode();
                 CurrentLoadDirName = argDirName;
@@ -237,7 +232,7 @@ namespace Tac.Save
 
         public void LoadAllPlaythrough()
         {
-            DirectoryInfo di = new DirectoryInfo(ISaveManager.SaveRootDir);
+            DirectoryInfo di = new DirectoryInfo(SaveRootDir);
             DirectoryInfo[] all = di.GetDirectories("???.*").OrderByDescending(fi => fi.LastWriteTime).ToArray();
 
             //FileInfo[] all = di.GetFiles("*.bin").OrderByDescending(fi => fi.LastWriteTime).ToArray();
@@ -284,7 +279,7 @@ namespace Tac.Save
 
             if (argPlaythroughId != 0)
             {
-                DirectoryInfo di = new DirectoryInfo(ISaveManager.SaveRootDir);
+                DirectoryInfo di = new DirectoryInfo(SaveRootDir);
                 FileInfo[] all = di.GetFiles(AllPlaythrough[argPlaythroughId].FullName + "\\*.bin").OrderByDescending(fi => fi.LastWriteTime).ToArray();
 
                 for (int i = 0; i < all.Length; i++)
@@ -306,7 +301,7 @@ namespace Tac.Save
 
                     string dateTime = DT(all[i].LastWriteTime);
 
-                    string[] info = File.ReadAllLines(ISaveManager.SaveRootDir + "\\" + AllPlaythrough[argPlaythroughId].FullName + "\\" + fileName + ".txt");
+                    string[] info = File.ReadAllLines(SaveRootDir + "\\" + AllPlaythrough[argPlaythroughId].FullName + "\\" + fileName + ".txt");
 
                     AddCheckPoint(fileName, info[0], info[1], dateTime, version, support, argPlaythroughId);
                 }

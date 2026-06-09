@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using DnaCore;
 
 namespace Tac
 {
@@ -14,7 +15,7 @@ namespace Tac
 	/// Технический объект, т.к. Юнити не позволяет добавить на сцену MonoBehaviour, который прямо реализует интерфейс
 	/// Используется системой сохранения, чтобы реализовать интерфейс IDayNight
 	/// </summary>
-	public partial class DayNight0 : MonoBehaviour
+	public partial class DayNight0 : Item
 	{
 		/// <summary>
 		/// Текстовое поле в UI в котором будет отображаться текущие время
@@ -29,7 +30,7 @@ namespace Tac
 	/// <summary>
 	/// Управляет игровым временем
 	/// </summary>
-	public partial class DayNight: DayNight0
+	public partial class DayNight: DayNight0, ICell
 	{
 		/// <summary>
 		/// Пауза полной остановки
@@ -103,6 +104,8 @@ namespace Tac
 
 		public float PlaySpeed = 1;
 		public bool Pause = false;
+
+		public Cell cell { get { return item; } }
 
 		private void Awake()
 		{

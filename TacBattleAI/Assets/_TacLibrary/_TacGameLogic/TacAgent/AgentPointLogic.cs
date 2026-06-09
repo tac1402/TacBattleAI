@@ -77,7 +77,7 @@ namespace Tac.Agent
 		{
 			argAgent.IsBusy = true;
 			argAgent.TargetId = 0;
-			argAgent.LocatedId = ObjectId;
+			argAgent.LocatedId = Id;
 			AgentInPoint point = new AgentInPoint();
 			point.Agent = argAgent;
 			point.EnterTime = LastGameTime;
@@ -137,11 +137,11 @@ namespace Tac.Agent
 				int a = 1;
 			}
 
-			List<Agent> tmpAgents = argAllAgent.FindAll(x => x.TargetId == ObjectId);
+			List<Agent> tmpAgents = argAllAgent.FindAll(x => x.TargetId == Id);
 
 			for (int j = 0; j < tmpAgents.Count; j++)
 			{
-				if (IsAgentInEnter(tmpAgents[j].ObjectId) == true)
+				if (IsAgentInEnter(tmpAgents[j].Id) == true)
 				{
 					WalkToEnter(argGameTime, tmpAgents[j]);
 				}
@@ -175,7 +175,7 @@ namespace Tac.Agent
 			string ret = Info;
 			if (GetInfoHandler != null)
 			{
-				ret += "\n" + GetInfoHandler(ObjectId);
+				ret += "\n" + GetInfoHandler(Id);
 			}
 			return ret;
 		}

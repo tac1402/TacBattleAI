@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.tac.unityef": "file:P:/_PROGS/_2026/TacBattleAI/Install/TacLibrary/_UnityEF/com.tac.unityef",
     "com.unity.ai.navigation": "2.0.11",
     "com.unity.collab-proxy": "2.11.4",
     "com.unity.ide.rider": "3.0.39",

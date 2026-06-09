@@ -13,7 +13,7 @@ namespace Tac.Society
 
 		public void AddPersonPlan(Person.Person argPerson)
 		{
-			PersonPlans.Add(argPerson.ObjectId, new PersonPlan(argPerson));
+			PersonPlans.Add(argPerson.Id, new PersonPlan(argPerson));
 		}
 
 

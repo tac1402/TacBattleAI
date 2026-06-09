@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+using UnityEF;
 
 namespace Tac.Agent
 {
@@ -50,7 +51,7 @@ namespace Tac.Agent
 			BuildItem item = GetComponent<BuildItem>();
 			if (item != null)
 			{
-				ObjectId = item.ObjectId;
+				Id = item.Id;
 			}
 
 			Init();
@@ -85,7 +86,7 @@ namespace Tac.Agent
 			{
 				Agent agent = c[j].gameObject.GetComponent<Agent>();
 
-				if (agent != null && agent.ObjectId == argAgentId && agent.TargetId == ObjectId)
+				if (agent != null && agent.Id == argAgentId && agent.TargetId == Id)
 				{ 
 					ret = true; 
 					break;

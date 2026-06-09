@@ -1,8 +1,11 @@
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Tac.Agent;
 using Tac.Person;
 using Tac.UI;
+
+using UnityEF;
 
 namespace Tac.Society
 {
@@ -11,7 +14,9 @@ namespace Tac.Society
 		/// <summary>
 		/// Все персонажи в игре
 		/// </summary>
-		public Dictionary<int, Person.Person> People = new Dictionary<int, Person.Person>();
+		[NotMapped]
+		public GDictionary<int, Person.Person> People { get; } = new GDictionary<int, Person.Person>();
+
 
 
 		public RobotJob RobotJob;
@@ -45,7 +50,7 @@ namespace Tac.Society
 			if (IsPlayer)
 			{
 				PlayerJob.AddPersonPlan(argAgent);
-				PlayerPersonId = argAgent.ObjectId;
+				PlayerPersonId = argAgent.Id;
 			}
 			else
 			{
@@ -99,7 +104,7 @@ namespace Tac.Society
 
 				person.OnWalkEnd += Person_OnWalkEnd;
 
-				People.Add(person.ObjectId, person);
+				People.Add(person.Id, person);
 				peopleTable.Add(person);
 
 				ret.Add(person);

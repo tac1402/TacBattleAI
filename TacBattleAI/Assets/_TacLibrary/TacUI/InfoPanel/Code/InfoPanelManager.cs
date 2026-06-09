@@ -170,7 +170,7 @@ namespace Tac.UI
 				{
 					case SelectionType.AgentPoint:
 						title = currentAgentPoint.Title;
-						info = "Id = " + currentAgentPoint.ObjectId.ToString() + "\n" + currentAgentPoint.GetInfo();
+						info = "Id = " + currentAgentPoint.Id.ToString() + "\n" + currentAgentPoint.GetInfo();
 						break;
 					case SelectionType.Person:
 						title = currentPerson.Name;

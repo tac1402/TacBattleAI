@@ -111,7 +111,7 @@ namespace Tac.ItemMove
 				{
 					isCollissionError = true;
 				}
-				if (newItem != null && (newItem.ObjectId != ObjectToPlace.ObjectId || newItem.GhostId != ObjectToPlace.GhostId))
+				if (newItem != null && (newItem.Id != ObjectToPlace.Id || newItem.GhostId != ObjectToPlace.GhostId))
 				{
 					isCollissionError = true;
 				}

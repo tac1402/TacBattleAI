@@ -4,10 +4,13 @@ using Tac.Agent;
 using Tac.Person;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DnaCore;
+
+using System.ComponentModel.DataAnnotations;
 
 namespace Tac.Society
 {
-	public partial class Society : MonoBehaviour
+	public partial class Society : Item, ICell
 	{
 		public List<GameObject> MenModel;
 		public List<GameObject> WomenModel;
@@ -18,6 +21,7 @@ namespace Tac.Society
 
 		public List<AgentPoint> AllAgentPoint;
 
+		public Cell cell { get { return item; } }
 
 		public void Init()
 		{
@@ -29,7 +33,7 @@ namespace Tac.Society
 
 			for (int i = 0; i < AllAgentPoint.Count; i++)
 			{
-				AllAgentPoint[i].ObjectId = ItemCreate.GetNewId();
+				AllAgentPoint[i].Id = ItemCreate.GetNewId();
 				AllAgentPoint[i].GetInfoHandler = GetAgentPointInfo;
 			}
 

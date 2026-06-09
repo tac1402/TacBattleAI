@@ -6,9 +6,9 @@ namespace Tac
 	/// <summary>
 	/// Типы моделей, настройте под свой проект: только первые два стандарты остальные удалите или добавьте
 	/// </summary>
-	public enum ModelTypes
+	/*public enum ModelTypes
 	{
 		None = -1,
 		Model = 0,
-	}
+	}*/
 }

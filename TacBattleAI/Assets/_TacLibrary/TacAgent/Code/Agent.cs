@@ -7,22 +7,26 @@ using System.IO;
 using Tac.HealthSystem;
 using UnityEngine;
 using UnityEngine.AI;
+using DnaCore;
 
 namespace Tac.Agent
 {
-	public partial class Agent : Item
+	public partial class Agent : Item, ICell
 	{
 		public NavMeshAgent agent;
 
+		public string agentName;
+
 		public string Name
 		{
-			get { return name; }
+			get { return agentName; }
 			set
 			{
+				agentName = value;
 				name = value;
 				if (StatusBar != null)
 				{
-					StatusBar.HealthBar.Text.text = name;
+					StatusBar.HealthBar.Text.text = agentName;
 				}
 			}
 		}
@@ -100,6 +104,7 @@ namespace Tac.Agent
 		internal StatusBar StatusBar;
 		private LineRenderer PathRender;
 		private float PathHeightOffset = 0.25f;
+		public Cell cell { get { return item; } }
 
 		public void Init(bool argRecoverMode = false)
 		{

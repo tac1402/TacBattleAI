@@ -1,8 +1,6 @@
 syntax: glob
 .DS_Store
-*.sln
 *.userprefs
-*.csproj
 *.pidb
 *.unitypackage
 .git
@@ -12,16 +10,10 @@ syntax: regexp
 ^TacBattleAI/Library/.*
 ^TacBattleAI/Temp/.*
 ^TacBattleAI/Logs/.*
-^TacBattleAI/.vs/.*
-^TacBattleAI/obj/.*
 
-^TacShootSim/.vs/.*
-^TacShootSim/obj/.*
-^TacShootSim/bin/.*
-
-^TacShootSimTest/.vs/.*
-^TacShootSimTest/obj/.*
-^TacShootSimTest/bin/.*
+.vs/.*
+obj/.*
+bin/.*
 
 ^Install/.*
 ^site/.*

@@ -1,18 +1,20 @@
+using DnaCore;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Principal;
 using Tac;
 using Tac.Agent;
 using Tac.DConvert;
 using Tac.ItemCreate;
 using Tac.Person;
+using Tac.Save;
 using Tac.Society;
 using Tac.UI;
-using Tac.Save;
+using UnityEF;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public partial class World : Item, ILoadManager
+public partial class World : Item, ICell
 {
 	public List<NavMeshBasic> NavMeshBasic;
 
@@ -21,11 +23,30 @@ public partial class World : Item, ILoadManager
 	private InfoPanelManager InfoPanelManager;
 	private SaveCatalog SaveCatalog;
 
+	public Cell cell { get { return item; } }
+
+
 	private void Start()
 	{
+		UnityDbContext context = new UnityDbContext();
+		ItemDb.db = context;
+
+		context.AddTypes("Assembly-CSharp");
+		context.AddTypes("TacStandartU");
+		context.AddTypes("TacLibrary");
+
+		// Принудительно строим модель – вызовет OnModelCreating
+		var model = context.Model;
+
+		context.DebugModel();
+		bool isCreated = context.Database.EnsureCreated();
+
 		ItemCreate = GetComponent<ItemCreate>();
 		DayNight = GetComponent<DayNight>();
 		Society = GetComponent<Society>();
+
+		//Society = ItemDb<Society>.Create(Society, "", "Society");
+
 
 		Society.AddModel();
 		ItemCreate.Init();
@@ -38,9 +59,9 @@ public partial class World : Item, ILoadManager
 			InfoPanelManager = ui.GetComponentInChildren<InfoPanelManager>(true);
 			InfoPanelManager.Init();
 			SaveCatalog = ui.GetComponentInChildren<SaveCatalog>(true);
-			SaveManager saveManager = GetComponent<SaveManager>();
-			saveManager.World = this;
-			SaveCatalog.ISaveManager = saveManager;
+			//SaveManager saveManager = GetComponent<SaveManager>();
+			//saveManager.World = this;
+			//SaveCatalog.ISaveManager = saveManager;
 			SaveCatalog.IDayNight = DayNight as IDayNight;
 		}
 
@@ -51,6 +72,8 @@ public partial class World : Item, ILoadManager
 		DayNight.NextHour += AgentWalkEmulation;
 
 		UpdateSurface();
+
+		item.Save(this);
 	}
 
 
@@ -103,12 +126,12 @@ public partial class World : Item, ILoadManager
 
 	public void ResetGame()
 	{
-		(this as ILoadManager).ResetGameInner();
-		(this as ILoadManager).ResetEvent(DayNight, "NextDay");
-		(this as ILoadManager).ResetEvent(DayNight, "NextHour");
+		//(this as ILoadManager).ResetGameInner();
+		//(this as ILoadManager).ResetEvent(DayNight, "NextDay");
+		//(this as ILoadManager).ResetEvent(DayNight, "NextHour");
 
-		Society.People.Clear();
-		InfoPanelManager.Clear();
+		//Society.People.Clear();
+		//InfoPanelManager.Clear();
 
 		/*World.Society.AllBusiness.Clear();
 
@@ -124,7 +147,7 @@ public partial class World : Item, ILoadManager
 
 		UpdateSurface();
 
-		foreach (Person p in Society.People.Values)
+		/*foreach (Person p in Society.People.Values)
 		{
 			if (p.IsActive == false)
 			{
@@ -150,7 +173,7 @@ public partial class World : Item, ILoadManager
 			// нужно по индексам восстановить ссылки на сами объекты
 			p.Places = p.PlacesRef.Resolve(allObject);
 		}
-
+		*/
 	}
 
 	#endregion

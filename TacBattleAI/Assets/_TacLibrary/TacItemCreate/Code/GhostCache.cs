@@ -14,10 +14,10 @@ namespace Tac.ItemCreate
 
 		private bool CreateMode = false;
 
-		private void Add(string argModelName, ModelTypes argModelType)
+		private void Add(string argModelName)
 		{
 			ItemCreate.PredeffinedObjectId = -1;
-			GameObject tmpGhostObj = ItemCreate.CreateObject(argModelName, 0, 0, 0, argModelType);
+			GameObject tmpGhostObj = ItemCreate.CreateObject(argModelName, 0, 0, 0);
 			ItemCreate.PredeffinedObjectId = 0;
 
 			if (tmpGhostObj != null)
@@ -32,7 +32,7 @@ namespace Tac.ItemCreate
 		/// <summary>
 		/// Âçÿòü èç êýøà
 		/// </summary>
-		public Item TakeFromCache(string argModelName, ModelTypes argModelType, Vector3 argPosition)
+		public Item TakeFromCache(string argModelName, Vector3 argPosition)
 		{
 			Item ret = null;
 			int index = -1;
@@ -40,7 +40,7 @@ namespace Tac.ItemCreate
 			{
 				for (int i = 0; i < Cache.Count; i++)
 				{
-					if (Cache[i].ModelName == argModelName && Cache[i].ModelType == argModelType)
+					if (Cache[i].ModelName == argModelName)
 					{
 						index = i;
 						break;
@@ -50,7 +50,7 @@ namespace Tac.ItemCreate
 
 			if (index == -1 || Cache[index] == null)
 			{
-				Add(argModelName, argModelType);
+				Add(argModelName);
 				index = Cache.Count - 1;
 			}
 

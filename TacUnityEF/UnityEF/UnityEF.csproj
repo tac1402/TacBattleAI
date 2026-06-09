@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>disable</Nullable>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	<CopyNuGetImplementations>true</CopyNuGetImplementations>
+	<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.32" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.32" /> 
+
+	<Reference Include="UnityEngine">
+		  <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.11f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+		  <Private>False</Private>
+	</Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DnaCore\DnaCore.csproj" />
+  </ItemGroup>
+
+	<Import Project="$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net461\SQLitePCLRaw.lib.e_sqlite3.targets" 
+			Condition="Exists('$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" />
+	
+</Project>

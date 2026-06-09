@@ -43,7 +43,7 @@ namespace Tac.Society
 							int a = 1;
 						}*/
 
-						plan.Person.TargetId = agentPoint.ObjectId;
+						plan.Person.TargetId = agentPoint.Id;
 						plan.Person.TargetPoint = agentPoint.PointPosition;
 						plan.Person.PathStatus = 1;
 						AgentPath.Enqueue(plan.Person);

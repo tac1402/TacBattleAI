@@ -1,14 +1,17 @@
 // Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
+using DnaCore;
 using System.Collections.Generic;
 
 using Tac.Agent;
 
 namespace Tac.Person
 { 
-	public partial class Person : Agent.Agent
+	public partial class Person : Agent.Agent, ICell
 	{
+		public Cell cell { get { return item; } }
+
 
 		#region  Stats & Skills
 

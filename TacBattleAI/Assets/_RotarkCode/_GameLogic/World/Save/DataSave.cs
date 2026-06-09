@@ -2,6 +2,7 @@
 
 using Tac.DConvert;
 
+/*
 public partial class World 
 {
 	public override void SaveData(bool argLoadMode)
@@ -18,6 +19,6 @@ public partial class World
 		Society.RobotJob.PersonPlans = SaveQ(Society.RobotJob.PersonPlans, () => Society.RobotJob.PersonPlans);
 		Society.PlayerJob.PersonPlans = SaveQ(Society.PlayerJob.PersonPlans, () => Society.PlayerJob.PersonPlans);
 	}
-}
+}*/
 
 

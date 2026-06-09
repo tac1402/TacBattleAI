@@ -33,7 +33,7 @@ namespace Tac.Person
 			{
 				Row tableRow = new Row();
 
-				tableRow.Column.Add(allPeople[i].ObjectId.ToString());
+				tableRow.Column.Add(allPeople[i].Id.ToString());
 				tableRow.Column.Add(allPeople[i].Name);
 
 				myTable.Rows.Add(tableRow);

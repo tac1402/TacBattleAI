@@ -197,7 +197,7 @@ namespace Tac.ItemMove
 		private BuildItem CreateObjectFromGhost(BuildItem argItem)
 		{
 			GameObject gameObject = GhostCache.ItemCreate.CreateObject(argItem.ModelName,
-				argItem.gameObject.transform.position.x, argItem.gameObject.transform.position.z, argItem.gameObject.transform.position.y, argItem.ModelType);
+				argItem.gameObject.transform.position.x, argItem.gameObject.transform.position.z, argItem.gameObject.transform.position.y);
 
 			BuildItem retItem = gameObject.GetComponent<BuildItem>();
 
