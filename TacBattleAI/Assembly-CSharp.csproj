@@ -705,10 +705,6 @@
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Text.Encodings.Web.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Bcl.HashCode">
-      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Microsoft.Bcl.HashCode.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection">
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Microsoft.Extensions.DependencyInjection.dll</HintPath>
       <Private>False</Private>
@@ -733,10 +729,6 @@
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Binder">
-      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System.Diagnostics.DiagnosticSource">
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Diagnostics.DiagnosticSource.dll</HintPath>
       <Private>False</Private>
@@ -747,10 +739,6 @@
     </Reference>
     <Reference Include="System.IO.Hashing">
       <HintPath>Library\PackageCache\com.unity.collections@aea9d3bd5e19\Unity.Collections.Tests\System.IO.Hashing\System.IO.Hashing.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration">
-      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Microsoft.Extensions.Configuration.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
@@ -815,6 +803,10 @@
     </Reference>
     <Reference Include="TacShootSim">
       <HintPath>Assets\_TacLibrary\TacAgent\_DLL\TacShootSim.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="TacPrimitives">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\TacPrimitives.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

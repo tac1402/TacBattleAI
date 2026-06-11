@@ -1,14 +1,14 @@
+using DnaCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEF;
 using UnityEngine;
 using UnityEngine.AI;
 
-using UnityEF;
-
 namespace Tac.Agent
 {
-	public partial class AgentPoint : Item
+	public partial class AgentPoint : Item, ICell
 	{
 		public Vector3 Size = new Vector3(10, 3, 10);
 		public GameObject Point;
@@ -45,6 +45,7 @@ namespace Tac.Agent
 			get { return new Vector2_(WorkingHours.x, WorkingHours.y); }
 		}
 
+		public Cell cell { get { return item; } }
 
 		private void Awake()
 		{

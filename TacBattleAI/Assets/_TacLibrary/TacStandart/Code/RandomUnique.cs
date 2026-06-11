@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
 namespace Tac
 {
 	public delegate int GetInt();

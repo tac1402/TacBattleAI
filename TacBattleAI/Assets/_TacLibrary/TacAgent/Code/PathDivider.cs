@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using UnityEF;
 
 namespace Tac.Agent
 {
@@ -107,24 +107,24 @@ namespace Tac.Agent
 			(teleportPoint, teleportPrevPathIndex) = GetPointAtDistance(argAgent.PathPoints, totalPathLength - lastSegmentLength);
 		}
 
-		private float CalculatePathLength(List<Vector3> corners)
+		private float CalculatePathLength(LList<LVector3> corners)
 		{
 			float length = 0f;
 			for (int i = 0; i < corners.Count - 1; i++)
 			{
-				length += Vector3.Distance(corners[i], corners[i + 1]);
+				length += Vector3.Distance(corners[i].To(), corners[i + 1].To());
 			}
 			return length;
 		}
 
-		private (Vector3, int) GetPointAtDistance(List<Vector3> corners, float targetDistance)
+		private (Vector3, int) GetPointAtDistance(LList<LVector3> corners, float targetDistance)
 		{
 			float accumulated = 0f;
 
 			for (int i = 0; i < corners.Count - 1; i++)
 			{
-				Vector3 start = corners[i];
-				Vector3 end = corners[i + 1];
+				Vector3 start = corners[i].To();
+				Vector3 end = corners[i + 1].To();
 				float segmentDist = Vector3.Distance(start, end);
 
 				if (accumulated + segmentDist >= targetDistance)
@@ -137,7 +137,7 @@ namespace Tac.Agent
 			}
 
 			// Если targetDistance больше длины пути, возвращаем последнюю точку
-			return (corners[corners.Count - 1], corners.Count - 2);
+			return (corners[corners.Count - 1].To(), corners.Count - 2);
 		}
 
 		public Gradient CreatePhaseGradient(Color[] phaseColors)

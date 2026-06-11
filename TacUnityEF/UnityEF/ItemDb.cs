@@ -30,7 +30,7 @@ namespace DnaCore
 		/// <summary>
 		/// Уникальный индентификатор объекта в мире
 		/// </summary>
-		public K Id;
+		public K Id { get; set; }
 
 		public static DbContext db;
 

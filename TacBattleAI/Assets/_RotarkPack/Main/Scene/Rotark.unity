@@ -227659,6 +227659,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048a1c00b22d71b41a1da195db9718ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Society
+  GroupId: -1
+  ModelName: 
   RobotJob: {fileID: 0}
   PlayerJob: {fileID: 0}
   PlayerPersonId: 0
@@ -229653,10 +229655,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c32f436c8c9a240b87b878e0b5d743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectId: 1
   GroupId: -1
   ModelName: World
-  ModelType: 0
   Society: {fileID: 0}
   DayNight: {fileID: 0}
   WorldSize:
@@ -230406,9 +230406,8 @@ GameObject:
   - component: {fileID: 4011879485492785464}
   - component: {fileID: 3519345460081437964}
   - component: {fileID: 3165903871578346287}
-  - component: {fileID: 4011879485492785466}
-  - component: {fileID: 4011879485492785465}
   - component: {fileID: 4011879485492785467}
+  - component: {fileID: 4011879485492785469}
   - component: {fileID: 4011879485492785468}
   m_Layer: 0
   m_Name: World
@@ -231734,6 +231733,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a53948faa4a22524b9c5bd4de997d77f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tac.DayNight
+  GroupId: -1
+  ModelName: 
   gameTime: {fileID: 5318326092841258701}
   gameDays: {fileID: 2855828313911918721}
   RealTime: {fileID: 5438029402710482074}
@@ -231747,30 +231748,6 @@ MonoBehaviour:
   DayLength: 360
   NightLength: 360
   GameDayLenght: 24
---- !u!114 &4011879485492785465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3741746271671942670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38978f9dfd49d464eb037c639e1473b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tac.Society.RobotJob
---- !u!114 &4011879485492785466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3741746271671942670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ebb349a7c67aea409be43b6c985cab9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tac.Society.PlayerJob
 --- !u!114 &4011879485492785467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231794,13 +231771,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 3741746271671942670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 259fb53c32e024b4b98a0ead83f27a39, type: 3}
+  m_Script: {fileID: 11500000, guid: 38978f9dfd49d464eb037c639e1473b1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SaveManager
-  InEditor: 1
-  IsDebugMode: 1
-  version: v0.01
-  World: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::Tac.Society.RobotJob
+  GroupId: -1
+  ModelName: 
+  AgentPath: []
+--- !u!114 &4011879485492785469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741746271671942670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ebb349a7c67aea409be43b6c985cab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tac.Society.PlayerJob
+  GroupId: -1
+  ModelName: 
+  AgentPath: []
 --- !u!64 &4018235344824868264
 MeshCollider:
   m_ObjectHideFlags: 0

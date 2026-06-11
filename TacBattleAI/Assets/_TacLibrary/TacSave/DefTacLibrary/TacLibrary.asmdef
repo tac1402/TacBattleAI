@@ -19,7 +19,8 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "UnityEF.dll",
-        "DnaCore.dll"
+        "DnaCore.dll",
+        "TacPrimitives.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

@@ -17,8 +17,6 @@ namespace Tac.Society
 		[NotMapped]
 		public GDictionary<int, Person.Person> People { get; } = new GDictionary<int, Person.Person>();
 
-
-
 		public RobotJob RobotJob;
 		public PlayerJob PlayerJob;
 

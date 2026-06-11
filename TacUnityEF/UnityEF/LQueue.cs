@@ -8,9 +8,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
+using Tac;
+
 namespace UnityEF
 {
-	public class LQueue<T> : ItemDb where T : ItemDb
+	/// <summary>
+	/// Локальная очередь
+	/// </summary>
+	public class LQueue<T> : ItemDb where T : class, IItemDb, IId
 	{
 		public List<LItem<T>> Items { get; set; } = new List<LItem<T>>();
 
@@ -25,26 +30,82 @@ namespace UnityEF
 			}
 		}
 
-		public void Enqueue(T item)
-		{
-			Queue.Enqueue(new LItem<T>(item));
-		}
+		private HashSet<int> removedIds = new HashSet<int>();
+
+		public int Count => Queue.Count - removedIds.Count;
+
+		public void Enqueue(T item) => Queue.Enqueue(new LItem<T>(item));
+		public T Peek() => Queue.Peek().Item;
+
 
 		public T Dequeue()
 		{
-			return Queue.Dequeue().Item;
+			T ret = default;
+			while (Queue.Count > 0)
+			{
+				ret = Queue.Dequeue().Item;
+				if (removedIds.Contains(ret.Id))
+				{
+					removedIds.Remove(ret.Id);
+					continue;
+				}
+				break;
+			}
+			return ret;
 		}
-	}
 
-	public class LItem<T> : ItemDb where T : ItemDb
-	{
-		public T Item;
-
-		public LItem() { }
-
-		public LItem(T argItem)
+		public T Remove(int id)
 		{
-			Item = argItem;
+			removedIds.Add(id);
+
+			T ret = default;
+			LItem<T>[] items = Queue.ToArray();
+			foreach (LItem<T> item in items)
+			{
+				if (item.Item.Id == id)
+				{
+					ret = item.Item;
+					break;
+				}
+			}
+			return ret;
+		}
+
+		public void Clear()
+		{
+			Queue.Clear();
+			removedIds.Clear();
+		}
+
+		public IEnumerator<T> GetEnumerator()
+		{
+			foreach (var item in Queue)
+			{
+				if (removedIds.Contains(item.Id) == false)
+				{
+					yield return item.Item;
+				}
+			}
+		}
+
+		public void ClearRemoved()
+		{
+			Queue<LItem<T>> newQueue = new Queue<LItem<T>>();
+			foreach (LItem<T> item in Queue)
+			{
+				if (removedIds.Contains(item.Item.Id) == false)
+				{
+					newQueue.Enqueue(item);
+				}
+			}
+			Queue = newQueue;
+			removedIds.Clear();
+		}
+
+		public List<T> ToList()
+		{
+			ClearRemoved();
+			return Queue.Select(i => i.Item).ToList();
 		}
 	}
 

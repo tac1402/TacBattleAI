@@ -2,170 +2,191 @@ Model:
   EntityType: Agent
     Properties: 
       Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      Discriminator (no field, string) Shadow Required AfterSave:Throw
       GroupId (GroupId, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       IsBusy (IsBusy, bool) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
       LocatedId (LocatedId, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       ModelName (ModelName, string)
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
+      PathPointsId (no field, Nullable<int>) Shadow FK Index
       TargetId (TargetId, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       UseHealthState (UseHealthState, bool) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
       WalkDimension (WalkDimension, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       agentName (agentName, string)
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
+      currentPathIndex (currentPathIndex, int) Required
       isMoving (isMoving, bool) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
       pathStatus (pathStatus, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+    Navigations: 
+      PathPoints (PathPoints, LList<LVector3>) ToPrincipal LList<LVector3>
     Keys: 
       Id PK
-    Annotations: 
-      ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding
+    Foreign keys: 
+      Agent {'PathPointsId'} -> LList<LVector3> {'Id'} ToPrincipal: PathPoints ClientSetNull
+    Indexes: 
+      PathPointsId 
+  EntityType: AgentInPoint
+    Properties: 
+      Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+      AgentId (no field, Nullable<int>) Shadow FK Index
+    Navigations: 
+      Agent (Agent, Agent) ToPrincipal Agent
+    Keys: 
+      Id PK
+    Foreign keys: 
+      AgentInPoint {'AgentId'} -> Agent {'Id'} ToPrincipal: Agent ClientSetNull
+    Indexes: 
+      AgentId 
+  EntityType: AgentPoint
+    Properties: 
+      Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+      AgentsId (no field, Nullable<int>) Shadow FK Index
+      DebugEnter (DebugEnter, bool) Required
+      Discriminator (no field, string) Shadow Required AfterSave:Throw
+      GroupId (GroupId, int) Required
+      HideAgent (HideAgent, bool) Required
+      Info (Info, string)
+      ModelName (ModelName, string)
+      Title (Title, string)
+    Navigations: 
+      Agents (Agents, LQueue<AgentInPoint>) ToPrincipal LQueue<AgentInPoint>
+    Keys: 
+      Id PK
+    Foreign keys: 
+      AgentPoint {'AgentsId'} -> LQueue<AgentInPoint> {'Id'} ToPrincipal: Agents ClientSetNull
+    Indexes: 
+      AgentsId 
   EntityType: DayNight
     Properties: 
       Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       DayLength (DayLength, float) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.FloatTypeMapping
       GameDayLenght (GameDayLenght, float) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.FloatTypeMapping
       GroupId (GroupId, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       ModelName (ModelName, string)
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
       NightLength (NightLength, float) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.FloatTypeMapping
       Pause (Pause, bool) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
       PlaySpeed (PlaySpeed, float) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.FloatTypeMapping
       currentDay (currentDay, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       currentTime (currentTime, float) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.FloatTypeMapping
       rm (rm, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       rs (rs, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
     Keys: 
       Id PK
-    Annotations: 
-      ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding
-  EntityType: Person
+  EntityType: Person Base: Agent
+    Properties: 
+      Gender (Gender, GenderType) Required
+  EntityType: Business Base: AgentPoint
+  EntityType: Job
     Properties: 
       Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
-      Gender (Gender, GenderType) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      AgentPathId (no field, Nullable<int>) Shadow FK Index
+      Discriminator (no field, string) Shadow Required AfterSave:Throw
       GroupId (GroupId, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
-      IsBusy (IsBusy, bool) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
-      LocatedId (LocatedId, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       ModelName (ModelName, string)
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
-      TargetId (TargetId, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
-      UseHealthState (UseHealthState, bool) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
-      WalkDimension (WalkDimension, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
-      agentName (agentName, string)
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
-      isMoving (isMoving, bool) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.BoolTypeMapping
-      pathStatus (pathStatus, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+    Navigations: 
+      AgentPath (AgentPath, LList<Agent>) ToPrincipal LList<Agent>
     Keys: 
       Id PK
-    Annotations: 
-      ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding
+    Foreign keys: 
+      Job {'AgentPathId'} -> LList<Agent> {'Id'} ToPrincipal: AgentPath ClientSetNull
+    Indexes: 
+      AgentPathId 
+  EntityType: PlayerJob Base: Job
+  EntityType: RobotJob Base: Job
   EntityType: Society
     Properties: 
       Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       GroupId (GroupId, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       ModelName (ModelName, string)
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
+      PlayerJobId (no field, Nullable<int>) Shadow FK Index
       PlayerPersonId (PlayerPersonId, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
+      RobotJobId (no field, Nullable<int>) Shadow FK Index
+    Navigations: 
+      PlayerJob (PlayerJob, PlayerJob) ToPrincipal PlayerJob
+      RobotJob (RobotJob, RobotJob) ToPrincipal RobotJob
     Keys: 
       Id PK
-    Annotations: 
-      ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding
+    Foreign keys: 
+      Society {'PlayerJobId'} -> PlayerJob {'Id'} ToPrincipal: PlayerJob ClientSetNull
+      Society {'RobotJobId'} -> RobotJob {'Id'} ToPrincipal: RobotJob ClientSetNull
+    Indexes: 
+      PlayerJobId 
+      RobotJobId 
+  EntityType: LItem<Agent>
+    Properties: 
+      Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+      ItemId (no field, Nullable<int>) Shadow FK Index
+      LListId (no field, Nullable<int>) Shadow FK Index
+    Navigations: 
+      Item (Item, Agent) ToPrincipal Agent
+    Keys: 
+      Id PK
+    Foreign keys: 
+      LItem<Agent> {'ItemId'} -> Agent {'Id'} ToPrincipal: Item ClientSetNull
+      LItem<Agent> {'LListId'} -> LList<Agent> {'Id'} ToDependent: Items ClientSetNull
+    Indexes: 
+      ItemId 
+      LListId 
+  EntityType: LItem<AgentInPoint>
+    Properties: 
+      Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+      ItemId (no field, Nullable<int>) Shadow FK Index
+      LQueueId (no field, Nullable<int>) Shadow FK Index
+    Navigations: 
+      Item (Item, AgentInPoint) ToPrincipal AgentInPoint
+    Keys: 
+      Id PK
+    Foreign keys: 
+      LItem<AgentInPoint> {'ItemId'} -> AgentInPoint {'Id'} ToPrincipal: Item ClientSetNull
+      LItem<AgentInPoint> {'LQueueId'} -> LQueue<AgentInPoint> {'Id'} ToDependent: Items ClientSetNull
+    Indexes: 
+      ItemId 
+      LQueueId 
+  EntityType: LItem<LVector3>
+    Properties: 
+      Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+      Item (Item, LVector3)
+      LListId (no field, Nullable<int>) Shadow FK Index
+    Keys: 
+      Id PK
+    Foreign keys: 
+      LItem<LVector3> {'LListId'} -> LList<LVector3> {'Id'} ToDependent: Items ClientSetNull
+    Indexes: 
+      LListId 
+  EntityType: LList<Agent>
+    Properties: 
+      Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+    Navigations: 
+      Items (List<LItem<Agent>>) Collection ToDependent LItem<Agent>
+    Keys: 
+      Id PK
+  EntityType: LList<LVector3>
+    Properties: 
+      Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+    Navigations: 
+      Items (List<LItem<LVector3>>) Collection ToDependent LItem<LVector3>
+    Keys: 
+      Id PK
+  EntityType: LQueue<AgentInPoint>
+    Properties: 
+      Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+    Navigations: 
+      Items (List<LItem<AgentInPoint>>) Collection ToDependent LItem<AgentInPoint>
+    Keys: 
+      Id PK
   EntityType: World
     Properties: 
       Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       DayNightId (no field, Nullable<int>) Shadow FK Index
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       GroupId (GroupId, int) Required
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
       ModelName (ModelName, string)
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.StringTypeMapping
       SocietyId (no field, Nullable<int>) Shadow FK Index
-        Annotations: 
-          TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping
     Navigations: 
       DayNight (DayNight, DayNight) ToPrincipal DayNight
       Society (Society, Society) ToPrincipal Society
     Keys: 
       Id PK
     Foreign keys: 
-      World {'DayNightId'} -> DayNight {'Id'} ToPrincipal: DayNight
-      World {'SocietyId'} -> Society {'Id'} ToPrincipal: Society
-    Annotations: 
-      ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding
-Annotations: 
-  ProductVersion: 3.1.32
+      World {'DayNightId'} -> DayNight {'Id'} ToPrincipal: DayNight ClientSetNull
+      World {'SocietyId'} -> Society {'Id'} ToPrincipal: Society ClientSetNull
+    Indexes: 
+      DayNightId 
+      SocietyId 

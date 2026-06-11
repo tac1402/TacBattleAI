@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.32" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.32" /> 
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.17" /> 
 
 	<Reference Include="UnityEngine">
 		  <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.11f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
@@ -21,9 +21,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DnaCore\DnaCore.csproj" />
+    <ProjectReference Include="..\TacPrimitives\TacPrimitives.csproj" />
   </ItemGroup>
 
-	<Import Project="$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net461\SQLitePCLRaw.lib.e_sqlite3.targets" 
-			Condition="Exists('$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" />
+	<Import Project="$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net461\SQLitePCLRaw.lib.e_sqlite3.targets" Condition="Exists('$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" />
 	
 </Project>

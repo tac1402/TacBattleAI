@@ -1,10 +1,9 @@
 using System.Numerics;
 
-
 namespace Tac
 {
 	[System.Serializable]
-	public class Vector3_
+	public class Vector3_ 
 	{
 		public float x;
 		public float y;

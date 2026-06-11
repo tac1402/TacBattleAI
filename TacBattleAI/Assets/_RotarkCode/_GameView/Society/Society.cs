@@ -6,8 +6,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DnaCore;
 
-using System.ComponentModel.DataAnnotations;
-
 namespace Tac.Society
 {
 	public partial class Society : Item, ICell

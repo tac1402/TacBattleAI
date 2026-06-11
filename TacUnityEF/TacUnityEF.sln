@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36603.0 d17.14
+VisualStudioVersion = 17.14.36603.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEF", "UnityEF\UnityEF.csproj", "{783B1986-DDEB-C4FD-8E8C-D9C9E705C9F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnaCore", "DnaCore\DnaCore.csproj", "{33AC2F7B-E1D4-96A7-5A62-445C08EBE0D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacPrimitives", "TacPrimitives\TacPrimitives.csproj", "{73DB2AA9-8A6F-4DA1-B325-72FC7B8E0D6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{33AC2F7B-E1D4-96A7-5A62-445C08EBE0D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33AC2F7B-E1D4-96A7-5A62-445C08EBE0D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33AC2F7B-E1D4-96A7-5A62-445C08EBE0D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73DB2AA9-8A6F-4DA1-B325-72FC7B8E0D6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73DB2AA9-8A6F-4DA1-B325-72FC7B8E0D6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73DB2AA9-8A6F-4DA1-B325-72FC7B8E0D6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73DB2AA9-8A6F-4DA1-B325-72FC7B8E0D6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

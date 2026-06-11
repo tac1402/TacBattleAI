@@ -9,6 +9,9 @@ using System.Linq;
 
 namespace UnityEF
 {
+	/// <summary>
+	/// Глобальный словарь
+	/// </summary>
 	public class GDictionary<K, V> where V : class, IItemDb
 	{
 

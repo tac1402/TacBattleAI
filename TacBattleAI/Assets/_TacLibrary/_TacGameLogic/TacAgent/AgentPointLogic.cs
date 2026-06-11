@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEF;
 
 namespace Tac.Agent
 {
@@ -9,7 +10,7 @@ namespace Tac.Agent
 		public string Title;
 		public string Info;
 
-		public QueueR<AgentInPoint> Agents = new QueueR<AgentInPoint>();
+		public LQueue<AgentInPoint> Agents = new LQueue<AgentInPoint>();
 
 		/// <summary>
 		/// Время последнего обновления
@@ -18,6 +19,8 @@ namespace Tac.Agent
 
 		public virtual void Init()
 		{
+			AgentInPoint A = new AgentInPoint();
+			A.Id = 0;
 		}
 
 

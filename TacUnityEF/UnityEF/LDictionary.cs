@@ -10,7 +10,10 @@ using System.Text;
 
 namespace UnityEF
 {
-	public class LDictionary<K, V> : ItemDb where V : ItemDb
+	/// <summary>
+	/// Локальный словарь
+	/// </summary>
+	public class LDictionary<K, V> : ItemDb where V : class, IItemDb
 	{
 		public List<LKeyValue<K, V>> Items { get; set; } = new List<LKeyValue<K, V>>();
 
@@ -81,7 +84,7 @@ namespace UnityEF
 	/// <summary>
 	/// Элемент словаря: связывает ключ со значением и принадлежит одному DDictionary.
 	/// </summary>
-	public class LKeyValue<K, V> : ItemDb<K> where V : ItemDb
+	public class LKeyValue<K, V> : ItemDb<K> where V : class, IItemDb
 	{
 		public V Value { get; set; }
 	}

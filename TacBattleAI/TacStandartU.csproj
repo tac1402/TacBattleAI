@@ -627,6 +627,10 @@
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\DnaCore.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="TacPrimitives">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\TacPrimitives.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.11f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
       <Private>False</Private>

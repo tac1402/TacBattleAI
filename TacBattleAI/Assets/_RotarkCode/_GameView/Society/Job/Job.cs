@@ -3,15 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using DnaCore;
+using UnityEF;
 
 namespace Tac.Society
 {
-	public partial class Job : MonoBehaviour
+	public partial class Job : Item, ICell
 	{
-		public Queue<Agent.Agent> AgentPath = new Queue<Agent.Agent> ();
+		public LList<Agent.Agent> AgentPath = new LList<Agent.Agent> ();
 
 		private NavMeshPathExt pathExt;
+
+		public Cell cell { get { return item; } }
 
 		private void Awake()
 		{
@@ -24,9 +27,9 @@ namespace Tac.Society
 		{
 			while (true)
 			{
-				for (int i = 0; i < AgentPath.Count; i++)
+				for (int i = AgentPath.Count - 1; i >= 0; i--)
 				{
-					Agent.Agent agent = AgentPath.Peek();
+					Agent.Agent agent = AgentPath[i];
 					if (agent.PathStatus == 1)
 					{
 						NavMeshPath2 path = pathExt.CalculatePath(agent.transform.position, agent.TargetPoint.To());
@@ -39,7 +42,7 @@ namespace Tac.Society
 						}
 						else
 						{
-							AgentPath.Dequeue();
+							AgentPath.RemoveAt(i);
 							agent.WalkTeleport();
 						}
 					}

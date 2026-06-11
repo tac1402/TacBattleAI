@@ -8,6 +8,7 @@ using Tac.HealthSystem;
 using UnityEngine;
 using UnityEngine.AI;
 using DnaCore;
+using UnityEF;
 
 namespace Tac.Agent
 {
@@ -93,6 +94,13 @@ namespace Tac.Agent
 		public Vector3_ TargetPoint = Vector3_.zero;
 
 		/// <summary>
+		/// “екущий путь агента
+		/// </summary>
+		public LList<LVector3> PathPoints;
+		[Mapped]
+		private int currentPathIndex;
+
+		/// <summary>
 		///  онтроль дистанции, можно использовать только внутри класса, в т.ч. partial
 		/// </summary>
 		private event Send OnCheckDistance;
@@ -171,7 +179,7 @@ namespace Tac.Agent
 			currentPathIndex++;
 			if (PathPoints.Count > currentPathIndex)
 			{
-				agent.SetDestination(PathPoints[currentPathIndex]);
+				agent.SetDestination(PathPoints[currentPathIndex].To());
 				if (agent.isStopped)
 				{
 					agent.isStopped = false;
@@ -206,11 +214,11 @@ namespace Tac.Agent
 
 			if (PathPoints.Count != 0 && currentPathIndex != PathPoints.Count - 1 && PathPoints.Count > currentPathIndex)
 			{
-				float d1 = Distance(transform.position, PathPoints[currentPathIndex]);
+				float d1 = Distance(transform.position, PathPoints[currentPathIndex].To());
 				if (d1 <= agent.stoppingDistance)
 				{
 					currentPathIndex++;
-					agent.SetDestination(PathPoints[currentPathIndex]);
+					agent.SetDestination(PathPoints[currentPathIndex].To());
 				}
 			}
 			else
@@ -285,16 +293,14 @@ namespace Tac.Agent
 			}
 		}
 
-		public List<Vector3> PathPoints;
-		private int currentPathIndex;
-
 		public void SetPath(NavMeshPath2 argPath)
 		{
 			if (argPath.status == NavMeshPathStatus.PathComplete)
 			{
 				for (int i = 0; i < argPath.corners.Length; i++)
 				{
-					PathPoints.Add(argPath.corners[i]);
+					
+					PathPoints.Add(new LVector3(argPath.corners[i]));
 				}
 				currentPathIndex = 0;
 				PathStatus = 2;
@@ -317,7 +323,7 @@ namespace Tac.Agent
 						PathRender.positionCount = PathPoints.Count;
 						for (int i = 0; i < PathPoints.Count; i++)
 						{
-							PathRender.SetPosition(i, PathPoints[i] + Vector3.up * PathHeightOffset);
+							PathRender.SetPosition(i, PathPoints[i].To() + Vector3.up * PathHeightOffset);
 						}
 					}
 				}

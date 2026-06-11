@@ -61,17 +61,13 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.11f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_TacLibrary\TacStandart\Code\IId.cs" />
     <Compile Include="Assets\_TacLibrary\TacSave\TacStandartExt\IDayNight.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\Code\RandomUnique.cs" />
-    <Compile Include="Assets\_TacLibrary\TacStandart\Code\Vector\Vector2_.cs" />
-    <Compile Include="Assets\_TacLibrary\TacStandart\Code\Vector\Vector3_.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\Code\IgnoreNormal.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\Code\XYZ.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\Code\ModelTypes.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\Code\GameTime.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\Code\Helper.cs" />
-    <Compile Include="Assets\_TacLibrary\TacStandart\Code\QueueR.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\Code\NamedValue.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\Code\ComponentAttribute.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\Code\LimitCircle.cs" />
@@ -82,6 +78,10 @@
     <None Include="Assets\_TacLibrary\TacStandart\Code\TacStandart.asmref" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="TacPrimitives">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\TacPrimitives.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.11f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
       <Private>False</Private>
