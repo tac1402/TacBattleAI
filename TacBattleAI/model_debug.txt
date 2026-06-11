@@ -9,6 +9,7 @@ Model:
       ModelName (ModelName, string)
       PathPointsId (no field, Nullable<int>) Shadow FK Index
       TargetId (TargetId, int) Required
+      TargetPoint (TargetPoint, Vector3_)
       UseHealthState (UseHealthState, bool) Required
       WalkDimension (WalkDimension, int) Required
       agentName (agentName, string)
@@ -41,11 +42,14 @@ Model:
       AgentsId (no field, Nullable<int>) Shadow FK Index
       DebugEnter (DebugEnter, bool) Required
       Discriminator (no field, string) Shadow Required AfterSave:Throw
+      EnterSize (EnterSize, Vector3) Required
       GroupId (GroupId, int) Required
       HideAgent (HideAgent, bool) Required
       Info (Info, string)
       ModelName (ModelName, string)
+      Size (Size, Vector3) Required
       Title (Title, string)
+      WorkingHours (WorkingHours, Vector2) Required
     Navigations: 
       Agents (Agents, LQueue<AgentInPoint>) ToPrincipal LQueue<AgentInPoint>
     Keys: 

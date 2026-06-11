@@ -11,7 +11,6 @@ using System.Linq;
 using System.Reflection;
 using Tac;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 
 namespace UnityEF
@@ -21,6 +20,10 @@ namespace UnityEF
 
 		private HashSet<Type> customPrimitives = new HashSet<Type>
 		{
+			typeof(UnityEngine.Vector3),
+			typeof(UnityEngine.Vector2),
+			typeof(Vector3_),
+			typeof(Vector2_),
 			typeof(LVector3),
 			typeof(LVector2)
 		};
@@ -304,29 +307,64 @@ namespace UnityEF
 		#region Serialize
 
 		// Вспомогательные методы (содержат несколько операторов, но это обычные методы, не лямбды)
-		private static LVector3 ParseVector3(string s)
+		private static Vector3 ParseVector3(string s)
+		{
+			string[] p = s.Split(';');
+			return new Vector3 { x = float.Parse(p[0]), y = float.Parse(p[1]), z = float.Parse(p[2]) };
+		}
+		private static Vector2 ParseVector2(string s)
+		{
+			string[] p = s.Split(';');
+			return new Vector2 { x = float.Parse(p[0]), y = float.Parse(p[1]) };
+		}
+		private static Vector3_ ParseVector3_(string s)
+		{
+			string[] p = s.Split(';');
+			return new Vector3_ { x = float.Parse(p[0]), y = float.Parse(p[1]), z = float.Parse(p[2]) };
+		}
+		private static Vector2_ ParseVector2_(string s)
+		{
+			string[] p = s.Split(';');
+			return new Vector2_ { x = float.Parse(p[0]), y = float.Parse(p[1]) };
+		}
+		private static LVector3 ParseLVector3(string s)
 		{
 			string[] p = s.Split(';');
 			return new LVector3 { x = float.Parse(p[0]), y = float.Parse(p[1]), z = float.Parse(p[2]) };
 		}
-
-		private static LVector2 ParseVector2(string s)
+		private static LVector2 ParseLVector2(string s)
 		{
 			string[] p = s.Split(';');
 			return new LVector2 { x = float.Parse(p[0]), y = float.Parse(p[1]) };
 		}
 
+		private static readonly ValueConverter<Vector3, string> Vector3Converter =
+			new ValueConverter<Vector3, string>(v => $"{v.x};{v.y};{v.z}", s => ParseVector3(s));
 
-		private static readonly ValueConverter<LVector3, string> Vector3_Converter =
-			new ValueConverter<LVector3, string>(v => $"{v.x};{v.y};{v.z}", s => ParseVector3(s));
+		private static readonly ValueConverter<Vector2, string> Vector2Converter =
+			new ValueConverter<Vector2, string>(v => $"{v.x};{v.y}", s => ParseVector2(s));
 
-		private static readonly ValueConverter<LVector2, string> Vector2_Converter =
-			new ValueConverter<LVector2, string>(v => $"{v.x};{v.y}", s => ParseVector2(s));
+		private static readonly ValueConverter<Vector3_, string> Vector3_Converter =
+			new ValueConverter<Vector3_, string>(v => $"{v.x};{v.y};{v.z}", s => ParseVector3_(s));
+
+		private static readonly ValueConverter<Vector2_, string> Vector2_Converter =
+			new ValueConverter<Vector2_, string>(v => $"{v.x};{v.y}", s => ParseVector2_(s));
+
+		private static readonly ValueConverter<LVector3, string> LVector3Converter =
+			new ValueConverter<LVector3, string>(v => $"{v.x};{v.y};{v.z}", s => ParseLVector3(s));
+
+		private static readonly ValueConverter<LVector2, string> LVector2Converter =
+			new ValueConverter<LVector2, string>(v => $"{v.x};{v.y}", s => ParseLVector2(s));
 
 		private ValueConverter GetValueConverter(Type type)
 		{
-			if (type == typeof(LVector3)) return Vector3_Converter;
-			if (type == typeof(LVector2)) return Vector2_Converter;
+			if (type == typeof(Vector3)) return Vector3Converter;
+			if (type == typeof(Vector3_)) return Vector3_Converter;
+			if (type == typeof(LVector3)) return LVector3Converter;
+
+			if (type == typeof(Vector2)) return Vector2Converter;
+			if (type == typeof(Vector2_)) return Vector2_Converter;
+			if (type == typeof(LVector2)) return LVector2Converter;
 			throw new NotSupportedException($"No converter for type {type}");
 		}
 
