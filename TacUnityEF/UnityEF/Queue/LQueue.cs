@@ -3,6 +3,7 @@
 
 using DnaCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -17,33 +18,68 @@ namespace UnityEF
 	/// </summary>
 	public class LQueue<T> : ItemDb where T : class, IItemDb, IId
 	{
+		private readonly IQueue<T> storage;
+
+		public LQueue()
+		{
+			storage = CreateStorage();
+		}
+
+		private IQueue<T> CreateStorage()
+		{
+			if (ItemDb<T>.db == null)
+			{
+				return new MemoryQueue<T>();
+			}
+			else
+			{
+				return new DbLQueue<T>(Items);
+			}
+		}
+
 		public List<LItem<T>> Items { get; set; } = new List<LItem<T>>();
 
-		// Для удобства — очередь (не сохраняется в БД)
-		[NotMapped]
-		public Queue<LItem<T>> Queue
+		public void Enqueue(T item) => storage.Enqueue(item);
+		public T Peek() => storage.Peek();
+		public T Dequeue() => storage.Dequeue();
+		public T Remove(int id) => storage.Remove(id);
+		public void Clear() => storage.Clear();
+		public int Count => storage.Count;
+		public List<T> ToList() => storage.ToList();
+		public IEnumerator<T> GetEnumerator() => storage.GetEnumerator();
+	}
+
+	internal class DbLQueue<T> : IQueue<T> where T : class, IItemDb, IId
+	{
+		private List<LItem<T>> items;
+		private Queue<LItem<T>> queue
 		{
-			get => new Queue<LItem<T>>(Items.OrderBy(i => i.Id));
+			get => new Queue<LItem<T>>(items.OrderBy(i => i.Id));
 			set
 			{
-				Items = value.ToList();
+				items = value.ToList();
 			}
+		}
+
+		public DbLQueue(List<LItem<T>> argItems)
+		{
+			items = argItems;
 		}
 
 		private HashSet<int> removedIds = new HashSet<int>();
 
-		public int Count => Queue.Count - removedIds.Count;
+		public int Count => items.Count - removedIds.Count;
 
-		public void Enqueue(T item) => Queue.Enqueue(new LItem<T>(item));
-		public T Peek() => Queue.Peek().Item;
+		public void Enqueue(T item) => queue.Enqueue(new LItem<T>(item));
+		public T Peek() => queue.Peek().Item;
 
 
 		public T Dequeue()
 		{
 			T ret = default;
-			while (Queue.Count > 0)
+			while (items.Count > 0)
 			{
-				ret = Queue.Dequeue().Item;
+				ret = queue.Dequeue().Item;
 				if (removedIds.Contains(ret.Id))
 				{
 					removedIds.Remove(ret.Id);
@@ -59,7 +95,7 @@ namespace UnityEF
 			removedIds.Add(id);
 
 			T ret = default;
-			LItem<T>[] items = Queue.ToArray();
+			LItem<T>[] items = queue.ToArray();
 			foreach (LItem<T> item in items)
 			{
 				if (item.Item.Id == id)
@@ -73,13 +109,13 @@ namespace UnityEF
 
 		public void Clear()
 		{
-			Queue.Clear();
+			queue.Clear();
 			removedIds.Clear();
 		}
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			foreach (var item in Queue)
+			foreach (var item in queue)
 			{
 				if (removedIds.Contains(item.Id) == false)
 				{
@@ -91,22 +127,22 @@ namespace UnityEF
 		public void ClearRemoved()
 		{
 			Queue<LItem<T>> newQueue = new Queue<LItem<T>>();
-			foreach (LItem<T> item in Queue)
+			foreach (LItem<T> item in queue)
 			{
 				if (removedIds.Contains(item.Item.Id) == false)
 				{
 					newQueue.Enqueue(item);
 				}
 			}
-			Queue = newQueue;
+			queue = newQueue;
 			removedIds.Clear();
 		}
 
 		public List<T> ToList()
 		{
 			ClearRemoved();
-			return Queue.Select(i => i.Item).ToList();
+			return queue.Select(i => i.Item).ToList();
 		}
-	}
 
+	}
 }
