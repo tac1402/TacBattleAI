@@ -25,8 +25,7 @@ public partial class World : Item, ICell
 
 	public Cell cell { get { return item; } }
 
-
-	private void Start()
+	private void Awake()
 	{
 		UnityDbContext context = new UnityDbContext();
 		ItemDb.db = context;
@@ -40,7 +39,11 @@ public partial class World : Item, ICell
 
 		context.DebugModel();
 		bool isCreated = context.Database.EnsureCreated();
+	}
 
+
+	private void Start()
+	{
 		ItemCreate = GetComponent<ItemCreate>();
 		DayNight = GetComponent<DayNight>();
 		Society = GetComponent<Society>();
@@ -73,7 +76,7 @@ public partial class World : Item, ICell
 
 		UpdateSurface();
 
-		item.Save(this);
+		item.SaveGraph(this);
 	}
 
 

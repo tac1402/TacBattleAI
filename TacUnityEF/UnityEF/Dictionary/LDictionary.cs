@@ -25,7 +25,7 @@ namespace UnityEF
 
 		private IDictionary<K, V> CreateStorage()
 		{
-			if (ItemDb<K>.db == null)
+			if (db == null)
 			{
 				return new MemoryDictionary<K, V>();
 			}

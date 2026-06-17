@@ -26,7 +26,7 @@ namespace UnityEF
 
 		private IDictionary<K, V> CreateStorage()
 		{
-			if (ItemDb<K>.db == null)
+			if (ItemDb.db == null)
 			{
 				return new MemoryDictionary<K, V>();
 			}
@@ -87,7 +87,7 @@ namespace UnityEF
 			{
 				Db.Set<V>().Add(item);
 			}
-			Db.SaveChanges();
+			//Db.SaveChanges();
 		}
 
 		public bool Remove(K key)
@@ -97,7 +97,7 @@ namespace UnityEF
 				return false;
 
 			Db.Set<V>().Remove(item);
-			Db.SaveChanges();
+			//Db.SaveChanges();
 			return true;
 		}
 

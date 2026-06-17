@@ -36,7 +36,13 @@ namespace DnaCore
 
 		private static HashSet<object> saving = new HashSet<object>(); // для избежания циклов
 
-		public void Save<T>(T obj)
+		public void SaveGraph<T>(T root)
+		{
+			Save(root);          // рекурсивно присоединяет все объекты
+			db.SaveChanges();    // единственный вызов
+		}
+
+		private void Save<T>(T obj)
 		{
 			// Если объект уже в процессе сохранения (циклическая ссылка), выходим
 			if (saving.Contains(obj)) return;
@@ -67,32 +73,38 @@ namespace DnaCore
 
 					if (fieldValue == null) { continue; }
 
-					// Одиночная ссылка на сущность (наследник Item<>)
-					if (typeof(ItemDb<>).IsAssignableFrom(fieldType) && fieldType.IsGenericType)
+					// Проверяем, является ли поле коллекцией элементов, реализующих IItemDb
+					bool isCollectionOfEntities = false;
+					var enumeratorInterface = fieldType.GetInterface(typeof(IEnumerator<>).FullName);
+					if (enumeratorInterface != null)
 					{
-						((dynamic)fieldValue).Save(); // рекурсивный вызов
-					}
-					// Коллекция сущностей (List<T>, LQueue<T>, LDictionary<K,V> и т.д.)
-					else if (typeof(System.Collections.IEnumerable).IsAssignableFrom(fieldType) &&
-							 fieldType.IsGenericType)
-					{
-						var elementType = fieldType.GetGenericArguments()[0];
-						if (typeof(ItemDb<>).IsAssignableFrom(elementType) && elementType.IsGenericType)
+						var elementType = enumeratorInterface.GetGenericArguments()[0];
+						if (typeof(IItemDb).IsAssignableFrom(elementType))
 						{
-							var collection = (System.Collections.IEnumerable)fieldValue;
-							foreach (var item in collection)
+							isCollectionOfEntities = true;
+						}
+					}
+
+
+					// Одиночная ссылка на сущность
+					if (typeof(IItemDb).IsAssignableFrom(fieldType) && isCollectionOfEntities == false)
+					{
+						// Приводим к интерфейсу и через свойство item вызываем Save()
+						((IItemDb)fieldValue).item.Save(fieldValue);
+					}
+					// Коллекция сущностей GDictionary, LList, LQueue, LDictionary
+					else if (isCollectionOfEntities == true)
+					{
+						var collection = (System.Collections.IEnumerable)fieldValue;
+						foreach (var item in collection)
+						{
+							if (item != null)
 							{
-								if (item != null)
-								{
-									((dynamic)item).Save(); // рекурсивный вызов
-								}
+								((IItemDb)item).item.Save(item); // рекурсивный вызов
 							}
 						}
 					}
 				}
-
-				// Сохраняем все изменения в базе (один раз для всего графа)
-				db.SaveChanges();
 			}
 			finally
 			{

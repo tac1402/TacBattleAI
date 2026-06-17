@@ -25,7 +25,7 @@ namespace UnityEF
 
 		private IList<T> CreateStorage()
 		{
-			if (ItemDb<T>.db == null)
+			if (db == null)
 			{
 				return new MemoryList<T>();
 			}

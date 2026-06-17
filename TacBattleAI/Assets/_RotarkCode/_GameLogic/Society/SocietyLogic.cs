@@ -14,8 +14,7 @@ namespace Tac.Society
 		/// <summary>
 		/// Все персонажи в игре
 		/// </summary>
-		[NotMapped]
-		public GDictionary<int, Person.Person> People { get; } = new GDictionary<int, Person.Person>();
+		public GDictionary<int, Person.Person> People;
 
 		public RobotJob RobotJob;
 		public PlayerJob PlayerJob;
@@ -35,6 +34,8 @@ namespace Tac.Society
 
 		public void InitLogic()
 		{
+			People = new GDictionary<int, Person.Person>();
+
 			if (PeoplePanel != null)
 			{
 				TableUI tableUI = PeoplePanel.GetComponentInChildren<TableUI>();
