@@ -71,3 +71,10 @@ nav:
     - IDayNight: TacSave/IDayNight.md
   - TacUnityEF:
     - Сохранение игры: TacUnityEF/UnityEF.md
+    - IItemDb: TacUnityEF/IItemDb.md
+    - UnityDbContext: TacUnityEF/UnityDbContext.md
+    - GDictionary: TacUnityEF/GDictionary.md
+    - LDictionary: TacUnityEF/LDictionary.md
+    - LList: TacUnityEF/LList.md
+    - LQueue: TacUnityEF/LQueue.md
+
