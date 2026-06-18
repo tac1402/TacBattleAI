@@ -5,9 +5,7 @@ using DnaCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
 
 using Tac;
 
@@ -52,14 +50,6 @@ namespace UnityEF
 	internal class DbLQueue<T> : IQueue<T> where T : class, IItemDb, IId
 	{
 		private List<LItem<T>> items;
-		private Queue<LItem<T>> queue
-		{
-			get => new Queue<LItem<T>>(items.OrderBy(i => i.Id));
-			set
-			{
-				items = value.ToList();
-			}
-		}
 
 		public DbLQueue(List<LItem<T>> argItems)
 		{
@@ -70,24 +60,41 @@ namespace UnityEF
 
 		public int Count => items.Count - removedIds.Count;
 
-		public void Enqueue(T item) => queue.Enqueue(new LItem<T>(item));
-		public T Peek() => queue.Peek().Item;
+		public void Enqueue(T item)
+		{
+			items.Add(new LItem<T>(item));
+		}
 
+		// Просмотр первого активного элемента без удаления
+		public T Peek()
+		{
+			foreach (var litem in items)
+			{
+				if (!removedIds.Contains(litem.Id))
+				{
+					return litem.Item;
+				}
+			}
+			return default(T);
+		}
 
 		public T Dequeue()
 		{
-			T ret = default;
 			while (items.Count > 0)
 			{
-				ret = queue.Dequeue().Item;
-				if (removedIds.Contains(ret.Id))
+				var first = items[0];
+				if (removedIds.Contains(first.Id))
 				{
-					removedIds.Remove(ret.Id);
+					// Удаляем помеченный элемент из списка и очищаем метку
+					removedIds.Remove(first.Id);
+					items.RemoveAt(0);
 					continue;
 				}
-				break;
+				// Найден активный элемент – удаляем его и возвращаем
+				items.RemoveAt(0);
+				return first.Item;
 			}
-			return ret;
+			return default(T);
 		}
 
 		public T Remove(int id)
@@ -95,7 +102,6 @@ namespace UnityEF
 			removedIds.Add(id);
 
 			T ret = default;
-			LItem<T>[] items = queue.ToArray();
 			foreach (LItem<T> item in items)
 			{
 				if (item.Item.Id == id)
@@ -109,13 +115,13 @@ namespace UnityEF
 
 		public void Clear()
 		{
-			queue.Clear();
+			items.Clear();
 			removedIds.Clear();
 		}
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			foreach (var item in queue)
+			foreach (var item in items)
 			{
 				if (removedIds.Contains(item.Id) == false)
 				{
@@ -127,21 +133,21 @@ namespace UnityEF
 		public void ClearRemoved()
 		{
 			Queue<LItem<T>> newQueue = new Queue<LItem<T>>();
-			foreach (LItem<T> item in queue)
+			foreach (LItem<T> item in items)
 			{
 				if (removedIds.Contains(item.Item.Id) == false)
 				{
 					newQueue.Enqueue(item);
 				}
 			}
-			queue = newQueue;
+			items = newQueue.ToList();
 			removedIds.Clear();
 		}
 
 		public List<T> ToList()
 		{
 			ClearRemoved();
-			return queue.Select(i => i.Item).ToList();
+			return items.Select(i => i.Item).ToList();
 		}
 
 	}

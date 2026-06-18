@@ -31,4 +31,16 @@ namespace UnityEF
 		public LVector2(Vector2_ v) : base(v.x, v.y) { }
 	}
 
+	public class LGameTime : GameTime, IItemDb
+	{
+		public int Id { get { return itemDb.Id; } set { itemDb.Id = value; } }
+
+		private ItemDb itemDb = new ItemDb();
+
+		public ItemDb item { get { return itemDb; } }
+		public LGameTime() { }
+		public LGameTime(GameTime gt) : base(gt.Day, gt.Hour) { }
+	}
+
+
 }

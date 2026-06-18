@@ -1,9 +1,13 @@
-// Author: Sergej Jakovlev <tac1402@gmail.com>
-// Copyright (C) 2025-26 Sergej Jakovlev
+﻿// Author: Sergej Jakovlev <tac1402@gmail.com>
+// Copyright (C) 2026 Sergej Jakovlev
+
+
+using System;
+using System.Collections.Generic;
 
 namespace Tac
 {
-	public partial class GameTime
+	public class GameTime
 	{
 		public int Day;
 		public int Hour;

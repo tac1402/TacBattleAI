@@ -58,7 +58,7 @@ namespace UnityEF
 			items = argItems;
 		}
 
-		// Добавляет элемент в конец списка (работает через временную копию — аналогично LQueue)
+		// Добавляет элемент в конец списка
 		public void Add(T item)
 		{
 			items.Add(new LItem<T>(item));

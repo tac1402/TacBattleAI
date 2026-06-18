@@ -25,7 +25,9 @@ namespace UnityEF
 			typeof(Vector3_),
 			typeof(Vector2_),
 			typeof(LVector3),
-			typeof(LVector2)
+			typeof(LVector2),
+			typeof(GameTime),
+			typeof(LGameTime)
 		};
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -338,6 +340,19 @@ namespace UnityEF
 			return new LVector2 { x = float.Parse(p[0]), y = float.Parse(p[1]) };
 		}
 
+		private static GameTime ParseGameTime(string s)
+		{
+			string[] p = s.Split(';');
+			return new GameTime { Day = int.Parse(p[0]), Hour = int.Parse(p[1]) };
+		}
+		private static LGameTime ParseLGameTime(string s)
+		{
+			string[] p = s.Split(';');
+			return new LGameTime { Day = int.Parse(p[0]), Hour = int.Parse(p[1]) };
+		}
+
+
+
 		private static readonly ValueConverter<Vector3, string> Vector3Converter =
 			new ValueConverter<Vector3, string>(v => $"{v.x};{v.y};{v.z}", s => ParseVector3(s));
 
@@ -356,6 +371,12 @@ namespace UnityEF
 		private static readonly ValueConverter<LVector2, string> LVector2Converter =
 			new ValueConverter<LVector2, string>(v => $"{v.x};{v.y}", s => ParseLVector2(s));
 
+		private static readonly ValueConverter<GameTime, string> GameTimeConverter =
+			new ValueConverter<GameTime, string>(v => $"{v.Day};{v.Hour}", s => ParseGameTime(s));
+		private static readonly ValueConverter<LGameTime, string> LGameTimeConverter =
+			new ValueConverter<LGameTime, string>(v => $"{v.Day};{v.Hour}", s => ParseLGameTime(s));
+
+
 		private ValueConverter GetValueConverter(Type type)
 		{
 			if (type == typeof(Vector3)) return Vector3Converter;
@@ -365,6 +386,10 @@ namespace UnityEF
 			if (type == typeof(Vector2)) return Vector2Converter;
 			if (type == typeof(Vector2_)) return Vector2_Converter;
 			if (type == typeof(LVector2)) return LVector2Converter;
+
+			if (type == typeof(GameTime)) return GameTimeConverter;
+			if (type == typeof(LGameTime)) return LGameTimeConverter;
+
 			throw new NotSupportedException($"No converter for type {type}");
 		}
 
