@@ -41,7 +41,6 @@ public partial class World : Item, ICell
 		bool isCreated = context.Database.EnsureCreated();
 	}
 
-
 	private void Start()
 	{
 		ItemCreate = GetComponent<ItemCreate>();

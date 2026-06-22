@@ -10,18 +10,24 @@ namespace Tac.Society
 {
 	public partial class Job : Item, ICell
 	{
-		public LList<Agent.Agent> AgentPath = new LList<Agent.Agent> ();
+		public LList<Agent.Agent> AgentPath;
 
 		private NavMeshPathExt pathExt;
 
 		public Cell cell { get { return item; } }
+
+
+		public override void InitData()
+		{
+			base.InitData();
+			AgentPath = new LList<Agent.Agent>();
+		}
 
 		private void Awake()
 		{
 			pathExt = new NavMeshPathExt();
 			StartCoroutine(CalcPath());
 		}
-
 
 		private IEnumerator CalcPath()
 		{

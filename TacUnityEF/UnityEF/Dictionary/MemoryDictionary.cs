@@ -2,6 +2,7 @@
 // Copyright (C) 2026 Sergej Jakovlev
 
 using DnaCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,6 +28,11 @@ namespace UnityEF
 		public List<V> GetAll() => dictionary.Values.ToList();
 		public IEnumerable<K> Keys => dictionary.Keys;
 		public int Count => dictionary.Count;
+
+		public IEnumerable<KeyValuePair<K, V>> Where(Func<KeyValuePair<K, V>, bool> predicate)
+		{
+			return dictionary.Where(predicate);
+		}
 
 	}
 }

@@ -3,6 +3,7 @@
 
 using DnaCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace UnityEF
 	/// <summary>
 	/// Локальный словарь в БД
 	/// </summary>
-	public class LDictionary<K, V> : ItemDb where V : class, IItemDb
+	public class LDictionary<K, V> : ItemDb, ICollection where V : class, IItemDb
 	{
 		private readonly IDictionary<K, V> storage;
 
@@ -52,40 +53,69 @@ namespace UnityEF
 		public int Count => storage.Count;
 		public IEnumerable<K> Keys => storage.Keys;
 		public IEnumerator<V> GetEnumerator() => storage.GetEnumerator();
+		public IEnumerable<KeyValuePair<K, V>> Where(Func<KeyValuePair<K, V>, bool> predicate) => storage.Where(predicate);
 		#endregion
 	}
 
 	/// <summary>
 	/// Элемент словаря: связывает ключ со значением и принадлежит одному DDictionary.
 	/// </summary>
-	public class LKeyValue<K, V> : ItemDb<K> where V : class, IItemDb
+	public class LKeyValue<K, V> : ItemDb where V : class, IItemDb
 	{
 		public V Value { get; set; }
+
+		public K Key { get; set; }
+		public int LDictionaryId { get; set; }
 	}
 
 	internal class DbLDictionary<K, V> : IDictionary<K, V> where V : class, IItemDb
 	{
 		private List<LKeyValue<K, V>> items;
+		private HashSet<K> nullKeys;         // ключи с null-значением
 
 		public DbLDictionary(List<LKeyValue<K, V>> argItems)
 		{
 			items = argItems;
+			nullKeys = new HashSet<K>();
 		}
 
 		public void Add(K key, V value)
 		{
-			items.Add(new LKeyValue<K, V> { Id = key, Value = value });
+			if (value == null)
+			{
+				nullKeys.Add(key);
+			}
+			else
+			{
+				items.Add(new LKeyValue<K, V> { Key = key, Value = value });
+			}
 		}
 
 		public bool Remove(K key)
 		{
-			var item = items.FirstOrDefault(kvp => kvp.Id.Equals(key));
-			return item != null && items.Remove(item);
+			bool removed = false;
+			var item = items.FirstOrDefault(kvp => kvp.Key.Equals(key));
+
+			if (item != null)
+			{
+				items.Remove(item);
+				removed = true;
+			}
+			if (nullKeys.Remove(key))
+			{
+				removed = true;
+			}
+			return removed;
 		}
 
 		public bool TryGetValue(K key, out V value)
 		{
-			var kvp = items.FirstOrDefault(kvp => kvp.Id.Equals(key));
+			if (nullKeys.Contains(key))
+			{
+				value = null;
+				return true;
+			}
+			var kvp = items.FirstOrDefault(kvp => kvp.Key.Equals(key));
 			if (kvp != null)
 			{
 				value = kvp.Value;
@@ -100,20 +130,51 @@ namespace UnityEF
 			get => TryGetValue(key, out var value) ? value : throw new KeyNotFoundException();
 			set
 			{
-				var existing = items.FirstOrDefault(kvp => kvp.Id.Equals(key));
-				if (existing != null)
-					existing.Value = value;
+				if (value == null)
+				{
+					// Удаляем из items, добавляем в nullKeys
+					var existingItem = items.FirstOrDefault(kvp => kvp.Key.Equals(key));
+					if (existingItem != null)
+					{
+						items.Remove(existingItem);
+						nullKeys.Add(key);
+					}
+					else if (nullKeys.Contains(key) == false)
+					{
+						nullKeys.Add(key);
+					}
+				}
 				else
-					items.Add(new LKeyValue<K, V> { Id = key, Value = value });
+				{
+					nullKeys.Remove(key);
+					var existing = items.FirstOrDefault(kvp => kvp.Key.Equals(key));
+					if (existing != null)
+					{
+						existing.Value = value;
+					}
+					else
+					{
+						items.Add(new LKeyValue<K, V> { Key = key, Value = value });
+					}
+				}
 			}
 		}
 
-		public bool ContainsKey(K key) => items.Any(kvp => kvp.Id.Equals(key));
+		public bool ContainsKey(K key) => nullKeys.Contains(key) || items.Any(kvp => kvp.Key.Equals(key));
 
-		public int Count => items.Count;
-		public IEnumerable<K> Keys => items.Select(kvp => kvp.Id);
+		public int Count => items.Count + nullKeys.Count;
+		public IEnumerable<K> Keys => items.Select(kvp => kvp.Key);
 		public IEnumerable<V> Values => items.Select(kvp => kvp.Value);
 		public List<V> GetAll() => items.Select(kvp => kvp.Value).ToList();
+
+		public IEnumerable<KeyValuePair<K, V>> Where(Func<KeyValuePair<K, V>, bool> predicate)
+		{
+			var fromItems = items.Select(item => new KeyValuePair<K, V>(item.Key, item.Value));
+			return fromItems.Where(predicate);
+
+			//var fromNulls = nullKeys.Select(key => new KeyValuePair<K, V>(key, null));
+			//return fromItems.Concat(fromNulls).Where(predicate);
+		}
 	}
 
 }

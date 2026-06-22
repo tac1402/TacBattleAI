@@ -5,12 +5,22 @@ using DnaCore;
 using System.Collections.Generic;
 
 using Tac.Agent;
+using UnityEF;
 
 namespace Tac.Person
 { 
 	public partial class Person : Agent.Agent, ICell
 	{
 		public Cell cell { get { return item; } }
+
+		public override void InitData()
+		{
+			base.InitData();
+			Stats = new Dictionary<string, float>();
+			StatTypes = new Dictionary<string, StatType>();
+			Skills = new Dictionary<string, float>();
+			Places = new LDictionary<string, AgentPoint>();
+		}
 
 
 		#region  Stats & Skills
@@ -23,16 +33,16 @@ namespace Tac.Person
 		/// <summary>
 		/// Статы (характеристики)
 		/// </summary>
-		public Dictionary<string, float> Stats = new Dictionary<string, float>();
+		public Dictionary<string, float> Stats;
 		/// <summary>
 		/// Типы важности для характеристик
 		/// </summary>
-		public Dictionary<string, StatType> StatTypes = new Dictionary<string, StatType>();
+		public Dictionary<string, StatType> StatTypes;
 
 		/// <summary>
 		/// Скилы (умения)
 		/// </summary>
-		public Dictionary<string, float> Skills = new Dictionary<string, float>();
+		public Dictionary<string, float> Skills;
 
 
 		/// <summary>
@@ -141,7 +151,7 @@ namespace Tac.Person
 		/// <summary>
 		/// Места интереса
 		/// </summary>
-		public Dictionary<string, AgentPoint> Places = new Dictionary<string, AgentPoint>();
+		public LDictionary<string, AgentPoint> Places;
 
 		/// <summary>
 		/// Установить место

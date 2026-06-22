@@ -28,6 +28,7 @@ Model:
     Properties: 
       Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
       AgentId (no field, Nullable<int>) Shadow FK Index
+      EnterTime (EnterTime, GameTime)
     Navigations: 
       Agent (Agent, Agent) ToPrincipal Agent
     Keys: 
@@ -46,6 +47,7 @@ Model:
       GroupId (GroupId, int) Required
       HideAgent (HideAgent, bool) Required
       Info (Info, string)
+      LDictionary<string, AgentPoint>Id (no field, Nullable<int>) Shadow FK Index
       ModelName (ModelName, string)
       Size (Size, Vector3) Required
       Title (Title, string)
@@ -56,8 +58,10 @@ Model:
       Id PK
     Foreign keys: 
       AgentPoint {'AgentsId'} -> LQueue<AgentInPoint> {'Id'} ToPrincipal: Agents ClientSetNull
+      AgentPoint {'LDictionary<string, AgentPoint>Id'} -> LDictionary<string, AgentPoint> {'Id'} ToDependent: Values ClientSetNull
     Indexes: 
       AgentsId 
+      LDictionary<string, AgentPoint>Id 
   EntityType: DayNight
     Properties: 
       Id (no field, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
@@ -77,6 +81,13 @@ Model:
   EntityType: Person Base: Agent
     Properties: 
       Gender (Gender, GenderType) Required
+      PlacesId (no field, Nullable<int>) Shadow FK Index
+    Navigations: 
+      Places (Places, LDictionary<string, AgentPoint>) ToPrincipal LDictionary<string, AgentPoint>
+    Foreign keys: 
+      Person {'PlacesId'} -> LDictionary<string, AgentPoint> {'Id'} ToPrincipal: Places ClientSetNull
+    Indexes: 
+      PlacesId 
   EntityType: Business Base: AgentPoint
   EntityType: Job
     Properties: 
@@ -114,6 +125,14 @@ Model:
     Indexes: 
       PlayerJobId 
       RobotJobId 
+  EntityType: LDictionary<string, AgentPoint>
+    Properties: 
+      Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+    Navigations: 
+      Items (List<LKeyValue<string, AgentPoint>>) Collection ToDependent LKeyValue<string, AgentPoint>
+      Values (no field, IList<AgentPoint>) Collection ToDependent AgentPoint
+    Keys: 
+      Id PK
   EntityType: LItem<Agent>
     Properties: 
       Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
@@ -155,6 +174,21 @@ Model:
       LItem<LVector3> {'LListId'} -> LList<LVector3> {'Id'} ToDependent: Items ClientSetNull
     Indexes: 
       LListId 
+  EntityType: LKeyValue<string, AgentPoint>
+    Properties: 
+      Id (string) Required PK AfterSave:Throw
+      LDictionaryId (no field, Nullable<int>) Shadow FK Index
+      ValueId (no field, Nullable<int>) Shadow FK Index
+    Navigations: 
+      Value (AgentPoint) ToPrincipal AgentPoint
+    Keys: 
+      Id PK
+    Foreign keys: 
+      LKeyValue<string, AgentPoint> {'LDictionaryId'} -> LDictionary<string, AgentPoint> {'Id'} ToDependent: Items ClientSetNull
+      LKeyValue<string, AgentPoint> {'ValueId'} -> AgentPoint {'Id'} ToPrincipal: Value ClientSetNull
+    Indexes: 
+      LDictionaryId 
+      ValueId 
   EntityType: LList<Agent>
     Properties: 
       Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd

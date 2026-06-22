@@ -231776,7 +231776,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tac.Society.RobotJob
   GroupId: -1
   ModelName: 
-  AgentPath: []
 --- !u!114 &4011879485492785469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231791,7 +231790,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tac.Society.PlayerJob
   GroupId: -1
   ModelName: 
-  AgentPath: []
 --- !u!64 &4018235344824868264
 MeshCollider:
   m_ObjectHideFlags: 0

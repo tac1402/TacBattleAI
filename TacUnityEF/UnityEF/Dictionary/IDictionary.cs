@@ -3,6 +3,7 @@
 
 
 using DnaCore;
+using System;
 using System.Collections.Generic;
 
 namespace UnityEF
@@ -16,6 +17,8 @@ namespace UnityEF
 		List<V> GetAll();
 		int Count { get; }
 		IEnumerable<K> Keys { get; }
+
+		IEnumerable<KeyValuePair<K, V>> Where(Func<KeyValuePair<K, V>, bool> predicate);
 
 		#region default
 		System.Collections.Generic.IList<V> Values => GetAll();

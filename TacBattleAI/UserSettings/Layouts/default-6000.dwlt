@@ -690,11 +690,12 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: []
+      m_SelectedIDs:
+      - m_Data: 60710
       m_LastClickedID:
-        m_Data: 0
+        m_Data: 60710
       m_ExpandedIDs:
-      - m_Data: -1430
+      - m_Data: -1310
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1406,7 +1407,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_TacLibrary/TacStandart/Code
+    - Assets/_RotarkCode/_GameView/World
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1416,59 +1417,58 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_TacLibrary/TacStandart/Code
+  - Assets/_RotarkCode/_GameView/World
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 480}
+    scrollPos: {x: 0, y: 60}
     m_SelectedIDs:
-    - m_Data: 65312
+    - m_Data: 74196
     m_LastClickedID:
-      m_Data: 65312
+      m_Data: 74196
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 65076
-    - m_Data: 65078
-    - m_Data: 65080
-    - m_Data: 65082
-    - m_Data: 65084
-    - m_Data: 65086
-    - m_Data: 65088
-    - m_Data: 65090
-    - m_Data: 65092
-    - m_Data: 65094
-    - m_Data: 65096
-    - m_Data: 65098
-    - m_Data: 65100
-    - m_Data: 65102
-    - m_Data: 65104
-    - m_Data: 65106
-    - m_Data: 65108
-    - m_Data: 65110
-    - m_Data: 65112
-    - m_Data: 65114
-    - m_Data: 65116
-    - m_Data: 65118
-    - m_Data: 65120
-    - m_Data: 65122
-    - m_Data: 65124
-    - m_Data: 65126
-    - m_Data: 65128
-    - m_Data: 65130
-    - m_Data: 65132
-    - m_Data: 65134
-    - m_Data: 65136
-    - m_Data: 65138
-    - m_Data: 65140
-    - m_Data: 65142
-    - m_Data: 65144
-    - m_Data: 65146
-    - m_Data: 65148
-    - m_Data: 65150
-    - m_Data: 65154
+    - m_Data: 74010
+    - m_Data: 74012
+    - m_Data: 74014
+    - m_Data: 74016
+    - m_Data: 74018
+    - m_Data: 74020
+    - m_Data: 74022
+    - m_Data: 74024
+    - m_Data: 74026
+    - m_Data: 74028
+    - m_Data: 74030
+    - m_Data: 74032
+    - m_Data: 74034
+    - m_Data: 74036
+    - m_Data: 74038
+    - m_Data: 74040
+    - m_Data: 74042
+    - m_Data: 74044
+    - m_Data: 74048
+    - m_Data: 74052
+    - m_Data: 74054
+    - m_Data: 74056
+    - m_Data: 74058
+    - m_Data: 74060
+    - m_Data: 74062
+    - m_Data: 74064
+    - m_Data: 74068
+    - m_Data: 74070
+    - m_Data: 74072
+    - m_Data: 74074
+    - m_Data: 74076
+    - m_Data: 74078
+    - m_Data: 74080
+    - m_Data: 74082
+    - m_Data: 74084
+    - m_Data: 74086
+    - m_Data: 74190
+    - m_Data: 74226
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1502,46 +1502,45 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 65076
-    - m_Data: 65078
-    - m_Data: 65080
-    - m_Data: 65082
-    - m_Data: 65084
-    - m_Data: 65086
-    - m_Data: 65088
-    - m_Data: 65090
-    - m_Data: 65092
-    - m_Data: 65094
-    - m_Data: 65096
-    - m_Data: 65098
-    - m_Data: 65100
-    - m_Data: 65102
-    - m_Data: 65104
-    - m_Data: 65106
-    - m_Data: 65108
-    - m_Data: 65110
-    - m_Data: 65112
-    - m_Data: 65114
-    - m_Data: 65116
-    - m_Data: 65118
-    - m_Data: 65120
-    - m_Data: 65122
-    - m_Data: 65124
-    - m_Data: 65126
-    - m_Data: 65128
-    - m_Data: 65130
-    - m_Data: 65132
-    - m_Data: 65134
-    - m_Data: 65136
-    - m_Data: 65138
-    - m_Data: 65140
-    - m_Data: 65142
-    - m_Data: 65144
-    - m_Data: 65146
-    - m_Data: 65148
-    - m_Data: 65150
-    - m_Data: 65152
-    - m_Data: 65154
+    - m_Data: 74010
+    - m_Data: 74012
+    - m_Data: 74014
+    - m_Data: 74016
+    - m_Data: 74018
+    - m_Data: 74020
+    - m_Data: 74022
+    - m_Data: 74024
+    - m_Data: 74026
+    - m_Data: 74028
+    - m_Data: 74030
+    - m_Data: 74032
+    - m_Data: 74034
+    - m_Data: 74036
+    - m_Data: 74038
+    - m_Data: 74040
+    - m_Data: 74042
+    - m_Data: 74044
+    - m_Data: 74046
+    - m_Data: 74048
+    - m_Data: 74050
+    - m_Data: 74052
+    - m_Data: 74054
+    - m_Data: 74056
+    - m_Data: 74058
+    - m_Data: 74060
+    - m_Data: 74062
+    - m_Data: 74064
+    - m_Data: 74066
+    - m_Data: 74068
+    - m_Data: 74070
+    - m_Data: 74072
+    - m_Data: 74074
+    - m_Data: 74076
+    - m_Data: 74078
+    - m_Data: 74080
+    - m_Data: 74082
+    - m_Data: 74084
+    - m_Data: 74086
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1568,9 +1567,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: []
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs:
+    - m_Data: 60710
+    m_LastClickedInstanceID: 60710
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs:
     - m_Data: 54580
     - m_Data: 104396
@@ -1607,8 +1607,8 @@ MonoBehaviour:
     - m_Data: 73718
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Main
+      m_OriginalName: Main
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1616,10 +1616,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 0
+        m_Data: 918106
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 10}

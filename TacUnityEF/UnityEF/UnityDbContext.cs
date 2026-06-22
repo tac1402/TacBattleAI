@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,8 +18,10 @@ namespace UnityEF
 {
     public class UnityDbContext : DbContext
 	{
+		private readonly StreamWriter logWriter = new StreamWriter(@"EF_log.txt", append: true) { AutoFlush = true };
 
-		private HashSet<Type> customPrimitives = new HashSet<Type>
+
+		private static HashSet<Type> customPrimitives = new HashSet<Type>
 		{
 			typeof(UnityEngine.Vector3),
 			typeof(UnityEngine.Vector2),
@@ -30,10 +33,32 @@ namespace UnityEF
 			typeof(LGameTime)
 		};
 
+		private DebugType debugType;
+
+		public UnityDbContext()
+		{ 
+			debugType = DebugType.None;
+		}
+
+		public UnityDbContext(DebugType argDebugType)
+		{
+			debugType = argDebugType;
+		}
+
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			// Указываем путь к файлу SQLite
-			optionsBuilder.UseSqlite("Data Source=myapp.db;");
+			optionsBuilder.UseSqlite("Data Source=myapp.db;Foreign Keys=False;");
+
+			switch (debugType)
+			{ 
+				case DebugType.InfoSql:
+					optionsBuilder.EnableSensitiveDataLogging().LogTo(logWriter.WriteLine, LogLevel.Information);
+					break;
+				case DebugType.Trace:
+					optionsBuilder.EnableSensitiveDataLogging().LogTo(logWriter.WriteLine, LogLevel.Trace);
+					break;
+			}
 		}
 
 		private readonly List<Type> allTypes = new List<Type>();
@@ -175,6 +200,9 @@ namespace UnityEF
 							.HasForeignKey("ValueId");
 					}
 
+					entityBuilder.Property("Id").ValueGeneratedOnAdd();
+
+					entityBuilder.HasIndex("LDictionaryId", "Key").IsUnique();
 				}
 				else if (isLList)
 				{
@@ -270,7 +298,7 @@ namespace UnityEF
 			}
 		}
 
-		private bool IsCustomPrimitive(Type type)
+		public static bool IsCustomPrimitive(Type type)
 		{
 			// Обработка nullable-типов (int?, DateTime? и т.д.)
 			type = Nullable.GetUnderlyingType(type) ?? type;
@@ -298,11 +326,14 @@ namespace UnityEF
 
 		public void DebugModel()
 		{
-			// Используем стандартный механизм отладки EF Core для получения "длинного" представления
-			string modelDebugView = Model.ToDebugString(MetadataDebugStringOptions.ShortDefault);
+			if (debugType == DebugType.OnlyShema)
+			{
+				// Используем стандартный механизм отладки EF Core для получения "длинного" представления
+				string modelDebugView = Model.ToDebugString(MetadataDebugStringOptions.ShortDefault);
 
-			// Можно сохранить это в файл или просто вывести в консоль для быстрого анализа
-			File.WriteAllText("model_debug.txt", modelDebugView);
+				// Можно сохранить это в файл или просто вывести в консоль для быстрого анализа
+				File.WriteAllText("model_debug.txt", modelDebugView);
+			}
 		}
 
 

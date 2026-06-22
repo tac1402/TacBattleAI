@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Reflection;
-
-using UnityEngine;
 using Tac;
+using UnityEF;
+using UnityEngine;
 
 namespace DnaCore
 {
@@ -75,14 +76,10 @@ namespace DnaCore
 
 					// Проверяем, является ли поле коллекцией элементов, реализующих IItemDb
 					bool isCollectionOfEntities = false;
-					var enumeratorInterface = fieldType.GetInterface(typeof(IEnumerator<>).FullName);
+					var enumeratorInterface = fieldType.GetInterface(typeof(UnityEF.ICollection).FullName);
 					if (enumeratorInterface != null)
 					{
-						var elementType = enumeratorInterface.GetGenericArguments()[0];
-						if (typeof(IItemDb).IsAssignableFrom(elementType))
-						{
-							isCollectionOfEntities = true;
-						}
+						isCollectionOfEntities = true;
 					}
 
 
@@ -95,7 +92,7 @@ namespace DnaCore
 					// Коллекция сущностей GDictionary, LList, LQueue, LDictionary
 					else if (isCollectionOfEntities == true)
 					{
-						var collection = (System.Collections.IEnumerable)fieldValue;
+						var collection = GetCollection(fieldValue);
 						foreach (var item in collection)
 						{
 							if (item != null)
@@ -111,6 +108,51 @@ namespace DnaCore
 				saving.Remove(obj);
 			}
 		}
+
+
+		public IEnumerable<object> GetCollection(object storage)
+		{
+			if (storage == null)
+				throw new ArgumentNullException(nameof(storage));
+
+			Type storageType = storage.GetType();
+
+			// Получаем все обобщённые аргументы типа
+			Type[] genericArgs = storageType.GetGenericArguments();
+
+			// Проверяем, есть ли среди них примитив
+			bool hasPrimitiveArg = false;
+			foreach (Type arg in genericArgs)
+			{
+				if (UnityDbContext.IsCustomPrimitive(arg))
+				{
+					hasPrimitiveArg = true;
+					break;
+				}
+			}
+
+			if (hasPrimitiveArg == true)
+			{
+				yield break; 
+			}
+
+			// Ищем публичный метод GetEnumerator без параметров
+			var method = storageType.GetMethod("GetEnumerator", Type.EmptyTypes);
+			if (method != null)
+			{
+				// Вызываем метод и получаем IEnumerator (он может быть обобщённым, но мы используем IEnumerator)
+				var enumerator = method.Invoke(storage, null) as System.Collections.IEnumerator;
+				if (enumerator != null)
+				{
+					// Перебираем все элементы
+					while (enumerator.MoveNext())
+					{
+						yield return enumerator.Current;
+					}
+				}
+			}
+		}
+
 
 		// Удалить
 		public void Delete()

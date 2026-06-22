@@ -14,7 +14,7 @@ namespace UnityEF
 	/// <summary>
 	/// Локальный список в БД
 	/// </summary>
-	public class LList<T> : ItemDb where T : class, IItemDb
+	public class LList<T> : ItemDb, ICollection where T : class, IItemDb
 	{
 		private readonly IList<T> storage;
 

@@ -14,7 +14,7 @@ namespace UnityEF
 	/// <summary>
 	/// Локальная очередь
 	/// </summary>
-	public class LQueue<T> : ItemDb where T : class, IItemDb, IId
+	public class LQueue<T> : ItemDb, ICollection where T : class, IItemDb, IId
 	{
 		private readonly IQueue<T> storage;
 

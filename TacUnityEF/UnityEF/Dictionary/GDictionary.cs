@@ -15,7 +15,7 @@ namespace UnityEF
 	/// <summary>
 	/// Глобальный словарь в БД
 	/// </summary>
-	public class GDictionary<K, V> where V : class, IItemDb
+	public class GDictionary<K, V> : ICollection where V : class, IItemDb
 	{
 		private readonly IDictionary<K, V> storage;
 
@@ -51,6 +51,7 @@ namespace UnityEF
 		public int Count => storage.Count;
 		public IEnumerable<K> Keys => storage.Keys;
 		public IEnumerator<V> GetEnumerator() => storage.GetEnumerator();
+		public IEnumerable<KeyValuePair<K, V>> Where(Func<KeyValuePair<K, V>, bool> predicate) => storage.Where(predicate);
 		#endregion
 	}
 
@@ -87,7 +88,7 @@ namespace UnityEF
 			{
 				Db.Set<V>().Add(item);
 			}
-			//Db.SaveChanges();
+			Db.SaveChanges();
 		}
 
 		public bool Remove(K key)
@@ -104,6 +105,13 @@ namespace UnityEF
 		public List<V> GetAll() => Db.Set<V>().ToList();
 		public IEnumerable<K> Keys => Db.Set<V>().Select(item => EF.Property<K>(item, "Id")).ToList();
 		public int Count => Db.Set<V>().Count();
+
+		public IEnumerable<KeyValuePair<K, V>> Where(Func<KeyValuePair<K, V>, bool> predicate)
+		{
+			// Проецируем каждый LKeyValue в KeyValuePair и фильтруем стандартным LINQ
+			return Db.Set<V>().Select(item => new KeyValuePair<K, V>(EF.Property<K>(item, "Id"), item))
+						.Where(predicate);
+		}
 	}
 
 

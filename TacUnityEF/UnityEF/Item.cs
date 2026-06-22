@@ -30,5 +30,12 @@ namespace Tac
 
 		public ItemDb item { get { return itemDb; } }
 
+
+		private void Awake()
+		{
+			InitData();
+		}
+
+		public virtual void InitData() { }
 	}
 }

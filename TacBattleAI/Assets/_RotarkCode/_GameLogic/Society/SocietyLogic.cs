@@ -32,10 +32,13 @@ namespace Tac.Society
 		private GameTime oldGameTime;
 
 
-		public void InitLogic()
+		public override void InitData()
 		{
 			People = new GDictionary<int, Person.Person>();
+		}
 
+		public void InitLogic()
+		{
 			if (PeoplePanel != null)
 			{
 				TableUI tableUI = PeoplePanel.GetComponentInChildren<TableUI>();
