@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Tac;
 
@@ -15,7 +16,7 @@ namespace UnityEF
 	/// <summary>
 	/// Глобальный словарь в БД
 	/// </summary>
-	public class GDictionary<K, V> : ICollection where V : class, IItemDb
+	public class GDictionary<K, V> : ICollection, IEnumerable<KeyValuePair<K, V>> where V : class, IItemDb
 	{
 		private readonly IDictionary<K, V> storage;
 
@@ -47,10 +48,13 @@ namespace UnityEF
 		public void Add(K key, V item) => storage.Add(key, item);
 		public void Remove(K key) => storage.Remove(key);
 		public List<V> GetAll() => storage.GetAll();
+		[NotMapped] 
 		public System.Collections.Generic.IList<V> Values => storage.Values;
 		public int Count => storage.Count;
 		public IEnumerable<K> Keys => storage.Keys;
-		public IEnumerator<V> GetEnumerator() => storage.GetEnumerator();
+		public IEnumerator<KeyValuePair<K, V>> GetEnumerator() => storage.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
 		public IEnumerable<KeyValuePair<K, V>> Where(Func<KeyValuePair<K, V>, bool> predicate) => storage.Where(predicate);
 		#endregion
 	}
@@ -88,7 +92,7 @@ namespace UnityEF
 			{
 				Db.Set<V>().Add(item);
 			}
-			Db.SaveChanges();
+			//Db.SaveChanges();
 		}
 
 		public bool Remove(K key)
@@ -112,6 +116,14 @@ namespace UnityEF
 			return Db.Set<V>().Select(item => new KeyValuePair<K, V>(EF.Property<K>(item, "Id"), item))
 						.Where(predicate);
 		}
+
+		public IEnumerator<KeyValuePair<K, V>> GetEnumerator()
+			=> Db.Set<V>()
+				 .Select(item => new KeyValuePair<K, V>(EF.Property<K>(item, "Id"), item))
+				 .GetEnumerator();
+
+		// Явная реализация необобщённого IEnumerable
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 
 

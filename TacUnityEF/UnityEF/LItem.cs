@@ -8,7 +8,7 @@ using System.Text;
 
 namespace UnityEF
 {
-	public class LItem<T> : ItemDb where T : class, IItemDb
+	public class LItem<T> : ItemDb //where T : class, IItemDb
 	{
 		public T Item;
 
@@ -17,6 +17,16 @@ namespace UnityEF
 		public LItem(T argItem)
 		{
 			Item = argItem;
+		}
+
+		public static implicit operator LItem<T>(T value)
+		{
+			return new LItem<T>(value);
+		}
+
+		public static implicit operator T(LItem<T> item)
+		{
+			return item.Item;
 		}
 	}
 }

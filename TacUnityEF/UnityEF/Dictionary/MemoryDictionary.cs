@@ -3,6 +3,7 @@
 
 using DnaCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,5 +35,7 @@ namespace UnityEF
 			return dictionary.Where(predicate);
 		}
 
+		public IEnumerator<KeyValuePair<K, V>> GetEnumerator() => dictionary.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 }

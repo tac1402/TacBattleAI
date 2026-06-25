@@ -33,6 +33,8 @@ namespace DnaCore
 		/// </summary>
 		public K Id { get; set; }
 
+		//public string DebugInfo { get; set; }
+
 		public static DbContext db;
 
 		private static HashSet<object> saving = new HashSet<object>(); // для избежания циклов
@@ -92,6 +94,7 @@ namespace DnaCore
 					// Коллекция сущностей GDictionary, LList, LQueue, LDictionary
 					else if (isCollectionOfEntities == true)
 					{
+						//SetDiscriminator(obj, field, fieldValue);
 						var collection = GetCollection(fieldValue);
 						foreach (var item in collection)
 						{
@@ -109,6 +112,14 @@ namespace DnaCore
 			}
 		}
 
+		/*private void SetDiscriminator(object owner, FieldInfo field, object fieldValue)
+		{
+			if (fieldValue is ItemDb container && container.DebugInfo == null)
+			{
+				container.DebugInfo = $"{owner.GetType().Name}.{field.Name}";
+			}
+		}*/
+
 
 		public IEnumerable<object> GetCollection(object storage)
 		{
@@ -124,7 +135,7 @@ namespace DnaCore
 			bool hasPrimitiveArg = false;
 			foreach (Type arg in genericArgs)
 			{
-				if (UnityDbContext.IsCustomPrimitive(arg))
+				if (UnityDbContext.IsSimpleType(arg))
 				{
 					hasPrimitiveArg = true;
 					break;
@@ -163,7 +174,7 @@ namespace DnaCore
 				db.Attach(this);
 			}
 			db.Remove(this);
-			db.SaveChanges();
+			//db.SaveChanges();
 		}
 
 		// Определяет, является ли объект новым (ещё не сохранённым в БД)

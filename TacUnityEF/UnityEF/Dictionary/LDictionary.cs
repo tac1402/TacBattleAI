@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
 using Tac;
 
 namespace UnityEF
@@ -15,7 +14,7 @@ namespace UnityEF
 	/// <summary>
 	/// Локальный словарь в БД
 	/// </summary>
-	public class LDictionary<K, V> : ItemDb, ICollection where V : class, IItemDb
+	public class LDictionary<K, V> : ItemDb, ICollection, IEnumerable<KeyValuePair<K, V>> where V : class, IItemDb
 	{
 		private readonly IDictionary<K, V> storage;
 
@@ -49,10 +48,13 @@ namespace UnityEF
 		public void Add(K key, V item) => storage.Add(key, item);
 		public void Remove(K key) => storage.Remove(key);
 		public List<V> GetAll() => storage.GetAll();
+		[NotMapped]
 		public System.Collections.Generic.IList<V> Values => storage.Values;
 		public int Count => storage.Count;
 		public IEnumerable<K> Keys => storage.Keys;
-		public IEnumerator<V> GetEnumerator() => storage.GetEnumerator();
+		public IEnumerator<KeyValuePair<K, V>> GetEnumerator() => storage.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
 		public IEnumerable<KeyValuePair<K, V>> Where(Func<KeyValuePair<K, V>, bool> predicate) => storage.Where(predicate);
 		#endregion
 	}
@@ -62,10 +64,9 @@ namespace UnityEF
 	/// </summary>
 	public class LKeyValue<K, V> : ItemDb where V : class, IItemDb
 	{
-		public V Value { get; set; }
-
-		public K Key { get; set; }
-		public int LDictionaryId { get; set; }
+		public V Value;
+		public K Key;
+		public int LDictionaryId;
 	}
 
 	internal class DbLDictionary<K, V> : IDictionary<K, V> where V : class, IItemDb
@@ -164,7 +165,7 @@ namespace UnityEF
 
 		public int Count => items.Count + nullKeys.Count;
 		public IEnumerable<K> Keys => items.Select(kvp => kvp.Key);
-		public IEnumerable<V> Values => items.Select(kvp => kvp.Value);
+		//public IEnumerable<V> Values => items.Select(kvp => kvp.Value);
 		public List<V> GetAll() => items.Select(kvp => kvp.Value).ToList();
 
 		public IEnumerable<KeyValuePair<K, V>> Where(Func<KeyValuePair<K, V>, bool> predicate)
@@ -175,6 +176,10 @@ namespace UnityEF
 			//var fromNulls = nullKeys.Select(key => new KeyValuePair<K, V>(key, null));
 			//return fromItems.Concat(fromNulls).Where(predicate);
 		}
+
+		public IEnumerator<KeyValuePair<K, V>> GetEnumerator() => items.Select(kvp => new KeyValuePair<K, V>(kvp.Key, kvp.Value)).GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
 	}
 
 }

@@ -147,13 +147,37 @@ namespace UnityEF
 					}
 					else if (genericDef == typeof(LDictionary<,>))
 					{
-						var argName = $"{type.GetGenericArguments()[0].Name}_{type.GetGenericArguments()[1].Name}";
-						entityBuilder.ToTable($"LDictionary_{argName}");
+						var keyArg = type.GetGenericArguments()[0];
+						var valueArg = type.GetGenericArguments()[1];
+
+						// Если значение — LItem<T>, извлекаем T
+						string valueName;
+						if (valueArg.IsGenericType && valueArg.GetGenericTypeDefinition() == typeof(LItem<>))
+						{
+							var inner = valueArg.GetGenericArguments()[0];
+							valueName = $"LItem_{inner.Name}";
+						}
+						else
+						{
+							valueName = valueArg.Name;
+						}
+						entityBuilder.ToTable($"LDictionary_{keyArg.Name}_{valueName}");
 					}
 					else if (genericDef == typeof(LKeyValue<,>))
 					{
-						var argName = $"{type.GetGenericArguments()[0].Name}_{type.GetGenericArguments()[1].Name}";
-						entityBuilder.ToTable($"LKeyValue_{argName}");
+						var keyArg = type.GetGenericArguments()[0];
+						var valueArg = type.GetGenericArguments()[1];
+						string valueName;
+						if (valueArg.IsGenericType && valueArg.GetGenericTypeDefinition() == typeof(LItem<>))
+						{
+							var inner = valueArg.GetGenericArguments()[0];
+							valueName = $"LItem_{inner.Name}";
+						}
+						else
+						{
+							valueName = valueArg.Name;
+						}
+						entityBuilder.ToTable($"LKeyValue_{keyArg.Name}_{valueName}");
 					}
 				}
 				else
@@ -176,6 +200,8 @@ namespace UnityEF
 
 				if (isLDictionary)
 				{
+					entityBuilder.Ignore("Values");
+
 					entityBuilder.HasMany("Items")
 						.WithOne()
 						.HasForeignKey("LDictionaryId");
@@ -185,12 +211,37 @@ namespace UnityEF
 					var keyType = type.GetGenericArguments()[0];
 					var valueType = type.GetGenericArguments()[1];
 
-					// Если ValueType – простой (включая кастомные), храним как строку
-					if (IsSimpleType(valueType))
+					bool isValueLItem = valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(LItem<>);
+
+					if (isValueLItem)
 					{
-						entityBuilder.Property(valueType, "Value")
-							.HasConversion(GetValueConverter(valueType))
-							.HasField("Value"); // предполагаем, что поле называется _value
+						var innerType = valueType.GetGenericArguments()[0]; // T в LItem<T>
+
+						if (IsSimpleType(innerType))
+						{
+							// Создаём конвертер LItem<T> -> T через рефлексию
+							var converterType = typeof(LItemConverter<>).MakeGenericType(innerType);
+							var converter = (ValueConverter)Activator.CreateInstance(converterType);
+
+							entityBuilder.Property(valueType, "Value")
+										 .HasConversion(converter)
+										 .HasField("Value");
+						}
+						else
+						{
+							// Если T — сложная сущность, то оставляем связь с LItem<T>
+							entityBuilder.HasOne("Value")
+										 .WithMany()
+										 .HasForeignKey("ValueId");
+						}
+					}
+					else if (IsSimpleType(valueType))
+					{
+						var prop = entityBuilder.Property(valueType, "Value").HasField("Value");
+						if (IsCustomPrimitive(valueType))
+						{
+							prop.HasConversion(GetValueConverter(valueType));
+						}
 					}
 					else
 					{
@@ -221,10 +272,11 @@ namespace UnityEF
 					var itemType = type.GetGenericArguments()[0]; // T в LItem<T>
 					if (IsSimpleType(itemType))
 					{
-						// T – простой (включая Vector3 и аналоги), храним Item как столбец с конвертером
-						entityBuilder.Property(itemType, "Item")
-							.HasConversion(GetValueConverter(itemType))
-							.HasField("Item");
+						var prop = entityBuilder.Property(itemType, "Item").HasField("Item");
+						if (IsCustomPrimitive(itemType))
+						{
+							prop.HasConversion(GetValueConverter(itemType));
+						}
 					}
 					else
 					{
@@ -305,7 +357,7 @@ namespace UnityEF
 			return customPrimitives.Contains(type);
 		}
 
-		private bool IsSimpleType(Type type)
+		public static bool IsSimpleType(Type type)
 		{
 			// Обработка nullable-типов (int?, DateTime? и т.д.)
 			type = Nullable.GetUnderlyingType(type) ?? type;
@@ -426,5 +478,15 @@ namespace UnityEF
 
 		#endregion
 
+	}
+
+
+	public class LItemConverter<T> : ValueConverter<LItem<T>, T>
+	{
+		public LItemConverter(): base(
+				item => item.Item,                 // LItem<T> → T
+				value => new LItem<T>(value)       // T → LItem<T>
+			)
+		{ }
 	}
 }
