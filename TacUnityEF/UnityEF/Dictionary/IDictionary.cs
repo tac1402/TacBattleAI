@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace UnityEF
 {
-	internal interface IDictionary<K, V> : IEnumerable<KeyValuePair<K, V>> where V : class, IItemDb
+	internal interface IDictionary<K, V> : IEnumerable<KeyValuePair<K, V>>
 	{
 		V this[K key] { get; set; }
 		bool TryGetValue(K key, out V value);
@@ -22,7 +22,6 @@ namespace UnityEF
 
 		#region default
 		System.Collections.Generic.IList<V> Values => GetAll();
-		//IEnumerator<V> GetEnumerator() => GetAll().GetEnumerator();
 		bool ContainsKey(K key) => TryGetValue(key, out _);
 		#endregion
 	}

@@ -8,8 +8,14 @@ using System.Collections.Generic;
 
 namespace UnityEF
 {
-	internal interface IQueue<T> : IQueue_<T> where T : class, IItemDb
+	internal interface IQueue_<T>
 	{
-		T Remove(int id);
+		void Enqueue(T item);
+		T Peek();
+		T Dequeue();
+		void Clear();
+		int Count { get; }
+		List<T> ToList();
+		IEnumerator<T> GetEnumerator();
 	}
 }

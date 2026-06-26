@@ -95,4 +95,5 @@ namespace UnityEF
 		public void Enqueue(T item) => queue.Enqueue(item);
 		public T Peek() => queue.Peek();
 	}
+
 }

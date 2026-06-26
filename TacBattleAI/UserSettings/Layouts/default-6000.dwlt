@@ -192,8 +192,8 @@ MonoBehaviour:
     y: 0
     width: 261
     height: 675
-  m_MinSize: {x: 201, y: 226}
-  m_MaxSize: {x: 4001, y: 4026}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -218,8 +218,8 @@ MonoBehaviour:
     y: 0
     width: 1271
     height: 675
-  m_MinSize: {x: 202, y: 226}
-  m_MaxSize: {x: 4002, y: 4026}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -273,8 +273,8 @@ MonoBehaviour:
     y: 0
     width: 388
     height: 933
-  m_MinSize: {x: 276, y: 76}
-  m_MaxSize: {x: 4001, y: 4026}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -691,11 +691,11 @@ MonoBehaviour:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs:
-      - m_Data: 60710
+      - m_Data: 35932
       m_LastClickedID:
-        m_Data: 60710
+        m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -1310
+      - m_Data: -1430
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1426,21 +1426,11 @@ MonoBehaviour:
   m_FolderTreeState:
     scrollPos: {x: 0, y: 60}
     m_SelectedIDs:
-    - m_Data: 74196
+    - m_Data: 74216
     m_LastClickedID:
-      m_Data: 74196
+      m_Data: 74216
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 74010
-    - m_Data: 74012
-    - m_Data: 74014
-    - m_Data: 74016
-    - m_Data: 74018
-    - m_Data: 74020
-    - m_Data: 74022
-    - m_Data: 74024
-    - m_Data: 74026
-    - m_Data: 74028
     - m_Data: 74030
     - m_Data: 74032
     - m_Data: 74034
@@ -1449,7 +1439,9 @@ MonoBehaviour:
     - m_Data: 74040
     - m_Data: 74042
     - m_Data: 74044
+    - m_Data: 74046
     - m_Data: 74048
+    - m_Data: 74050
     - m_Data: 74052
     - m_Data: 74054
     - m_Data: 74056
@@ -1457,6 +1449,7 @@ MonoBehaviour:
     - m_Data: 74060
     - m_Data: 74062
     - m_Data: 74064
+    - m_Data: 74066
     - m_Data: 74068
     - m_Data: 74070
     - m_Data: 74072
@@ -1467,8 +1460,15 @@ MonoBehaviour:
     - m_Data: 74082
     - m_Data: 74084
     - m_Data: 74086
-    - m_Data: 74190
-    - m_Data: 74226
+    - m_Data: 74088
+    - m_Data: 74090
+    - m_Data: 74092
+    - m_Data: 74094
+    - m_Data: 74096
+    - m_Data: 74098
+    - m_Data: 74100
+    - m_Data: 74102
+    - m_Data: 74104
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1502,16 +1502,6 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 74010
-    - m_Data: 74012
-    - m_Data: 74014
-    - m_Data: 74016
-    - m_Data: 74018
-    - m_Data: 74020
-    - m_Data: 74022
-    - m_Data: 74024
-    - m_Data: 74026
-    - m_Data: 74028
     - m_Data: 74030
     - m_Data: 74032
     - m_Data: 74034
@@ -1541,6 +1531,15 @@ MonoBehaviour:
     - m_Data: 74082
     - m_Data: 74084
     - m_Data: 74086
+    - m_Data: 74088
+    - m_Data: 74090
+    - m_Data: 74092
+    - m_Data: 74094
+    - m_Data: 74096
+    - m_Data: 74098
+    - m_Data: 74100
+    - m_Data: 74102
+    - m_Data: 74104
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1568,9 +1567,9 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: 60710
-    m_LastClickedInstanceID: 60710
-    m_HadKeyboardFocusLastEvent: 0
+    - m_Data: 35932
+    m_LastClickedInstanceID: 35932
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 54580
     - m_Data: 104396
@@ -1607,8 +1606,8 @@ MonoBehaviour:
     - m_Data: 73718
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Main
-      m_OriginalName: Main
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1616,10 +1615,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 918106
+        m_Data: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 10}

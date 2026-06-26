@@ -1,15 +1,20 @@
+using DnaCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Tac.Agent;
+using UnityEF;
+
 
 namespace Tac.Person
 {
-	public partial class PersonPlan
+	public class PersonPlan : ItemDb
 	{
 		public Person Person;
-		public Queue<string> CurrentPlan;
+		public LQueue_<string> CurrentPlan;
+
+		public PersonPlan() { }
 
 		public PersonPlan(Person argPerson)
 		{
@@ -102,7 +107,7 @@ namespace Tac.Person
 								  .Select(x => x.Key)
 								  .ToList();
 
-			CurrentPlan = new Queue<string>(sortedIds);
+			CurrentPlan = new LQueue_<string>(sortedIds);
 		}
 
 		public AgentPoint GetActual()

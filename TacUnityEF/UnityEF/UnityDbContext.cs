@@ -90,27 +90,31 @@ namespace UnityEF
 			{
 				foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.Instance))
 				{
-					var ft = field.FieldType;
-					if (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(LList<>))
+					Type ft = field.FieldType;
+					if (ft.IsGenericType)
 					{
-						toAdd.Add(ft); // LList<T>
-						var dItemType = typeof(LItem<>).MakeGenericType(ft.GetGenericArguments()[0]);
-						toAdd.Add(dItemType); // LItem<T>
-					}
-					if (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(LQueue<>))
-					{
-						toAdd.Add(ft); // LQueue<T>
-						var dItemType = typeof(LItem<>).MakeGenericType(ft.GetGenericArguments()[0]);
-						toAdd.Add(dItemType); // LItem<T>
-					}
-					if (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(LDictionary<,>))
-					{
-						toAdd.Add(ft); // LDictionary<K,V>
-						var kvType = typeof(LKeyValue<,>).MakeGenericType(
-							ft.GetGenericArguments()[0], // K
-							ft.GetGenericArguments()[1]  // V
-						);
-						toAdd.Add(kvType);
+						Type gt = ft.GetGenericTypeDefinition();
+						if (gt == typeof(LList<>))
+						{
+							toAdd.Add(ft); // LList<T>
+							var dItemType = typeof(LItem<>).MakeGenericType(ft.GetGenericArguments()[0]);
+							toAdd.Add(dItemType); // LItem<T>
+						}
+						if (gt == typeof(LQueue<>) || gt == typeof(LQueue_<>))
+						{
+							toAdd.Add(ft); // LQueue<T>
+							var dItemType = typeof(LItem<>).MakeGenericType(ft.GetGenericArguments()[0]);
+							toAdd.Add(dItemType); // LItem<T>
+						}
+						if (gt == typeof(LDictionary<,>) || gt == typeof(LDictionary_<,>))
+						{
+							toAdd.Add(ft); // LDictionary<K,V>
+							var kvType = typeof(LKeyValue<,>).MakeGenericType(
+								ft.GetGenericArguments()[0], // K
+								ft.GetGenericArguments()[1]  // V
+							);
+							toAdd.Add(kvType);
+						}
 					}
 				}
 			}
@@ -129,23 +133,23 @@ namespace UnityEF
 				// Если тип - закрытый generic DQueue<T> или DItem<T>, задаём красивое имя таблицы
 				if (type.IsGenericType)
 				{
-					var genericDef = type.GetGenericTypeDefinition();
-					if (genericDef == typeof(LList<>))
+					var gt = type.GetGenericTypeDefinition();
+					if (gt == typeof(LList<>))
 					{
 						var argName = type.GetGenericArguments()[0].Name;
 						entityBuilder.ToTable($"LList_{argName}");
 					}
-					else if (genericDef == typeof(LQueue<>))
+					else if (gt == typeof(LQueue<>) || gt == typeof(LQueue_<>))
 					{
 						var argName = type.GetGenericArguments()[0].Name;
 						entityBuilder.ToTable($"LQueue_{argName}");
 					}
-					else if (genericDef == typeof(LItem<>))
+					else if (gt == typeof(LItem<>))
 					{
 						var argName = type.GetGenericArguments()[0].Name;
 						entityBuilder.ToTable($"LItem_{argName}");
 					}
-					else if (genericDef == typeof(LDictionary<,>))
+					else if (gt == typeof(LDictionary<,>) || gt == typeof(LDictionary_<,>))
 					{
 						var keyArg = type.GetGenericArguments()[0];
 						var valueArg = type.GetGenericArguments()[1];
@@ -163,7 +167,7 @@ namespace UnityEF
 						}
 						entityBuilder.ToTable($"LDictionary_{keyArg.Name}_{valueName}");
 					}
-					else if (genericDef == typeof(LKeyValue<,>))
+					else if (gt == typeof(LKeyValue<,>))
 					{
 						var keyArg = type.GetGenericArguments()[0];
 						var valueArg = type.GetGenericArguments()[1];
@@ -194,11 +198,13 @@ namespace UnityEF
 
 				bool isLList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LList<>);
 				bool isLQueue = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LQueue<>);
+				bool isLQueue_ = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LQueue_<>);
 				bool isLItem = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LItem<>);
 				bool isLDictionary = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LDictionary<,>);
+				bool isLDictionary_ = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LDictionary_<,>);
 				bool isLKeyValue = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LKeyValue<,>);
 
-				if (isLDictionary)
+				if (isLDictionary || isLDictionary_)
 				{
 					entityBuilder.Ignore("Values");
 
@@ -211,7 +217,7 @@ namespace UnityEF
 					var keyType = type.GetGenericArguments()[0];
 					var valueType = type.GetGenericArguments()[1];
 
-					bool isValueLItem = valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(LItem<>);
+					/*bool isValueLItem = valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(LItem<>);
 
 					if (isValueLItem)
 					{
@@ -235,7 +241,7 @@ namespace UnityEF
 										 .HasForeignKey("ValueId");
 						}
 					}
-					else if (IsSimpleType(valueType))
+					else*/ if (IsSimpleType(valueType))
 					{
 						var prop = entityBuilder.Property(valueType, "Value").HasField("Value");
 						if (IsCustomPrimitive(valueType))
@@ -259,13 +265,19 @@ namespace UnityEF
 				{
 					entityBuilder.HasMany("Items")
 						.WithOne()
-						.HasForeignKey("LListId"); ;
+						.HasForeignKey("LListId");
 				}
 				else if (isLQueue)
 				{
 					entityBuilder.HasMany("Items")
 						.WithOne()
-						.HasForeignKey("LQueueId"); ;
+						.HasForeignKey("LQueueId");
+				}
+				else if (isLQueue_)
+				{
+					entityBuilder.HasMany("Items")
+						.WithOne()
+						.HasForeignKey("LQueueId");
 				}
 				else if (isLItem)
 				{

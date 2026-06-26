@@ -16,9 +16,9 @@ namespace Tac.Person
 		public override void InitData()
 		{
 			base.InitData();
-			Stats = new Dictionary<string, float>();
-			StatTypes = new Dictionary<string, StatType>();
-			Skills = new Dictionary<string, float>();
+			Stats = new LDictionary_<string, float>();
+			StatTypes = new LDictionary_<string, StatType>();
+			Skills = new LDictionary_<string, float>();
 			Places = new LDictionary<string, AgentPoint>();
 		}
 
@@ -33,16 +33,16 @@ namespace Tac.Person
 		/// <summary>
 		/// Статы (характеристики)
 		/// </summary>
-		public Dictionary<string, float> Stats;
+		public LDictionary_<string, float> Stats;
 		/// <summary>
 		/// Типы важности для характеристик
 		/// </summary>
-		public Dictionary<string, StatType> StatTypes;
+		public LDictionary_<string, StatType> StatTypes;
 
 		/// <summary>
 		/// Скилы (умения)
 		/// </summary>
-		public Dictionary<string, float> Skills;
+		public LDictionary_<string, float> Skills;
 
 
 		/// <summary>

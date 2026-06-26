@@ -8,7 +8,7 @@ using System.Text;
 
 namespace UnityEF
 {
-	public class LItem<T> : ItemDb //where T : class, IItemDb
+	public class LItem<T> : ItemDb
 	{
 		public T Item;
 

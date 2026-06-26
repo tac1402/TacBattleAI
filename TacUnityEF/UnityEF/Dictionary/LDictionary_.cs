@@ -11,14 +11,15 @@ using Tac;
 
 namespace UnityEF
 {
+
 	/// <summary>
 	/// Локальный словарь в БД
 	/// </summary>
-	public class LDictionary<K, V> : ItemDb, ICollection, IEnumerable<KeyValuePair<K, V>> where V : class, IItemDb
+	public class LDictionary_<K, V> : ItemDb, ICollection, IEnumerable<KeyValuePair<K, V>>
 	{
 		private readonly IDictionary<K, V> storage;
 
-		public LDictionary()
+		public LDictionary_()
 		{
 			storage = CreateStorage();
 		}
@@ -27,11 +28,11 @@ namespace UnityEF
 		{
 			if (db == null)
 			{
-				return new MemoryDictionary<K, V>();
+				return new MemoryDictionary_<K, V>();
 			}
 			else
 			{
-				return new DbLDictionary<K, V>(Items);
+				return new DbLDictionary_<K, V>(Items);
 			}
 		}
 
@@ -59,12 +60,12 @@ namespace UnityEF
 		#endregion
 	}
 
-	internal class DbLDictionary<K, V> : IDictionary<K, V> where V : class, IItemDb
+	internal class DbLDictionary_<K, V> : IDictionary<K, V>
 	{
 		private List<LKeyValue<K, V>> items;
 		private HashSet<K> nullKeys;         // ключи с null-значением
 
-		public DbLDictionary(List<LKeyValue<K, V>> argItems)
+		public DbLDictionary_(List<LKeyValue<K, V>> argItems)
 		{
 			items = argItems;
 			nullKeys = new HashSet<K>();
@@ -103,7 +104,7 @@ namespace UnityEF
 		{
 			if (nullKeys.Contains(key))
 			{
-				value = null;
+				value = default(V);
 				return true;
 			}
 			var kvp = items.FirstOrDefault(kvp => kvp.Key.Equals(key));
@@ -112,7 +113,7 @@ namespace UnityEF
 				value = kvp.Value;
 				return true;
 			}
-			value = null;
+			value = default(V);
 			return false;
 		}
 
@@ -167,5 +168,6 @@ namespace UnityEF
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 	}
+
 
 }
