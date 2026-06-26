@@ -3,7 +3,7 @@
 
 namespace UnityEF
 {
-	public interface ICollection
+	public interface IOrmCollection
 	{
 	}
 }

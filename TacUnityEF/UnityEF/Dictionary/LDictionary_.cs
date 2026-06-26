@@ -15,7 +15,7 @@ namespace UnityEF
 	/// <summary>
 	/// Локальный словарь в БД
 	/// </summary>
-	public class LDictionary_<K, V> : ItemDb, ICollection, IEnumerable<KeyValuePair<K, V>>
+	public class LDictionary_<K, V> : ItemDb, IOrmCollection, IEnumerable<KeyValuePair<K, V>>
 	{
 		private readonly IDictionary<K, V> storage;
 

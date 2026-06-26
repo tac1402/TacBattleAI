@@ -16,7 +16,7 @@ namespace UnityEF
 	/// <summary>
 	/// Глобальный словарь в БД
 	/// </summary>
-	public class GDictionary<K, V> : ICollection, IEnumerable<KeyValuePair<K, V>> where V : class, IItemDb
+	public class GDictionary<K, V> : IOrmCollection, IEnumerable<KeyValuePair<K, V>> where V : class, IItemDb
 	{
 		private readonly IDictionary<K, V> storage;
 

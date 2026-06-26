@@ -78,7 +78,7 @@ namespace DnaCore
 
 					// Проверяем, является ли поле коллекцией элементов, реализующих IItemDb
 					bool isCollectionOfEntities = false;
-					var enumeratorInterface = fieldType.GetInterface(typeof(UnityEF.ICollection).FullName);
+					var enumeratorInterface = fieldType.GetInterface(typeof(UnityEF.IOrmCollection).FullName);
 					if (enumeratorInterface != null)
 					{
 						isCollectionOfEntities = true;
