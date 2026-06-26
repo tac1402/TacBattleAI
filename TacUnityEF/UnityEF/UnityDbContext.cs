@@ -94,7 +94,7 @@ namespace UnityEF
 					if (ft.IsGenericType)
 					{
 						Type gt = ft.GetGenericTypeDefinition();
-						if (gt == typeof(LList<>))
+						if (gt == typeof(LList<>) || gt == typeof(LList_<>))
 						{
 							toAdd.Add(ft); // LList<T>
 							var dItemType = typeof(LItem<>).MakeGenericType(ft.GetGenericArguments()[0]);
@@ -134,7 +134,7 @@ namespace UnityEF
 				if (type.IsGenericType)
 				{
 					var gt = type.GetGenericTypeDefinition();
-					if (gt == typeof(LList<>))
+					if (gt == typeof(LList<>) || gt == typeof(LList_<>))
 					{
 						var argName = type.GetGenericArguments()[0].Name;
 						entityBuilder.ToTable($"LList_{argName}");
@@ -197,6 +197,7 @@ namespace UnityEF
 				var entityBuilder = modelBuilder.Entity(type);
 
 				bool isLList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LList<>);
+				bool isLList_ = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LList_<>);
 				bool isLQueue = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LQueue<>);
 				bool isLQueue_ = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LQueue_<>);
 				bool isLItem = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(LItem<>);
@@ -261,19 +262,13 @@ namespace UnityEF
 
 					entityBuilder.HasIndex("LDictionaryId", "Key").IsUnique();
 				}
-				else if (isLList)
+				else if (isLList || isLList_)
 				{
 					entityBuilder.HasMany("Items")
 						.WithOne()
 						.HasForeignKey("LListId");
 				}
-				else if (isLQueue)
-				{
-					entityBuilder.HasMany("Items")
-						.WithOne()
-						.HasForeignKey("LQueueId");
-				}
-				else if (isLQueue_)
+				else if (isLQueue || isLQueue_)
 				{
 					entityBuilder.HasMany("Items")
 						.WithOne()

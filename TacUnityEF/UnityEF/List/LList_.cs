@@ -11,14 +11,15 @@ using Tac;
 
 namespace UnityEF
 {
+
 	/// <summary>
 	/// Локальный список в БД
 	/// </summary>
-	public class LList<T> : ItemDb, ICollection where T : class, IItemDb
+	public class LList_<T> : ItemDb, ICollection
 	{
 		private readonly IList<T> storage;
 
-		public LList()
+		public LList_()
 		{
 			storage = CreateStorage();
 		}
@@ -27,20 +28,20 @@ namespace UnityEF
 		{
 			if (db == null)
 			{
-				return new MemoryList<T>();
+				return new MemoryList_<T>();
 			}
 			else
 			{
-				return new DbLList<T>(Items);
+				return new DbLList_<T>(Items);
 			}
 		}
 
 		public List<LItem<T>> Items { get; set; } = new List<LItem<T>>();
 
-		public T this[int key] 
-		{ 
-			get => storage[key]; 
-			set => storage[key] = value; 
+		public T this[int key]
+		{
+			get => storage[key];
+			set => storage[key] = value;
 		}
 		public void Add(T item) => storage.Add(item);
 		public void RemoveAt(int index) => storage.RemoveAt(index);
@@ -49,11 +50,11 @@ namespace UnityEF
 		public IEnumerator<T> GetEnumerator() => storage.GetEnumerator();
 	}
 
-	internal class DbLList<T> : IList<T> where T : class, IItemDb
+	internal class DbLList_<T> : IList<T>
 	{
 		private List<LItem<T>> items;
 
-		public DbLList(List<LItem<T>> argItems)
+		public DbLList_(List<LItem<T>> argItems)
 		{
 			items = argItems;
 		}
@@ -87,4 +88,5 @@ namespace UnityEF
 		public int Count => items.Count;
 		public IEnumerator<T> GetEnumerator() => items.Select(k => k.Item).GetEnumerator();
 	}
+
 }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace UnityEF
 {
-	internal interface IList<T> where T : class, IItemDb
+	internal interface IList<T>
 	{
 		T this[int key] { get; set; }
 		void Add(T item);
