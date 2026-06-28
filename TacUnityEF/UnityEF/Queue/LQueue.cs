@@ -14,7 +14,7 @@ namespace UnityEF
 	/// <summary>
 	/// Локальная очередь
 	/// </summary>
-	public class LQueue<T> : ItemDb, IOrmCollection where T : class, IItemDb, IId
+	public class LQueue<T> : ItemDb, IOrmCollection where T : class, IItemDb
 	{
 		private readonly IQueue<T> storage;
 
@@ -47,7 +47,7 @@ namespace UnityEF
 		public IEnumerator<T> GetEnumerator() => storage.GetEnumerator();
 	}
 
-	internal class DbLQueue<T> : IQueue<T> where T : class, IItemDb, IId
+	internal class DbLQueue<T> : IQueue<T> where T : class, IItemDb
 	{
 		private List<LItem<T>> items;
 
@@ -104,7 +104,7 @@ namespace UnityEF
 			T ret = default;
 			foreach (LItem<T> item in items)
 			{
-				if (item.Item.Id == id)
+				if (item.Item.item.Id == id)
 				{
 					ret = item.Item;
 					break;
@@ -135,7 +135,7 @@ namespace UnityEF
 			Queue<LItem<T>> newQueue = new Queue<LItem<T>>();
 			foreach (LItem<T> item in items)
 			{
-				if (removedIds.Contains(item.Item.Id) == false)
+				if (removedIds.Contains(item.Item.item.Id) == false)
 				{
 					newQueue.Enqueue(item);
 				}

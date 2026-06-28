@@ -3,6 +3,7 @@
 
 using DnaCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace UnityEF
 	/// <summary>
 	/// Локальный список в БД
 	/// </summary>
-	public class LList_<T> : ItemDb, IOrmCollection
+	public class LList_<T> : ItemDb, IOrmCollection, IEnumerable<T>
 	{
 		private readonly IList<T> storage;
 
@@ -46,8 +47,13 @@ namespace UnityEF
 		public void Add(T item) => storage.Add(item);
 		public void RemoveAt(int index) => storage.RemoveAt(index);
 		public void Clear() => storage.Clear();
+		public bool Contains(T item) => storage.Contains(item);
 		public int Count => storage.Count;
 		public IEnumerator<T> GetEnumerator() => storage.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		public T Find(Predicate<T> match) => storage.Find(match);
+		public List<T> FindAll(Predicate<T> match) => storage.FindAll(match);
 	}
 
 	internal class DbLList_<T> : IList<T>
@@ -85,8 +91,33 @@ namespace UnityEF
 			set => items[index] = new LItem<T>(value);
 		}
 
+		public bool Contains(T item)
+		{
+			if (item == null)
+				return items.Any(li => li.Item == null);
+			return items.Any(li => EqualityComparer<T>.Default.Equals(li.Item, item));
+		}
+
 		public int Count => items.Count;
 		public IEnumerator<T> GetEnumerator() => items.Select(k => k.Item).GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		public T Find(Predicate<T> match)
+		{
+			if (match == null) throw new ArgumentNullException(nameof(match));
+			foreach (var li in items)
+				if (match(li.Item)) return li.Item;
+			return default(T);
+		}
+
+		public List<T> FindAll(Predicate<T> match)
+		{
+			if (match == null) throw new ArgumentNullException(nameof(match));
+			var result = new List<T>();
+			foreach (var li in items)
+				if (match(li.Item)) result.Add(li.Item);
+			return result;
+		}
 	}
 
 }

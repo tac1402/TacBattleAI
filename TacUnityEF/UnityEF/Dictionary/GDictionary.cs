@@ -92,7 +92,6 @@ namespace UnityEF
 			{
 				Db.Set<V>().Add(item);
 			}
-			//Db.SaveChanges();
 		}
 
 		public bool Remove(K key)

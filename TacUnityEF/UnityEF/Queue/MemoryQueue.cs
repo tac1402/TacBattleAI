@@ -13,7 +13,7 @@ namespace UnityEF
 	/// <summary>
 	/// Очередь в памяти с возможностью удаления по индексу
 	/// </summary>
-	internal class MemoryQueue<T> : IQueue<T> where T : class, IItemDb, IId
+	internal class MemoryQueue<T> : IQueue<T> where T : class, IItemDb
 	{
 		private Queue<T> queue = new Queue<T>();
 
@@ -28,9 +28,9 @@ namespace UnityEF
 			while (queue.Count > 0)
 			{
 				ret = queue.Dequeue();
-				if (removedIds.Contains(ret.Id))
+				if (removedIds.Contains(ret.item.Id))
 				{
-					removedIds.Remove(ret.Id);
+					removedIds.Remove(ret.item.Id);
 					continue;
 				}
 				break;
@@ -46,7 +46,7 @@ namespace UnityEF
 			T[] items = queue.ToArray();
 			foreach (T item in items)
 			{
-				if (item.Id == id)
+				if (item.item.Id == id)
 				{
 					ret = item;
 					break;
@@ -65,7 +65,7 @@ namespace UnityEF
 		{
 			foreach (var item in queue)
 			{
-				if (removedIds.Contains(item.Id) == false)
+				if (removedIds.Contains(item.item.Id) == false)
 				{
 					yield return item;
 				}
@@ -77,7 +77,7 @@ namespace UnityEF
 			Queue<T> newQueue = new Queue<T>();
 			foreach (T item in queue)
 			{
-				if (removedIds.Contains(item.Id) == false)
+				if (removedIds.Contains(item.item.Id) == false)
 				{
 					newQueue.Enqueue(item);
 				}

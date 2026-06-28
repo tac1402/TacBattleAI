@@ -31,11 +31,12 @@ namespace Tac
 		public ItemDb item { get { return itemDb; } }
 
 
+		private bool initData = false;
 		private void Awake()
 		{
-			InitData();
+			if (initData == false) { InitData(); }
 		}
 
-		public virtual void InitData() { }
+		public virtual void InitData() { initData = true; }
 	}
 }
