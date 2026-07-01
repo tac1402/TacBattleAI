@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnaCore", "DnaCore\DnaCore.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacPrimitives", "TacPrimitives\TacPrimitives.csproj", "{73DB2AA9-8A6F-4DA1-B325-72FC7B8E0D6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacSqlData", "..\TacSqlService\TacSqlData\TacSqlData.csproj", "{504CFCCC-1BA3-CAA1-2652-26B0FD9AF4D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{73DB2AA9-8A6F-4DA1-B325-72FC7B8E0D6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73DB2AA9-8A6F-4DA1-B325-72FC7B8E0D6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73DB2AA9-8A6F-4DA1-B325-72FC7B8E0D6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{504CFCCC-1BA3-CAA1-2652-26B0FD9AF4D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{504CFCCC-1BA3-CAA1-2652-26B0FD9AF4D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{504CFCCC-1BA3-CAA1-2652-26B0FD9AF4D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{504CFCCC-1BA3-CAA1-2652-26B0FD9AF4D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

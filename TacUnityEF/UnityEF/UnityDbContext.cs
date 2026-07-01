@@ -47,8 +47,10 @@ namespace UnityEF
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			// Указываем путь к файлу SQLite
-			optionsBuilder.UseSqlite("Data Source=myapp.db;Foreign Keys=False;");
+			optionsBuilder.UseSqlite("Data Source=rotark.db;Foreign Keys=False;").AddInterceptors(new SqlTraceInterceptor()); ;
+
+			//optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Rotark;Trusted_Connection=True;");
+
 
 			switch (debugType)
 			{ 
@@ -388,7 +390,7 @@ namespace UnityEF
 			if (debugType == DebugType.OnlyShema)
 			{
 				// Используем стандартный механизм отладки EF Core для получения "длинного" представления
-				string modelDebugView = Model.ToDebugString(MetadataDebugStringOptions.ShortDefault);
+				string modelDebugView = Model.ToDebugString(MetadataDebugStringOptions.ShortDefault); // 5.0.17
 
 				// Можно сохранить это в файл или просто вывести в консоль для быстрого анализа
 				File.WriteAllText("model_debug.txt", modelDebugView);
