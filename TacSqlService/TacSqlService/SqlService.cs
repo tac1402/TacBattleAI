@@ -23,6 +23,7 @@ namespace Tac.Sql
 		private string fullPathAfter;
 		private string fullPathError;
 		private LiteToServer liteToServer;
+		private DataTableConverter dtConverter = new DataTableConverter();
 
 		public SqlService(ILogger<SqlService> argLogger, IConfiguration configuration)
 		{
@@ -138,12 +139,12 @@ namespace Tac.Sql
 			await File.AppendAllTextAsync(argFullPath, entry);
 		}
 
-		private async Task ExecuteSqlAsync(LogData log)
+		private async Task<string?> ExecuteSqlAsync(LogData log)
 		{
 			if (string.IsNullOrEmpty(connectionString))
 			{
 				logger.LogWarning("Строка подключения не задана, выполнение SQL невозможно.");
-				return;
+				return null;
 			}
 
 			try
@@ -170,31 +171,43 @@ namespace Tac.Sql
 					}
 				}
 
+
 				if (log.Operation.Contains("Reader"))
 				{
 					using var reader = await cmd.ExecuteReaderAsync();
-					// Можно также прочитать данные, но мы просто логируем факт выполнения
-					logger.LogInformation($"ExecuteReader выполнен. Затронуто строк: {reader.RecordsAffected}");
+					var dataTable = new DataTable();
+					dataTable.Load(reader); // загружаем все строки
+
+					// Преобразуем DataTable в LogDataTable
+					var logTable = dtConverter.Convert(dataTable);
+					// Сериализуем в JSON
+					string json = JsonSerializer.Serialize(logTable);
+					logger.LogInformation($"ExecuteReader выполнен. Получено строк: {dataTable.Rows.Count}");
+					return json;
 				}
 				else if (log.Operation.Contains("NonQuery"))
 				{
 					int affected = await cmd.ExecuteNonQueryAsync();
 					logger.LogInformation($"ExecuteNonQuery выполнен. Затронуто строк: {affected}");
+					return null;
 				}
 				else if (log.Operation.Contains("Scalar"))
 				{
 					object result = await cmd.ExecuteScalarAsync();
 					logger.LogInformation($"ExecuteScalar выполнен. Результат: {result}");
+					return null;
 				}
 				else
 				{
 					logger.LogWarning($"Неизвестная операция: {log.Operation}. Выполняем ExecuteNonQuery по умолчанию.");
 					await cmd.ExecuteNonQueryAsync();
+					return null;
 				}
 			}
 			catch (Exception ex)
 			{
 				await File.AppendAllTextAsync(fullPathError, ex.Message + "\n" + ex.StackTrace);
+				return null;
 			}
 		}
 

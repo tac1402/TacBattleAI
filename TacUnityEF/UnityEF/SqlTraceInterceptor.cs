@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.IO;
 using System.Text;
+using System.Data;
 
 namespace UnityEF
 {
@@ -19,6 +20,8 @@ namespace UnityEF
 
 		private Dictionary<string, int> SqlToId = new Dictionary<string, int>();
 		private Dictionary<int, string> IdToSql = new Dictionary<int, string>();
+		private DataTableConverter dtConverter = new DataTableConverter();
+		private DataTable endResult;
 
 		private int NextCommandId = 0;
 
@@ -127,9 +130,16 @@ namespace UnityEF
 			EnsureService();
 
 			var log = BuildLogData(command, operation);
-			bool sent = SqlLogSender.SendLog(log);
+			//bool sent = SqlLogSender.SendLog(log);
+			LogDataTable result = SqlLogSender.SendAndReceive(log);
 
-			if (!sent)
+			if (result != null)
+			{
+				endResult = dtConverter.Restore(result);
+			}
+			else { endResult = null; }
+
+			/*if (!sent)
 			{
 				var sb = new StringBuilder();
 				sb.AppendLine($"{operation} {log.CommandId}");
@@ -138,7 +148,7 @@ namespace UnityEF
 						sb.AppendLine($"    {p.Name} = {p.Value} ({p.DbType})");
 				sb.AppendLine();
 				File.AppendAllText(logTrace, sb.ToString());
-			}
+			}*/
 		}
 
 
@@ -162,8 +172,15 @@ namespace UnityEF
 
 		public override DbDataReader ReaderExecuted(DbCommand command, CommandExecutedEventData eventData, DbDataReader result)
 		{
-			WriteExecuted(eventData.Duration);
-			return result;
+			//WriteExecuted(eventData.Duration);
+			DbDataReader ret = null;
+			if (endResult != null)
+			{
+				ret = endResult.CreateDataReader();
+			}
+			else { ret = result; }
+
+			return ret;
 		}
 
 		public override InterceptionResult<int> NonQueryExecuting(DbCommand command, CommandEventData eventData, InterceptionResult<int> result)

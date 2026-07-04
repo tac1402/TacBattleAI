@@ -24,6 +24,21 @@ namespace Tac.Sql
 		public string DbType { get; set; }
 	}
 
+
+	[Serializable]
+	public class LogDataTable
+	{
+		public List<ColumnInfo> Columns { get; set; }
+		public List<List<string?>> Rows { get; set; }
+	}
+
+	[Serializable]
+	public class ColumnInfo
+	{
+		public string Name { get; set; }
+		public string TypeName { get; set; }
+	}
+
 	// PipeConstants.cs
 	public static class PipeConstants
 	{
