@@ -17,11 +17,13 @@ namespace Tac.Sql
 		private readonly string logDirectory = @"P:\SqlLogs";
 		private readonly string logFileBefor = "sql_trace_befor.log";
 		private readonly string logFileAfter = "sql_trace_after.log";
+		private readonly string logFileReceive = "sql_trace_receive.log";
 		private readonly string logFileError = "sql_trace_error.log";
 		private readonly string connectionString;
 		private string fullPathBefor;
 		private string fullPathAfter;
 		private string fullPathError;
+		private string fullPathReceive;
 		private LiteToServer liteToServer;
 		private DataTableConverter dtConverter = new DataTableConverter();
 
@@ -33,6 +35,7 @@ namespace Tac.Sql
 			fullPathBefor = Path.Combine(logDirectory, logFileBefor);
 			fullPathAfter = Path.Combine(logDirectory, logFileAfter);
 			fullPathError = Path.Combine(logDirectory, logFileError);
+			fullPathReceive = Path.Combine(logDirectory, logFileReceive);
 			liteToServer = new LiteToServer();
 		}
 
@@ -79,7 +82,7 @@ namespace Tac.Sql
 		{
 			try
 			{
-				using var reader = new StreamReader(server, Encoding.UTF8);
+				var reader = new StreamReader(server, Encoding.UTF8, leaveOpen: true);
 
 				// Читаем команды, пока клиент подключён
 				while (true)
@@ -97,7 +100,10 @@ namespace Tac.Sql
 						if (log != null)
 						{
 							await WriteLogAsync(log, fullPathBefor);
-							await ExecuteSqlAsync(log);
+							string response = await ExecuteSqlAsync(log);
+
+							var writer = new StreamWriter(server, Encoding.UTF8, leaveOpen: true) { AutoFlush = true };
+							await writer.WriteLineAsync(response);
 						}
 					}
 				}
@@ -139,12 +145,12 @@ namespace Tac.Sql
 			await File.AppendAllTextAsync(argFullPath, entry);
 		}
 
-		private async Task<string?> ExecuteSqlAsync(LogData log)
+		private async Task<string> ExecuteSqlAsync(LogData log)
 		{
 			if (string.IsNullOrEmpty(connectionString))
 			{
 				logger.LogWarning("Строка подключения не задана, выполнение SQL невозможно.");
-				return null;
+				return string.Empty;
 			}
 
 			try
@@ -175,39 +181,46 @@ namespace Tac.Sql
 				if (log.Operation.Contains("Reader"))
 				{
 					using var reader = await cmd.ExecuteReaderAsync();
-					var dataTable = new DataTable();
+					DataTable dataTable = new DataTable();
 					dataTable.Load(reader); // загружаем все строки
 
 					// Преобразуем DataTable в LogDataTable
-					var logTable = dtConverter.Convert(dataTable);
+					LogDataTable logTable = dtConverter.Convert(dataTable);
+					logTable.RecordsAffected = reader.RecordsAffected;
 					// Сериализуем в JSON
 					string json = JsonSerializer.Serialize(logTable);
-					logger.LogInformation($"ExecuteReader выполнен. Получено строк: {dataTable.Rows.Count}");
+					//logger.LogInformation($"ExecuteReader выполнен. Получено строк: {dataTable.Rows.Count}");
+
+					if (json != "")
+					{
+						await File.AppendAllTextAsync(fullPathReceive, json + "\n");
+					}
+
 					return json;
 				}
 				else if (log.Operation.Contains("NonQuery"))
 				{
 					int affected = await cmd.ExecuteNonQueryAsync();
 					logger.LogInformation($"ExecuteNonQuery выполнен. Затронуто строк: {affected}");
-					return null;
+					return string.Empty;
 				}
 				else if (log.Operation.Contains("Scalar"))
 				{
 					object result = await cmd.ExecuteScalarAsync();
 					logger.LogInformation($"ExecuteScalar выполнен. Результат: {result}");
-					return null;
+					return string.Empty;
 				}
 				else
 				{
 					logger.LogWarning($"Неизвестная операция: {log.Operation}. Выполняем ExecuteNonQuery по умолчанию.");
 					await cmd.ExecuteNonQueryAsync();
-					return null;
+					return string.Empty;
 				}
 			}
 			catch (Exception ex)
 			{
 				await File.AppendAllTextAsync(fullPathError, ex.Message + "\n" + ex.StackTrace);
-				return null;
+				return string.Empty;
 			}
 		}
 

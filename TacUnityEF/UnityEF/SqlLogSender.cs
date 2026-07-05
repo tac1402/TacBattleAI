@@ -41,25 +41,29 @@ namespace UnityEF
 		{
 			try
 			{
+				LogDataTable retTable = null;
 				using var client = new NamedPipeClientStream(".", PipeConstants.PipeName, PipeDirection.InOut);
 				client.Connect(500); // таймаут 500 мс
 
-				using var writer = new StreamWriter(client, Encoding.UTF8);
+				StreamWriter writer = new StreamWriter(client, Encoding.UTF8, 4096, true);
 				string json = JsonSerializer.Serialize(log);
 				writer.WriteLine(json);
 				writer.Flush();
 
 				// Читаем ответ от службы
-				using var reader = new StreamReader(client, Encoding.UTF8);
+				StreamReader reader = new StreamReader(client, Encoding.UTF8, false, 4096, true);
 				string responseJson = reader.ReadLine();
-				if (string.IsNullOrEmpty(responseJson))
-					return null;
-
-				return JsonSerializer.Deserialize<LogDataTable>(responseJson);
+				if (string.IsNullOrEmpty(responseJson) == false)
+				{
+					retTable = JsonSerializer.Deserialize<LogDataTable>(responseJson);
+					File.AppendAllText("response.log", responseJson + "\n");
+				}
+				return retTable;
 			}
 			catch (Exception ex)
 			{
 				// Логируем ошибку (можно использовать ILogger)
+				File.AppendAllText("error.log", ex.Message + "\n" + ex.StackTrace + "\n");
 				return null;
 			}
 		}

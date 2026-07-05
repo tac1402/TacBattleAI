@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace Tac.Sql
 {
@@ -30,6 +31,7 @@ namespace Tac.Sql
 	{
 		public List<ColumnInfo> Columns { get; set; }
 		public List<List<string?>> Rows { get; set; }
+		public int RecordsAffected { get; set; } = -1; // По умолчанию -1
 	}
 
 	[Serializable]
@@ -38,6 +40,7 @@ namespace Tac.Sql
 		public string Name { get; set; }
 		public string TypeName { get; set; }
 	}
+
 
 	// PipeConstants.cs
 	public static class PipeConstants

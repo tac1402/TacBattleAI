@@ -158,7 +158,7 @@ namespace Tac.Sql
 			sqlCommand = Regex.Replace(
 				sqlCommand,
 				@"SELECT\s+\[(?<column>\w+)\]\s+FROM\s+\[dbo\]\.\[\w+\]\s+WHERE\s+@@ROWCOUNT\s*=\s*1\s+AND\s+\[rowid\]\s*=\s*last_insert_rowid\s*\(\s*\)\s*;?",
-				"SELECT SCOPE_IDENTITY() AS [${column}];",
+				"SELECT CAST(SCOPE_IDENTITY() AS INT) AS [${column}];",
 				RegexOptions.IgnoreCase
 			);
 

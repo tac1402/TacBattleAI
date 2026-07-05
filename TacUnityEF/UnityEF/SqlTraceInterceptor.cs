@@ -22,6 +22,7 @@ namespace UnityEF
 		private Dictionary<int, string> IdToSql = new Dictionary<int, string>();
 		private DataTableConverter dtConverter = new DataTableConverter();
 		private DataTable endResult;
+		private int endRecordsAffected;
 
 		private int NextCommandId = 0;
 
@@ -131,13 +132,26 @@ namespace UnityEF
 
 			var log = BuildLogData(command, operation);
 			//bool sent = SqlLogSender.SendLog(log);
+
+			if (log.CommandId == 78 )
+			{
+				int q = 1;
+			}
+
+
 			LogDataTable result = SqlLogSender.SendAndReceive(log);
 
 			if (result != null)
 			{
 				endResult = dtConverter.Restore(result);
+				endRecordsAffected = result.RecordsAffected;
+
+				if (endRecordsAffected == 1)
+				{
+					int a = 1;
+				}
 			}
-			else { endResult = null; }
+			else { endResult = null; endRecordsAffected = -1; }
 
 			/*if (!sent)
 			{
@@ -167,35 +181,48 @@ namespace UnityEF
 		public override InterceptionResult<DbDataReader> ReaderExecuting(DbCommand command, CommandEventData eventData, InterceptionResult<DbDataReader> result)
 		{
 			Write(command, "ExecuteReader");
-			return result;
+			InterceptionResult<DbDataReader> ret;
+			if (endResult != null)
+			{
+				DbDataReader dtReader = endResult.CreateDataReader();
+				DbDataReaderExt dbDataReaderExt = new DbDataReaderExt(dtReader, endRecordsAffected);
+				ret = InterceptionResult<DbDataReader>.SuppressWithResult(dbDataReaderExt);
+			}
+			else 
+			{
+				var emptyTable = new DataTable();
+				ret = InterceptionResult<DbDataReader>.SuppressWithResult(emptyTable.CreateDataReader());
+			}
+			return ret;
 		}
 
 		public override DbDataReader ReaderExecuted(DbCommand command, CommandExecutedEventData eventData, DbDataReader result)
 		{
 			//WriteExecuted(eventData.Duration);
-			DbDataReader ret = null;
-			if (endResult != null)
-			{
-				ret = endResult.CreateDataReader();
-			}
-			else { ret = result; }
-
-			return ret;
+			return result;
 		}
 
 		public override InterceptionResult<int> NonQueryExecuting(DbCommand command, CommandEventData eventData, InterceptionResult<int> result)
 		{
 			Write(command, "ExecuteNonQuery");
-			return result;
+
+			/*var commandText = command.CommandText?.Trim().ToUpperInvariant() ?? "";
+			if (commandText.StartsWith("PRAGMA") || commandText.StartsWith("SET"))
+			{
+				// Разрешаем реальное выполнение таких команд
+				return result;
+			}*/
+
+			return InterceptionResult<int>.SuppressWithResult(0);
 		}
 
 		public override int NonQueryExecuted(DbCommand command, CommandExecutedEventData eventData, int result)
 		{
-			WriteExecuted(eventData.Duration);
+			//WriteExecuted(eventData.Duration);
 			return result;
 		}
 
-		public override InterceptionResult<object> ScalarExecuting(DbCommand command, CommandEventData eventData, InterceptionResult<object> result)
+		/*public override InterceptionResult<object> ScalarExecuting(DbCommand command, CommandEventData eventData, InterceptionResult<object> result)
 		{
 			Write(command, "ExecuteScalar");
 			return result;
@@ -203,9 +230,9 @@ namespace UnityEF
 
 		public override object ScalarExecuted(DbCommand command, CommandExecutedEventData eventData, object result)
 		{
-			WriteExecuted(eventData.Duration);
+			//WriteExecuted(eventData.Duration);
 			return result;
-		}
+		}*/
 
 		public override void CommandFailed(DbCommand command, CommandErrorEventData eventData)
 		{
