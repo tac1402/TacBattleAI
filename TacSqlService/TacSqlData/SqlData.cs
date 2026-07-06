@@ -3,13 +3,83 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
+using System.IO;
+using System.Text;
+using System.Text.Json;
 
 namespace Tac.Sql
 {
+	public enum MessageType
+	{
+		Message = 0,
+		NewSave = 1,
+		LogCommand = 2,
+		LogDataTable = 3
+	}
 
 	[Serializable]
-	public class LogData
+	public class Message
+	{
+		public MessageType MessageType { get; set; }
+		public string Info { get; set; }
+
+		public static string Serialize(string message)
+		{
+			Message m = new Message();
+			m.MessageType = MessageType.Message;
+			m.Info = message;
+			return JsonSerializer.Serialize<Message>(m);
+		}
+
+		public static string Serialize(Message message)
+		{
+			switch (message)
+			{
+				case NewSave ns:
+					ns.MessageType = MessageType.NewSave;
+					return JsonSerializer.Serialize<NewSave>(ns);
+				case LogCommand lc:
+					lc.MessageType = MessageType.LogCommand;
+					return JsonSerializer.Serialize<LogCommand>(lc);
+				case LogDataTable ld:
+					ld.MessageType = MessageType.LogDataTable;
+					return JsonSerializer.Serialize<LogDataTable>(ld);
+				case Message m:
+					m.MessageType = MessageType.Message;
+					return JsonSerializer.Serialize<Message>(m);
+				default:
+					throw new NotSupportedException($"Unsupported type: {message.GetType()}");
+			}
+		}
+		public static Message Deserialize(string json)
+		{
+			using var doc = JsonDocument.Parse(json);
+			if (!doc.RootElement.TryGetProperty("MessageType", out var typeElement))
+				throw new InvalidOperationException("MessageType field is missing");
+
+			int typeNumber = typeElement.GetInt32();
+			MessageType messageType = (MessageType)typeNumber;
+
+			// Десериализуем в конкретный тип в зависимости от messageType
+			return messageType switch
+			{
+				MessageType.Message => JsonSerializer.Deserialize<Message>(json),
+				MessageType.NewSave => JsonSerializer.Deserialize<NewSave>(json),
+				MessageType.LogCommand => JsonSerializer.Deserialize<LogCommand>(json),
+				MessageType.LogDataTable => JsonSerializer.Deserialize<LogDataTable>(json),
+				_ => throw new NotSupportedException($"Unsupported MessageType: {messageType}")
+			};
+		}
+	}
+
+	[Serializable]
+	public class NewSave : Message
+	{
+		public string SaveName { get; set; }
+	}
+
+	[Serializable]
+	public class LogCommand : Message
 	{
 		public string Operation { get; set; }
 		public int CommandId { get; set; }
@@ -27,7 +97,7 @@ namespace Tac.Sql
 
 
 	[Serializable]
-	public class LogDataTable
+	public class LogDataTable : Message
 	{
 		public List<ColumnInfo> Columns { get; set; }
 		public List<List<string?>> Rows { get; set; }

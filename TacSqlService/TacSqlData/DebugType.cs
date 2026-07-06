@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace UnityEF
+namespace Tac
 {
 	public enum DebugType
 	{

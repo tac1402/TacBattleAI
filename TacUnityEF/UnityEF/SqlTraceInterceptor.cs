@@ -3,13 +3,16 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Tac.Sql;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.IO;
+using System.IO.Pipes;
 using System.Text;
-using System.Data;
+using System.Text.Json;
+using Tac;
+using Tac.Sql;
 
 namespace UnityEF
 {
@@ -28,19 +31,27 @@ namespace UnityEF
 
 		private bool _serviceChecked = false;
 
-		private bool SendMode = true;
+		public bool SendMode = true;
+		public DebugType DebugType = DebugType.InfoSql;
 
 		public SqlTraceInterceptor()
 		{
 		}
 
-		// Этот метод вызывается перед первой отправкой
 		private void EnsureService()
 		{
 			if (!_serviceChecked)
 			{
 				_serviceChecked = true;
 				ServiceManager.EnsureServiceInstalledAndRunning();
+
+				var save = new NewSave
+				{
+					MessageType = MessageType.NewSave,
+					SaveName = "autosave"
+				};
+
+				Message response = SendAndReceive(save);
 			}
 		}
 
@@ -54,7 +65,11 @@ namespace UnityEF
 				SqlToId.Add(operation, NextCommandId);
 				IdToSql.Add(NextCommandId, operation);
 				ret = NextCommandId;
-				File.AppendAllText(logDeclare, operation + "\n");
+
+				if (DebugType != DebugType.None)
+				{
+					File.AppendAllText(logDeclare, operation + "\n");
+				}
 			}
 			else
 			{ 
@@ -62,8 +77,6 @@ namespace UnityEF
 			}
 			return ret;
 		}
-
-
 
 		private void Write(DbCommand command, string operation)
 		{
@@ -100,9 +113,9 @@ namespace UnityEF
 			}
 		}
 
-		private LogData BuildLogData(DbCommand command, string operation)
+		private LogCommand BuildLogData(DbCommand command, string operation)
 		{
-			var log = new LogData
+			var log = new LogCommand
 			{
 				Operation = operation,
 				CommandId = GetSqlId(command.CommandText),
@@ -130,30 +143,17 @@ namespace UnityEF
 			// Первая проверка сервиса
 			EnsureService();
 
-			var log = BuildLogData(command, operation);
-			//bool sent = SqlLogSender.SendLog(log);
-
-			if (log.CommandId == 78 )
-			{
-				int q = 1;
-			}
-
-
-			LogDataTable result = SqlLogSender.SendAndReceive(log);
+			LogCommand log = BuildLogData(command, operation);
+			LogDataTable result = SendAndReceive(log) as LogDataTable;
 
 			if (result != null)
 			{
 				endResult = dtConverter.Restore(result);
 				endRecordsAffected = result.RecordsAffected;
-
-				if (endRecordsAffected == 1)
-				{
-					int a = 1;
-				}
 			}
 			else { endResult = null; endRecordsAffected = -1; }
 
-			/*if (!sent)
+			if (DebugType != DebugType.None)
 			{
 				var sb = new StringBuilder();
 				sb.AppendLine($"{operation} {log.CommandId}");
@@ -162,16 +162,9 @@ namespace UnityEF
 						sb.AppendLine($"    {p.Name} = {p.Value} ({p.DbType})");
 				sb.AppendLine();
 				File.AppendAllText(logTrace, sb.ToString());
-			}*/
+			}
 		}
 
-
-
-
-		private void WriteExecuted(TimeSpan duration)
-		{
-			//File.AppendAllText(	_logFile, $"Completed in {duration.TotalMilliseconds:F2} ms{Environment.NewLine}{Environment.NewLine}");
-		}
 
 		private void WriteException(Exception ex)
 		{
@@ -205,14 +198,6 @@ namespace UnityEF
 		public override InterceptionResult<int> NonQueryExecuting(DbCommand command, CommandEventData eventData, InterceptionResult<int> result)
 		{
 			Write(command, "ExecuteNonQuery");
-
-			/*var commandText = command.CommandText?.Trim().ToUpperInvariant() ?? "";
-			if (commandText.StartsWith("PRAGMA") || commandText.StartsWith("SET"))
-			{
-				// Разрешаем реальное выполнение таких команд
-				return result;
-			}*/
-
 			return InterceptionResult<int>.SuppressWithResult(0);
 		}
 
@@ -222,21 +207,82 @@ namespace UnityEF
 			return result;
 		}
 
-		/*public override InterceptionResult<object> ScalarExecuting(DbCommand command, CommandEventData eventData, InterceptionResult<object> result)
-		{
-			Write(command, "ExecuteScalar");
-			return result;
-		}
-
-		public override object ScalarExecuted(DbCommand command, CommandExecutedEventData eventData, object result)
-		{
-			//WriteExecuted(eventData.Duration);
-			return result;
-		}*/
-
 		public override void CommandFailed(DbCommand command, CommandErrorEventData eventData)
 		{
 			WriteException(eventData.Exception);
 		}
+
+
+		/*private Message SendAndReceive(LogCommand log)
+		{
+			try
+			{
+				Message retMessage = null;
+				using var client = new NamedPipeClientStream(".", PipeConstants.PipeName, PipeDirection.InOut);
+				client.Connect(500); // таймаут 500 мс
+
+				StreamWriter writer = new StreamWriter(client, Encoding.UTF8, 4096, true);
+				string json = JsonSerializer.Serialize(log);
+				writer.WriteLine(json);
+				writer.Flush();
+
+				// Читаем ответ от службы
+				StreamReader reader = new StreamReader(client, Encoding.UTF8, false, 4096, true);
+				string responseJson = reader.ReadLine();
+				if (string.IsNullOrEmpty(responseJson) == false)
+				{
+					retMessage = Message.Deserialize(responseJson);
+					File.AppendAllText("response.log", responseJson + "\n");
+				}
+				return retMessage;
+			}
+			catch (Exception ex)
+			{
+				// Логируем ошибку (можно использовать ILogger)
+				File.AppendAllText("error.log", ex.Message + "\n" + ex.StackTrace + "\n");
+				return null;
+			}
+		}*/
+
+		private Message SendAndReceive(Message request)
+		{
+			try
+			{
+				Message retMessage = null;
+				using var client = new NamedPipeClientStream(".", PipeConstants.PipeName, PipeDirection.InOut);
+				client.Connect(500);
+
+				// Отправка запроса
+				using (var writer = new StreamWriter(client, Encoding.UTF8, 4096, true))
+				{
+					string json = Message.Serialize(request);
+					writer.WriteLine(json);
+					writer.Flush();
+				}
+
+				// Чтение ответа
+				using (var reader = new StreamReader(client, Encoding.UTF8, false, 4096, true))
+				{
+					string responseJson = reader.ReadLine();
+					if (string.IsNullOrEmpty(responseJson) == false)
+					{
+						if (DebugType != DebugType.None)
+						{
+							File.AppendAllText("response.log", responseJson + "\n");
+						}
+
+						retMessage = Message.Deserialize(responseJson);
+					}
+				}
+				return retMessage;
+			}
+			catch (Exception ex)
+			{
+				File.AppendAllText("error.log", ex.Message + "\n" + ex.StackTrace + "\n");
+				return new Message { Info = $"ERROR: {ex.Message}" }; 
+			}
+		}
+
+
 	}
 }

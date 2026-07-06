@@ -15,7 +15,7 @@ namespace Tac.Sql
 	{
 		private readonly List<string> _alterStatements = new();
 
-		public void Convert(LogData log)
+		public void Convert(LogCommand log)
 		{
 			if (log == null || string.IsNullOrEmpty(log.CommandText))
 				return;
@@ -28,7 +28,7 @@ namespace Tac.Sql
 				log.CommandText = "-- empty command (PRAGMA removed)";
 		}
 
-		private void ConvertParameters(LogData log)
+		private void ConvertParameters(LogCommand log)
 		{
 			if (log?.Parameters == null) return;
 

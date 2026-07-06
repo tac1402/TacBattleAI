@@ -19,18 +19,30 @@ namespace Tac.Sql
 		private readonly string logFileAfter = "sql_trace_after.log";
 		private readonly string logFileReceive = "sql_trace_receive.log";
 		private readonly string logFileError = "sql_trace_error.log";
-		private readonly string connectionString;
+		private string connectionString;
 		private string fullPathBefor;
 		private string fullPathAfter;
 		private string fullPathError;
 		private string fullPathReceive;
 		private LiteToServer liteToServer;
 		private DataTableConverter dtConverter = new DataTableConverter();
+		private DebugType debugType;
+
 
 		public SqlService(ILogger<SqlService> argLogger, IConfiguration configuration)
 		{
 			logger = argLogger;
 			connectionString = configuration.GetConnectionString("SqlConnection");
+
+			if (Enum.TryParse<DebugType>(configuration["Debug:DebugType"], ignoreCase: true, out var parsedDebugType))
+			{
+				debugType = parsedDebugType;
+			}
+			else
+			{
+				debugType = DebugType.None;
+			}
+
 			Directory.CreateDirectory(logDirectory);
 			fullPathBefor = Path.Combine(logDirectory, logFileBefor);
 			fullPathAfter = Path.Combine(logDirectory, logFileAfter);
@@ -94,13 +106,33 @@ namespace Tac.Sql
 					if (message == null) // клиент закрыл соединение
 						break;
 
-					if (!string.IsNullOrEmpty(message))
+					if (string.IsNullOrEmpty(message) == false)
 					{
-						var log = JsonSerializer.Deserialize<LogData>(message);
-						if (log != null)
+						Message msg = Message.Deserialize(message);
+
+						if (msg != null)
 						{
-							await WriteLogAsync(log, fullPathBefor);
-							string response = await ExecuteSqlAsync(log);
+							if (debugType != DebugType.None)
+							{
+								await WriteLogAsync(msg, fullPathBefor);
+							}
+
+							string response = "";
+							switch (msg)
+							{
+								case LogCommand log:
+									response = await ExecuteSqlAsync(log);
+									break;
+
+								case NewSave save:
+									response = await ProcessSaveAsync(save.SaveName);
+									response = Message.Serialize(response);
+									break;
+
+								default:
+									response = Message.Serialize("ERROR: Unsupported message type");
+									break;
+							}
 
 							var writer = new StreamWriter(server, Encoding.UTF8, leaveOpen: true) { AutoFlush = true };
 							await writer.WriteLineAsync(response);
@@ -131,36 +163,114 @@ namespace Tac.Sql
 			}
 		}
 
-		private async Task WriteLogAsync(LogData log, string argFullPath)
-		{
-			string entry = $"[{log.Operation}] ID={log.CommandId}\n" +
-						   $"{log.CommandText}\n";
-			if (log.Parameters != null && log.Parameters.Count > 0)
-			{
-				foreach (var p in log.Parameters)
-					entry += $"    {p.Name} = {p.Value} ({p.DbType})\n";
-			}
-			entry += new string('-', 80) + "\n";
 
-			await File.AppendAllTextAsync(argFullPath, entry);
+		private async Task WriteLogAsync(Message message, string filePath)
+		{
+			string entry;
+			switch (message)
+			{
+				case LogCommand log:
+					entry = $"[{log.Operation}] ID={log.CommandId}\n" +
+							$"{log.CommandText}\n";
+					if (log.Parameters != null && log.Parameters.Count > 0)
+					{
+						foreach (var p in log.Parameters)
+							entry += $"    {p.Name} = {p.Value} ({p.DbType})\n";
+					}
+					entry += new string('-', 80) + "\n";
+					break;
+
+				case NewSave save:
+					entry = $"[NewSave] SaveName={save.SaveName}\n" +
+							$"Timestamp: {DateTime.Now:yyyy-MM-dd HH:mm:ss}\n" +
+							new string('-', 80) + "\n";
+					break;
+
+				default:
+					entry = $"[Unknown] {message.GetType().Name}\n" +
+							new string('-', 80) + "\n";
+					break;
+			}
+
+			await File.AppendAllTextAsync(filePath, entry);
 		}
 
-		private async Task<string> ExecuteSqlAsync(LogData log)
+		private async Task<string> ProcessSaveAsync(string saveName)
 		{
-			if (string.IsNullOrEmpty(connectionString))
-			{
-				logger.LogWarning("Строка подключения не задана, выполнение SQL невозможно.");
-				return string.Empty;
-			}
-
 			try
 			{
-				using var connection = new SqlConnection(connectionString);
+				var builder = new SqlConnectionStringBuilder(connectionString);
+				string originalDatabase = builder.InitialCatalog;
+				string newDatabase = $"{originalDatabase}_{saveName}";
+
+				// Подключение к master
+				builder.InitialCatalog = "master";
+				string masterConnectionString = builder.ConnectionString;
+
+				using (var masterConn = new SqlConnection(masterConnectionString))
+				{
+					await masterConn.OpenAsync();
+
+					// Проверяем, существует ли база
+					string checkCommand = $"SELECT COUNT(*) FROM sys.databases WHERE name = N'{newDatabase}'";
+					using (var checkCmd = new SqlCommand(checkCommand, masterConn))
+					{
+						int exists = (int)await checkCmd.ExecuteScalarAsync();
+						if (exists > 0)
+						{
+							// Отключаем AUTO_CLOSE перед удалением (избегаем ошибки 615)
+							string alterCommand = $"ALTER DATABASE [{newDatabase}] SET AUTO_CLOSE OFF";
+							using (var alterCmd = new SqlCommand(alterCommand, masterConn))
+							{
+								await alterCmd.ExecuteNonQueryAsync();
+							}
+
+							// Удаляем базу
+							string dropCommand = $"DROP DATABASE [{newDatabase}]";
+							using (var dropCmd = new SqlCommand(dropCommand, masterConn))
+							{
+								await dropCmd.ExecuteNonQueryAsync();
+							}
+						}
+					}
+
+					// Создаём новую базу
+					string createCommand = $"CREATE DATABASE [{newDatabase}]";
+					using (var createCmd = new SqlCommand(createCommand, masterConn))
+					{
+						await createCmd.ExecuteNonQueryAsync();
+					}
+
+					// После создания базы очищаем пул соединений
+					SqlConnection.ClearAllPools();
+
+					// ---- ОБНОВЛЯЕМ СТРОКУ ПОДКЛЮЧЕНИЯ ----
+					builder.InitialCatalog = newDatabase; 
+					connectionString = builder.ConnectionString;
+				}
+
+				return $"OK: Database '{newDatabase}' created (previous dropped if existed)";
+			}
+			catch (Exception ex)
+			{
+				await File.AppendAllTextAsync(fullPathError, $"[SaveError] {ex.Message}\n{ex.StackTrace}");
+				return $"ERROR: {ex.Message}";
+			}
+		}
+
+		private async Task<string> ExecuteSqlAsync(LogCommand log)
+		{
+			try
+			{
+				using SqlConnection connection = new SqlConnection(connectionString);
 				await connection.OpenAsync();
 
 				liteToServer.Convert(log);
 
-				WriteLogAsync(log, fullPathAfter);
+				if (debugType != DebugType.None)
+				{
+					await WriteLogAsync(log, fullPathAfter);
+				}
 
 				using var cmd = new SqlCommand(log.CommandText, connection);
 				cmd.CommandType = CommandType.Text;
@@ -177,7 +287,6 @@ namespace Tac.Sql
 					}
 				}
 
-
 				if (log.Operation.Contains("Reader"))
 				{
 					using var reader = await cmd.ExecuteReaderAsync();
@@ -188,10 +297,9 @@ namespace Tac.Sql
 					LogDataTable logTable = dtConverter.Convert(dataTable);
 					logTable.RecordsAffected = reader.RecordsAffected;
 					// Сериализуем в JSON
-					string json = JsonSerializer.Serialize(logTable);
-					//logger.LogInformation($"ExecuteReader выполнен. Получено строк: {dataTable.Rows.Count}");
+					string json = Message.Serialize(logTable);
 
-					if (json != "")
+					if (json != "" && debugType != DebugType.None)
 					{
 						await File.AppendAllTextAsync(fullPathReceive, json + "\n");
 					}
@@ -201,13 +309,11 @@ namespace Tac.Sql
 				else if (log.Operation.Contains("NonQuery"))
 				{
 					int affected = await cmd.ExecuteNonQueryAsync();
-					logger.LogInformation($"ExecuteNonQuery выполнен. Затронуто строк: {affected}");
 					return string.Empty;
 				}
 				else if (log.Operation.Contains("Scalar"))
 				{
 					object result = await cmd.ExecuteScalarAsync();
-					logger.LogInformation($"ExecuteScalar выполнен. Результат: {result}");
 					return string.Empty;
 				}
 				else
