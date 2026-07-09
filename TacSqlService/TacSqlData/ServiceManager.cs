@@ -41,7 +41,7 @@ namespace Tac.Sql
 					if (sc.Status == ServiceControllerStatus.Stopped)
 					{
 						sc.Start();
-						sc.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(10));
+						sc.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(60));
 					}
 					else if (sc.Status == ServiceControllerStatus.Running)
 					{

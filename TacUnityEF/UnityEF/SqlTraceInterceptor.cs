@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Globalization;
 using System.IO;
 using System.IO.Pipes;
 using System.Text;
@@ -33,6 +34,7 @@ namespace UnityEF
 
 		public bool SendMode = true;
 		public DebugType DebugType = DebugType.InfoSql;
+		public bool LoadMode;
 
 		public SqlTraceInterceptor()
 		{
@@ -45,13 +47,25 @@ namespace UnityEF
 				_serviceChecked = true;
 				ServiceManager.EnsureServiceInstalledAndRunning();
 
-				var save = new NewSave
+				if (LoadMode == false)
 				{
-					MessageType = MessageType.NewSave,
-					SaveName = "autosave"
-				};
+					NewSave save = new NewSave
+					{
+						MessageType = MessageType.NewSave,
+						SaveName = "autosave"
+					};
+					Message response = SendAndReceive(save);
+				}
+				else
+				{
+					LoadSave load = new LoadSave
+					{
+						MessageType = MessageType.LoadSave,
+						SaveName = "autosave"
+					};
+					Message response = SendAndReceive(load);
+				}
 
-				Message response = SendAndReceive(save);
 			}
 		}
 
@@ -68,6 +82,7 @@ namespace UnityEF
 
 				if (DebugType != DebugType.None)
 				{
+					File.AppendAllText(logDeclare, "CommandId = " + NextCommandId.ToString() + "\n");
 					File.AppendAllText(logDeclare, operation + "\n");
 				}
 			}
@@ -130,12 +145,39 @@ namespace UnityEF
 					log.Parameters.Add(new ParameterData
 					{
 						Name = p.ParameterName,
-						Value = p.Value == DBNull.Value ? "NULL" : p.Value?.ToString(),
+						Value = GetParameterValue(p),
 						DbType = p.DbType.ToString()
 					});
 				}
 			}
 			return log;
+		}
+
+		private string GetParameterValue(DbParameter parameter)
+		{
+			// Обработка null и DBNull (исходное поведение)
+			if (parameter.Value == DBNull.Value || parameter.Value == null)
+				return "NULL";
+
+			// Всегда используем инвариантную культуру для получения строки
+			string stringValue = Convert.ToString(parameter.Value, CultureInfo.InvariantCulture);
+
+			// Если полученная строка — "NaN", "Infinity" или аналоги, заменяем на "0"
+			if (IsNonNumericString(stringValue))
+				return "0";
+
+			return stringValue;
+		}
+
+		private bool IsNonNumericString(string value)
+		{
+			if (string.IsNullOrWhiteSpace(value))
+				return false;
+
+			string trimmed = value.Trim();
+			string lower = trimmed.ToLowerInvariant();
+
+			return lower == "nan" || lower == "infinity" || lower == "-infinity" || lower == "+infinity";
 		}
 
 		private void Send(DbCommand command, string operation)

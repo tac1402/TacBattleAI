@@ -13,8 +13,9 @@ namespace Tac.Sql
 	{
 		Message = 0,
 		NewSave = 1,
-		LogCommand = 2,
-		LogDataTable = 3
+		LoadSave = 2,
+		LogCommand = 3,
+		LogDataTable = 4
 	}
 
 	[Serializable]
@@ -38,6 +39,9 @@ namespace Tac.Sql
 				case NewSave ns:
 					ns.MessageType = MessageType.NewSave;
 					return JsonSerializer.Serialize<NewSave>(ns);
+				case LoadSave ls:
+					ls.MessageType = MessageType.LoadSave;
+					return JsonSerializer.Serialize<LoadSave>(ls);
 				case LogCommand lc:
 					lc.MessageType = MessageType.LogCommand;
 					return JsonSerializer.Serialize<LogCommand>(lc);
@@ -65,6 +69,7 @@ namespace Tac.Sql
 			{
 				MessageType.Message => JsonSerializer.Deserialize<Message>(json),
 				MessageType.NewSave => JsonSerializer.Deserialize<NewSave>(json),
+				MessageType.LoadSave => JsonSerializer.Deserialize<LoadSave>(json),
 				MessageType.LogCommand => JsonSerializer.Deserialize<LogCommand>(json),
 				MessageType.LogDataTable => JsonSerializer.Deserialize<LogDataTable>(json),
 				_ => throw new NotSupportedException($"Unsupported MessageType: {messageType}")
@@ -74,6 +79,12 @@ namespace Tac.Sql
 
 	[Serializable]
 	public class NewSave : Message
+	{
+		public string SaveName { get; set; }
+	}
+
+	[Serializable]
+	public class LoadSave : Message
 	{
 		public string SaveName { get; set; }
 	}

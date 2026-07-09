@@ -14,6 +14,7 @@ namespace Tac.Sql
 	public class LiteToServer
 	{
 		private readonly List<string> _alterStatements = new();
+		//private LiteText liteText = new LiteText();
 
 		public void Convert(LogCommand log)
 		{
@@ -128,9 +129,6 @@ namespace Tac.Sql
 			// 7. Заменяем INTEGER на INT (оставшиеся)
 			sqlCommand = Regex.Replace(sqlCommand, @"\bINTEGER\b", "INT", RegexOptions.IgnoreCase);
 
-			// 8. Заменяем TEXT на NVARCHAR(450) – подходит для индексов и ключей
-			sqlCommand = Regex.Replace(sqlCommand, @"\bTEXT\b", "NVARCHAR(450)", RegexOptions.IgnoreCase);
-
 			// 9. LIMIT → TOP
 			sqlCommand = Regex.Replace(
 				sqlCommand,
@@ -164,6 +162,16 @@ namespace Tac.Sql
 
 			// 12. Обработка IDENTITY_INSERT для INSERT с явным указанием Id
 			sqlCommand = WrapIdentityInsert(sqlCommand);
+
+			// End. Заменяем TEXT на NVARCHAR(450) – для индексов и ключей, иначе на NVARCHAR(MAX). Нужно делать в конце обработки.
+			//sqlCommand = Regex.Replace(sqlCommand, @"\bTEXT\b", "NVARCHAR(450)", RegexOptions.IgnoreCase);
+			//sqlCommand = liteText.Replace(sqlCommand);
+
+			// 1. Заменяем [Key] TEXT на [Key] NVARCHAR(450)
+			sqlCommand = Regex.Replace(sqlCommand, @"\[Key\]\s+TEXT", "[Key] NVARCHAR(450)", RegexOptions.IgnoreCase);
+
+			// 2. Все остальные TEXT заменяем на NVARCHAR(MAX)
+			sqlCommand = Regex.Replace(sqlCommand, @"\bTEXT\b", "NVARCHAR(MAX)", RegexOptions.IgnoreCase);
 
 			return sqlCommand.Trim();
 		}
@@ -311,234 +319,121 @@ SET IDENTITY_INSERT {table} OFF;";
 			return result;
 		}
 	}
+/*
+	public class LiteText
+	{
+		private HashSet<string> keyColumns;
 
-	/*
-		public class LiteToServer
+		public string Replace(string sqlCommand, string nonKeyNvarchar = "NVARCHAR(MAX)")
 		{
-			private readonly List<string> _alterStatements = new();
+			keyColumns = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-			public void Convert(LogData log)
+			// Паттерн для имени таблицы: [schema.]table (с квадратными скобками или без)
+			string tablePattern = @"(?<table>(?:\[[^\]]+\]\.)?\[?[^\]]+\]?)";
+
+			// 1. PRIMARY KEY
+			string patternPK = $@"ALTER\s+TABLE\s+{tablePattern}\s+ADD\s+CONSTRAINT\s+\[?[^\]]*\]?\s+PRIMARY\s+KEY\s*\((?<cols>[^)]+)\)";
+			AddKeyColumns(sqlCommand, patternPK);
+
+			// 2. FOREIGN KEY
+			string patternFK = $@"ALTER\s+TABLE\s+{tablePattern}\s+ADD\s+CONSTRAINT\s+\[?[^\]]*\]?\s+FOREIGN\s+KEY\s*\((?<cols>[^)]+)\)";
+			AddKeyColumns(sqlCommand, patternFK);
+
+			// 3. UNIQUE
+			string patternUQ = $@"ALTER\s+TABLE\s+{tablePattern}\s+ADD\s+CONSTRAINT\s+\[?[^\]]*\]?\s+UNIQUE\s*\((?<cols>[^)]+)\)";
+			AddKeyColumns(sqlCommand, patternUQ);
+
+			// 4. CREATE INDEX (включая UNIQUE INDEX)
+			string patternIdx = $@"CREATE\s+(?:UNIQUE\s+)?INDEX\s+\[?[^\]]*\]?\s+ON\s+{tablePattern}\s*\((?<cols>[^)]+)\)";
+			AddKeyColumns(sqlCommand, patternIdx);
+
+			// 5. Обработка CREATE TABLE
+			string patternCreate = $@"CREATE\s+TABLE\s+{tablePattern}\s*\((?<def>.*)\)";
+
+			var replacements = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase); 
+			foreach (Match m in Regex.Matches(sqlCommand, patternCreate, RegexOptions.IgnoreCase))
 			{
-				if (log == null || string.IsNullOrEmpty(log.CommandText))
-					return;
+				string table = m.Groups["table"].Value.Trim();
+				string def = m.Groups["def"].Value;
+				string originalMatch = m.Value; // полный текст CREATE TABLE
 
-				_alterStatements.Clear();
-				log.CommandText = ToTSQL(log.CommandText);
+				var columns = SplitColumnsDefinition(def);
+				var newColumns = new List<string>();
 
-				if (string.IsNullOrWhiteSpace(log.CommandText))
-					log.CommandText = "-- empty command (PRAGMA removed)";
-			}
-
-			private string ToTSQL(string sqlCommand)
-			{
-				// 1. Удаляем PRAGMA
-				sqlCommand = Regex.Replace(
-					sqlCommand,
-					@"^\s*PRAGMA\s+[^;]*;?\s*$",
-					"",
-					RegexOptions.IgnoreCase | RegexOptions.Multiline
-				);
-				sqlCommand = Regex.Replace(sqlCommand, @"^\s*\r?\n", "", RegexOptions.Multiline);
-
-				// 2. Заменяем кавычки
-				sqlCommand = Regex.Replace(sqlCommand, @"""(?<id>[^""]+)""", "[${id}]");
-
-				// 3. Преобразуем sqlite_master
-				sqlCommand = Regex.Replace(
-					sqlCommand,
-					@"SELECT\s+COUNT\(\*\)\s+FROM\s+\[sqlite_master\]\s+WHERE\s+\[type\]\s*=\s*'table'\s+AND\s+\[rootpage\]\s+IS\s+NOT\s+NULL\s*;?",
-					"SELECT COUNT(*) FROM sys.tables WHERE type = 'U';",
-					RegexOptions.IgnoreCase
-				);
-				sqlCommand = Regex.Replace(
-					sqlCommand,
-					@"FROM\s+\[sqlite_master\]",
-					"FROM sys.tables",
-					RegexOptions.IgnoreCase
-				);
-				sqlCommand = Regex.Replace(
-					sqlCommand,
-					@"\[\s*type\s*\]\s*=\s*'table'",
-					"type = 'U'",
-					RegexOptions.IgnoreCase
-				);
-				sqlCommand = Regex.Replace(
-					sqlCommand,
-					@"\s+AND\s+\[\s*rootpage\s*\]\s+IS\s+NOT\s+NULL",
-					"",
-					RegexOptions.IgnoreCase
-				);
-				sqlCommand = Regex.Replace(
-					sqlCommand,
-					@"\[\s*rootpage\s*\]\s+IS\s+NOT\s+NULL\s*(AND\s+)?",
-					"",
-					RegexOptions.IgnoreCase
-				);
-
-				// 4. Добавляем схему dbo
-				sqlCommand = AddDboSchema(sqlCommand);
-
-				// 5. Обрабатываем CREATE TABLE
-				var pattern = @"CREATE\s+TABLE\s+(?<tableName>\[?[^\s\(]+\]?)\s*\((?<definition>.*)\)\s*;?";
-				var matches = Regex.Matches(sqlCommand, pattern, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-				foreach (Match match in matches)
+				for (int i = 0; i < columns.Count; i++)
 				{
-					var tableName = match.Groups["tableName"].Value;
-					if (!tableName.Contains("."))
-						tableName = "[dbo]." + tableName;
-
-					var definition = match.Groups["definition"].Value;
-					var newDefinition = ParseTableDefinition(definition, tableName);
-					var newCreate = $"CREATE TABLE {tableName} ({newDefinition});";
-					sqlCommand = sqlCommand.Replace(match.Value, newCreate);
+					string colDef = columns[i];
+					var colMatch = Regex.Match(colDef, @"\[?(?<col>\w+)\]?\s+TEXT\b", RegexOptions.IgnoreCase);
+					if (colMatch.Success)
+					{
+						string colName = colMatch.Groups["col"].Value;
+						string key = table + "." + colName;
+						string replacement = keyColumns.Contains(key) ? "NVARCHAR(450)" : nonKeyNvarchar;
+						colDef = Regex.Replace(colDef, @"\bTEXT\b", replacement, RegexOptions.IgnoreCase);
+					}
+					newColumns.Add(colDef);
 				}
 
-				// 6. Добавляем все ALTER (PRIMARY KEY + FOREIGN KEY)
-				if (_alterStatements.Count > 0)
-					sqlCommand += Environment.NewLine + string.Join(Environment.NewLine, _alterStatements);
-
-				// 7. Заменяем INTEGER на INT (оставшиеся)
-				sqlCommand = Regex.Replace(sqlCommand, @"\bINTEGER\b", "INT", RegexOptions.IgnoreCase);
-
-				// 8. Заменяем TEXT
-				sqlCommand = Regex.Replace(sqlCommand, @"\bTEXT\b", "NVARCHAR(MAX)", RegexOptions.IgnoreCase);
-
-				// 9. LIMIT → TOP
-				sqlCommand = Regex.Replace(
-					sqlCommand,
-					@"(?<=SELECT\s)(.*?)(?=\s+LIMIT\s+(\d+)\s*;?)",
-					"TOP $2 $1",
-					RegexOptions.IgnoreCase | RegexOptions.Singleline
-				);
-				sqlCommand = Regex.Replace(
-					sqlCommand,
-					@"\s+LIMIT\s+\d+\s*;?",
-					"",
-					RegexOptions.IgnoreCase
-				);
-
-				return sqlCommand.Trim();
+				string newTableDef = $"CREATE TABLE [{table}] ({string.Join(", ", newColumns)})";
+				replacements[originalMatch] = newTableDef;
 			}
 
-			private string AddDboSchema(string sql)
+			// Теперь выполняем единую замену, используя собранный словарь
+			foreach (var kvp in replacements)
 			{
-				string pattern = @"\b(FROM|JOIN|UPDATE|INTO|TABLE|DELETE\s+FROM|INSERT\s+INTO)\s+\[([^\]]+)\]";
-				return Regex.Replace(sql, pattern, m =>
-				{
-					string keyword = m.Groups[1].Value;
-					string tableName = m.Groups[2].Value;
-					if (tableName.Contains(".") || tableName.StartsWith("sys.", StringComparison.OrdinalIgnoreCase))
-						return m.Value;
-					return $"{keyword} [dbo].[{tableName}]";
-				}, RegexOptions.IgnoreCase);
+				// Заменяем только первое вхождение? Но может быть несколько одинаковых? Лучше использовать MatchEvaluator.
+				// Для надёжности лучше использовать Regex.Replace с делегатом, который ищет в словаре.
+				sqlCommand = Regex.Replace(sqlCommand, Regex.Escape(kvp.Key), kvp.Value, RegexOptions.IgnoreCase);
 			}
 
-			private string ParseTableDefinition(string definition, string tableName)
+			return sqlCommand;
+		}
+
+		// Вспомогательный метод для добавления колонок из найденных ограничений
+		private void AddKeyColumns(string sql, string pattern)
+		{
+			foreach (Match m in Regex.Matches(sql, pattern, RegexOptions.IgnoreCase))
 			{
-				var elements = SplitDefinition(definition);
-				var newElements = new List<string>();
-
-				foreach (var element in elements)
+				string table = m.Groups["table"].Value.Trim();
+				string cols = m.Groups["cols"].Value;
+				foreach (string col in SplitColumns(cols))
 				{
-					// FOREIGN KEY
-					if (Regex.IsMatch(element, @"FOREIGN\s+KEY", RegexOptions.IgnoreCase))
-					{
-						var fkPattern = @"CONSTRAINT\s+(?<constraint>\[?[a-zA-Z0-9_]+\]?)\s+FOREIGN\s+KEY\s*\((?<columns>[^\)]+)\)\s+REFERENCES\s+(?<refTable>\[?[a-zA-Z0-9_]+\]?)\s*\((?<refColumns>[^\)]+)\)\s*(?:ON\s+DELETE\s+(?<onDelete>RESTRICT|CASCADE|SET\s+NULL|SET\s+DEFAULT|NO\s+ACTION))?\s*(?:ON\s+UPDATE\s+(?<onUpdate>RESTRICT|CASCADE|SET\s+NULL|SET\s+DEFAULT|NO\s+ACTION))?";
-						var m = Regex.Match(element, fkPattern, RegexOptions.IgnoreCase);
-						if (m.Success)
-						{
-							string constraintName = m.Groups["constraint"].Value;
-							string columns = m.Groups["columns"].Value;
-							string refTable = m.Groups["refTable"].Value;
-							string refColumns = m.Groups["refColumns"].Value;
-							string onDelete = m.Groups["onDelete"].Value;
-							string onUpdate = m.Groups["onUpdate"].Value;
-
-							if (onDelete.Equals("RESTRICT", StringComparison.OrdinalIgnoreCase))
-								onDelete = "NO ACTION";
-							if (onUpdate.Equals("RESTRICT", StringComparison.OrdinalIgnoreCase))
-								onUpdate = "NO ACTION";
-
-							if (!refTable.Contains("."))
-								refTable = "[dbo]." + refTable;
-
-							string alter = $"ALTER TABLE {tableName} ADD CONSTRAINT {constraintName} FOREIGN KEY ({columns}) REFERENCES {refTable} ({refColumns})";
-							if (!string.IsNullOrEmpty(onDelete))
-								alter += $" ON DELETE {onDelete}";
-							if (!string.IsNullOrEmpty(onUpdate))
-								alter += $" ON UPDATE {onUpdate}";
-							alter += ";";
-
-							_alterStatements.Add(alter);
-							continue;
-						}
-						else
-						{
-							newElements.Add(element);
-						}
-					}
-					else
-					{
-						// PRIMARY KEY AUTOINCREMENT
-						if (Regex.IsMatch(element, @"PRIMARY\s+KEY\s+AUTOINCREMENT", RegexOptions.IgnoreCase))
-						{
-							var columnMatch = Regex.Match(element, @"(?<column>\[?[a-zA-Z0-9_]+\]?)\s+");
-							var constraintMatch = Regex.Match(element, @"CONSTRAINT\s+(?<constraint>\[?[a-zA-Z0-9_]+\]?)", RegexOptions.IgnoreCase);
-
-							string columnName = columnMatch.Success ? columnMatch.Groups["column"].Value : "Id";
-							string constraintName = constraintMatch.Success
-								? constraintMatch.Groups["constraint"].Value
-								: $"PK_{tableName}_{columnName}";
-
-							string newElement = Regex.Replace(element, @"CONSTRAINT\s+\[?[a-zA-Z0-9_]+\]?\s+", "", RegexOptions.IgnoreCase);
-							newElement = Regex.Replace(newElement, @"PRIMARY\s+KEY\s+AUTOINCREMENT", "", RegexOptions.IgnoreCase);
-							newElement = Regex.Replace(newElement, @"\bINTEGER\b", "INT IDENTITY(1,1)", RegexOptions.IgnoreCase);
-							newElement = Regex.Replace(newElement, @"\s+", " ").Trim();
-
-							newElements.Add(newElement);
-
-							// Добавляем ALTER PRIMARY KEY
-							_alterStatements.Add($"ALTER TABLE {tableName} ADD CONSTRAINT {constraintName} PRIMARY KEY ({columnName});");
-						}
-						else
-						{
-							// Обычный столбец
-							string newElement = Regex.Replace(element, @"\bINTEGER\b", "INT", RegexOptions.IgnoreCase);
-							newElements.Add(newElement);
-						}
-					}
+					keyColumns.Add(table + "." + col.Trim());
 				}
-
-				return string.Join(", ", newElements);
-			}
-
-			private List<string> SplitDefinition(string definition)
-			{
-				var result = new List<string>();
-				int depth = 0;
-				int start = 0;
-
-				for (int i = 0; i < definition.Length; i++)
-				{
-					char c = definition[i];
-					if (c == '(') depth++;
-					else if (c == ')') depth--;
-					else if (c == ',' && depth == 0)
-					{
-						var part = definition.Substring(start, i - start).Trim();
-						if (!string.IsNullOrEmpty(part))
-							result.Add(part);
-						start = i + 1;
-					}
-				}
-
-				var lastPart = definition.Substring(start).Trim();
-				if (!string.IsNullOrEmpty(lastPart))
-					result.Add(lastPart);
-
-				return result;
 			}
 		}
-	*/
+
+		// Разбивает строку с колонками (разделёнными запятыми), учитывая вложенные скобки
+		private List<string> SplitColumns(string columns)
+		{
+			var result = new List<string>();
+			int depth = 0;
+			int start = 0;
+			for (int i = 0; i < columns.Length; i++)
+			{
+				char c = columns[i];
+				if (c == '(') depth++;
+				else if (c == ')') depth--;
+				else if (c == ',' && depth == 0)
+				{
+					result.Add(columns.Substring(start, i - start).Trim());
+					start = i + 1;
+				}
+			}
+			if (start < columns.Length)
+				result.Add(columns.Substring(start).Trim());
+			return result;
+		}
+
+		// Разбивает определение таблицы на отдельные определения колонок/ограничений,
+		// учитывая вложенные скобки (например, CHECK(...))
+		private List<string> SplitColumnsDefinition(string def)
+		{
+			// Аналогично SplitColumns, только разделитель — запятая на верхнем уровне
+			return SplitColumns(def);
+		}
+
+	}
+*/
 
 }

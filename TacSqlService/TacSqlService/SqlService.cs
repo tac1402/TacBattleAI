@@ -20,6 +20,7 @@ namespace Tac.Sql
 		private readonly string logFileReceive = "sql_trace_receive.log";
 		private readonly string logFileError = "sql_trace_error.log";
 		private string connectionString;
+		private string originalDatabase;
 		private string fullPathBefor;
 		private string fullPathAfter;
 		private string fullPathError;
@@ -33,6 +34,8 @@ namespace Tac.Sql
 		{
 			logger = argLogger;
 			connectionString = configuration.GetConnectionString("SqlConnection");
+			var builder = new SqlConnectionStringBuilder(connectionString);
+			originalDatabase = builder.InitialCatalog;
 
 			if (Enum.TryParse<DebugType>(configuration["Debug:DebugType"], ignoreCase: true, out var parsedDebugType))
 			{
@@ -49,6 +52,7 @@ namespace Tac.Sql
 			fullPathError = Path.Combine(logDirectory, logFileError);
 			fullPathReceive = Path.Combine(logDirectory, logFileReceive);
 			liteToServer = new LiteToServer();
+
 		}
 
 		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -129,6 +133,11 @@ namespace Tac.Sql
 									response = Message.Serialize(response);
 									break;
 
+								case LoadSave load:
+									response = await ProcessLoadAsync(load.SaveName);
+									response = Message.Serialize(response);
+									break;
+
 								default:
 									response = Message.Serialize("ERROR: Unsupported message type");
 									break;
@@ -186,6 +195,12 @@ namespace Tac.Sql
 							new string('-', 80) + "\n";
 					break;
 
+				case LoadSave load:
+					entry = $"[LoadSave] SaveName={load.SaveName}\n" +
+							$"Timestamp: {DateTime.Now:yyyy-MM-dd HH:mm:ss}\n" +
+							new string('-', 80) + "\n";
+					break;
+
 				default:
 					entry = $"[Unknown] {message.GetType().Name}\n" +
 							new string('-', 80) + "\n";
@@ -200,7 +215,6 @@ namespace Tac.Sql
 			try
 			{
 				var builder = new SqlConnectionStringBuilder(connectionString);
-				string originalDatabase = builder.InitialCatalog;
 				string newDatabase = $"{originalDatabase}_{saveName}";
 
 				// Подключение к master
@@ -254,6 +268,49 @@ namespace Tac.Sql
 			catch (Exception ex)
 			{
 				await File.AppendAllTextAsync(fullPathError, $"[SaveError] {ex.Message}\n{ex.StackTrace}");
+				return $"ERROR: {ex.Message}";
+			}
+		}
+
+		private async Task<string> ProcessLoadAsync(string saveName)
+		{
+			try
+			{
+				var builder = new SqlConnectionStringBuilder(connectionString);
+				string newDatabase = $"{originalDatabase}_{saveName}";
+
+				// Подключение к master
+				builder.InitialCatalog = "master";
+				string masterConnectionString = builder.ConnectionString;
+
+				int exists = 0;
+				using (var masterConn = new SqlConnection(masterConnectionString))
+				{
+					await masterConn.OpenAsync();
+
+					// Проверяем, существует ли база
+					string checkCommand = $"SELECT COUNT(*) FROM sys.databases WHERE name = N'{newDatabase}'";
+					using (var checkCmd = new SqlCommand(checkCommand, masterConn))
+					{
+						exists = (int)await checkCmd.ExecuteScalarAsync();
+					}
+
+					if (exists > 0)
+					{
+						// После создания базы очищаем пул соединений
+						SqlConnection.ClearAllPools();
+
+						// ---- ОБНОВЛЯЕМ СТРОКУ ПОДКЛЮЧЕНИЯ ----
+						builder.InitialCatalog = newDatabase;
+						connectionString = builder.ConnectionString;
+					}
+				}
+
+				return $"OK: Database '{newDatabase}' created (previous dropped if existed)";
+			}
+			catch (Exception ex)
+			{
+				await File.AppendAllTextAsync(fullPathError, $"[LoadError] {ex.Message}\n{ex.StackTrace}");
 				return $"ERROR: {ex.Message}";
 			}
 		}
@@ -325,7 +382,8 @@ namespace Tac.Sql
 			}
 			catch (Exception ex)
 			{
-				await File.AppendAllTextAsync(fullPathError, ex.Message + "\n" + ex.StackTrace);
+				await File.AppendAllTextAsync(fullPathError, ex.Message + "\n" + ex.StackTrace + "\n");
+				await File.AppendAllTextAsync(fullPathError, log.CommandText + "\n");
 				return string.Empty;
 			}
 		}

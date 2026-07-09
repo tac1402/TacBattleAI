@@ -34,20 +34,26 @@ namespace UnityEF
 		};
 
 		private DebugType debugType;
+		private bool loadMode;
 
 		public UnityDbContext()
 		{ 
 			debugType = DebugType.None;
+			loadMode = false;
 		}
 
-		public UnityDbContext(DebugType argDebugType)
+		public UnityDbContext(DebugType argDebugType, bool argLoadType)
 		{
 			debugType = argDebugType;
+			loadMode = argLoadType;
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlite("Data Source=rotark.db;Foreign Keys=False;").AddInterceptors(new SqlTraceInterceptor()); ;
+			SqlTraceInterceptor interceptor = new SqlTraceInterceptor();
+			interceptor.LoadMode = loadMode;
+
+			optionsBuilder.UseSqlite("Data Source=rotark.db;Foreign Keys=False;").AddInterceptors(interceptor); ;
 
 			//optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Rotark;Trusted_Connection=True;");
 

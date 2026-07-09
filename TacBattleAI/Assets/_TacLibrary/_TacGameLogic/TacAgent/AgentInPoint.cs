@@ -6,8 +6,21 @@ using UnityEF;
 
 namespace Tac.Agent
 {
-	public partial class AgentInPoint : ItemDb, IId
+	public class AgentInPoint : ItemDb
 	{
+		public override int Id
+		{
+			get 
+			{
+				if (Agent != null)
+				{
+					return Agent.Id;
+				}
+				return 0;
+			}
+			set { }
+		}
+
 		public Agent Agent;
 		public GameTime EnterTime;
 	}

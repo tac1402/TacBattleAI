@@ -76,6 +76,8 @@ nav:
     - ICollection: TacUnityEF/ICollection.md
     - GDictionary: TacUnityEF/GDictionary.md
     - LDictionary: TacUnityEF/LDictionary.md
+    - GList: TacUnityEF/GList.md
     - LList: TacUnityEF/LList.md
     - LQueue: TacUnityEF/LQueue.md
-
+    - SQLite: TacUnityEF/SQLite.md
+    - SQLServer: TacUnityEF/SQLServer.md

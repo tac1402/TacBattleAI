@@ -31,7 +31,7 @@ namespace DnaCore
 		/// <summary>
 		/// Уникальный индентификатор объекта в мире
 		/// </summary>
-		public K Id { get; set; }
+		public virtual K Id { get; set; }
 
 		//public string DebugInfo { get; set; }
 

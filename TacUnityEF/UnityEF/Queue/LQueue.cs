@@ -99,17 +99,19 @@ namespace UnityEF
 
 		public T Remove(int id)
 		{
-			removedIds.Add(id);
-
 			T ret = default;
-			foreach (LItem<T> item in items)
+
+			for (int i = 0; i < items.Count; i++)
 			{
-				if (item.Item.item.Id == id)
+				if (items[i].Item.item.Id == id)
 				{
-					ret = item.Item;
+					ret = items[i].Item;
 					break;
 				}
 			}
+
+			removedIds.Add(id); // Важно после получения, т.к. иначе GetEnumerator() исключит удаленные
+
 			return ret;
 		}
 

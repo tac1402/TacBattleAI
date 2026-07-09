@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TacSqlData\TacSqlData.csproj" />
+    <ProjectReference Include="..\TacSqlService\TacSqlService.csproj" />
   </ItemGroup>
 
 </Project>
