@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -342,6 +343,12 @@ namespace UnityEF
 							{
 								propertyBuilder.HasConversion(GetValueConverter(fieldType));
 							}
+
+							// Добавляем для bool
+							if (fieldType == typeof(bool))
+							{
+								propertyBuilder.HasConversion<int>();
+							}
 						}
 					}
 
@@ -410,32 +417,32 @@ namespace UnityEF
 		private static Vector3 ParseVector3(string s)
 		{
 			string[] p = s.Split(';');
-			return new Vector3 { x = float.Parse(p[0]), y = float.Parse(p[1]), z = float.Parse(p[2]) };
+			return new Vector3 {x = float.Parse(p[0], CultureInfo.InvariantCulture), y = float.Parse(p[1], CultureInfo.InvariantCulture), z = float.Parse(p[2], CultureInfo.InvariantCulture) };
 		}
 		private static Vector2 ParseVector2(string s)
 		{
 			string[] p = s.Split(';');
-			return new Vector2 { x = float.Parse(p[0]), y = float.Parse(p[1]) };
+			return new Vector2 {x = float.Parse(p[0], CultureInfo.InvariantCulture), y = float.Parse(p[1], CultureInfo.InvariantCulture) };
 		}
 		private static Vector3_ ParseVector3_(string s)
 		{
 			string[] p = s.Split(';');
-			return new Vector3_ { x = float.Parse(p[0]), y = float.Parse(p[1]), z = float.Parse(p[2]) };
+			return new Vector3_ {x = float.Parse(p[0], CultureInfo.InvariantCulture), y = float.Parse(p[1], CultureInfo.InvariantCulture), z = float.Parse(p[2], CultureInfo.InvariantCulture) };
 		}
 		private static Vector2_ ParseVector2_(string s)
 		{
 			string[] p = s.Split(';');
-			return new Vector2_ { x = float.Parse(p[0]), y = float.Parse(p[1]) };
+			return new Vector2_ { x = float.Parse(p[0], CultureInfo.InvariantCulture), y = float.Parse(p[1], CultureInfo.InvariantCulture) };
 		}
 		private static LVector3 ParseLVector3(string s)
 		{
 			string[] p = s.Split(';');
-			return new LVector3 { x = float.Parse(p[0]), y = float.Parse(p[1]), z = float.Parse(p[2]) };
+			return new LVector3 {x = float.Parse(p[0], CultureInfo.InvariantCulture), y = float.Parse(p[1], CultureInfo.InvariantCulture), z = float.Parse(p[2], CultureInfo.InvariantCulture) };
 		}
 		private static LVector2 ParseLVector2(string s)
 		{
 			string[] p = s.Split(';');
-			return new LVector2 { x = float.Parse(p[0]), y = float.Parse(p[1]) };
+			return new LVector2 {x = float.Parse(p[0], CultureInfo.InvariantCulture), y = float.Parse(p[1], CultureInfo.InvariantCulture) };
 		}
 
 		private static GameTime ParseGameTime(string s)

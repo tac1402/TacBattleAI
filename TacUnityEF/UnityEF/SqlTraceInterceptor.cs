@@ -254,38 +254,6 @@ namespace UnityEF
 			WriteException(eventData.Exception);
 		}
 
-
-		/*private Message SendAndReceive(LogCommand log)
-		{
-			try
-			{
-				Message retMessage = null;
-				using var client = new NamedPipeClientStream(".", PipeConstants.PipeName, PipeDirection.InOut);
-				client.Connect(500); // таймаут 500 мс
-
-				StreamWriter writer = new StreamWriter(client, Encoding.UTF8, 4096, true);
-				string json = JsonSerializer.Serialize(log);
-				writer.WriteLine(json);
-				writer.Flush();
-
-				// Читаем ответ от службы
-				StreamReader reader = new StreamReader(client, Encoding.UTF8, false, 4096, true);
-				string responseJson = reader.ReadLine();
-				if (string.IsNullOrEmpty(responseJson) == false)
-				{
-					retMessage = Message.Deserialize(responseJson);
-					File.AppendAllText("response.log", responseJson + "\n");
-				}
-				return retMessage;
-			}
-			catch (Exception ex)
-			{
-				// Логируем ошибку (можно использовать ILogger)
-				File.AppendAllText("error.log", ex.Message + "\n" + ex.StackTrace + "\n");
-				return null;
-			}
-		}*/
-
 		private Message SendAndReceive(Message request)
 		{
 			try

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Tac;
 using UnityEF;
 using UnityEngine;
@@ -37,7 +38,8 @@ namespace DnaCore
 
 		public static DbContext db;
 
-		private static HashSet<object> saving = new HashSet<object>(); // для избежания циклов
+		private static HashSet<object> saving = new HashSet<object>(); // для избежания циклов при сохранении
+		private static HashSet<object> loading = new HashSet<object>(); // для избежания циклов при загрузке
 
 		public void SaveGraph<T>(T root)
 		{
@@ -112,13 +114,140 @@ namespace DnaCore
 			}
 		}
 
-		/*private void SetDiscriminator(object owner, FieldInfo field, object fieldValue)
+		/// <summary>
+		/// Загружает данные из БД в текущий объект (он уже должен существовать в памяти).
+		/// Обновляются все поля, включая навигационные свойства (одиночные ссылки и коллекции).
+		/// </summary>
+		public void LoadGraph<T>(T root)
 		{
-			if (fieldValue is ItemDb container && container.DebugInfo == null)
+			// 1. Присоединяем текущий объект к контексту, если он отсоединён
+			var entry = db.Entry(root);
+			if (entry.State == EntityState.Detached)
 			{
-				container.DebugInfo = $"{owner.GetType().Name}.{field.Name}";
+				db.Attach(root);
+				entry = db.Entry(root); // обновляем ссылку после Attach
 			}
-		}*/
+
+			// 2. Загружаем все скалярные свойства из БД (обновляем значения)
+			entry.Reload();
+
+			// 3. Рекурсивно загружаем навигационные свойства (аналогично LoadGraph для нового объекта)
+			Load(root);
+		}
+
+		// Рекурсивная загрузка для произвольного объекта
+		private void Load(object obj)
+		{
+			if (obj == null) return;
+			if (loading.Contains(obj)) return; // циклическая ссылка
+			loading.Add(obj);
+
+			try
+			{
+				var entry = db.Entry(obj);
+				var fields = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+
+				foreach (var field in fields)
+				{
+					var fieldType = field.FieldType;
+					var fieldValue = field.GetValue(obj);
+					bool isCollection = fieldType.GetInterface(typeof(UnityEF.IOrmCollection).FullName) != null;
+
+					// Одиночная ссылка на сущность
+					if (typeof(IItemDb).IsAssignableFrom(fieldType) && !isCollection)
+					{
+						var refEntry = entry.Reference(field.Name);
+						if (!refEntry.IsLoaded)
+						{
+							refEntry.Load();
+						}
+						// После загрузки свойство содержит объект (возможно, новый экземпляр).
+						// Теперь рекурсивно загружаем его граф.
+						var child = field.GetValue(obj) as IItemDb;
+						if (child != null)
+						{
+							Load(child);
+						}
+					}
+					// Коллекция сущностей
+					else if (isCollection)
+					{
+						// Проверяем, является ли коллекция GDictionary<,>
+						if (fieldType.IsGenericType && fieldType.GetGenericTypeDefinition() == typeof(GDictionary<,>))
+						{
+							Type valueType = fieldType.GetGenericArguments()[1]; // V
+
+							// ---------- Получение данных из БД с учётом иерархии ----------
+							// 1. Получаем метаданные сущности
+							var entityType = db.Model.FindEntityType(valueType);
+							if (entityType == null) continue;
+
+							// 2. Для TPH берём корневой тип (таблица Agent)
+							var rootType = entityType.GetRootType();
+
+							// 3. Получаем DbSet<T> для корневого типа через рефлексию
+							//    Вызов db.Set<rootType.ClrType>()
+							var setMethod = typeof(DbContext).GetMethod("Set", Type.EmptyTypes);
+							var setGeneric = setMethod.MakeGenericMethod(rootType.ClrType);
+							IQueryable rootDbSet = setGeneric.Invoke(db, null) as IQueryable; // IQueryable<rootType>
+
+							/*var setMethod2 = typeof(DbContext).GetMethod("Set", Type.EmptyTypes);
+							var setGeneric2 = setMethod2.MakeGenericMethod(valueType);
+							var dbSet = setGeneric2.Invoke(db, null) as IQueryable; // IQueryable<valueType>
+
+							// 4. Применяем OfType через рефлексию для фильтрации по дискриминатору
+							var ofTypeMethod = typeof(Queryable).GetMethod("OfType", BindingFlags.Public | BindingFlags.Static);
+							var ofTypeGeneric = ofTypeMethod.MakeGenericMethod(valueType);
+							var query = ofTypeGeneric.Invoke(db, new object[] { rootDbSet }) as IQueryable;*/
+
+							var toListMethod = typeof(Enumerable)
+								.GetMethod("ToList", BindingFlags.Public | BindingFlags.Static)
+								.MakeGenericMethod(rootType.ClrType);
+							var allEntities = toListMethod.Invoke(null, new[] { rootDbSet }) as System.Collections.IList;
+
+
+							// ---------- Создание Unity-объектов ----------
+
+							foreach (var entity in allEntities)
+							{
+								// Получаем Id, GroupId, ModelName через рефлексию
+								var idProp = entity.GetType().GetProperty("Id")?.GetValue(entity);
+								var groupIdProp = entity.GetType().GetField("GroupId")?.GetValue(entity);
+								var modelNameProp = entity.GetType().GetField("ModelName")?.GetValue(entity);
+								if (idProp == null || groupIdProp == null || modelNameProp == null) continue;
+
+								// Создаём Unity-объект
+								object child = null; /*UnityObjectCreator(
+									valueType,
+									idProp,
+									(int)groupIdProp,
+									(string)modelNameProp
+								);*/
+								if (child == null) continue;
+
+								// Присоединяем к контексту, если ещё не отслеживается
+								var childEntry = db.Entry(child);
+								if (childEntry.State == EntityState.Detached)
+								{
+									db.Attach(child);
+									childEntry = db.Entry(child);
+								}
+
+								// Загружаем все скалярные поля из БД (обновит и Id, GroupId, ModelName, и остальные)
+								childEntry.Reload();
+
+								// Рекурсивно загружаем навигационные свойства ребёнка
+								Load(child);
+							}
+						}
+					}
+				}
+			}
+			finally
+			{
+				loading.Remove(obj);
+			}
+		}
 
 
 		public IEnumerable<object> GetCollection(object storage)
