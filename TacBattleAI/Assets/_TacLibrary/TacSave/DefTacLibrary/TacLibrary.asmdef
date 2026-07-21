@@ -4,7 +4,6 @@
     "references": [
         "TacStandart",
         "TacStandartU",
-        "TacDConvertor",
         "Unity.InputSystem",
         "Unity.AI.Navigation",
         "Unity.TextMeshPro"

@@ -2,13 +2,16 @@
 // Copyright (C) 2026 Sergej Jakovlev
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Tac;
+using Tac.Save;
 using UnityEF;
 using UnityEngine;
 
@@ -37,6 +40,7 @@ namespace DnaCore
 		//public string DebugInfo { get; set; }
 
 		public static DbContext db;
+		public static ILoadManager ILoadManager;
 
 		private static HashSet<object> saving = new HashSet<object>(); // для избежания циклов при сохранении
 		private static HashSet<object> loading = new HashSet<object>(); // для избежания циклов при загрузке
@@ -118,25 +122,102 @@ namespace DnaCore
 		/// Загружает данные из БД в текущий объект (он уже должен существовать в памяти).
 		/// Обновляются все поля, включая навигационные свойства (одиночные ссылки и коллекции).
 		/// </summary>
-		public void LoadGraph<T>(T root)
+		public void LoadGraph(object root)
 		{
-			// 1. Присоединяем текущий объект к контексту, если он отсоединён
-			var entry = db.Entry(root);
-			if (entry.State == EntityState.Detached)
+			// 1. Получаем Id корневого объекта
+			var id = (int)root.GetType().GetProperty("Id")?.GetValue(root);
+			if (id == 0)
+				throw new InvalidOperationException("Root entity has no Id.");
+
+			Dictionary<string, int> foreignKeys = LoadEntity(root, id);
+
+			/*
+				// 2. Загружаем сущность из БД (она будет отслеживаться)
+			var loaded = db.Find<T>(id);
+
+			// 3. Отсоединяем loaded, чтобы избежать дублирования ключей
+			var loadedEntry = db.Entry(loaded);
+			loadedEntry.State = EntityState.Detached;
+
+			// 4. Присоединяем root к контексту, если он ещё не отслеживается
+			var rootEntry = db.Entry(root);
+			if (rootEntry.State == EntityState.Detached)
 			{
 				db.Attach(root);
-				entry = db.Entry(root); // обновляем ссылку после Attach
+				rootEntry = db.Entry(root);
 			}
 
-			// 2. Загружаем все скалярные свойства из БД (обновляем значения)
-			entry.Reload();
+			// 5. Копируем все скалярные и shadow свойства из loaded в root (без затрагивания навигационных)
+			rootEntry.CurrentValues.SetValues(loadedEntry.CurrentValues);*/
 
-			// 3. Рекурсивно загружаем навигационные свойства (аналогично LoadGraph для нового объекта)
-			Load(root);
+			// 6. Теперь рекурсивно загружаем навигационные свойства (одиночные ссылки и коллекции)
+			Load(root, foreignKeys);
 		}
 
+		private Dictionary<string, int> LoadEntity(object obj, int id)
+		{
+			// 1. Загружаем сущность из БД (она будет отслеживаться)
+			object loaded = db.Find(obj.GetType(), id);
+			return RefreshEntity(obj, loaded);
+		}
+
+		private Dictionary<string, int> PostLoadEntity(out object obj, object loaded)
+		{
+			var addDelegate = Item.Reg.GetAdd(loaded.GetType());
+			if (addDelegate != null)
+			{
+				obj = addDelegate(loaded);
+				return RefreshEntity(obj, loaded);
+			}
+			else
+			{
+				obj = null;
+				return null;
+			}
+		}
+
+		private Dictionary<string, int> RefreshEntity(object obj, object loaded)
+		{
+			// 2. Отсоединяем loaded, чтобы избежать дублирования ключей
+			EntityEntry loadedEntry = db.Entry(loaded);
+			loadedEntry.State = EntityState.Detached;
+
+			// 3. Присоединяем новый к контексту, если он ещё не отслеживается
+			EntityEntry objEntry = db.Entry(obj);
+			if (objEntry.State == EntityState.Detached)
+			{
+				db.Attach(obj);
+				objEntry = db.Entry(obj);
+			}
+
+			// 4. Копируем все скалярные и shadow свойства из loaded в objEntry (без затрагивания навигационных)
+			//objEntry.CurrentValues.SetValues(loadedEntry.CurrentValues);
+
+			// 4. Копируем только скалярные и shadow свойства (НЕ навигационные)
+			var entityType = db.Model.FindEntityType(obj.GetType());
+			Dictionary<string, int> foreignKeys = new Dictionary<string, int>();
+			foreach (var prop in entityType.GetProperties())
+			{
+				var value = loadedEntry.Property(prop.Name).CurrentValue;
+				if (prop.IsForeignKey() == true)
+				{
+					if (value != null && (int)value != 0)
+					{
+						foreignKeys[prop.Name] = (int)value;
+					}
+				}
+				else
+				{
+					objEntry.Property(prop.Name).CurrentValue = value;
+				}
+			}
+
+			return foreignKeys;
+		}
+
+
 		// Рекурсивная загрузка для произвольного объекта
-		private void Load(object obj)
+		private void Load(object obj, Dictionary<string, int> argForeignKeys)
 		{
 			if (obj == null) return;
 			if (loading.Contains(obj)) return; // циклическая ссылка
@@ -156,24 +237,104 @@ namespace DnaCore
 					// Одиночная ссылка на сущность
 					if (typeof(IItemDb).IsAssignableFrom(fieldType) && !isCollection)
 					{
-						var refEntry = entry.Reference(field.Name);
-						if (!refEntry.IsLoaded)
+						// Получаем значение внешнего ключа (shadow property)
+						string fkName = field.Name + "Id";
+						int id = argForeignKeys[fkName];
+
+						if (id != 0)
 						{
-							refEntry.Load();
-						}
-						// После загрузки свойство содержит объект (возможно, новый экземпляр).
-						// Теперь рекурсивно загружаем его граф.
-						var child = field.GetValue(obj) as IItemDb;
-						if (child != null)
-						{
-							Load(child);
+							var currentValue = field.GetValue(obj);
+							if (currentValue != null)
+							{
+								Dictionary<string, int>  foreignKeys = LoadEntity(currentValue, id);
+
+								// Рекурсивно загружаем граф для currentValue
+								Load(currentValue, foreignKeys);
+							}
+							else if (currentValue == null)
+							{
+								// Если поля нет – присвоить новый объект (но это должно быть редко)
+								var loaded = db.Find(fieldType, id);
+								if (loaded != null)
+								{
+									field.SetValue(obj, loaded);
+									Load(loaded, null);
+								}
+							}
 						}
 					}
 					// Коллекция сущностей
 					else if (isCollection)
 					{
+						if (fieldType.IsGenericType &&
+								(fieldType.GetGenericTypeDefinition() == typeof(LDictionary_<,>) ||
+								 fieldType.GetGenericTypeDefinition() == typeof(LList_<>) ||
+								 fieldType.GetGenericTypeDefinition() == typeof(LQueue_<>)))
+						{
+							// Получаем значение внешнего ключа через shadow property
+							string fkName = field.Name + "Id";
+							int id = argForeignKeys[fkName];
+
+							if (id != 0)
+							{
+								// Загружаем LDictionary_ по Id
+								var child = db.Find(fieldType, id);
+								if (child != null)
+								{
+									// Присваиваем загруженный объект полю
+									field.SetValue(obj, child);
+
+									// 3. Загружаем коллекцию Items (LKeyValue)
+									var childEntry = db.Entry(child);
+									childEntry.Collection("Items").Load();
+								}
+							}
+						}
+						else if (fieldType.IsGenericType &&
+								(fieldType.GetGenericTypeDefinition() == typeof(LDictionary<,>) ||
+								 fieldType.GetGenericTypeDefinition() == typeof(LList<>) ||
+								 fieldType.GetGenericTypeDefinition() == typeof(LQueue<>)))
+						{
+							// Получаем значение внешнего ключа через shadow property
+							string fkName = field.Name + "Id";
+							int id = argForeignKeys[fkName];
+
+							if (id != 0)
+							{
+								// Загружаем по Id
+								var child = db.Find(fieldType, id);
+								if (child != null)
+								{
+									// Присваиваем загруженный объект полю
+									field.SetValue(obj, child);
+
+									// 3. Загружаем коллекцию Items (LKeyValue)
+									var childEntry = db.Entry(child);
+
+									CollectionEntry collectionEntry = childEntry.Collection("Items");
+									collectionEntry.Load();
+
+									var items = collectionEntry.CurrentValue as IEnumerable;
+									if (items != null)
+									{
+										foreach (var item in items)
+										{
+											// item - это LKeyValue<K,V>, у него есть свойство Value
+											var valueProp = item.GetType().GetProperty("Value");
+											if (valueProp != null)
+											{
+												var valueObj = valueProp.GetValue(item);
+												/*if (valueObj is IItemDb)
+													Load(valueObj); // рекурсивно загружаем граф сущности
+													*/
+											}
+										}
+									}
+								}
+							}
+						}
 						// Проверяем, является ли коллекция GDictionary<,>
-						if (fieldType.IsGenericType && fieldType.GetGenericTypeDefinition() == typeof(GDictionary<,>))
+						else if (fieldType.IsGenericType && fieldType.GetGenericTypeDefinition() == typeof(GDictionary<,>))
 						{
 							Type valueType = fieldType.GetGenericArguments()[1]; // V
 
@@ -206,38 +367,42 @@ namespace DnaCore
 							var allEntities = toListMethod.Invoke(null, new[] { rootDbSet }) as System.Collections.IList;
 
 
-							// ---------- Создание Unity-объектов ----------
-
 							foreach (var entity in allEntities)
 							{
-								// Получаем Id, GroupId, ModelName через рефлексию
-								var idProp = entity.GetType().GetProperty("Id")?.GetValue(entity);
-								var groupIdProp = entity.GetType().GetField("GroupId")?.GetValue(entity);
-								var modelNameProp = entity.GetType().GetField("ModelName")?.GetValue(entity);
-								if (idProp == null || groupIdProp == null || modelNameProp == null) continue;
+								object component = null;
+								Dictionary<string, int> foreignKeys = PostLoadEntity(out component, entity);
+								Load(component, foreignKeys);
 
-								// Создаём Unity-объект
-								object child = null; /*UnityObjectCreator(
-									valueType,
-									idProp,
-									(int)groupIdProp,
-									(string)modelNameProp
-								);*/
-								if (child == null) continue;
+								/*var entityEntry = db.Entry(entity);
+								Type type = entity.GetType();
 
-								// Присоединяем к контексту, если ещё не отслеживается
-								var childEntry = db.Entry(child);
-								if (childEntry.State == EntityState.Detached)
+
+								var addDelegate = Item.Reg.GetAdd(type);
+								object component = null;
+								if (addDelegate != null)
 								{
-									db.Attach(child);
-									childEntry = db.Entry(child);
+									component = addDelegate(entity);
 								}
 
-								// Загружаем все скалярные поля из БД (обновит и Id, GroupId, ModelName, и остальные)
-								childEntry.Reload();
+								// Отсоединяем entity от контекста (он больше не отслеживается)
+								entityEntry.State = EntityState.Detached;
 
-								// Рекурсивно загружаем навигационные свойства ребёнка
-								Load(child);
+								if (component != null)
+								{
+									// 4. Присоединяем component к контексту
+									var componentEntry = db.Entry(component);
+									if (componentEntry.State == EntityState.Detached)
+									{
+										db.Attach(component);
+										componentEntry = db.Entry(component);
+									}
+
+									// 5. Копируем все значения (включая shadow properties) из старой сущности в новую
+									componentEntry.CurrentValues.SetValues(entityEntry.CurrentValues);
+
+									// Рекурсивно загружаем навигационные свойства 
+									Load(component, null);
+								}*/
 							}
 						}
 					}

@@ -69,6 +69,12 @@ namespace Tac
 		{
 			return new Vector2(v.x, v.z);
 		}
+		public static Vector3_ To3(this Vector2_ v)
+		{
+			return new Vector3_(v.x, 0, v.y);
+		}
+
+
 		public static Vector3 To(this Vector3_ v)
 		{
 			return new Vector3(v.x, v.y, v.z);

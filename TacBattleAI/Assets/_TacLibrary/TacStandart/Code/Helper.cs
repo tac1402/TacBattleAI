@@ -57,7 +57,6 @@ namespace Tac
         }
     }
 
-	public delegate void Change();
 	public delegate void Send(params object[] argInfo);
 	public delegate string ChangeAndReturn(params object[] argInfo);
 

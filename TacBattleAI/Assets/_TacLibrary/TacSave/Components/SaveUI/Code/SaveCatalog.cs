@@ -53,7 +53,7 @@ namespace Tac.Save
 
         public int SelectedPlaythroughId = 0;
 
-        /*private ISaveManager isaveManager;
+        private ISaveManager isaveManager;
         public ISaveManager ISaveManager
         {
             get { return isaveManager; }
@@ -62,7 +62,7 @@ namespace Tac.Save
                 isaveManager = value;
                 isaveManager.Version = Version;
             }
-        }*/
+        }
 
         private void Start()
         {
@@ -154,7 +154,7 @@ namespace Tac.Save
 
                     File.WriteAllText(SaveRootDir + "\\" + dirName + "\\" + fileName + ".txt", saveInfo);
 
-                    //ISaveManager.Save(ISaveManager.SaveRootDir + "\\" + dirName, fileName);
+                    ISaveManager.Save(ISaveManager.SaveRootDir + "\\" + dirName, fileName);
                     LoadAllCheckPoint(SelectedPlaythroughId);
                     Hide();
                 }
@@ -175,14 +175,14 @@ namespace Tac.Save
 
         public void Load(string argDirName, string argFileName)
         {
-            /*if (ISaveManager != null)
+            if (ISaveManager != null)
             {
                 DayNight.PauseCompleteStop = true;
                 ISaveManager.LoadError += ISaveManager_LoadError;
                 ISaveManager.LoadEnd += ISaveManager_LoadEnd;
                 ISaveManager.Load(ISaveManager.SaveRootDir + "\\" + argDirName, argFileName);
             }
-            else*/
+            else
             {
                 //MS.LoadSaveGameInFreeMode();
                 CurrentLoadDirName = argDirName;

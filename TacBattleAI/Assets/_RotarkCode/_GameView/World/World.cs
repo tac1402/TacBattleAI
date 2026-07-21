@@ -14,7 +14,7 @@ using UnityEF;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public partial class World : Item, ICell
+public partial class World : Item, ICell, ILoadManager
 {
 	public List<NavMeshBasic> NavMeshBasic;
 
@@ -29,6 +29,7 @@ public partial class World : Item, ICell
 	{
 		UnityDbContext context = new UnityDbContext();
 		ItemDb.db = context;
+		ItemDb.ILoadManager = this;
 
 		context.AddTypes("Assembly-CSharp");
 		context.AddTypes("TacStandartU");
