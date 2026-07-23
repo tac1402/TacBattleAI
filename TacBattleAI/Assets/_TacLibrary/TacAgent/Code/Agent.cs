@@ -12,7 +12,7 @@ using UnityEF;
 
 namespace Tac.Agent
 {
-	public partial class Agent : Item, ICell
+	public partial class Agent : Entity, ICell
 	{
 		public NavMeshAgent agent;
 

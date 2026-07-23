@@ -88,10 +88,10 @@ namespace UnityEF
 			}
 		}
 
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			AddTypes("Assembly-CSharp");
-
 
 			// 2. находим все закрытые generic-типы DQueue<> и DItem<>, на которые есть ссылки в полях
 			var toAdd = new HashSet<Type>();
@@ -193,12 +193,18 @@ namespace UnityEF
 						entityBuilder.ToTable($"LKeyValue_{keyArg.Name}_{valueName}");
 					}
 				}
-				else
+
+				/*var entityTypes = modelBuilder.Model.GetEntityTypes();
+				foreach (var et in entityTypes)
 				{
-					// Задаём имя таблицы = имени класса - только для стратегии TPT (Table per Type)
-					//entityBuilder.ToTable(type.Name);
-				}
+					if (et.ClrType == typeof(Vector3_))
+					{
+						Console.WriteLine("Vector3_ зарегистрирован как сущность!");
+					}
+				}*/
 			}
+
+			//modelBuilder.Entity<Vector3_>().HasNoKey();
 
 			// 3. Теперь для каждой зарегистрированной сущности настраиваем поля и связи
 			foreach (Type type in allTypes)
@@ -227,31 +233,7 @@ namespace UnityEF
 					var keyType = type.GetGenericArguments()[0];
 					var valueType = type.GetGenericArguments()[1];
 
-					/*bool isValueLItem = valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(LItem<>);
-
-					if (isValueLItem)
-					{
-						var innerType = valueType.GetGenericArguments()[0]; // T в LItem<T>
-
-						if (IsSimpleType(innerType))
-						{
-							// Создаём конвертер LItem<T> -> T через рефлексию
-							var converterType = typeof(LItemConverter<>).MakeGenericType(innerType);
-							var converter = (ValueConverter)Activator.CreateInstance(converterType);
-
-							entityBuilder.Property(valueType, "Value")
-										 .HasConversion(converter)
-										 .HasField("Value");
-						}
-						else
-						{
-							// Если T — сложная сущность, то оставляем связь с LItem<T>
-							entityBuilder.HasOne("Value")
-										 .WithMany()
-										 .HasForeignKey("ValueId");
-						}
-					}
-					else*/ if (IsSimpleType(valueType))
+					if (IsSimpleType(valueType))
 					{
 						var prop = entityBuilder.Property(valueType, "Value").HasField("Value");
 						if (IsCustomPrimitive(valueType))
@@ -304,7 +286,6 @@ namespace UnityEF
 				}
 				else
 				{
-					//var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
 					var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
 						.Where(f => (f.IsPublic || (f.IsPrivate && f.IsDefined(typeof(MappedAttribute), false)))
 							&& f.IsDefined(typeof(NotMappedAttribute), false) == false);
@@ -328,7 +309,7 @@ namespace UnityEF
 							continue;
 						}
 
-						if (isEntity)
+						if (isEntity && isSimple == false)
 						{
 							// Одиночная ссылка на другую сущность
 							var fkName = $"{field.Name}Id";
@@ -352,6 +333,16 @@ namespace UnityEF
 						}
 					}
 
+					if (typeof(Entity).IsAssignableFrom(type) || typeof(IEntityDb).IsAssignableFrom(type))
+					{
+						entityBuilder.Property<Vector3_>("Position")
+							.HasConversion(GetValueConverter(typeof(Vector3_)));
+						entityBuilder.Property<Vector3_>("Rotation")
+							.HasConversion(GetValueConverter(typeof(Vector3_)));
+						entityBuilder.Property<Vector3_>("Scale")
+							.HasConversion(GetValueConverter(typeof(Vector3_)));
+					}
+
 					bool isRoot = (type.BaseType == null) || allTypes.Contains(type.BaseType) == false;
 
 					BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
@@ -363,10 +354,13 @@ namespace UnityEF
 					PropertyInfo[] properties = type.GetProperties(flags);
 					foreach (var prop in properties)
 					{
-						if (prop.Name != "Id")
+						if (prop.Name == "Id") { continue; }
+						if ((typeof(Entity).IsAssignableFrom(type) || typeof(IEntityDb).IsAssignableFrom(type)) &&
+							(prop.Name == "Position" || prop.Name == "Rotation" || prop.Name == "Scale"))
 						{
-							entityBuilder.Ignore(prop.Name);
+							continue;
 						}
+						entityBuilder.Ignore(prop.Name);
 					}
 				}
 			}

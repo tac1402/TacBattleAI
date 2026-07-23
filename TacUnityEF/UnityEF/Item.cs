@@ -21,25 +21,6 @@ namespace Tac
 		/// </summary>
 		public int Id { get { return itemDb.Id; } set { itemDb.Id = value;  } }
 
-		[NotMapped]
-		public Vector3_ Position
-		{
-			get { if (IsValidUnityComponent) { return transform.position.To_(); } else { return Vector3_.zero; } }
-			set { if (IsValidUnityComponent) { transform.position = value.To(); } }
-		}
-		[NotMapped]
-		public Vector3_ Rotation
-		{
-			get { if (IsValidUnityComponent) { return transform.localEulerAngles.To_(); } else { return Vector3_.zero; } }
-			set { if (IsValidUnityComponent) { transform.localEulerAngles = value.To(); } }
-		}
-		[NotMapped]
-		public Vector3_ Scale
-		{
-			get { if (IsValidUnityComponent) { return transform.localScale.To_(); } else { return Vector3_.zero; } }
-			set { if (IsValidUnityComponent) { transform.localScale = value.To(); } }
-		}
-
 		public bool IsValidUnityComponent
 		{
 			get

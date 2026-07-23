@@ -14,7 +14,7 @@ using UnityEF;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public partial class World : Item, ICell, ILoadManager
+public partial class World : Item, ICell
 {
 	public List<NavMeshBasic> NavMeshBasic;
 
@@ -29,7 +29,6 @@ public partial class World : Item, ICell, ILoadManager
 	{
 		UnityDbContext context = new UnityDbContext();
 		ItemDb.db = context;
-		ItemDb.ILoadManager = this;
 
 		context.AddTypes("Assembly-CSharp");
 		context.AddTypes("TacStandartU");
@@ -117,67 +116,4 @@ public partial class World : Item, ICell, ILoadManager
 		}
 	}
 
-	#region ILoadManager
-
-	/// <summary>
-	/// ¬се объекты добавленные на сцену
-	/// </summary>
-	private Dictionary<int, GameObject> allObject = new Dictionary<int, GameObject>();
-	public Dictionary<int, GameObject> AllObject { get { return allObject; } }
-
-	public IObject IObject { get { return ItemCreate; } }
-
-	public void ResetGame()
-	{
-		//(this as ILoadManager).ResetGameInner();
-		//(this as ILoadManager).ResetEvent(DayNight, "NextDay");
-		//(this as ILoadManager).ResetEvent(DayNight, "NextHour");
-
-		//Society.People.Clear();
-		//InfoPanelManager.Clear();
-
-		/*World.Society.AllBusiness.Clear();
-
-		World.Society.RobotJob.AgentPlans.Clear();
-		World.Society.PlayerJob.AgentPlans.Clear();
-		*/
-	}
-
-	public void RecoverGame()
-	{
-		RunPanel.Init(DayNight, Society);
-		DayNight.NextHour += AgentWalkEmulation;
-
-		UpdateSurface();
-
-		/*foreach (Person p in Society.People.Values)
-		{
-			if (p.IsActive == false)
-			{
-				p.IsActive = true;
-				p.Init(true);
-				p.IsActive = false;
-			}
-			else
-			{
-				p.Init(true);
-			}
-			// ≈сли агент находитс€ в пути, то пути нужно все пересчитать и
-			// добавить себ€ в очередь RobotJob.AgentPath дл€ расчета пути
-			if (p.IsBusy && p.TargetId != 0)
-			{
-				p.PathStatus = 1;
-				Society.RobotJob.AgentPath.Enqueue(p);
-			}
-
-			// ¬ случае перекрестных ссылок, например, когда Person.Places ссылаетс€ на AgentPoint,
-			// а AgentPoint.Agents.Agent опосредованно ссылаетс€ на Person, нужно не пр€мо восстановить ссылки,
-			// а при сохранении будут записаны только индексы и когда уже будут восстановленны все объекты,
-			// нужно по индексам восстановить ссылки на сами объекты
-			p.Places = p.PlacesRef.Resolve(allObject);
-		}
-		*/
-	}
-
-	#endregion
 }

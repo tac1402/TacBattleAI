@@ -17,6 +17,13 @@ using UnityEngine;
 
 namespace DnaCore
 {
+	public interface IEntityDb : IItemDb
+	{
+		Vector3_ Position { get; set; }
+		Vector3_ Rotation { get; set; }
+		Vector3_ Scale { get; set; }
+	}
+
 	public interface IItemDb
 	{
 		public ItemDb item { get; }
@@ -40,7 +47,7 @@ namespace DnaCore
 		//public string DebugInfo { get; set; }
 
 		public static DbContext db;
-		public static ILoadManager ILoadManager;
+		//public static ILoadManager ILoadManager;
 
 		private static HashSet<object> saving = new HashSet<object>(); // для избежания циклов при сохранении
 		private static HashSet<object> loading = new HashSet<object>(); // для избежания циклов при загрузке

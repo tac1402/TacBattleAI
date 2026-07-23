@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 namespace Tac.Agent
 {
-	public partial class AgentPoint : Item, ICell
+	public partial class AgentPoint : Entity, ICell
 	{
 		public Vector3 Size = new Vector3(10, 3, 10);
 		public GameObject Point;
