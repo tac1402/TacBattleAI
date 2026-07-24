@@ -1,7 +1,7 @@
 // Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2026 Sergej Jakovlev
 
-namespace Tac.DConvert
+namespace Tac
 {
 	public interface IDayNight
 	{

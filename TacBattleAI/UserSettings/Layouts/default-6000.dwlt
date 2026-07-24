@@ -691,7 +691,7 @@ MonoBehaviour:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs:
-      - m_Data: 19920
+      - m_Data: 37822
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
@@ -1407,7 +1407,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_TacLibrary/TacAgent/Code
+    - Assets/_TacLibrary/TacStandart/CodeU
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1417,20 +1417,22 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_TacLibrary/TacAgent/Code
+  - Assets/_TacLibrary/TacStandart/CodeU
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 240}
+    scrollPos: {x: 0, y: 399}
     m_SelectedIDs:
-    - m_Data: 74274
+    - m_Data: 74202
     m_LastClickedID:
-      m_Data: 74274
+      m_Data: 74202
     m_ExpandedIDs:
     - m_Data: 0
+    - m_Data: 73994
+    - m_Data: 73996
     - m_Data: 73998
     - m_Data: 74000
     - m_Data: 74002
@@ -1464,10 +1466,7 @@ MonoBehaviour:
     - m_Data: 74058
     - m_Data: 74060
     - m_Data: 74062
-    - m_Data: 74064
-    - m_Data: 74186
     - m_Data: 1000000000
-    - m_Data: 2147483647
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1500,6 +1499,8 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
+    - m_Data: 73994
+    - m_Data: 73996
     - m_Data: 73998
     - m_Data: 74000
     - m_Data: 74002
@@ -1533,7 +1534,6 @@ MonoBehaviour:
     - m_Data: 74058
     - m_Data: 74060
     - m_Data: 74062
-    - m_Data: 74064
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1561,8 +1561,8 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: 19920
-    m_LastClickedInstanceID: 19920
+    - m_Data: 37822
+    m_LastClickedInstanceID: 37822
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 54580

@@ -6,12 +6,9 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using Tac;
-using Tac.Save;
 using UnityEF;
 using UnityEngine;
 
@@ -138,25 +135,6 @@ namespace DnaCore
 
 			Dictionary<string, int> foreignKeys = LoadEntity(root, id);
 
-			/*
-				// 2. Загружаем сущность из БД (она будет отслеживаться)
-			var loaded = db.Find<T>(id);
-
-			// 3. Отсоединяем loaded, чтобы избежать дублирования ключей
-			var loadedEntry = db.Entry(loaded);
-			loadedEntry.State = EntityState.Detached;
-
-			// 4. Присоединяем root к контексту, если он ещё не отслеживается
-			var rootEntry = db.Entry(root);
-			if (rootEntry.State == EntityState.Detached)
-			{
-				db.Attach(root);
-				rootEntry = db.Entry(root);
-			}
-
-			// 5. Копируем все скалярные и shadow свойства из loaded в root (без затрагивания навигационных)
-			rootEntry.CurrentValues.SetValues(loadedEntry.CurrentValues);*/
-
 			// 6. Теперь рекурсивно загружаем навигационные свойства (одиночные ссылки и коллекции)
 			Load(root, foreignKeys);
 		}
@@ -280,20 +258,22 @@ namespace DnaCore
 						{
 							// Получаем значение внешнего ключа через shadow property
 							string fkName = field.Name + "Id";
-							int id = argForeignKeys[fkName];
-
-							if (id != 0)
+							if (argForeignKeys.ContainsKey(fkName))
 							{
-								// Загружаем LDictionary_ по Id
-								var child = db.Find(fieldType, id);
-								if (child != null)
+								int id = argForeignKeys[fkName];
+								if (id != 0)
 								{
-									// Присваиваем загруженный объект полю
-									field.SetValue(obj, child);
+									// Загружаем LDictionary_ по Id
+									var child = db.Find(fieldType, id);
+									if (child != null)
+									{
+										// Присваиваем загруженный объект полю
+										field.SetValue(obj, child);
 
-									// 3. Загружаем коллекцию Items (LKeyValue)
-									var childEntry = db.Entry(child);
-									childEntry.Collection("Items").Load();
+										// 3. Загружаем коллекцию Items (LKeyValue)
+										var childEntry = db.Entry(child);
+										childEntry.Collection("Items").Load();
+									}
 								}
 							}
 						}
@@ -304,36 +284,39 @@ namespace DnaCore
 						{
 							// Получаем значение внешнего ключа через shadow property
 							string fkName = field.Name + "Id";
-							int id = argForeignKeys[fkName];
-
-							if (id != 0)
+							if (argForeignKeys.ContainsKey(fkName))
 							{
-								// Загружаем по Id
-								var child = db.Find(fieldType, id);
-								if (child != null)
+								int id = argForeignKeys[fkName];
+
+								if (id != 0)
 								{
-									// Присваиваем загруженный объект полю
-									field.SetValue(obj, child);
-
-									// 3. Загружаем коллекцию Items (LKeyValue)
-									var childEntry = db.Entry(child);
-
-									CollectionEntry collectionEntry = childEntry.Collection("Items");
-									collectionEntry.Load();
-
-									var items = collectionEntry.CurrentValue as IEnumerable;
-									if (items != null)
+									// Загружаем по Id
+									var child = db.Find(fieldType, id);
+									if (child != null)
 									{
-										foreach (var item in items)
+										// Присваиваем загруженный объект полю
+										field.SetValue(obj, child);
+
+										// 3. Загружаем коллекцию Items (LKeyValue)
+										var childEntry = db.Entry(child);
+
+										CollectionEntry collectionEntry = childEntry.Collection("Items");
+										collectionEntry.Load();
+
+										var items = collectionEntry.CurrentValue as IEnumerable;
+										if (items != null)
 										{
-											// item - это LKeyValue<K,V>, у него есть свойство Value
-											var valueProp = item.GetType().GetProperty("Value");
-											if (valueProp != null)
+											foreach (var item in items)
 											{
-												var valueObj = valueProp.GetValue(item);
-												/*if (valueObj is IItemDb)
-													Load(valueObj); // рекурсивно загружаем граф сущности
-													*/
+												// item - это LKeyValue<K,V>, у него есть свойство Value
+												var valueProp = item.GetType().GetProperty("Value");
+												if (valueProp != null)
+												{
+													var valueObj = valueProp.GetValue(item);
+													/*if (valueObj is IItemDb)
+														Load(valueObj); // рекурсивно загружаем граф сущности
+														*/
+												}
 											}
 										}
 									}
@@ -379,37 +362,6 @@ namespace DnaCore
 								object component = null;
 								Dictionary<string, int> foreignKeys = PostLoadEntity(out component, entity);
 								Load(component, foreignKeys);
-
-								/*var entityEntry = db.Entry(entity);
-								Type type = entity.GetType();
-
-
-								var addDelegate = Item.Reg.GetAdd(type);
-								object component = null;
-								if (addDelegate != null)
-								{
-									component = addDelegate(entity);
-								}
-
-								// Отсоединяем entity от контекста (он больше не отслеживается)
-								entityEntry.State = EntityState.Detached;
-
-								if (component != null)
-								{
-									// 4. Присоединяем component к контексту
-									var componentEntry = db.Entry(component);
-									if (componentEntry.State == EntityState.Detached)
-									{
-										db.Attach(component);
-										componentEntry = db.Entry(component);
-									}
-
-									// 5. Копируем все значения (включая shadow properties) из старой сущности в новую
-									componentEntry.CurrentValues.SetValues(entityEntry.CurrentValues);
-
-									// Рекурсивно загружаем навигационные свойства 
-									Load(component, null);
-								}*/
 							}
 						}
 					}

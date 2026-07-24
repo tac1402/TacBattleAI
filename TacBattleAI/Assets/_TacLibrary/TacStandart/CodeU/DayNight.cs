@@ -12,22 +12,6 @@ namespace Tac
 {
 
 	/// <summary>
-	/// Технический объект, т.к. Юнити не позволяет добавить на сцену MonoBehaviour, который прямо реализует интерфейс
-	/// Используется системой сохранения, чтобы реализовать интерфейс IDayNight
-	/// </summary>
-	public partial class DayNight0 : Item
-	{
-		/// <summary>
-		/// Текстовое поле в UI в котором будет отображаться текущие время
-		/// </summary>
-		public Text gameTime;
-		/// <summary>
-		/// Текстовое поле в UI в котором будет отображаться текущий номер суток
-		/// </summary>
-		public Text gameDays;
-
-	}
-	/// <summary>
 	/// Управляет игровым временем
 	/// </summary>
 	public partial class DayNight: DayNight0, ICell
@@ -49,15 +33,16 @@ namespace Tac
 		/// <summary>
 		/// Текущие время
 		/// </summary>
-		public float currentTime = 6.0f;
+		private float currentTime = 6.0f;
 		/// <summary>
 		/// Текущие сутки (номер)
 		/// </summary>
-		public int currentDay = 1;
+		private int currentDay = 1;
 
 		/// <summary>
 		/// Текущие время
 		/// </summary>
+		[Mapped]
 		public float CurrentTime
 		{
 			get { return currentTime; }
@@ -71,6 +56,7 @@ namespace Tac
 		/// <summary>
 		/// Текущие сутки (номер)
 		/// </summary>
+		[Mapped]
 		public int CurrentDay
 		{
 			get { return currentDay; }
@@ -177,6 +163,45 @@ namespace Tac
 			gameTime.text = Mathf.Floor(time).ToString("F0").PadLeft(2, '0') + " : " + minutes.ToString("F0").PadLeft(2, '0') + " " + AMPM;
 
 			Time = new System.TimeSpan((int)Mathf.Floor(time), (int)Mathf.Floor(minutes), 0);
+		}
+	}
+
+	/// <summary>
+	/// Технический объект, т.к. Юнити не позволяет добавить на сцену MonoBehaviour, который прямо реализует интерфейс
+	/// Используется системой сохранения, чтобы реализовать интерфейс IDayNight
+	/// </summary>
+	public class DayNight0 : Item, IDayNight
+	{
+		/// <summary>
+		/// Текстовое поле в UI в котором будет отображаться текущие время
+		/// </summary>
+		public Text gameTime;
+		/// <summary>
+		/// Текстовое поле в UI в котором будет отображаться текущий номер суток
+		/// </summary>
+		public Text gameDays;
+
+		public string GameTime
+		{
+			get
+			{
+				if (gameTime != null) { return gameTime.text; } else { return string.Empty; }
+			}
+			set
+			{
+				if (gameTime != null) gameTime.text = value;
+			}
+		}
+		public string GameDays
+		{
+			get
+			{
+				if (gameDays != null) { return gameDays.text; } else { return string.Empty; }
+			}
+			set
+			{
+				if (gameDays != null) { gameDays.text = value; }
+			}
 		}
 	}
 }

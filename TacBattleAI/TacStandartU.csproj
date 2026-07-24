@@ -64,14 +64,12 @@
     <Compile Include="Assets\_TacLibrary\TacStandart\CodeU\DayNight.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\CodeU\BoundsExt.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\CodeU\Variation.cs" />
-    <Compile Include="Assets\_TacLibrary\TacStandart\ExceptCode\DayNightLogic.cs" />
+    <Compile Include="Assets\_TacLibrary\TacStandart\CodeU\IDayNight.cs" />
     <Compile Include="Assets\_TacLibrary\TacStandart\CodeU\Discrete.cs" />
-    <Compile Include="Assets\_TacLibrary\TacSave\TacStandartUExt\DayNight.cs" />
+    <Compile Include="Assets\_TacLibrary\TacStandart\CodeU\DayNightLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\_TacLibrary\TacStandart\DefTacStandartU\TacStandartU.asmdef" />
-    <None Include="Assets\_TacLibrary\TacStandart\ExceptCode\TacStandartU.asmref" />
-    <None Include="Assets\_TacLibrary\TacSave\TacStandartUExt\TacStandartU.asmref" />
     <None Include="Assets\_TacLibrary\TacStandart\CodeU\TacStandartU.asmref" />
   </ItemGroup>
   <ItemGroup>

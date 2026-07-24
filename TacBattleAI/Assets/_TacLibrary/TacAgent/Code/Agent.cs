@@ -1,14 +1,13 @@
 // Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
+using DnaCore;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using Tac.HealthSystem;
+using UnityEF;
 using UnityEngine;
 using UnityEngine.AI;
-using DnaCore;
-using UnityEF;
 
 namespace Tac.Agent
 {
@@ -113,6 +112,14 @@ namespace Tac.Agent
 		private LineRenderer PathRender;
 		private float PathHeightOffset = 0.25f;
 		public Cell cell { get { return item; } }
+
+
+		public override void InitData()
+		{
+			base.InitData();
+			PathPoints = new LList<LVector3>();
+		}
+
 
 		public void Init(bool argRecoverMode = false)
 		{

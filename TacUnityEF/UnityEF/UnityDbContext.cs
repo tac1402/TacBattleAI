@@ -360,7 +360,23 @@ namespace UnityEF
 						{
 							continue;
 						}
-						entityBuilder.Ignore(prop.Name);
+
+						if (prop.IsDefined(typeof(MappedAttribute), false))
+						{
+							// Настраиваем свойство как маппируемое
+							var propertyBuilder = entityBuilder.Property(prop.PropertyType, prop.Name);
+							if (IsCustomPrimitive(prop.PropertyType))
+							{
+								propertyBuilder.HasConversion(GetValueConverter(prop.PropertyType));
+							}
+							// Явно указываем, что нужно использовать свойство, а не поле
+							propertyBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruction);
+						}
+						else
+						{
+							// Все остальные свойства игнорируем
+							entityBuilder.Ignore(prop.Name);
+						}
 					}
 				}
 			}

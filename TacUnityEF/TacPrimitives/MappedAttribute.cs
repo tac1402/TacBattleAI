@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace UnityEF
+namespace Tac
 {
-	[AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
 	public class MappedAttribute : Attribute
 	{
 	}
