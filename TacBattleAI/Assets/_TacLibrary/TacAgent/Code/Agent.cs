@@ -11,7 +11,7 @@ using UnityEngine.AI;
 
 namespace Tac.Agent
 {
-	public partial class Agent : Entity, ICell
+	public partial class Agent : Spatial, ICell
 	{
 		public NavMeshAgent agent;
 

@@ -8,26 +8,24 @@ using System.Collections.Generic;
 namespace Tac
 {
 	/// <summary>
-	/// Управляет игровым временем
+	/// Логика игрового времени
 	/// </summary>
-	public partial class DayNight
+	public class DayNightLogic
 	{
 		public TimeSpan Time;
 
 		/// <summary>
 		/// Длина дня в реальных секундах
 		/// </summary>
-		public float DayLength = 120;
+		private const float DayLength = 120;
 		/// <summary>
 		/// Длина ночи в реальных секундах
 		/// </summary>
-		public float NightLength = 120;
+		private const float NightLength = 120;
 		/// <summary>
 		/// Длина суток в игровых часах
 		/// </summary>
-		public float GameDayLenght = 24;
-
-		private TimeMode timeMode;
+		private const float GameDayLenght = 24;
 
 		/// <summary>
 		/// Прошел час
@@ -38,36 +36,50 @@ namespace Tac
 		/// </summary>
 		public event Tick NextDay;
 
+		public TimeMode timeMode;
 
 		private float daySpeedMultiplier;
-
-
-		void UpdateTime()
+		public float DaySpeedMultiplier
 		{
-			int oldHour = (int)Math.Floor(CurrentTime);
-			int oldMinutes = (int)((CurrentTime - Math.Floor(CurrentTime)) * 60.0f);
-
-			CurrentTime += daySpeedMultiplier / 10f;
-			if (CurrentTime >= GameDayLenght)
+			get
 			{
-				CurrentTime = 0;
-				CurrentDay++;
+				if (timeMode == TimeMode.Normal)
+				{
+					daySpeedMultiplier = GameDayLenght / (float)(DayLength + NightLength);
+				}
+				return daySpeedMultiplier;
+			}
+		}
+
+
+		public (int, float) UpdateTime(int argCurrentDay,float argCurrentTime)
+		{
+			int currentDay = argCurrentDay;
+			float currentTime = argCurrentTime;
+			int oldHour = (int)Math.Floor(argCurrentTime);
+			int oldMinutes = (int)((argCurrentTime - Math.Floor(argCurrentTime)) * 60.0f);
+
+			currentTime += DaySpeedMultiplier / 10f;
+			if (argCurrentTime >= GameDayLenght)
+			{
+				argCurrentTime = 0;
+				currentDay++;
 				if (NextDay != null)
 				{
-					NextDay(new GameTime(CurrentDay, 0));
+					NextDay(new GameTime(argCurrentDay, 0));
 				}
 			}
 
-			int currentHour = (int)Math.Floor(CurrentTime);
+			int currentHour = (int)Math.Floor(argCurrentTime);
 
 			if (oldHour != currentHour)
 			{
 				if (NextHour != null)
 				{
-					NextHour(new GameTime(CurrentDay, currentHour));
+					NextHour(new GameTime(argCurrentDay, currentHour));
 				}
 			}
-
+			return (currentDay, currentTime);
 		}
 
 		public DateTime GetDateTime(int argDay, TimeSpan argTime)
@@ -78,68 +90,6 @@ namespace Tac
 			dt = dt.AddMinutes(argTime.Minutes);
 			return dt;
 		}
-
-		public DateTime DateTimeNow
-		{
-			get
-			{
-				return GetDateTime(CurrentDay, Time);
-			}
-		}
-
-
-#if OnlyLogic
-
-		/// <summary>
-		/// Текущие время
-		/// </summary>
-		public float currentTime = 6.0f;
-		/// <summary>
-		/// Текущие сутки (номер)
-		/// </summary>
-		public int currentDay = 1;
-
-		public void Tick(int argTickCount)
-		{
-			daySpeedMultiplier = GameDayLenght / (float)(DayLength + NightLength);
-			for (int i = 0; i < argTickCount; i++)
-			{
-				UpdateTime();
-			}
-		}
-
-		public TimeMode TimeMode
-		{
-			get { return timeMode; }
-			set { timeMode = value; }
-		}
-
-		/// <summary>
-		/// Текущие время
-		/// </summary>
-		public float CurrentTime
-		{
-			get { return currentTime; }
-			set
-			{
-				currentTime = value;
-
-				float minutes = (currentTime - (float)Math.Floor(currentTime)) * 60.0f;
-				Time = new System.TimeSpan((int)Math.Floor(currentTime), (int)Math.Floor(minutes), 0);
-			}
-		}
-
-		/// <summary>
-		/// Текущие сутки (номер)
-		/// </summary>
-		public int CurrentDay
-		{
-			get { return currentDay; }
-			set { currentDay = value; }
-		}
-#endif
-
-
 	}
 
 	public enum TimeMode

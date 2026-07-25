@@ -13,8 +13,13 @@ using UnityEF;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public partial class World : Item, ICell
+public partial class World : Flow, ICell
 {
+	private WorldLogic logic = new WorldLogic();
+	private Society Society => logic.Society;
+	private DayNight DayNight => logic.DayNight;
+
+
 	public List<NavMeshBasic> NavMeshBasic;
 
 	private ItemCreate ItemCreate;
@@ -43,8 +48,8 @@ public partial class World : Item, ICell
 	private void Start()
 	{
 		ItemCreate = GetComponent<ItemCreate>();
-		DayNight = GetComponent<DayNight>();
-		Society = GetComponent<Society>();
+		logic.DayNight = GetComponent<DayNight>();
+		logic.Society = GetComponent<Society>();
 
 		//Society = ItemDb<Society>.Create(Society, "", "Society");
 
@@ -60,9 +65,6 @@ public partial class World : Item, ICell
 			InfoPanelManager = ui.GetComponentInChildren<InfoPanelManager>(true);
 			InfoPanelManager.Init();
 			SaveCatalog = ui.GetComponentInChildren<SaveCatalog>(true);
-			//SaveManager saveManager = GetComponent<SaveManager>();
-			//saveManager.World = this;
-			//SaveCatalog.ISaveManager = saveManager;
 			SaveCatalog.IDayNight = DayNight as IDayNight;
 		}
 
@@ -70,7 +72,7 @@ public partial class World : Item, ICell
 		Society.InitWorkPlace();
 
 		RunPanel.Init(DayNight, Society);
-		DayNight.NextHour += AgentWalkEmulation;
+		DayNight.NextHour += logic.AgentWalkEmulation;
 
 		UpdateSurface();
 
@@ -100,7 +102,7 @@ public partial class World : Item, ICell
 
 	public void CreateWorld()
 	{
-		CreateWorld_Logic();
+		logic.CreateWorld_Logic();
 	}
 
 

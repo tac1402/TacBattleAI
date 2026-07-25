@@ -76,8 +76,8 @@ namespace UnityEF
 		{
 			Type[] types = Assembly.Load(assemblyName).GetTypes();
 
-			// Базовые сущности: все неабстрактные классы в вашем пространстве имён, реализующие ICell
-			var baseTypes = types.Where(t => t.IsClass && !t.IsAbstract && typeof(ICell).IsAssignableFrom(t));
+			// Базовые сущности: все неабстрактные классы в вашем пространстве имён, реализующие IItemDb
+			var baseTypes = types.Where(t => t.IsClass && !t.IsAbstract && typeof(IItemDb).IsAssignableFrom(t));
 
 			foreach (Type t in baseTypes)
 			{
@@ -203,8 +203,6 @@ namespace UnityEF
 					}
 				}*/
 			}
-
-			//modelBuilder.Entity<Vector3_>().HasNoKey();
 
 			// 3. Теперь для каждой зарегистрированной сущности настраиваем поля и связи
 			foreach (Type type in allTypes)
@@ -333,7 +331,7 @@ namespace UnityEF
 						}
 					}
 
-					if (typeof(Entity).IsAssignableFrom(type) || typeof(IEntityDb).IsAssignableFrom(type))
+					if (typeof(Spatial).IsAssignableFrom(type) || typeof(ISpatialDb).IsAssignableFrom(type))
 					{
 						entityBuilder.Property<Vector3_>("Position")
 							.HasConversion(GetValueConverter(typeof(Vector3_)));
@@ -355,7 +353,7 @@ namespace UnityEF
 					foreach (var prop in properties)
 					{
 						if (prop.Name == "Id") { continue; }
-						if ((typeof(Entity).IsAssignableFrom(type) || typeof(IEntityDb).IsAssignableFrom(type)) &&
+						if ((typeof(Spatial).IsAssignableFrom(type) || typeof(ISpatialDb).IsAssignableFrom(type)) &&
 							(prop.Name == "Position" || prop.Name == "Rotation" || prop.Name == "Scale"))
 						{
 							continue;

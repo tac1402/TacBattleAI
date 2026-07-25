@@ -11,7 +11,10 @@ using UnityEngine;
 
 namespace Tac
 {
-	public abstract class Entity : Item, IEntityDb
+	/// <summary>
+	/// Пространственная сущность в сцене
+	/// </summary>
+	public abstract class Spatial : Flow, ISpatialDb
 	{
 		private Vector3_ fakePosition;
 		public Vector3_ Position

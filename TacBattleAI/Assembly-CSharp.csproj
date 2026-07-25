@@ -64,7 +64,6 @@
     <Compile Include="Assets\_RotarkCode\_GameLogic\Society\Job\RobotJobLogic.cs" />
     <Compile Include="Assets\_RotarkCode\BuildingLevel\GameobjectList.cs" />
     <Compile Include="Assets\_RotarkCode\_GameLogic\Society\BusinessLogic.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameLogic\World\Save\DataSave.cs" />
     <Compile Include="Assets\_RotarkCode\_GameLogic\Society\SocietyLogic.cs" />
     <Compile Include="Assets\_RotarkCode\BuildingLevel\BuildingLevel.cs" />
     <Compile Include="Assets\_RotarkCode\_GameView\Society\Job\RobotJob.cs" />

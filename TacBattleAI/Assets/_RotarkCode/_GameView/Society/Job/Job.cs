@@ -8,7 +8,7 @@ using UnityEF;
 
 namespace Tac.Society
 {
-	public partial class Job : Item, ICell
+	public partial class Job : Flow, ICell
 	{
 		public LList<Agent.Agent> AgentPath;
 

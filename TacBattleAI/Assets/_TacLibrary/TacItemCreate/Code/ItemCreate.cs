@@ -9,10 +9,10 @@ using UnityEngine;
 
 namespace Tac.ItemCreate
 {
-	public class ItemCreate : MonoBehaviour, IObject
+	public class ItemCreate : MonoBehaviour//, IObject
 	{
 		public List<EntityType> WorldLevel;
-		List<EntityType> IObject.WorldLevel => WorldLevel;
+		//List<EntityType> IObject.WorldLevel => WorldLevel;
 
 		/// <summary>
 		/// Настоящая структура террайна, может использоваться .SampleHeight() чтобы получить именно высоту террайна, а не соответствующего слоя
@@ -77,15 +77,15 @@ namespace Tac.ItemCreate
 			// Загрузим модель и проверим, что у неё есть компонент Item2
 			GameObject locModel = GetModel(argModelName);
 
-			Item locModelItem = null;
+			Flow locModelItem = null;
 			if (locModel != null) 
 			{
-				locModelItem = locModel.GetComponent<Item>();
+				locModelItem = locModel.GetComponent<Flow>();
 			}
 			if (locModelItem != null)
 			{
 				locObject = Instantiate(locModel);
-				Item locItem = locObject.GetComponent<Item>();
+				Flow locItem = locObject.GetComponent<Flow>();
 
 				if (PredeffinedObjectId == 0)
 				{
@@ -201,7 +201,7 @@ namespace Tac.ItemCreate
 		{
 			if (argModel != null)
 			{
-				Item locModelItem = argModel.GetComponent<Item>();
+				Flow locModelItem = argModel.GetComponent<Flow>();
 				if (locModelItem != null)
 				{
 					string locNameKey = locModelItem.ModelName;

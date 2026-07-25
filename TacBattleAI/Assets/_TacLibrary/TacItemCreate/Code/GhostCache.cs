@@ -10,7 +10,7 @@ namespace Tac.ItemCreate
 		public ItemCreate ItemCreate;
 
 		public GameObject GhostCurrent;
-		public List<Item> Cache = new List<Item>();
+		public List<Flow> Cache = new List<Flow>();
 
 		private bool CreateMode = false;
 
@@ -23,7 +23,7 @@ namespace Tac.ItemCreate
 			if (tmpGhostObj != null)
 			{
 				tmpGhostObj.transform.SetParent(this.gameObject.transform);
-				Item tmpItem = tmpGhostObj.GetComponent<Item>();
+				Flow tmpItem = tmpGhostObj.GetComponent<Flow>();
 
 				Cache.Add(tmpItem);
 			}
@@ -32,9 +32,9 @@ namespace Tac.ItemCreate
 		/// <summary>
 		/// Взять из кэша
 		/// </summary>
-		public Item TakeFromCache(string argModelName, Vector3 argPosition)
+		public Flow TakeFromCache(string argModelName, Vector3 argPosition)
 		{
-			Item ret = null;
+			Flow ret = null;
 			int index = -1;
 			if (CreateMode == false)
 			{
@@ -66,7 +66,7 @@ namespace Tac.ItemCreate
 		/// <summary>
 		/// Вернуть в кэш
 		/// </summary>
-		public void ReturnToCache(Item argItem)
+		public void ReturnToCache(Flow argItem)
 		{
 			if (CreateMode == false)
 			{

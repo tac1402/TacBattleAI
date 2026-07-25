@@ -8,12 +8,12 @@ using Tac.Person;
 using Tac.Society;
 
 
-public partial class World
+public class WorldLogic : Logic
 {
 	public Society Society;
 	public DayNight DayNight;
 
-	public Vector2Int_ WorldSize = new Vector2Int_(10, 10);
+	//public Vector2Int_ WorldSize = new Vector2Int_(10, 10);
 
 	private System.Random rnd = new System.Random();
 

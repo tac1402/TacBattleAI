@@ -91,7 +91,7 @@ namespace Tac.Wireframe
 
 namespace Tac
 {
-	public partial class BuildItem : Item
+	public partial class BuildItem : Flow
 	{
 		public Wireframe.Wireframe Wireframe;
 

@@ -12,9 +12,9 @@ using UnityEngine;
 namespace Tac
 {
 	/// <summary>
-	/// Универсальная сущность от Tac 
+	/// Потоко-управляемая сущность в сцене
 	/// </summary>
-	public abstract class Item : MonoBehaviour, IItemDb
+	public abstract class Flow : MonoBehaviour, IItemDb
 	{
 		/// <summary>
 		/// Уникальный индентификатор объекта в мире
@@ -66,40 +66,16 @@ namespace Tac
 		[NotMapped]
 		public bool RecoverMode
 		{
-			get { if (Id == 0) { return false; } else { return true; } }
+			get { return ItemDb.RecoverMode; }
 		}
-		
+
 
 		public static readonly RegCollection Reg = new RegCollection();
 
-		public static void Register<T>(IAdd<T> iadd) where T : Item
+		public static void Register<T>(IAdd<T> iadd) where T : IItemDb
 			=> Reg.Register(iadd);
 
 	}
 
-	public class RegCollection
-	{
-		private readonly Dictionary<string, Func<object, object>> map = new Dictionary<string, Func<object, object>>();
 
-		public void Register<T>(IAdd<T> factory) where T : Item
-		{
-			string key = typeof(T).FullName;
-			if (!map.ContainsKey(key))
-			{
-				// Создаём делегат
-				Func<object, object> addDelegate = obj => factory.Add((T)obj);
-				map.Add(key, addDelegate);
-			}
-		}
-
-		/// <summary>
-		/// Возвращает делегат для добавления объекта указанного типа.
-		/// Если фабрика не зарегистрирована, возвращает null.
-		/// </summary>
-		public Func<object, object> GetAdd(Type type)
-		{
-			map.TryGetValue(type.FullName, out var del);
-			return del;
-		}
-	}
 }

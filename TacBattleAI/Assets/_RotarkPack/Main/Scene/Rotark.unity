@@ -231735,19 +231735,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tac.DayNight
   GroupId: -1
   ModelName: 
-  gameTime: {fileID: 5318326092841258701}
-  gameDays: {fileID: 2855828313911918721}
   RealTime: {fileID: 5438029402710482074}
   TimeModeTxt: {fileID: 1675090817206834920}
-  currentTime: 6
-  currentDay: 1
+  gameTime: {fileID: 5318326092841258701}
+  gameDays: {fileID: 2855828313911918721}
   PlaySpeed: 1
   Pause: 0
   rs: 0
   rm: 0
-  DayLength: 360
-  NightLength: 360
-  GameDayLenght: 24
 --- !u!114 &4011879485492785467
 MonoBehaviour:
   m_ObjectHideFlags: 0

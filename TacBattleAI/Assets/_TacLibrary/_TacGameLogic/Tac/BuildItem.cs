@@ -3,7 +3,7 @@
 
 namespace Tac
 {
-    public partial class BuildItem : Item
+    public partial class BuildItem : Flow
     {
     }
 }

@@ -211,7 +211,7 @@ namespace Tac.ItemMove
 
 namespace Tac
 {
-	public partial class BuildItem : Item
+	public partial class BuildItem : Flow
 	{
 		public Vector3 DiscreteStep = Vector3.one;
 

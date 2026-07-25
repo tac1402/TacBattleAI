@@ -8,7 +8,7 @@ using DnaCore;
 
 namespace Tac.Society
 {
-	public partial class Society : Item, ICell
+	public partial class Society : Flow, ICell
 	{
 		public List<GameObject> MenModel;
 		public List<GameObject> WomenModel;
@@ -107,7 +107,7 @@ namespace Tac.Society
 			{
 				int menIndex = rnd.Next(0, MenModel.Count);
 
-				Item menId = MenModel[menIndex].GetComponent<Item>();
+				Flow menId = MenModel[menIndex].GetComponent<Flow>();
 				GameObject menObj = ItemCreate.CreateObject(menId.ModelName, argPosition.x, argPosition.y);
 				person = menObj.GetComponent<Person.Person>();
 
@@ -117,7 +117,7 @@ namespace Tac.Society
 			{
 				int womenIndex = rnd.Next(0, WomenModel.Count);
 
-				Item womenId = WomenModel[womenIndex].GetComponent<Item>();
+				Flow womenId = WomenModel[womenIndex].GetComponent<Flow>();
 				GameObject womenObj = ItemCreate.CreateObject(womenId.ModelName, argPosition.x, argPosition.y);
 				person = womenObj.GetComponent<Person.Person>();
 

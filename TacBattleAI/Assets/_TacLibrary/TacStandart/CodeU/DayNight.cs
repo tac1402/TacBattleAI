@@ -14,8 +14,10 @@ namespace Tac
 	/// <summary>
 	/// Управляет игровым временем
 	/// </summary>
-	public partial class DayNight: DayNight0, ICell
+	public class DayNight: Flow, IDayNight, ICell
 	{
+		private DayNightLogic logic = new DayNightLogic();
+
 		/// <summary>
 		/// Пауза полной остановки
 		/// </summary>
@@ -29,6 +31,38 @@ namespace Tac
 		/// Текстовое поле в UI в котором будет отображаться текущая скорость течения времени
 		/// </summary>
 		public Text TimeModeTxt;
+		/// <summary>
+		/// Текстовое поле в UI в котором будет отображаться текущие время
+		/// </summary>
+		public Text gameTime;
+		/// <summary>
+		/// Текстовое поле в UI в котором будет отображаться текущий номер суток
+		/// </summary>
+		public Text gameDays;
+
+		public string GameTime
+		{
+			get
+			{
+				if (gameTime != null) { return gameTime.text; } else { return string.Empty; }
+			}
+			set
+			{
+				if (gameTime != null) { gameTime.text = value; }
+			}
+		}
+		public string GameDays
+		{
+			get
+			{
+				if (gameDays != null) { return gameDays.text; } else { return string.Empty; }
+			}
+			set
+			{
+				if (gameDays != null) { gameDays.text = value; }
+			}
+		}
+
 
 		/// <summary>
 		/// Текущие время
@@ -68,22 +102,15 @@ namespace Tac
 		}
 
 
-
 		public TimeMode TimeMode
 		{
-			get { return timeMode; }
+			get { return logic.timeMode; }
 			set
 			{
-				timeMode = value;
-
-				if (timeMode == TimeMode.Normal)
-				{
-					daySpeedMultiplier = GameDayLenght / (float)(DayLength + NightLength);
-				}
-
+				logic.timeMode = value;
 				if (TimeModeTxt != null)
 				{
-					TimeModeTxt.text = timeMode.ToString();
+					TimeModeTxt.text = logic.timeMode.ToString();
 				}
 			}
 		}
@@ -92,6 +119,18 @@ namespace Tac
 		public bool Pause = false;
 
 		public Cell cell { get { return item; } }
+
+		public event Tick NextHour
+		{
+			add => logic.NextHour += value;
+			remove => logic.NextHour -= value;
+		}
+
+		public event Tick NextDay
+		{
+			add => logic.NextDay += value;
+			remove => logic.NextDay -= value;
+		}
 
 		private void Awake()
 		{
@@ -129,7 +168,7 @@ namespace Tac
 				{
 					UnityEngine.Time.timeScale = PlaySpeed;
 
-					UpdateTime();
+					(CurrentDay, CurrentTime) = logic.UpdateTime(CurrentDay, CurrentTime);
 					UpdateRealTime();
 				}
 				yield return new WaitForSeconds(0.1f);
@@ -149,59 +188,15 @@ namespace Tac
 			}
 		}
 
-
-
-
 		void ShowTime()
 		{
-			string AMPM = "";
-			float minutes = ((CurrentTime) - (Mathf.Floor(CurrentTime))) * 60.0f;
-			float GameNight = (GameDayLenght / (DayLength + NightLength)) * NightLength;
+			int hours = (int)Mathf.Floor(CurrentTime);
+			int minutes = (int)Mathf.Floor((CurrentTime - hours) * 60.0f);
 
-			float time = CurrentTime;
+			gameTime.text = hours.ToString("F0").PadLeft(2, '0') + " : " + minutes.ToString("F0").PadLeft(2, '0') + " ";
 
-			gameTime.text = Mathf.Floor(time).ToString("F0").PadLeft(2, '0') + " : " + minutes.ToString("F0").PadLeft(2, '0') + " " + AMPM;
-
-			Time = new System.TimeSpan((int)Mathf.Floor(time), (int)Mathf.Floor(minutes), 0);
+			logic.Time = new System.TimeSpan(hours, minutes, 0);
 		}
 	}
 
-	/// <summary>
-	/// Технический объект, т.к. Юнити не позволяет добавить на сцену MonoBehaviour, который прямо реализует интерфейс
-	/// Используется системой сохранения, чтобы реализовать интерфейс IDayNight
-	/// </summary>
-	public class DayNight0 : Item, IDayNight
-	{
-		/// <summary>
-		/// Текстовое поле в UI в котором будет отображаться текущие время
-		/// </summary>
-		public Text gameTime;
-		/// <summary>
-		/// Текстовое поле в UI в котором будет отображаться текущий номер суток
-		/// </summary>
-		public Text gameDays;
-
-		public string GameTime
-		{
-			get
-			{
-				if (gameTime != null) { return gameTime.text; } else { return string.Empty; }
-			}
-			set
-			{
-				if (gameTime != null) gameTime.text = value;
-			}
-		}
-		public string GameDays
-		{
-			get
-			{
-				if (gameDays != null) { return gameDays.text; } else { return string.Empty; }
-			}
-			set
-			{
-				if (gameDays != null) { gameDays.text = value; }
-			}
-		}
-	}
 }

@@ -37,7 +37,7 @@ namespace Tac.ItemMove
 
 namespace Tac
 {
-	public partial class BuildItem : Item
+	public partial class BuildItem : Flow
 	{
 		public GameObject Pivot;
 		public GameObject View;

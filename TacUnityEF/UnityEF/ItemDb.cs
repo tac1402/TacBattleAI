@@ -14,13 +14,6 @@ using UnityEngine;
 
 namespace DnaCore
 {
-	public interface IEntityDb : IItemDb
-	{
-		Vector3_ Position { get; set; }
-		Vector3_ Rotation { get; set; }
-		Vector3_ Scale { get; set; }
-	}
-
 	public interface IItemDb
 	{
 		public ItemDb item { get; }
@@ -44,10 +37,10 @@ namespace DnaCore
 		//public string DebugInfo { get; set; }
 
 		public static DbContext db;
-		//public static ILoadManager ILoadManager;
 
 		private static HashSet<object> saving = new HashSet<object>(); // для избежания циклов при сохранении
 		private static HashSet<object> loading = new HashSet<object>(); // для избежания циклов при загрузке
+		public static bool RecoverMode = false;
 
 		public void SaveGraph<T>(T root)
 		{
@@ -128,6 +121,7 @@ namespace DnaCore
 		/// </summary>
 		public void LoadGraph(object root)
 		{
+			RecoverMode = true;
 			// 1. Получаем Id корневого объекта
 			var id = (int)root.GetType().GetProperty("Id")?.GetValue(root);
 			if (id == 0)
@@ -137,6 +131,7 @@ namespace DnaCore
 
 			// 6. Теперь рекурсивно загружаем навигационные свойства (одиночные ссылки и коллекции)
 			Load(root, foreignKeys);
+			RecoverMode = false;
 		}
 
 		private Dictionary<string, int> LoadEntity(object obj, int id)
@@ -148,7 +143,7 @@ namespace DnaCore
 
 		private Dictionary<string, int> PostLoadEntity(out object obj, object loaded)
 		{
-			var addDelegate = Item.Reg.GetAdd(loaded.GetType());
+			var addDelegate = Flow.Reg.GetAdd(loaded.GetType());
 			if (addDelegate != null)
 			{
 				obj = addDelegate(loaded);
@@ -470,7 +465,7 @@ namespace DnaCore
 		private static T CreateInstance<T>(string name) where T : class, ICell
 		{
 			GameObject locObject = UnityEngine.Object.Instantiate(GetModel(name));
-			Item locItem = locObject.GetComponent<Item>();
+			Flow locItem = locObject.GetComponent<Flow>();
 			return locItem.item.cell as T;
 		}
 
