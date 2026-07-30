@@ -39,18 +39,4 @@ public class WorldLogic : Logic
 			building.Tick(argGameTime, agents);
 		}
 	}
-
-#if OnlyLogic
-
-	public void Init()
-	{
-		DayNight = new DayNight();
-
-		Society = new Society();
-		Society.DayNight = DayNight;
-		Society.Init();
-	}
-
-#endif
-
 }

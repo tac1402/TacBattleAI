@@ -14,7 +14,7 @@ namespace Tac
 		/// <summary>
 		/// Уникальный индентификатор объекта в мире
 		/// </summary>
-		public int Id { get { return itemDb.Id; } set { itemDb.Id = value; } }
+		public virtual int Id { get { return itemDb.Id; } set { itemDb.Id = value; } }
 
 		private ItemDb itemDb = new ItemDb();
 		public ItemDb item { get { return itemDb; } }

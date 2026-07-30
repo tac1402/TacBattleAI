@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using DnaCore;
+using System;
 
 namespace Tac
 {
@@ -17,6 +18,7 @@ namespace Tac
 	public class DayNight: Flow, IDayNight, ICell
 	{
 		private DayNightLogic logic = new DayNightLogic();
+		public TimeSpan Time => logic.Time;
 
 		/// <summary>
 		/// Пауза полной остановки

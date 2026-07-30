@@ -13,6 +13,14 @@ namespace Tac.Agent
 {
 	public partial class Agent : Spatial, ICell
 	{
+		private AgentLogic logic = new AgentLogic();
+
+		public int TargetId => logic.TargetId;
+		public bool IsBusy => logic.IsBusy;
+		public void SetTarget(int argId) => logic.SetTarget(argId);
+		public void SetLocated(int argId) => logic.SetLocated(argId);
+		public void ResetLocated() => logic.ResetLocated();
+
 		public NavMeshAgent agent;
 
 		public string agentName;
@@ -105,9 +113,6 @@ namespace Tac.Agent
 		private event Send OnCheckDistance;
 		private Vector3 previousPosition;
 
-		private System.Random rnd = new System.Random();
-
-
 		internal StatusBar StatusBar;
 		private LineRenderer PathRender;
 		private float PathHeightOffset = 0.25f;
@@ -123,25 +128,25 @@ namespace Tac.Agent
 
 		public void Init(bool argRecoverMode = false)
 		{
-			HealthState = new HealthState(rnd);
+			logic.HealthState = new HealthState(logic.rnd);
 			if (argRecoverMode == false)
 			{
-				Precision.State = 70;
-				Charge.State = 100;
+				logic.Precision.State = 70;
+				logic.Charge.State = 100;
 			}
 
 			StatusBar = GetComponentInChildren<StatusBar>();
 			if (StatusBar != null)
 			{
 				StatusBar.Init();
-				StatusBar.SetHealth(HealthState.Health);
-				StatusBar.SetStamina(Charge.State);
+				StatusBar.SetHealth(logic.HealthState.Health);
+				StatusBar.SetStamina(logic.Charge.State);
 			}
 			PathRender = GetComponentInChildren<LineRenderer>();
 
 			if (argRecoverMode == false)
 			{
-				AddStatsSkills();
+				logic.AddStatsSkills();
 			}
 
 			agent = GetComponent<NavMeshAgent>();
@@ -150,10 +155,24 @@ namespace Tac.Agent
 				agent.enabled = true;
 				StartCoroutine(DrawPath());
 			}
+			logic.ChangeHealth += Logic_ChangeHealth;
+
 			StartCoroutine(Tick());
 		}
 
-		public virtual void AddStatsSkills() { }
+		private void Logic_ChangeHealth()
+		{
+			if (StatusBar != null)
+			{
+				StatusBar.SetHealth(logic.HealthState.Health, logic.previousHealth);
+				StatusBar.SetStamina(logic.Charge.State, logic.previousStamina);
+			}
+			if (logic.IsDead == true)
+			{
+				agent.enabled = false;
+			}
+		}
+
 
 		/// <summary>
 		/// Двигаться к 
@@ -300,9 +319,9 @@ namespace Tac.Agent
 			}
 		}
 
-		public void SetPath(NavMeshPath2 argPath)
+		public void SetPath(NavMeshPath argPath)
 		{
-			if (argPath.status == NavMeshPathStatus.PathComplete)
+			if (argPath.status == NavMeshPath.NavMeshPathStatus.PathComplete)
 			{
 				for (int i = 0; i < argPath.corners.Length; i++)
 				{

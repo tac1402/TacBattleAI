@@ -6,7 +6,7 @@ using UnityEF;
 
 namespace Tac.Agent
 {
-	public class AgentInPoint : ItemDb
+	public class AgentInPoint : Logic
 	{
 		public override int Id
 		{

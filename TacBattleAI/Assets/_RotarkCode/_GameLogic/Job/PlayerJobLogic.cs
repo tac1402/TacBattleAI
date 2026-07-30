@@ -5,8 +5,14 @@ using System.Collections.Generic;
 
 namespace Tac.Society
 {
-	public partial class PlayerJob : Job
+	public class PlayerJobLogic : JobLogic
 	{
+
+		public PlayerJobLogic() { }
+		public PlayerJobLogic(PathCalculator argPathCalculator)
+		{
+			pathCalculator = argPathCalculator;
+		}
 
 		public void NextHour(GameTime argGameTime)
 		{

@@ -5,11 +5,28 @@ using System.Collections.Generic;
 using UnityEF;
 using UnityEngine;
 using UnityEngine.AI;
+using static Tac.Agent.AgentPointLogic;
 
 namespace Tac.Agent
 {
-	public partial class AgentPoint : Spatial, ICell
+	public class AgentPoint : Spatial, ICell
 	{
+		#region logic
+		private AgentPointLogic logic = new AgentPointLogic();
+		public List<NamedValue> BaseWorkPayment => logic.BaseWorkPayment;
+		public string Title => logic.Title;
+		public GetInfoDelegate GetInfoHandler { set { logic.GetInfoHandler = value; } }
+		public string GetInfo() => logic.GetInfo();
+		public bool IsOpen(int currentTime) => logic.IsOpen(currentTime);
+		public void Tick(GameTime argGameTime, List<Agent> argAllAgent) => logic.Tick(argGameTime, argAllAgent);
+		public void WalkToEnter(GameTime argGameTime, Agent argAgent) => logic.WalkToEnter(argGameTime, argAgent);
+		#endregion
+
+		/// <summary>
+		/// Рабочие часы (не находятся в логике, т.к. задаются в Юнити редакторе)
+		/// </summary>
+		public Vector2 WorkingHours;
+
 		public Vector3 Size = new Vector3(10, 3, 10);
 		public GameObject Point;
 
@@ -35,15 +52,6 @@ namespace Tac.Agent
 
 		public LayerMask AgentLayer;
 
-		/// <summary>
-		/// Рабочие часы
-		/// </summary>
-		public Vector2 WorkingHours;
-
-		private Vector2_ WorkingHours_
-		{
-			get { return new Vector2_(WorkingHours.x, WorkingHours.y); }
-		}
 
 		public Cell cell { get { return item; } }
 
@@ -55,9 +63,15 @@ namespace Tac.Agent
 				Id = item.Id;
 			}
 
+			logic.AddView = AddView;
+			logic.RemoveView = RemoveView;
+			logic.IsAgentInEnter = IsAgentInEnter;
+			logic.workingFrom = (int)WorkingHours.x;
+			logic.workingTill = (int)WorkingHours.y;
 			Init();
 		}
 
+		public virtual void Init() { }
 
 		public virtual void AddView(Agent argAgent)
 		{
@@ -97,7 +111,7 @@ namespace Tac.Agent
 		}
 
 
-			void OnDrawGizmos()
+		void OnDrawGizmos()
 		{
 			if (Point != null)
 			{

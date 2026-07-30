@@ -15,7 +15,7 @@ using UnityEngine.InputSystem;
 
 public partial class World : Flow, ICell
 {
-	private WorldLogic logic = new WorldLogic();
+	public WorldLogic logic = new WorldLogic();
 	private Society Society => logic.Society;
 	private DayNight DayNight => logic.DayNight;
 

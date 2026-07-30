@@ -9,7 +9,7 @@ using UnityEF;
 
 namespace Tac.Person
 {
-	public class PersonPlan : ItemDb
+	public class PersonPlan : Logic
 	{
 		public Person Person;
 		public LQueue_<string> CurrentPlan;

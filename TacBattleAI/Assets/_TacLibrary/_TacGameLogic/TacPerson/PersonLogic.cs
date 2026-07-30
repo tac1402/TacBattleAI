@@ -1,27 +1,15 @@
 // Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
-using DnaCore;
 using System.Collections.Generic;
 
 using Tac.Agent;
 using UnityEF;
 
 namespace Tac.Person
-{ 
-	public partial class Person : Agent.Agent, ICell
+{
+	public class PersonLogic : AgentLogic
 	{
-		public Cell cell { get { return item; } }
-
-		public override void InitData()
-		{
-			base.InitData();
-			Stats = new LDictionary_<string, float>();
-			StatTypes = new LDictionary_<string, StatType>();
-			Skills = new LDictionary_<string, float>();
-			Places = new LDictionary<string, AgentPoint>();
-		}
-
 
 		#region  Stats & Skills
 

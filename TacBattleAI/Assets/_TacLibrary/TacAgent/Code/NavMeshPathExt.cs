@@ -1,8 +1,8 @@
 using System;
+using Tac;
 using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Experimental.AI;
 using UnityEngine.LightTransport;
 
@@ -18,7 +18,7 @@ public class NavMeshPathExt : IDisposable
 	/// </summary>
 	/// <param name="argAreaMask">Битовая маска разрешённых областей (по умолчанию все).</param>
 	/// <param name="nodePoolSize">Размер пула узлов для самых длинных путей.</param>
-	public NavMeshPathExt(int argAreaMask = NavMesh.AllAreas, int argAgentTypeId = 0, int nodePoolSize = 65535)
+	public NavMeshPathExt(int argAreaMask = UnityEngine.AI.NavMesh.AllAreas, int argAgentTypeId = 0, int nodePoolSize = 65535)
 	{
 		areaMask = argAreaMask;
 		agentTypeId = argAgentTypeId;
@@ -30,17 +30,17 @@ public class NavMeshPathExt : IDisposable
 	{
 		query.Dispose();
 	}
-	public NavMeshPath2 CalculatePath(Vector3 sourcePosition, Vector3 targetPosition)
+	public NavMeshPath CalculatePath(Vector3_ sourcePosition, Vector3_ targetPosition)
 	{
-		NavMeshPath2 path = new NavMeshPath2();
+		NavMeshPath path = new NavMeshPath();
 
 		// Используем радиус для поиска ближайшей точки на NavMesh
-		var startLocation = query.MapLocation(sourcePosition, Vector3.one, agentTypeId);
-		var targetLocation = query.MapLocation(targetPosition, Vector3.one, agentTypeId);
+		var startLocation = query.MapLocation(sourcePosition.To(), Vector3.one, agentTypeId);
+		var targetLocation = query.MapLocation(targetPosition.To(), Vector3.one, agentTypeId);
 
 		if (!query.IsValid(startLocation) || !query.IsValid(targetLocation))
 		{
-			path.status = NavMeshPathStatus.PathInvalid;
+			path.status = Tac.NavMeshPath.NavMeshPathStatus.PathInvalid;
 			return path;
 		}
 
@@ -71,7 +71,7 @@ public class NavMeshPathExt : IDisposable
 
 			if (polyCount == 0)
 			{
-				path.status = NavMeshPathStatus.PathInvalid;
+				path.status = NavMeshPath.NavMeshPathStatus.PathInvalid;
 				return path;
 			}
 
@@ -101,17 +101,17 @@ public class NavMeshPathExt : IDisposable
 
 			if (findStatus == PathQueryStatus.Success && straightPathCount > 0)
 			{
-				var corners = new Vector3[straightPathCount];
+				var corners = new Vector3_[straightPathCount];
 				for (int i = 0; i < straightPathCount; i++)
 				{
-					corners[i] = straightPath[i].position;
+					corners[i] = straightPath[i].position.To_();
 				}
 				path.corners = corners;
-				path.status = NavMeshPathStatus.PathComplete;
+				path.status = NavMeshPath.NavMeshPathStatus.PathComplete;
 			}
 			else
 			{
-				path.status = NavMeshPathStatus.PathInvalid;
+				path.status = NavMeshPath.NavMeshPathStatus.PathInvalid;
 			}
 
 			// Очистка
@@ -352,8 +352,5 @@ public class NavMeshPathExt : IDisposable
 	}
 }
 
-public class NavMeshPath2
-{
-	public Vector3[] corners;
-	public NavMeshPathStatus status;
-}
+
+

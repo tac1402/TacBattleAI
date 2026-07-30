@@ -1,12 +1,13 @@
+using Tac.Agent;
 using UnityEngine;
 
-using Tac.Agent;
 
 namespace Tac.Society
 {
-	public partial class Business : AgentPoint
+	public class BusinessLogic : AgentPointLogic
 	{
-		public override void Init()
+
+		protected override void Init()
 		{
 			base.Init();
 			Title = "Частный дом";

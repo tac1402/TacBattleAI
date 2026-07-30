@@ -19,6 +19,8 @@ public class RunPanel : MonoBehaviour
 
 	private DayNight DayNight;
 	private Society Society;
+	private PlayerJob PlayerJob;
+
 	public AgentSelection AgentSelection;
 
 
@@ -29,6 +31,7 @@ public class RunPanel : MonoBehaviour
 		DayNight.NextDay += OnNextDay;
 		DayNight.NextHour += OnNextHour;
 		Society = argSociety;
+		PlayerJob = argSociety.PlayerJob;
 
 		Name.text = "Ваш персонаж: " + Society.People[Society.PlayerPersonId].Name;
 		AgentSelection.OnAgentTap(Society.People[Society.PlayerPersonId]);
@@ -36,36 +39,36 @@ public class RunPanel : MonoBehaviour
 
 	private void OnNextHour(GameTime argGameTime)
 	{
-		/*if (DayNightController.Time == new TimeSpan(1, 0, 0))
+		/*if (DayNight.Time == new TimeSpan(1, 0, 0))
 		{
 			if (Work.isOn == true)
 			{
-				PlayerJobSystem.WorkMode = true;
+				PlayerJob.WorkMode = true;
 			}
 			else if (Studies.isOn == true)
 			{
-				PlayerJobSystem.WorkMode = false;
+				PlayerJob.WorkMode = false;
 			}
 		}
-		if (DayNightController.Time == new TimeSpan(8, 0, 0))
+		if (DayNight.Time == new TimeSpan(8, 0, 0))
 		{
-			if (PlayerJobSystem.WorkMode && PlayerJobSystem.WorkError > 0)
+			if (PlayerJob.WorkMode && PlayerJob.WorkError > 0)
 			{
 				Message.text = "Вас приняли на завод";
 			}
-			else if (PlayerJobSystem.WorkMode && PlayerJobSystem.WorkError == -1)
+			else if (PlayerJob.WorkMode && PlayerJob.WorkError == -1)
 			{
 				Message.text = "Вас не приняли на завод";
 				Work.isOn = false;
 				Studies.isOn = true;
-				PlayerJobSystem.WorkMode = false;
+				PlayerJob.WorkMode = false;
 			}
 			else if(Society.People[Society.PlayerPersonId].IsFired == true)
 			{
 				Message.text = "Вас уволили";
 				Work.isOn = false;
 				Studies.isOn = true;
-				PlayerJobSystem.WorkMode = false;
+				PlayerJob.WorkMode = false;
 				Society.People[Society.PlayerPersonId].IsFired = true;
 			}
 			else

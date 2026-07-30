@@ -4,9 +4,17 @@ using UnityEF;
 
 namespace Tac.Agent
 {
-
-	public partial class AgentPoint 
+	public class AgentPointLogic : Logic
 	{
+
+		public delegate void AddViewDelegate(Agent agent);
+		public delegate void RemoveViewDelegate(Agent agent);
+		public delegate bool IsAgentInEnterDelegate(int agentId);
+
+		public AddViewDelegate AddView;
+		public RemoveViewDelegate RemoveView;
+		public IsAgentInEnterDelegate IsAgentInEnter;
+
 		public string Title;
 		public string Info;
 
@@ -17,36 +25,33 @@ namespace Tac.Agent
 		/// </summary>
 		private GameTime LastGameTime;
 
-		public virtual void Init()
-		{
-			AgentInPoint A = new AgentInPoint();
-			A.Id = 0;
-		}
-
-
-		public virtual void Work(GameTime argGameTime) { }
 		/// <summary>
 		/// Список ресурсов, которые агент может получить работая в этой точке в базовых величинах.
 		/// В качестве именований нужно использовать теже наименования что и в статах персонажа. 
 		/// </summary>
 		public List<NamedValue> BaseWorkPayment = new List<NamedValue>();
 
+		internal int workingFrom;
 		protected int WorkingFrom
 		{
-			get
-			{
-				int x = (int)WorkingHours_.x;
-				return x;
-			}
+			get { return workingFrom; } 
 		}
+		internal int workingTill;
 		protected int WorkingTill
 		{
-			get
-			{
-				int y = (int)WorkingHours_.y;
-				return y;
-			}
+			get { return workingTill; }
 		}
+
+
+		public AgentPointLogic()
+		{ 
+			Init();
+		}
+
+		protected virtual void Init() { }
+
+		public virtual void Work(GameTime argGameTime) { }
+
 
 		public bool IsOpen(int currentTime)
 		{
@@ -78,9 +83,7 @@ namespace Tac.Agent
 
 		public virtual void Add(Agent argAgent)
 		{
-			argAgent.IsBusy = true;
-			argAgent.TargetId = 0;
-			argAgent.LocatedId = Id;
+			argAgent.SetLocated(Id);
 			AgentInPoint point = new AgentInPoint();
 			point.Agent = argAgent;
 			point.EnterTime = LastGameTime;
@@ -93,9 +96,7 @@ namespace Tac.Agent
 		{
 			AgentInPoint ap = Agents.Dequeue();
 			RemoveView(ap.Agent);
-			ap.Agent.IsBusy = false;
-			ap.Agent.LocatedId = 0;
-			ap.Agent.TargetId = 0;
+			ap.Agent.ResetLocated();
 			return ap.Agent;
 		}
 
@@ -103,9 +104,7 @@ namespace Tac.Agent
 		{
 			AgentInPoint ap = Agents.Remove(argAgentId);
 			RemoveView(ap.Agent);
-			ap.Agent.IsBusy = false;
-			ap.Agent.LocatedId = 0;
-			ap.Agent.TargetId = 0;
+			ap.Agent.ResetLocated();
 			return ap.Agent;
 		}
 
@@ -182,26 +181,6 @@ namespace Tac.Agent
 			}
 			return ret;
 		}
-
-
-#if OnlyLogic
-		protected virtual Vector2_ workingHours() { return new Vector2_(0, 24); }
-		private Vector2_ WorkingHours_
-		{
-			get { return new Vector2_(workingHours().x, workingHours().y); }
-		}
-
-		public Vector3_ PointPosition
-		{
-			get { return Vector3_.zero; }
-		}
-
-		public virtual void AddView(Agent argAgent) { }
-		public void RemoveView(Agent argAgent) { }
-
-		public bool IsAgentInEnter(int argAgentId) { return true; }
-
-#endif
 
 
 	}

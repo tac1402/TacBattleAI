@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Numerics;
 using Tac.HealthSystem;
+using UnityEngine;
 
 namespace Tac.Agent
 {
-    public partial class Agent
+    public class AgentLogic : Logic
     {
 		/// <summary>
 		/// Место назначения (куда идти)
@@ -23,7 +25,9 @@ namespace Tac.Agent
 
 		public bool UseHealthState = false;
 
-		private HealthState HealthState;
+		internal System.Random rnd = new System.Random();
+
+		internal HealthState HealthState;
 		internal float health;
 		/// <summary>
 		/// Здоровье
@@ -68,6 +72,10 @@ namespace Tac.Agent
 		/// </summary>
 		public PhysicalSkill Precision { get { return precision; } set { precision = value; } }
 
+		public event Change ChangeHealth;
+
+
+		public virtual void AddStatsSkills() { }
 
 		public void ApplyDamage(float argDamage)
 		{
@@ -78,36 +86,46 @@ namespace Tac.Agent
 		public void ApplyDamage(BodyParts argBodyPart, float argDamage)
 		{
 			HealthState.Body[argBodyPart].State -= argDamage;
-
 			CalcHealth();
-
-			if (IsDead == true)
-			{
-				agent.enabled = false;
-			}
 		}
+
+		internal float previousHealth;
+		internal float previousStamina;
 
 		public void CalcHealth()
 		{
-			float previousHealth = HealthState.Health;
-			float previousStamina = Charge.State;
+			previousHealth = HealthState.Health;
+			previousStamina = Charge.State;
 
 			HealthState.CalcHealth();
 
 			// Расчитать снижение меткости при изменении здоровья
 			Precision.Recalc(Health);
 
-			if (StatusBar != null)
+			if (ChangeHealth != null)
 			{
-				StatusBar.SetHealth(HealthState.Health, previousHealth);
-				StatusBar.SetStamina(Charge.State, previousStamina);
+				ChangeHealth();
 			}
 		}
+		public void SetTarget(int argId)
+		{
+			IsBusy = true;
+			LocatedId = -1;
+			TargetId = argId;
+		}
 
-#if OnlyLogic
-		public object StatusBar == null;
-#endif
-
+		public void SetLocated(int argId)
+		{
+			IsBusy = true;
+			TargetId = 0;
+			LocatedId = Id;
+		}
+		public void ResetLocated()
+		{
+			IsBusy = false;
+			LocatedId = 0;
+			TargetId = 0;
+		}
 	}
 }
 
