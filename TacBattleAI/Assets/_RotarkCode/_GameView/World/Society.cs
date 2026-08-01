@@ -13,7 +13,7 @@ namespace Tac.Society
 {
 	public partial class Society : Flow, ICell
 	{
-		public SocietyLogic logic = new SocietyLogic();
+		private SocietyLogic logic = new SocietyLogic();
 		public GDictionary<int, Person.Person> People => logic.People;
 		public RobotJob RobotJob => logic.RobotJob;
 		public PlayerJob PlayerJob => logic.PlayerJob;

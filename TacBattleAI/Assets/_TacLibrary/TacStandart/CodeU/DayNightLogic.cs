@@ -10,7 +10,7 @@ namespace Tac
 	/// <summary>
 	/// Логика игрового времени
 	/// </summary>
-	public class DayNightLogic
+	public class DayNightLogic : Logic
 	{
 		public TimeSpan Time;
 

@@ -18,6 +18,7 @@ namespace Tac
 
 		private ItemDb itemDb = new ItemDb();
 		public ItemDb item { get { return itemDb; } }
+		public virtual void InitLogic() { }
 
 		[NotMapped]
 		public bool RecoverMode

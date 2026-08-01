@@ -7,9 +7,9 @@ namespace Tac.Society
 	public class BusinessLogic : AgentPointLogic
 	{
 
-		protected override void Init()
+		public override void InitLogic()
 		{
-			base.Init();
+			base.InitLogic();
 			Title = "Частный дом";
 		}
 	}

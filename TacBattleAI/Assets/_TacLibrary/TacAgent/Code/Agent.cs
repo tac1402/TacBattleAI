@@ -5,6 +5,7 @@ using DnaCore;
 using System.Collections;
 using System.Collections.Generic;
 using Tac.HealthSystem;
+using Tac.Person;
 using UnityEF;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,7 +14,8 @@ namespace Tac.Agent
 {
 	public partial class Agent : Spatial, ICell
 	{
-		private AgentLogic logic = new AgentLogic();
+		protected AgentLogic logic => baseLogic as AgentLogic;
+		protected override void CreateLogic() { baseLogic = new AgentLogic(); }
 
 		public int TargetId => logic.TargetId;
 		public bool IsBusy => logic.IsBusy;
@@ -155,7 +157,7 @@ namespace Tac.Agent
 				agent.enabled = true;
 				StartCoroutine(DrawPath());
 			}
-			logic.ChangeHealth += Logic_ChangeHealth;
+			logic.ChangeHealth += new Change(Logic_ChangeHealth);
 
 			StartCoroutine(Tick());
 		}
@@ -356,7 +358,6 @@ namespace Tac.Agent
 				yield return Wait;
 			}
 		}
-
 
 	}
 

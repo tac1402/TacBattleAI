@@ -58,10 +58,23 @@ namespace Tac
 		private bool initData = false;
 		private void Awake()
 		{
+			CreateLogic();
+			if (logic != null)
+			{
+				logic.InitLogic();
+			}
 			if (initData == false) { InitData(); }
 		}
 
-		public virtual void InitData() { initData = true; }
+		[Mapped]
+		private Logic logic;
+		protected Logic baseLogic { get { return logic; } set { logic = value; } }
+		protected virtual void CreateLogic() { }
+
+		public virtual void InitData()
+		{
+			initData = true;
+		}
 
 		[NotMapped]
 		public bool RecoverMode

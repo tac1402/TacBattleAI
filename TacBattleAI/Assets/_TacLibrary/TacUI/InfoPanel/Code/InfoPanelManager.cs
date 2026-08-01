@@ -138,7 +138,7 @@ namespace Tac.UI
 		}
 
 
-		public void OnAgentSelect(Agent.Agent argAgent)
+		public void OnAgentSelect(dynamic argAgent)
 		{
 			currentPerson = argAgent as Person.Person;
 			if (currentPerson != null)

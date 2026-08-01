@@ -6,11 +6,16 @@ namespace Tac.Society
 {
 	public class RobotJob : Job
 	{
-		private new RobotJobLogic logic;
-		private void Awake()
+		protected new RobotJobLogic logic => baseLogic as RobotJobLogic;
+		protected override void CreateLogic()
 		{
 			pathExt = new NavMeshPathExt();
-			logic = new RobotJobLogic(pathExt.CalculatePath);
+			baseLogic = new RobotJobLogic(pathExt.CalculatePath);
+		}
+
+
+		private void Awake()
+		{
 			StartCoroutine(CalcPath());
 		}
 

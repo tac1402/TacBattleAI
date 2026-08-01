@@ -9,17 +9,17 @@ using UnityEngine;
 
 namespace Tac.Person
 {
-
 	public partial class Person : Agent.Agent
 	{
-		private PersonLogic logic = new PersonLogic();
+		protected new PersonLogic logic => baseLogic as PersonLogic;
+		protected override void CreateLogic() { baseLogic = new PersonLogic(); }
+
 		public LDictionary<string, AgentPoint> Places => logic.Places;
 		public LDictionary_<string, float> Stats => logic.Stats;
 		public LDictionary_<string, StatType> StatTypes => logic.StatTypes;
 		public AgentPoint WorkPlace { get { return logic.WorkPlace; } set { logic.WorkPlace = value; } }
 		public GenderType Gender { get { return logic.Gender; } set { logic.Gender = value; } }
 		public string InfoTxt => logic.InfoTxt;
-		
 
 		public override void InitData()
 		{

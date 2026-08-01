@@ -43,13 +43,6 @@ namespace Tac.Agent
 		}
 
 
-		public AgentPointLogic()
-		{ 
-			Init();
-		}
-
-		protected virtual void Init() { }
-
 		public virtual void Work(GameTime argGameTime) { }
 
 

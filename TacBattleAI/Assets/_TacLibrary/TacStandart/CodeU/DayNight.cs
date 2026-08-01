@@ -17,7 +17,7 @@ namespace Tac
 	/// </summary>
 	public class DayNight: Flow, IDayNight, ICell
 	{
-		private DayNightLogic logic = new DayNightLogic();
+		private new DayNightLogic logic = new DayNightLogic();
 		public TimeSpan Time => logic.Time;
 
 		/// <summary>

@@ -20,7 +20,7 @@ namespace Tac.Agent
 			if (PathStatus == 2)
 			{
 				divider = new PathDivider();
-				divider.DividePath(this, 30f);
+				divider.DividePath(this as Agent, 30f);
 
 				Gradient gradient = divider.CreatePhaseGradient(new Color[] { Color.green, Color.red, Color.green });
 				PathRender.colorGradient = gradient;

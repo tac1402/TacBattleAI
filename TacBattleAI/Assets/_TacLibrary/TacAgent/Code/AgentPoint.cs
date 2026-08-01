@@ -9,10 +9,14 @@ using static Tac.Agent.AgentPointLogic;
 
 namespace Tac.Agent
 {
+	
+
 	public class AgentPoint : Spatial, ICell
 	{
 		#region logic
-		private AgentPointLogic logic = new AgentPointLogic();
+		protected AgentPointLogic logic => baseLogic as AgentPointLogic;
+		protected override void CreateLogic() { baseLogic = new AgentPointLogic(); }
+
 		public List<NamedValue> BaseWorkPayment => logic.BaseWorkPayment;
 		public string Title => logic.Title;
 		public GetInfoDelegate GetInfoHandler { set { logic.GetInfoHandler = value; } }
@@ -55,7 +59,7 @@ namespace Tac.Agent
 
 		public Cell cell { get { return item; } }
 
-		private void Awake()
+		public override void InitData()
 		{
 			BuildItem item = GetComponent<BuildItem>();
 			if (item != null)
@@ -63,15 +67,13 @@ namespace Tac.Agent
 				Id = item.Id;
 			}
 
+			base.InitData();
 			logic.AddView = AddView;
 			logic.RemoveView = RemoveView;
 			logic.IsAgentInEnter = IsAgentInEnter;
 			logic.workingFrom = (int)WorkingHours.x;
 			logic.workingTill = (int)WorkingHours.y;
-			Init();
 		}
-
-		public virtual void Init() { }
 
 		public virtual void AddView(Agent argAgent)
 		{

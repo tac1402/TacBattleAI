@@ -193,6 +193,11 @@ namespace UnityEF
 						entityBuilder.ToTable($"LKeyValue_{keyArg.Name}_{valueName}");
 					}
 				}
+				/*else
+				{
+					// Для обычных классов задаём имя таблицы по имени класса
+					entityBuilder.ToTable(type.Name);
+				}*/
 
 				/*var entityTypes = modelBuilder.Model.GetEntityTypes();
 				foreach (var et in entityTypes)
@@ -285,7 +290,7 @@ namespace UnityEF
 				else
 				{
 					var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-						.Where(f => (f.IsPublic || (f.IsPrivate && f.IsDefined(typeof(MappedAttribute), false)))
+						.Where(f => (f.IsPublic || f.IsDefined(typeof(MappedAttribute), false))
 							&& f.IsDefined(typeof(NotMappedAttribute), false) == false);
 
 					foreach (var field in fields)
@@ -309,6 +314,11 @@ namespace UnityEF
 
 						if (isEntity && isSimple == false)
 						{
+							if (field.Name == "logic")
+							{
+								int a = 1;
+							}
+
 							// Одиночная ссылка на другую сущность
 							var fkName = $"{field.Name}Id";
 							entityBuilder.HasOne(fieldType, field.Name)
@@ -331,7 +341,7 @@ namespace UnityEF
 						}
 					}
 
-					if (typeof(Spatial).IsAssignableFrom(type) || typeof(ISpatialDb).IsAssignableFrom(type))
+					if (typeof(ISpatialDb).IsAssignableFrom(type))
 					{
 						entityBuilder.Property<Vector3_>("Position")
 							.HasConversion(GetValueConverter(typeof(Vector3_)));
@@ -353,7 +363,7 @@ namespace UnityEF
 					foreach (var prop in properties)
 					{
 						if (prop.Name == "Id") { continue; }
-						if ((typeof(Spatial).IsAssignableFrom(type) || typeof(ISpatialDb).IsAssignableFrom(type)) &&
+						if ((typeof(ISpatialDb).IsAssignableFrom(type)) &&
 							(prop.Name == "Position" || prop.Name == "Rotation" || prop.Name == "Scale"))
 						{
 							continue;
