@@ -14,7 +14,7 @@ namespace Tac.Agent
 {
 	public partial class Agent : Spatial, ICell
 	{
-		protected AgentLogic logic => baseLogic as AgentLogic;
+		protected AgentLogic logic { get { return baseLogic as AgentLogic; } set { baseLogic = value; } }
 		protected override void CreateLogic() { baseLogic = new AgentLogic(); }
 
 		public int TargetId => logic.TargetId;

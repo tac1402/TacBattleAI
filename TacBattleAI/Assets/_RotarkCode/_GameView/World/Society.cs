@@ -13,7 +13,8 @@ namespace Tac.Society
 {
 	public partial class Society : Flow, ICell
 	{
-		private SocietyLogic logic = new SocietyLogic();
+		protected SocietyLogic logic { get { return baseLogic as SocietyLogic; } set { baseLogic = value; } }
+		protected override void CreateLogic() { baseLogic = new SocietyLogic(); }
 		public GDictionary<int, Person.Person> People => logic.People;
 		public RobotJob RobotJob => logic.RobotJob;
 		public PlayerJob PlayerJob => logic.PlayerJob;

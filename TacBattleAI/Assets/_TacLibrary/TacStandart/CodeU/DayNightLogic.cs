@@ -70,7 +70,7 @@ namespace Tac
 				}
 			}
 
-			int currentHour = (int)Math.Floor(argCurrentTime);
+			int currentHour = (int)Math.Floor(currentTime);
 
 			if (oldHour != currentHour)
 			{

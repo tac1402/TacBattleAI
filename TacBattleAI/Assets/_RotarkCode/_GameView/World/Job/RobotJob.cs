@@ -6,7 +6,7 @@ namespace Tac.Society
 {
 	public class RobotJob : Job
 	{
-		protected new RobotJobLogic logic => baseLogic as RobotJobLogic;
+		protected new RobotJobLogic logic { get { return baseLogic as RobotJobLogic; } set { baseLogic = value; } }
 		protected override void CreateLogic()
 		{
 			pathExt = new NavMeshPathExt();

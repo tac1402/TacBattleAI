@@ -71,7 +71,19 @@ namespace DnaCore
 				}
 
 				// Рекурсивно обходим все поля, которые являются сущностями или коллекциями сущностей
-				var fields = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+				var fields = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance).ToList();
+
+				// 2. Проверяем, является ли тип объекта потомком Flow (или самим Flow)
+				var type = obj.GetType();
+				if (typeof(Flow).IsAssignableFrom(type))
+				{
+					// 3. Ищем поле "logic" именно в классе Flow (с учетом приватности)
+					var logicField = typeof(Flow).GetField("logic",
+										BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+					if (logicField != null)
+						fields.Add(logicField);
+				}
+
 				foreach (var field in fields)
 				{
 					var fieldType = field.FieldType;

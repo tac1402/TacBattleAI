@@ -14,7 +14,7 @@ namespace Tac.Agent
 	public class AgentPoint : Spatial, ICell
 	{
 		#region logic
-		protected AgentPointLogic logic => baseLogic as AgentPointLogic;
+		protected AgentPointLogic logic { get { return baseLogic as AgentPointLogic; } set { baseLogic = value; } }
 		protected override void CreateLogic() { baseLogic = new AgentPointLogic(); }
 
 		public List<NamedValue> BaseWorkPayment => logic.BaseWorkPayment;

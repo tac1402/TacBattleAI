@@ -11,7 +11,7 @@ namespace Tac.Society
 {
 	public class Job : Flow, ICell
 	{
-		protected new JobLogic logic => baseLogic as JobLogic;
+		protected JobLogic logic { get { return baseLogic as JobLogic; } set { baseLogic = value; } }
 		protected override void CreateLogic()
 		{
 			pathExt = new NavMeshPathExt();

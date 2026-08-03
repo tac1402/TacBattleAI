@@ -17,7 +17,9 @@ namespace Tac
 	/// </summary>
 	public class DayNight: Flow, IDayNight, ICell
 	{
-		private new DayNightLogic logic = new DayNightLogic();
+		protected DayNightLogic logic { get { return baseLogic as DayNightLogic; } set { baseLogic = value; } }
+		protected override void CreateLogic() { baseLogic = new DayNightLogic(); }
+
 		public TimeSpan Time => logic.Time;
 
 		/// <summary>
@@ -134,7 +136,7 @@ namespace Tac
 			remove => logic.NextDay -= value;
 		}
 
-		private void Awake()
+		private void Start()
 		{
 			TimeMode = TimeMode.Normal;
 			StartCoroutine(Tick());

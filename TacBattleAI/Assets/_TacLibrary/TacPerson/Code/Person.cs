@@ -11,7 +11,7 @@ namespace Tac.Person
 {
 	public partial class Person : Agent.Agent
 	{
-		protected new PersonLogic logic => baseLogic as PersonLogic;
+		protected new PersonLogic logic { get { return baseLogic as PersonLogic; } set { baseLogic = value; } }
 		protected override void CreateLogic() { baseLogic = new PersonLogic(); }
 
 		public LDictionary<string, AgentPoint> Places => logic.Places;

@@ -9,12 +9,26 @@ using System.Text;
 
 namespace Tac
 {
-	public class Logic : IItemDb
+	public abstract class Logic : IItemDb
 	{
 		/// <summary>
 		/// Уникальный индентификатор объекта в мире
 		/// </summary>
+		//[DatabaseGenerated(DatabaseGeneratedOption.None)] 
 		public virtual int Id { get { return itemDb.Id; } set { itemDb.Id = value; } }
+
+		/*public static int IdCounter = 0;
+
+		public Logic()
+		{
+			SetId();
+		}
+
+		public void SetId()
+		{
+			IdCounter++;
+			Id = IdCounter;
+		}*/
 
 		private ItemDb itemDb = new ItemDb();
 		public ItemDb item { get { return itemDb; } }

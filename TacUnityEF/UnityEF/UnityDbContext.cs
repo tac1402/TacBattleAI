@@ -1,7 +1,12 @@
-﻿using DnaCore;
+﻿// Author: Sergej Jakovlev <tac1402@gmail.com>
+// Copyright (C) 2026 Sergej Jakovlev
+
+using DnaCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
 using System;
@@ -128,6 +133,10 @@ namespace UnityEF
 				}
 			}
 			foreach (var t in toAdd) allTypes.Add(t);
+
+			//allTypes.Add(typeof(Logic));
+			//allTypes.Add(typeof(Flow));
+			//allTypes.Add(typeof(Spatial));
 
 			// 3. Регистрируем все найденные типы как сущности
 			foreach (var type in allTypes)
@@ -289,6 +298,32 @@ namespace UnityEF
 				}
 				else
 				{
+					var logicProps = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Instance)
+										 .Where(p => p.Name.StartsWith("logic"))
+										 .ToList();
+					if (logicProps.Count > 1)
+					{
+						throw new InvalidOperationException($"Multiple properties starting with 'logic' found in type {type.FullName}.");
+					}
+					else if (logicProps.Count == 1)
+					{
+						var logicProp = logicProps[0];
+						var logicPropType = logicProp.PropertyType;
+
+						bool isEntity = modelBuilder.Model.FindEntityType(logicPropType) != null;
+						if (isEntity)
+						{
+							var existingNavigation = entityBuilder.Metadata.FindNavigation(logicProp.Name);
+							if (existingNavigation == null)
+							{
+								// Это навигационное свойство – настраиваем связь
+								entityBuilder.HasOne(logicPropType, logicProp.Name)
+										 .WithMany();
+							}
+						}
+					}
+
+					///////////////////////////////////////////////////////////////////////////////////////////////////
 					var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
 						.Where(f => (f.IsPublic || f.IsDefined(typeof(MappedAttribute), false))
 							&& f.IsDefined(typeof(NotMappedAttribute), false) == false);
@@ -314,11 +349,6 @@ namespace UnityEF
 
 						if (isEntity && isSimple == false)
 						{
-							if (field.Name == "logic")
-							{
-								int a = 1;
-							}
-
 							// Одиночная ссылка на другую сущность
 							var fkName = $"{field.Name}Id";
 							entityBuilder.HasOne(fieldType, field.Name)
@@ -359,7 +389,8 @@ namespace UnityEF
 						flags |= BindingFlags.DeclaredOnly;
 					}
 
-					PropertyInfo[] properties = type.GetProperties(flags);
+					List<PropertyInfo> properties = type.GetProperties(flags).ToList();
+
 					foreach (var prop in properties)
 					{
 						if (prop.Name == "Id") { continue; }

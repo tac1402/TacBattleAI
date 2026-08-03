@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -246,14 +246,14 @@ MonoBehaviour:
     y: 675
     width: 1526
     height: 258
-  m_MinSize: {x: 101, y: 126}
-  m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 18}
+  m_MinSize: {x: 231, y: 276}
+  m_MaxSize: {x: 10001, y: 10026}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
   - {fileID: 18}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -691,7 +691,7 @@ MonoBehaviour:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs:
-      - m_Data: 40684
+      - m_Data: 37806
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
@@ -1407,7 +1407,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_RotarkCode/_GameLogic/World
+    - Assets/_TacLibrary/TacStandart/CodeU
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1417,56 +1417,57 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_RotarkCode/_GameLogic/World
+  - Assets/_TacLibrary/TacStandart/CodeU
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 143}
+    scrollPos: {x: 0, y: 480}
     m_SelectedIDs:
-    - m_Data: 74164
+    - m_Data: 74268
     m_LastClickedID:
-      m_Data: 74164
+      m_Data: 74268
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 73988
-    - m_Data: 73990
-    - m_Data: 73992
-    - m_Data: 73994
-    - m_Data: 73996
-    - m_Data: 73998
-    - m_Data: 74000
-    - m_Data: 74002
-    - m_Data: 74004
-    - m_Data: 74006
-    - m_Data: 74008
-    - m_Data: 74010
-    - m_Data: 74012
-    - m_Data: 74014
-    - m_Data: 74016
-    - m_Data: 74018
-    - m_Data: 74020
-    - m_Data: 74022
-    - m_Data: 74024
-    - m_Data: 74026
-    - m_Data: 74028
-    - m_Data: 74030
-    - m_Data: 74032
-    - m_Data: 74034
-    - m_Data: 74036
-    - m_Data: 74038
-    - m_Data: 74040
-    - m_Data: 74042
-    - m_Data: 74044
-    - m_Data: 74046
     - m_Data: 74048
     - m_Data: 74050
     - m_Data: 74052
     - m_Data: 74054
     - m_Data: 74056
     - m_Data: 74058
+    - m_Data: 74060
+    - m_Data: 74062
+    - m_Data: 74064
+    - m_Data: 74066
+    - m_Data: 74068
+    - m_Data: 74070
+    - m_Data: 74072
+    - m_Data: 74074
+    - m_Data: 74076
+    - m_Data: 74078
+    - m_Data: 74080
+    - m_Data: 74082
+    - m_Data: 74084
+    - m_Data: 74086
+    - m_Data: 74088
+    - m_Data: 74090
+    - m_Data: 74092
+    - m_Data: 74094
+    - m_Data: 74096
+    - m_Data: 74098
+    - m_Data: 74100
+    - m_Data: 74102
+    - m_Data: 74104
+    - m_Data: 74106
+    - m_Data: 74108
+    - m_Data: 74110
+    - m_Data: 74112
+    - m_Data: 74114
+    - m_Data: 74116
+    - m_Data: 74118
+    - m_Data: 74120
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1500,42 +1501,43 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 73988
-    - m_Data: 73990
-    - m_Data: 73992
-    - m_Data: 73994
-    - m_Data: 73996
-    - m_Data: 73998
-    - m_Data: 74000
-    - m_Data: 74002
-    - m_Data: 74004
-    - m_Data: 74006
-    - m_Data: 74008
-    - m_Data: 74010
-    - m_Data: 74012
-    - m_Data: 74014
-    - m_Data: 74016
-    - m_Data: 74018
-    - m_Data: 74020
-    - m_Data: 74022
-    - m_Data: 74024
-    - m_Data: 74026
-    - m_Data: 74028
-    - m_Data: 74030
-    - m_Data: 74032
-    - m_Data: 74034
-    - m_Data: 74036
-    - m_Data: 74038
-    - m_Data: 74040
-    - m_Data: 74042
-    - m_Data: 74044
-    - m_Data: 74046
     - m_Data: 74048
     - m_Data: 74050
     - m_Data: 74052
     - m_Data: 74054
     - m_Data: 74056
     - m_Data: 74058
+    - m_Data: 74060
+    - m_Data: 74062
+    - m_Data: 74064
+    - m_Data: 74066
+    - m_Data: 74068
+    - m_Data: 74070
+    - m_Data: 74072
+    - m_Data: 74074
+    - m_Data: 74076
+    - m_Data: 74078
+    - m_Data: 74080
+    - m_Data: 74082
+    - m_Data: 74084
+    - m_Data: 74086
+    - m_Data: 74088
+    - m_Data: 74090
+    - m_Data: 74092
+    - m_Data: 74094
+    - m_Data: 74096
+    - m_Data: 74098
+    - m_Data: 74100
+    - m_Data: 74102
+    - m_Data: 74104
+    - m_Data: 74106
+    - m_Data: 74108
+    - m_Data: 74110
+    - m_Data: 74112
+    - m_Data: 74114
+    - m_Data: 74116
+    - m_Data: 74118
+    - m_Data: 74120
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1563,8 +1565,8 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: 40684
-    m_LastClickedInstanceID: 40684
+    - m_Data: 37806
+    m_LastClickedInstanceID: 37806
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 54580
@@ -1602,8 +1604,8 @@ MonoBehaviour:
     - m_Data: 73718
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: DayNight
+      m_OriginalName: DayNight
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1611,10 +1613,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 0
+        m_Data: 37806
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 10}
