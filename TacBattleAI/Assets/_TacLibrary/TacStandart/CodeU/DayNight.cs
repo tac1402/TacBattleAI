@@ -23,6 +23,19 @@ namespace Tac
 		public TimeSpan Time => logic.Time;
 
 		/// <summary>
+		/// Длина дня в реальных секундах
+		/// </summary>
+		public float DayLength = 120;
+		/// <summary>
+		/// Длина ночи в реальных секундах
+		/// </summary>
+		public float NightLength = 120;
+		/// <summary>
+		/// Длина суток в игровых часах
+		/// </summary>
+		public float GameDayLenght = 24;
+
+		/// <summary>
 		/// Пауза полной остановки
 		/// </summary>
 		public static bool PauseCompleteStop;
@@ -139,6 +152,9 @@ namespace Tac
 		private void Start()
 		{
 			TimeMode = TimeMode.Normal;
+			logic.DayLength = DayLength;
+			logic.NightLength = NightLength;
+			logic.DayLength = DayLength;
 			StartCoroutine(Tick());
 		}
 

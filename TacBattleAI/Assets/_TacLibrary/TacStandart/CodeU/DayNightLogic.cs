@@ -17,15 +17,15 @@ namespace Tac
 		/// <summary>
 		/// Длина дня в реальных секундах
 		/// </summary>
-		private const float DayLength = 120;
+		internal float DayLength = 120;
 		/// <summary>
 		/// Длина ночи в реальных секундах
 		/// </summary>
-		private const float NightLength = 120;
+		internal float NightLength = 120;
 		/// <summary>
 		/// Длина суток в игровых часах
 		/// </summary>
-		private const float GameDayLenght = 24;
+		internal float GameDayLenght = 24;
 
 		/// <summary>
 		/// Прошел час

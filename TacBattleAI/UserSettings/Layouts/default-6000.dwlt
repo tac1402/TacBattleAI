@@ -690,8 +690,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs:
-      - m_Data: 37806
+      m_SelectedIDs: []
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
@@ -1282,7 +1281,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.27336407, y: -0.26400912, z: 0.07827678, w: -0.92171806}
     speed: 2
-    m_Value: {x: -0.27334765, y: -0.26399326, z: 0.07827208, w: -0.9216627}
+    m_Value: {x: -0.2733641, y: -0.26400912, z: 0.07827678, w: -0.92171806}
   m_Size:
     m_Target: 124.57073
     speed: 2
@@ -1564,10 +1563,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs:
-    - m_Data: 37806
-    m_LastClickedInstanceID: 37806
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: []
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs:
     - m_Data: 54580
     - m_Data: 104396
@@ -1604,8 +1602,8 @@ MonoBehaviour:
     - m_Data: 73718
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: DayNight
-      m_OriginalName: DayNight
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1613,10 +1611,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 37806
+        m_Data: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 10}

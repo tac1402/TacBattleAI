@@ -227661,8 +227661,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Society
   GroupId: -1
   ModelName: 
-  RobotJob: {fileID: 0}
-  PlayerJob: {fileID: 0}
   PlayerPersonId: 0
   MenModel:
   - {fileID: 7923730028941531380, guid: 24b79ba791f43c146964d338cc50a591, type: 3}
@@ -227686,10 +227684,8 @@ MonoBehaviour:
   - {fileID: 6989859141800878130, guid: deace7c7e35031b418cfcba2a12e1a6a, type: 3}
   - {fileID: 5096338831182416058, guid: f033b5ebe7d58c84ba1140bdb5423f80, type: 3}
   - {fileID: 249046849845710363, guid: 47b7749e628611143873aa40e7cd44bb, type: 3}
-  ItemCreate: {fileID: 4011879485492785463}
   AgentSelection: {fileID: 4011879485492785467}
   PeoplePanel: {fileID: 1924373804}
-  AllAgentPoint: []
 --- !u!114 &3169185914192667643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229657,11 +229653,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GroupId: -1
   ModelName: World
-  Society: {fileID: 0}
-  DayNight: {fileID: 0}
-  WorldSize:
-    x: 10
-    y: 10
   NavMeshBasic:
   - {fileID: 353595963}
 --- !u!1 &3523290839949849208
@@ -231735,6 +231726,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tac.DayNight
   GroupId: -1
   ModelName: 
+  DayLength: 360
+  NightLength: 360
+  GameDayLenght: 24
   RealTime: {fileID: 5438029402710482074}
   TimeModeTxt: {fileID: 1675090817206834920}
   gameTime: {fileID: 5318326092841258701}
