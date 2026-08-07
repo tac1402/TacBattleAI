@@ -3,8 +3,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Tac;
-using Tac.Agent;
-using Tac.Person;
+using Tac.Agent_;
+using Tac.Person_;
 using Tac.Society;
 
 

@@ -1,27 +1,59 @@
-// Author: Sergej Jakovlev <tac1402@gmail.com>
+п»ї// Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
 using DnaCore;
 using System.Collections;
 using System.Collections.Generic;
 using Tac.HealthSystem;
-using Tac.Person;
+using Tac.Person_;
 using UnityEF;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Tac.Agent
+namespace Tac.Agent_
 {
 	public partial class Agent : Spatial, ICell
 	{
-		protected AgentLogic logic { get { return baseLogic as AgentLogic; } set { baseLogic = value; } }
-		protected override void CreateLogic() { baseLogic = new AgentLogic(); }
+        //[TacLogic] AgentLogic logic;
+#region Generated Logic
+        protected AgentLogic logic
+        {
+            get
+            {
+                return baseLogic as AgentLogic;
+            }
 
-		public int TargetId => logic.TargetId;
-		public bool IsBusy => logic.IsBusy;
-		public void SetTarget(int argId) => logic.SetTarget(argId);
-		public void SetLocated(int argId) => logic.SetLocated(argId);
-		public void ResetLocated() => logic.ResetLocated();
+            set
+            {
+                baseLogic = value;
+            }
+        }
+
+        protected override void CreateLogic()
+        {
+            baseLogic = new AgentLogic();
+        }
+
+        public int TargetId => logic.TargetId;
+        public bool IsBusy => logic.IsBusy;
+        public int LocatedId => logic.LocatedId;
+        public bool UseHealthState => logic.UseHealthState;
+
+        public void AddStatsSkills() => logic.AddStatsSkills();
+        public void ApplyDamage(float argDamage) => logic.ApplyDamage(argDamage);
+        public void ApplyDamage(BodyParts argBodyPart, float argDamage) => logic.ApplyDamage(argBodyPart, argDamage);
+        public void CalcHealth() => logic.CalcHealth();
+        public void SetTarget(int argId) => logic.SetTarget(argId);
+        public void SetLocated(int argId) => logic.SetLocated(argId);
+        public void ResetLocated() => logic.ResetLocated();
+        public float Health => logic.Health;
+        public bool IsDead => logic.IsDead;
+        public PhysicalSkill Charge => logic.Charge;
+        public PhysicalSkill Precision => logic.Precision;
+
+        public event Change ChangeHealth { add => logic.ChangeHealth += value; remove => logic.ChangeHealth -= value; }
+#endregion
+
 
 		public NavMeshAgent agent;
 
@@ -46,7 +78,7 @@ namespace Tac.Agent
 		public float WalkDistance { get { return walkDistance; } }
 
 		/// <summary>
-		/// Двигается ли юнит к цели
+		/// Р”РІРёРіР°РµС‚СЃСЏ Р»Рё СЋРЅРёС‚ Рє С†РµР»Рё
 		/// </summary>
 		public bool isMoving = false;
 		public bool IsMoving
@@ -66,7 +98,7 @@ namespace Tac.Agent
 			}
 		}
 
-		public int pathStatus = 0; // 0 - нет пути, 1 - нужно посчитать, 2 - путь расчитан
+		public int pathStatus = 0; // 0 - РЅРµС‚ РїСѓС‚Рё, 1 - РЅСѓР¶РЅРѕ РїРѕСЃС‡РёС‚Р°С‚СЊ, 2 - РїСѓС‚СЊ СЂР°СЃС‡РёС‚Р°РЅ
 
 		public int PathStatus
 		{
@@ -93,24 +125,24 @@ namespace Tac.Agent
 		}
 
 		/// <summary>
-		/// Возникает, когда агент заканчивает движение к заданной цели
+		/// Р’РѕР·РЅРёРєР°РµС‚, РєРѕРіРґР° Р°РіРµРЅС‚ Р·Р°РєР°РЅС‡РёРІР°РµС‚ РґРІРёР¶РµРЅРёРµ Рє Р·Р°РґР°РЅРЅРѕР№ С†РµР»Рё
 		/// </summary>
 		public event Send OnWalkEnd;
 
 		/// <summary>
-		/// Точка на карте куда движется агент
+		/// РўРѕС‡РєР° РЅР° РєР°СЂС‚Рµ РєСѓРґР° РґРІРёР¶РµС‚СЃСЏ Р°РіРµРЅС‚
 		/// </summary>
 		public Vector3_ TargetPoint = Vector3_.zero;
 
 		/// <summary>
-		/// Текущий путь агента
+		/// РўРµРєСѓС‰РёР№ РїСѓС‚СЊ Р°РіРµРЅС‚Р°
 		/// </summary>
 		public LList<LVector3> PathPoints;
 		[Mapped]
 		private int currentPathIndex;
 
 		/// <summary>
-		/// Контроль дистанции, можно использовать только внутри класса, в т.ч. partial
+		/// РљРѕРЅС‚СЂРѕР»СЊ РґРёСЃС‚Р°РЅС†РёРё, РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С‚РѕР»СЊРєРѕ РІРЅСѓС‚СЂРё РєР»Р°СЃСЃР°, РІ С‚.С‡. partial
 		/// </summary>
 		private event Send OnCheckDistance;
 		private Vector3 previousPosition;
@@ -177,7 +209,7 @@ namespace Tac.Agent
 
 
 		/// <summary>
-		/// Двигаться к 
+		/// Р”РІРёРіР°С‚СЊСЃСЏ Рє 
 		/// </summary>
 		public void Walk(Vector3_ argTarget, float stoppingDistance = 0.1f)
 		{
@@ -310,7 +342,7 @@ namespace Tac.Agent
 
 
 		/// <summary>
-		/// Найти ближайшую доступную позицию на NavMesh карте и поместить в неё агента
+		/// РќР°Р№С‚Рё Р±Р»РёР¶Р°Р№С€СѓСЋ РґРѕСЃС‚СѓРїРЅСѓСЋ РїРѕР·РёС†РёСЋ РЅР° NavMesh РєР°СЂС‚Рµ Рё РїРѕРјРµСЃС‚РёС‚СЊ РІ РЅРµС‘ Р°РіРµРЅС‚Р°
 		/// </summary>
 		public void CheckPosition()
 		{

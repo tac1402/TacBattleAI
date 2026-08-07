@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Tac.Person
+namespace Tac.Person_
 {
 	public partial class PersonName
 	{

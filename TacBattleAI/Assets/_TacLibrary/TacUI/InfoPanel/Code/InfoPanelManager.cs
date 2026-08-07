@@ -3,7 +3,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using Tac.Agent;
+using Tac.Agent_;
 using Tac.Camera;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,7 +21,7 @@ namespace Tac.UI
 
 		private AgentPoint currentAgentPoint;
 		private BuildItem currentItem;
-		private Person.Person currentPerson;
+		private Person_.Person currentPerson;
 
 		private SelectionType Type = SelectionType.None;
 		public void Init()
@@ -140,7 +140,7 @@ namespace Tac.UI
 
 		public void OnAgentSelect(dynamic argAgent)
 		{
-			currentPerson = argAgent as Person.Person;
+			currentPerson = argAgent as Person_.Person;
 			if (currentPerson != null)
 			{
 				ShowHide(SelectionType.Person);

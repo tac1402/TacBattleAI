@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Tac.UI;
 
-namespace Tac.Person
+namespace Tac.Person_
 {
 
 	public class PeopleTable

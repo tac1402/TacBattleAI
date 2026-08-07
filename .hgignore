@@ -10,6 +10,7 @@ syntax: regexp
 ^TacBattleAI/Library/.*
 ^TacBattleAI/Temp/.*
 ^TacBattleAI/Logs/.*
+^TacBattleAI/TacBackup/.*
 
 .vs/.*
 obj/.*

@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-namespace Tac.Person
+namespace Tac.Person_
 {
 	public partial class PersonName
 	{

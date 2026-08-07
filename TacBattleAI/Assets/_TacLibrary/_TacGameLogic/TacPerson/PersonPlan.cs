@@ -3,11 +3,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Tac.Agent;
+using Tac.Agent_;
 using UnityEF;
 
 
-namespace Tac.Person
+namespace Tac.Person_
 {
 	public class PersonPlan : Logic
 	{

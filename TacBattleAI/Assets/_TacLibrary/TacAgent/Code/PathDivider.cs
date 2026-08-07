@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEF;
 
-namespace Tac.Agent
+namespace Tac.Agent_
 {
 	public partial class Agent
 	{

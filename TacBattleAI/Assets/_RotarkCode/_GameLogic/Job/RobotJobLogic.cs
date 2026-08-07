@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Tac.Agent;
+using Tac.Agent_;
 
 namespace Tac.Society
 {

@@ -5,12 +5,11 @@ using System.Collections.Generic;
 using UnityEF;
 using UnityEngine;
 using UnityEngine.AI;
-using static Tac.Agent.AgentPointLogic;
+using static Tac.Agent_.AgentPointLogic;
 
-namespace Tac.Agent
+namespace Tac.Agent_
 {
 	
-
 	public class AgentPoint : Spatial, ICell
 	{
 		#region logic

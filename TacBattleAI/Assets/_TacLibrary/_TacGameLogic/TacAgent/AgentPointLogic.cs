@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEF;
 
-namespace Tac.Agent
+namespace Tac.Agent_
 {
 	public class AgentPointLogic : Logic
 	{

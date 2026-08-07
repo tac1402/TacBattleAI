@@ -1,8 +1,8 @@
 using DnaCore;
 using System.Collections.Generic;
 using System.Linq;
-using Tac.Agent;
-using Tac.Person;
+using Tac.Agent_;
+using Tac.Person_;
 using Tac.UI;
 using Unity.VisualScripting;
 using UnityEF;
@@ -15,7 +15,7 @@ namespace Tac.Society
 	{
 		protected SocietyLogic logic { get { return baseLogic as SocietyLogic; } set { baseLogic = value; } }
 		protected override void CreateLogic() { baseLogic = new SocietyLogic(); }
-		public GDictionary<int, Person.Person> People => logic.People;
+		public GDictionary<int, Person_.Person> People => logic.People;
 		public RobotJob RobotJob => logic.RobotJob;
 		public PlayerJob PlayerJob => logic.PlayerJob;
 		private PeopleTable peopleTable => logic.PeopleTable;
@@ -59,7 +59,7 @@ namespace Tac.Society
 
 		public override void InitData()
 		{
-			logic.People = new GDictionary<int, Person.Person>();
+			logic.People = new GDictionary<int, Person_.Person>();
 		}
 
 
@@ -91,7 +91,7 @@ namespace Tac.Society
 
 		}
 
-		public void AddAgentPlan(Person.Person argAgent, bool IsPlayer = false)
+		public void AddAgentPlan(Person_.Person argAgent, bool IsPlayer = false)
 		{
 			if (IsPlayer)
 			{
@@ -103,9 +103,9 @@ namespace Tac.Society
 				RobotJob.AddPersonPlan(argAgent);
 			}
 		}
-		public List<Person.Person> AddPerson(int argCount, Rect_ argLocation, bool IsFamily = true)
+		public List<Person_.Person> AddPerson(int argCount, Rect_ argLocation, bool IsFamily = true)
 		{
-			List<Person.Person> fakePerson = new List<Person.Person>();
+			List<Person_.Person> fakePerson = new List<Person_.Person>();
 
 			for (int i = 0; i < argCount; i++)
 			{
@@ -115,9 +115,9 @@ namespace Tac.Society
 			return logic.AddPerson(argCount, argLocation, fakePerson, IsFamily);
 		}
 
-		public Person.Person CreateFakePerson()
+		public Person_.Person CreateFakePerson()
 		{
-			Person.Person person = new Person.Person();
+			Person_.Person person = new Person_.Person();
 
 			int isMen = logic.rnd.Next(100);
 			if (isMen > 50)
@@ -127,7 +127,7 @@ namespace Tac.Society
 				Flow menId = MenModel[menIndex].GetComponent<Flow>();
 
 				person.ModelName = menId.ModelName;
-				person.Gender = GenderType.Men;
+				person.SetGender(GenderType.Men);
 			}
 			else
 			{
@@ -136,7 +136,7 @@ namespace Tac.Society
 				Flow womenId = WomenModel[womenIndex].GetComponent<Flow>();
 
 				person.ModelName = womenId.ModelName;
-				person.Gender = GenderType.Women;
+				person.SetGender(GenderType.Women);
 			}
 			return person;
 		}
@@ -149,10 +149,10 @@ namespace Tac.Society
 
 		public void InitWorkPlace()
 		{
-			foreach (Person.Person p in People.Values)
+			foreach (Person_.Person p in People.Values)
 			{
 				int pointIndex = logic.rnd.Next(0, AllAgentPoint.Count);
-				p.WorkPlace = AllAgentPoint[pointIndex];
+				p.SetPlace("WorkPlace", AllAgentPoint[pointIndex]);
 			}
 		}
 

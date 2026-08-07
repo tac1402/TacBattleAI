@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.AI.Navigation;
 
-namespace Tac.Agent
+namespace Tac.Agent_
 {
 	public class NavMeshBasic : MonoBehaviour
 	{

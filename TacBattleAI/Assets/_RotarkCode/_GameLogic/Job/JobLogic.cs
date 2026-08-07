@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Tac;
-using Tac.Person;
+using Tac.Person_;
 using UnityEF;
 
 namespace Tac.Society
@@ -13,27 +13,21 @@ namespace Tac.Society
 		/// </summary>
 		public Dictionary<int, PersonPlan> PersonPlans = new Dictionary<int, PersonPlan>();
 
-		protected List<Agent.Agent> AgentPath = new List<Agent.Agent>();
+		protected List<Agent_.Agent> AgentPath = new List<Agent_.Agent>();
 
 		public delegate NavMeshPath PathCalculator(Vector3_ from, Vector3_ to);
-		protected PathCalculator pathCalculator;
+		internal PathCalculator pathCalculator;
 
-		public JobLogic() { }
-		public JobLogic(PathCalculator argPathCalculator) 
-		{
-			pathCalculator = argPathCalculator;
-		}
-
-		public void AddPersonPlan(Person.Person argPerson)
+		public void AddPersonPlan(Person_.Person argPerson)
 		{
 			PersonPlans.Add(argPerson.Id, new PersonPlan(argPerson));
 		}
 
-		public void CalcPath()
+		public void CalcAgentPath()
 		{
 			for (int i = AgentPath.Count - 1; i >= 0; i--)
 			{
-				Agent.Agent agent = AgentPath[i];
+				Agent_.Agent agent = AgentPath[i];
 				if (agent.PathStatus == 1)
 				{
 					NavMeshPath path = pathCalculator(agent.transform.position.To_(), agent.TargetPoint);

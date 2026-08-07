@@ -4,7 +4,7 @@
 using UnityEngine;
 
 
-namespace Tac.Agent
+namespace Tac.Agent_
 {
 
     public class AgentAnimator : MonoBehaviour

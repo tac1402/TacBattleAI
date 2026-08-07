@@ -1,8 +1,8 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Tac.Agent;
-using Tac.Person;
+using Tac.Agent_;
+using Tac.Person_;
 using Tac.UI;
 
 using UnityEF;
@@ -15,7 +15,7 @@ namespace Tac.Society
 		/// <summary>
 		/// Все персонажи в игре
 		/// </summary>
-		public GDictionary<int, Person.Person> People;
+		public GDictionary<int, Person_.Person> People;
 
 		public RobotJob RobotJob;
 		public PlayerJob PlayerJob;
@@ -30,9 +30,9 @@ namespace Tac.Society
 
 
 
-		public List<Person.Person> AddPerson(int argCount, Rect_ argLocation, List<Person.Person> argFakePerson, bool IsFamily = true)
+		public List<Person_.Person> AddPerson(int argCount, Rect_ argLocation, List<Person_.Person> argFakePerson, bool IsFamily = true)
 		{
-			List<Person.Person> ret = new List<Person.Person>();
+			List<Person_.Person> ret = new List<Person_.Person>();
 			RandomWorld randomWorld = new RandomWorld();
 
 			string surname = "";
@@ -43,7 +43,7 @@ namespace Tac.Society
 
 			for (int i = 0; i < argCount; i++)
 			{
-				Person.Person person = argFakePerson[i];
+				Person_.Person person = argFakePerson[i];
 				person.Position = randomWorld.GetRandomPosition(argLocation).To3();
 
 				person = AddPerson(person);
@@ -66,14 +66,14 @@ namespace Tac.Society
 			return ret;
 		}
 
-		public Person.Person AddPerson(Person.Person argPerson)
+		public Person_.Person AddPerson(Person_.Person argPerson)
 		{
 			if (argPerson.RecoverMode == true)
 			{
 				ItemCreate.PredeffinedObjectId = argPerson.Id;
 			}
 			GameObject prefab = ItemCreate.CreateObject(argPerson.ModelName, argPerson.Position.x, argPerson.Position.z);
-			Person.Person person = prefab.GetComponent<Person.Person>();
+			Person_.Person person = prefab.GetComponent<Person_.Person>();
 
 			person.Init(argPerson.RecoverMode);
 			person.CheckPosition();
@@ -91,7 +91,7 @@ namespace Tac.Society
 
 		protected virtual void Person_OnWalkEnd(params object[] argInfo)
 		{
-			Agent.Agent agent = argInfo[0] as Agent.Agent;
+			Agent_.Agent agent = argInfo[0] as Agent_.Agent;
 
 			AllAgentPoint[agent.TargetId].WalkToEnter(oldGameTime, agent);
 		}

@@ -9,6 +9,7 @@ TacBattleAI/[Bb]uild/
 TacBattleAI/[Bb]uilds/
 TacBattleAI/[Ll]ogs/
 TacBattleAI/[Mm]emoryCaptures/
+TacBattleAI/TacBackup/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta

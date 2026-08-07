@@ -1,4 +1,4 @@
-// Author: Sergej Jakovlev <tac1402@gmail.com>
+п»ї// Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
 using System.Collections;
@@ -13,47 +13,72 @@ namespace Tac
 {
 
 	/// <summary>
-	/// Управляет игровым временем
+	/// РЈРїСЂР°РІР»СЏРµС‚ РёРіСЂРѕРІС‹Рј РІСЂРµРјРµРЅРµРј
 	/// </summary>
-	public class DayNight: Flow, IDayNight, ICell
+	public class DayNight: Flow, IDayNight
 	{
-		protected DayNightLogic logic { get { return baseLogic as DayNightLogic; } set { baseLogic = value; } }
-		protected override void CreateLogic() { baseLogic = new DayNightLogic(); }
+        //[TacLogic] DayNightLogic logic;
+#region Generated Logic
+        protected DayNightLogic logic
+        {
+            get
+            {
+                return baseLogic as DayNightLogic;
+            }
 
-		public TimeSpan Time => logic.Time;
+            set
+            {
+                baseLogic = value;
+            }
+        }
+
+        protected override void CreateLogic()
+        {
+            baseLogic = new DayNightLogic();
+        }
+
+        public TimeSpan Time => logic.Time;
+        public TimeMode timeMode => logic.timeMode;
+
+        public DateTime GetDateTime(int argDay, TimeSpan argTime) => logic.GetDateTime(argDay, argTime);
+
+        public event Tick NextHour { add => logic.NextHour += value; remove => logic.NextHour -= value; }
+
+        public event Tick NextDay { add => logic.NextDay += value; remove => logic.NextDay -= value; }
+#endregion
 
 		/// <summary>
-		/// Длина дня в реальных секундах
+		/// Р”Р»РёРЅР° РґРЅСЏ РІ СЂРµР°Р»СЊРЅС‹С… СЃРµРєСѓРЅРґР°С…
 		/// </summary>
 		public float DayLength = 120;
 		/// <summary>
-		/// Длина ночи в реальных секундах
+		/// Р”Р»РёРЅР° РЅРѕС‡Рё РІ СЂРµР°Р»СЊРЅС‹С… СЃРµРєСѓРЅРґР°С…
 		/// </summary>
 		public float NightLength = 120;
 		/// <summary>
-		/// Длина суток в игровых часах
+		/// Р”Р»РёРЅР° СЃСѓС‚РѕРє РІ РёРіСЂРѕРІС‹С… С‡Р°СЃР°С…
 		/// </summary>
 		public float GameDayLenght = 24;
 
 		/// <summary>
-		/// Пауза полной остановки
+		/// РџР°СѓР·Р° РїРѕР»РЅРѕР№ РѕСЃС‚Р°РЅРѕРІРєРё
 		/// </summary>
 		public static bool PauseCompleteStop;
 
 		/// <summary>
-		/// Текстовое поле в UI в котором будет отображаться текущие прошедшие реальное время
+		/// РўРµРєСЃС‚РѕРІРѕРµ РїРѕР»Рµ РІ UI РІ РєРѕС‚РѕСЂРѕРј Р±СѓРґРµС‚ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊСЃСЏ С‚РµРєСѓС‰РёРµ РїСЂРѕС€РµРґС€РёРµ СЂРµР°Р»СЊРЅРѕРµ РІСЂРµРјСЏ
 		/// </summary>
 		public Text RealTime;
 		/// <summary>
-		/// Текстовое поле в UI в котором будет отображаться текущая скорость течения времени
+		/// РўРµРєСЃС‚РѕРІРѕРµ РїРѕР»Рµ РІ UI РІ РєРѕС‚РѕСЂРѕРј Р±СѓРґРµС‚ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊСЃСЏ С‚РµРєСѓС‰Р°СЏ СЃРєРѕСЂРѕСЃС‚СЊ С‚РµС‡РµРЅРёСЏ РІСЂРµРјРµРЅРё
 		/// </summary>
 		public Text TimeModeTxt;
 		/// <summary>
-		/// Текстовое поле в UI в котором будет отображаться текущие время
+		/// РўРµРєСЃС‚РѕРІРѕРµ РїРѕР»Рµ РІ UI РІ РєРѕС‚РѕСЂРѕРј Р±СѓРґРµС‚ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊСЃСЏ С‚РµРєСѓС‰РёРµ РІСЂРµРјСЏ
 		/// </summary>
 		public Text gameTime;
 		/// <summary>
-		/// Текстовое поле в UI в котором будет отображаться текущий номер суток
+		/// РўРµРєСЃС‚РѕРІРѕРµ РїРѕР»Рµ РІ UI РІ РєРѕС‚РѕСЂРѕРј Р±СѓРґРµС‚ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊСЃСЏ С‚РµРєСѓС‰РёР№ РЅРѕРјРµСЂ СЃСѓС‚РѕРє
 		/// </summary>
 		public Text gameDays;
 
@@ -82,16 +107,16 @@ namespace Tac
 
 
 		/// <summary>
-		/// Текущие время
+		/// РўРµРєСѓС‰РёРµ РІСЂРµРјСЏ
 		/// </summary>
 		private float currentTime = 6.0f;
 		/// <summary>
-		/// Текущие сутки (номер)
+		/// РўРµРєСѓС‰РёРµ СЃСѓС‚РєРё (РЅРѕРјРµСЂ)
 		/// </summary>
 		private int currentDay = 1;
 
 		/// <summary>
-		/// Текущие время
+		/// РўРµРєСѓС‰РёРµ РІСЂРµРјСЏ
 		/// </summary>
 		[Mapped]
 		public float CurrentTime
@@ -105,7 +130,7 @@ namespace Tac
 		}
 
 		/// <summary>
-		/// Текущие сутки (номер)
+		/// РўРµРєСѓС‰РёРµ СЃСѓС‚РєРё (РЅРѕРјРµСЂ)
 		/// </summary>
 		[Mapped]
 		public int CurrentDay
@@ -135,19 +160,6 @@ namespace Tac
 		public float PlaySpeed = 1;
 		public bool Pause = false;
 
-		public Cell cell { get { return item; } }
-
-		public event Tick NextHour
-		{
-			add => logic.NextHour += value;
-			remove => logic.NextHour -= value;
-		}
-
-		public event Tick NextDay
-		{
-			add => logic.NextDay += value;
-			remove => logic.NextDay -= value;
-		}
 
 		private void Start()
 		{

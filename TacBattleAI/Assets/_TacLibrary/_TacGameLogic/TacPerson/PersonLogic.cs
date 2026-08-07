@@ -3,10 +3,10 @@
 
 using System.Collections.Generic;
 
-using Tac.Agent;
+using Tac.Agent_;
 using UnityEF;
 
-namespace Tac.Person
+namespace Tac.Person_
 {
 	public class PersonLogic : AgentLogic
 	{
@@ -17,6 +17,8 @@ namespace Tac.Person
 		/// Пол (мужской или женский) персонажа
 		/// </summary>
 		public GenderType Gender = GenderType.Unknow;
+
+		public void SetGender(GenderType argGender) { Gender = argGender; }
 
 		/// <summary>
 		/// Статы (характеристики)
@@ -36,7 +38,7 @@ namespace Tac.Person
 		/// <summary>
 		/// Информация о статах или скилах, которая поддерживается для отображения в UI
 		/// </summary>
-		public List<NamedValue> Info = new List<NamedValue>();
+		private List<NamedValue> Info = new List<NamedValue>();
 		/// <summary>
 		/// Полная информация о статах и скилах, разбитая на строки для UI
 		/// </summary>
@@ -144,7 +146,7 @@ namespace Tac.Person
 		/// <summary>
 		/// Установить место
 		/// </summary>
-		private void SetPlace(string argKey, AgentPoint argPlace)
+		public void SetPlace(string argKey, AgentPoint argPlace)
 		{
 			if (Places.ContainsKey(argKey))
 			{

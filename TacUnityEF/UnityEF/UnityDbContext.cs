@@ -46,6 +46,8 @@ namespace UnityEF
 		{ 
 			debugType = DebugType.None;
 			loadMode = false;
+
+			var dummy = typeof(TacCompiler.Compiler); // фейковое использование
 		}
 
 		public UnityDbContext(DebugType argDebugType, bool argLoadType)

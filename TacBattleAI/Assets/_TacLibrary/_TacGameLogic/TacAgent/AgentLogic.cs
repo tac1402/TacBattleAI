@@ -3,7 +3,7 @@ using System.Numerics;
 using Tac.HealthSystem;
 using UnityEngine;
 
-namespace Tac.Agent
+namespace Tac.Agent_
 {
     public class AgentLogic : Logic
     {

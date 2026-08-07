@@ -7,7 +7,7 @@
 
 using UnityEngine;
 
-namespace Tac.Agent
+namespace Tac.Agent_
 {
 	/// <summary>
 	/// Зрение агента, выделяет опасные цели и препятствия

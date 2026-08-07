@@ -4,7 +4,7 @@ using Tac.Camera;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Tac.Agent
+namespace Tac.Agent_
 {
 	[Component(typeof(Agent), typeof(StatusBar), typeof(TopCamera))]
 	public class AgentSelection : MonoBehaviour
@@ -70,7 +70,7 @@ namespace Tac.Agent
 
 namespace Tac.Camera
 {
-	public delegate void AgentInfo(Agent.Agent argAgent);
+	public delegate void AgentInfo(Agent_.Agent argAgent);
 
 	public partial class TopCamera
 	{
@@ -92,7 +92,7 @@ namespace Tac.Camera
             }
 		}
 
-		private Agent.Agent selectedAgent;
+		private Agent_.Agent selectedAgent;
 
 
 		private void Camera_OnUpdateAgent()
@@ -107,7 +107,7 @@ namespace Tac.Camera
 			GameObject go = GetAgent(Mouse.current.position.ReadValue());
 			if (go != null)
 			{
-				Agent.Agent agentTapped = go.GetComponent<Agent.Agent>();
+				Agent_.Agent agentTapped = go.GetComponent<Agent_.Agent>();
 
 				if (agentTapped != null)
 				{

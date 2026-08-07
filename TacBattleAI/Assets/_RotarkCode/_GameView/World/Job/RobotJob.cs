@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,20 +6,36 @@ namespace Tac.Society
 {
 	public class RobotJob : Job
 	{
-		protected new RobotJobLogic logic { get { return baseLogic as RobotJobLogic; } set { baseLogic = value; } }
-		protected override void CreateLogic()
+        //[TacLogic] RobotJobLogic logic;
+#region Generated Logic
+        protected RobotJobLogic logic
+        {
+            get
+            {
+                return baseLogic as RobotJobLogic;
+            }
+
+            set
+            {
+                baseLogic = value;
+            }
+        }
+
+        protected override void CreateLogic()
+        {
+            baseLogic = new RobotJobLogic();
+        }
+
+        public void NextHour(GameTime argGameTime) => logic.NextHour(argGameTime);
+#endregion
+
+
+		private void Start()
 		{
 			pathExt = new NavMeshPathExt();
-			baseLogic = new RobotJobLogic(pathExt.CalculatePath);
-		}
-
-
-		private void Awake()
-		{
+			logic.pathCalculator = pathExt.CalculatePath;
 			StartCoroutine(CalcPath());
 		}
-
-		public void NextHour(GameTime argGameTime) => logic.NextHour(argGameTime);
 	}
 }
 

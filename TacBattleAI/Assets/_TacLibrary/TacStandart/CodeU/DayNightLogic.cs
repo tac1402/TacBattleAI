@@ -39,7 +39,7 @@ namespace Tac
 		public TimeMode timeMode;
 
 		private float daySpeedMultiplier;
-		public float DaySpeedMultiplier
+		internal float DaySpeedMultiplier
 		{
 			get
 			{
@@ -51,8 +51,7 @@ namespace Tac
 			}
 		}
 
-
-		public (int, float) UpdateTime(int argCurrentDay,float argCurrentTime)
+		internal (int, float) UpdateTime(int argCurrentDay,float argCurrentTime)
 		{
 			int currentDay = argCurrentDay;
 			float currentTime = argCurrentTime;

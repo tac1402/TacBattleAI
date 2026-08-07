@@ -668,6 +668,14 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.11f1\Editor\Data\Managed\UnityEngine\UnityEditor.XRModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.Workspaces">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Composition.Hosting">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Composition.Hosting.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeAnalysis.CSharp.resources">
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\es\Microsoft.CodeAnalysis.CSharp.resources.dll</HintPath>
       <Private>False</Private>
@@ -704,6 +712,10 @@
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Collections.Immutable.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.Workspaces.resources">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@d8c07649098d\net40\unity-custom\nunit.framework.dll</HintPath>
       <Private>False</Private>
@@ -714,6 +726,10 @@
     </Reference>
     <Reference Include="System.Text.Encodings.Web">
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Text.Encodings.Web.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp.Workspaces.resources">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection">
@@ -732,6 +748,10 @@
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Composition.AttributedModel">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Composition.AttributedModel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
       <Private>False</Private>
@@ -740,12 +760,24 @@
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Threading.Channels">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Threading.Channels.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="TacCompiler">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\TacCompiler.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Diagnostics.EventLog">
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Diagnostics.EventLog.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Diagnostics.DiagnosticSource">
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp.Workspaces">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Microsoft.CodeAnalysis.CSharp.Workspaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Sqlite">
@@ -762,6 +794,10 @@
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis">
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Microsoft.CodeAnalysis.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Composition.Convention">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Composition.Convention.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
@@ -812,6 +848,10 @@
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Security.Principal.Windows.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Humanizer">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Humanizer.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Memory">
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\Microsoft.Extensions.Caching.Memory.dll</HintPath>
       <Private>False</Private>
@@ -850,6 +890,14 @@
     </Reference>
     <Reference Include="TacPrimitives">
       <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\TacPrimitives.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Composition.TypedParts">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Composition.TypedParts.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Composition.Runtime">
+      <HintPath>P:\_PROGS\_2026\TacBattleAI\Install\TacLibrary\_UnityEF\com.tac.unityef\Runtime\System.Composition.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

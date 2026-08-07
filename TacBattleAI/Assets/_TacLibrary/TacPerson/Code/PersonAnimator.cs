@@ -1,11 +1,11 @@
 // Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
-using Tac.Agent;
+using Tac.Agent_;
 using UnityEngine;
 
 
-namespace Tac.Person
+namespace Tac.Person_
 {
 	public class PersonAnimator : AgentAnimator
 	{

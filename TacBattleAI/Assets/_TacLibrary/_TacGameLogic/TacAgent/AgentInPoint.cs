@@ -4,7 +4,7 @@
 using DnaCore;
 using UnityEF;
 
-namespace Tac.Agent
+namespace Tac.Agent_
 {
 	public class AgentInPoint : Logic
 	{

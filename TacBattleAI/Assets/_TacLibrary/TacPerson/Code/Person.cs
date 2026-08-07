@@ -1,34 +1,62 @@
-// Author: Sergej Jakovlev <tac1402@gmail.com>
+﻿// Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
 using System.Collections.Generic;
 using System.Numerics;
-using Tac.Agent;
+using Tac.Agent_;
 using UnityEF;
 using UnityEngine;
 
-namespace Tac.Person
+namespace Tac.Person_
 {
-	public partial class Person : Agent.Agent
+	public partial class Person : Agent
 	{
-		protected new PersonLogic logic { get { return baseLogic as PersonLogic; } set { baseLogic = value; } }
-		protected override void CreateLogic() { baseLogic = new PersonLogic(); }
+        //[TacLogic] PersonLogic logic;
+#region Generated Logic
+        protected new PersonLogic logic
+        {
+            get
+            {
+                return baseLogic as PersonLogic;
+            }
 
-		public LDictionary<string, AgentPoint> Places => logic.Places;
-		public LDictionary_<string, float> Stats => logic.Stats;
-		public LDictionary_<string, StatType> StatTypes => logic.StatTypes;
-		public AgentPoint WorkPlace { get { return logic.WorkPlace; } set { logic.WorkPlace = value; } }
-		public GenderType Gender { get { return logic.Gender; } set { logic.Gender = value; } }
-		public string InfoTxt => logic.InfoTxt;
+            set
+            {
+                baseLogic = value;
+            }
+        }
 
-		public override void InitData()
-		{
-			base.InitData();
-			logic.Stats = new LDictionary_<string, float>();
-			logic.StatTypes = new LDictionary_<string, StatType>();
-			logic.Skills = new LDictionary_<string, float>();
-			logic.Places = new LDictionary<string, AgentPoint>();
-		}
+        protected override void CreateLogic()
+        {
+            baseLogic = new PersonLogic();
+        }
+
+        public GenderType Gender => logic.Gender;
+        public LDictionary_<string, float> Stats => logic.Stats;
+        public LDictionary_<string, StatType> StatTypes => logic.StatTypes;
+        public LDictionary_<string, float> Skills => logic.Skills;
+        public LDictionary<string, AgentPoint> Places => logic.Places;
+
+        public void SetGender(GenderType argGender) => logic.SetGender(argGender);
+        public void AddSkill(string argName, float argValue = 0f, bool argAddInfo = true) => logic.AddSkill(argName, argValue, argAddInfo);
+        public void AddStat(string argName, float argValue = 0f, StatType argStatType = StatType.Normal, bool argAddInfo = true) => logic.AddStat(argName, argValue, argStatType, argAddInfo);
+        public void Change(string argName, float argValue) => logic.Change(argName, argValue);
+        public void SetPlace(string argKey, AgentPoint argPlace) => logic.SetPlace(argKey, argPlace);
+        public string InfoTxt => logic.InfoTxt;
+        public AgentPoint WorkPlace => logic.WorkPlace;
+        public AgentPoint ResidencePlace => logic.ResidencePlace;
+
+        public override void InitData()
+        {
+            base.InitData();
+            logic.Stats = new LDictionary_<string, float>();
+            logic.StatTypes = new LDictionary_<string, StatType>();
+            logic.Skills = new LDictionary_<string, float>();
+            logic.Places = new LDictionary<string, AgentPoint>();
+        }
+
+        public event Change OnChangeInfo { add => logic.OnChangeInfo += value; remove => logic.OnChangeInfo -= value; }
+#endregion
 
 
 	}
