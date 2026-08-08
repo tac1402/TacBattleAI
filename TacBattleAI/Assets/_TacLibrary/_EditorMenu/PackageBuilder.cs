@@ -10,70 +10,63 @@ public class PackageBuilder
 	private static string SourceFolder = "Assets/_TacLibrary/"; // папка с исходниками пакета
 	private static string TargetRoot = "../Install/TacLibrary/"; // папка для готовых пакетов (относительно корня проекта)
 
-	[MenuItem("Tools/Build TacLibrary/TacStandart")]
+	[MenuItem("TacLibrary/TacStandart")]
 	public static void BuildTacStandart()
 	{
 		BuildPackage("com.tac.tacstandart", "TacStandart");
 		DeleteMeta("com.tac.tacstandart", "TacStandart");
 	}
 
-	[MenuItem("Tools/Build TacLibrary/TacSave")]
+	[MenuItem("TacLibrary/TacSave")]
 	public static void BuildTacSave()
 	{
 		BuildPackage("com.tac.tacsave", "TacSave");
 		DeleteMeta("com.tac.tacsave", "TacSave", new List<string> { "SaveUI" });
 	}
 
-	[MenuItem("Tools/Build TacLibrary/TacWireframe")]
+	[MenuItem("TacLibrary/TacWireframe")]
 	public static void BuildTacWireframe()
 	{
 		BuildPackage("com.tac.tacwireframe", "TacWireframe");
 		DeleteMeta("com.tac.tacwireframe", "TacWireframe", new List<string> { "Material", "Shader" });
 	}
 
-	[MenuItem("Tools/Build TacLibrary/TacCamera")]
+	[MenuItem("TacLibrary/TacCamera")]
 	public static void BuildTacCamera()
 	{
 		BuildPackage("com.tac.taccamera", "TacCamera");
 		DeleteMeta("com.tac.taccamera", "TacCamera", new List<string> { "Prefab", "Code" });
 	}
 
-	[MenuItem("Tools/Build TacLibrary/TacItemCreate")]
+	[MenuItem("TacLibrary/TacItemCreate")]
 	public static void BuildTacItemCreate()
 	{
 		BuildPackage("com.tac.tacitemcreate", "TacItemCreate");
 		DeleteMeta("com.tac.tacitemcreate", "TacItemCreate");
 	}
 
-	[MenuItem("Tools/Build TacLibrary/TacGameLogic")]
+	[MenuItem("TacLibrary/TacGameLogic")]
 	public static void BuildTacGameLogic()
 	{
 		BuildPackage("com.tac.tacgamelogic", "_TacGameLogic");
 		DeleteMeta("com.tac.tacgamelogic", "_TacGameLogic");
 	}
 
-	[MenuItem("Tools/Build TacLibrary/TacUI")]
+	[MenuItem("TacLibrary/TacUI")]
 	public static void BuildTacUI()
 	{
 		BuildPackage("com.tac.tacui", "TacUI");
 	}
 
 
-	[MenuItem("Tools/Build TacLibrary/TacAgent")]
+	[MenuItem("TacLibrary/TacAgent")]
 	public static void BuildTacAgent()
 	{
 		BuildPackage("com.tac.tacagent", "TacAgent");
-		DeleteMeta("com.tac.tacagent", "TacAgent", new List<string> { "UI" });
+		DeleteMeta("com.tac.tacagent", "TacAgent", new List<string> { "UI", "Resources" });
 	}
 
-	[MenuItem("Tools/Build TacLibrary/TacPerson")]
-	public static void BuildTacPerson()
-	{
-		BuildPackage("com.tac.tacperson", "TacPerson");
-		DeleteMeta("com.tac.tacperson", "TacPerson", new List<string> { "Resources" });
-	}
-
-	[MenuItem("Tools/Build TacLibrary/TacItemMove")]
+	[MenuItem("TacLibrary/TacItemMove")]
 	public static void BuildTacItemMove()
 	{
 		BuildPackage("com.tac.tacitemmove", "TacItemMove");

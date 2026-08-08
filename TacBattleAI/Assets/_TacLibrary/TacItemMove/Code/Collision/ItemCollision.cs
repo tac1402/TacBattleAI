@@ -155,7 +155,7 @@ namespace Tac.ItemMove
 
 namespace Tac
 {
-	public partial class BuildItem : Flow
+	public partial class BuildItem
 	{
 		public bool AllowMove = true;
 		public Collider[] Colliders;

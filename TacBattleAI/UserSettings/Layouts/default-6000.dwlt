@@ -690,8 +690,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs:
-      - m_Data: 38688
+      m_SelectedIDs: []
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
@@ -1407,7 +1406,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_RotarkCode/_GameView/World
+    - Assets/_TacLibrary/_EditorMenu
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1417,22 +1416,20 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_RotarkCode/_GameView/World
+  - Assets/_TacLibrary/_EditorMenu
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 64}
+    scrollPos: {x: 0, y: 79}
     m_SelectedIDs:
-    - m_Data: 74190
+    - m_Data: 74306
     m_LastClickedID:
-      m_Data: 74190
+      m_Data: 74306
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 74126
-    - m_Data: 74128
     - m_Data: 74130
     - m_Data: 74132
     - m_Data: 74134
@@ -1451,7 +1448,6 @@ MonoBehaviour:
     - m_Data: 74160
     - m_Data: 74162
     - m_Data: 74164
-    - m_Data: 74166
     - m_Data: 74168
     - m_Data: 74170
     - m_Data: 74172
@@ -1459,10 +1455,14 @@ MonoBehaviour:
     - m_Data: 74176
     - m_Data: 74178
     - m_Data: 74180
+    - m_Data: 74182
+    - m_Data: 74184
     - m_Data: 74186
+    - m_Data: 74188
     - m_Data: 74190
-    - m_Data: 74192
-    - m_Data: 74302
+    - m_Data: 74308
+    - m_Data: 74310
+    - m_Data: 74318
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1496,8 +1496,6 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 74126
-    - m_Data: 74128
     - m_Data: 74130
     - m_Data: 74132
     - m_Data: 74134
@@ -1556,10 +1554,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs:
-    - m_Data: 38688
-    m_LastClickedInstanceID: 38688
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: []
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs:
     - m_Data: 54580
     - m_Data: 104396
@@ -1596,8 +1593,8 @@ MonoBehaviour:
     - m_Data: 73718
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Society
-      m_OriginalName: Society
+      m_Name: PackageBuilder
+      m_OriginalName: PackageBuilder
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1605,7 +1602,7 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 38688
+        m_Data: 35730
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0

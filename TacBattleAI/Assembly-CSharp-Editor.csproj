@@ -65,7 +65,6 @@
     <Compile Include="Assets\_RotarkPack\Pack\Rotark\_Code\Editor\BuildingManagerEditor.cs" />
     <Compile Include="Assets\_TacLibrary\TacAgent\UI\Editor\HealthBarEditor.cs" />
     <Compile Include="Assets\_RotarkPack\Pack\Rotark\_Code\Editor\BuildingEditor.cs" />
-    <Compile Include="Assets\Editor\TacLogicBuild.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
