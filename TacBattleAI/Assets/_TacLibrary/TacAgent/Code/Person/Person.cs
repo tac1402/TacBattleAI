@@ -32,19 +32,34 @@ namespace Tac.Person_
         }
 
         public GenderType Gender => logic.Gender;
+
+        public void SetGender(GenderType value)
+        {
+            logic.Gender = value;
+        }
+
         public LDictionary_<string, float> Stats => logic.Stats;
         public LDictionary_<string, StatType> StatTypes => logic.StatTypes;
         public LDictionary_<string, float> Skills => logic.Skills;
         public LDictionary<string, AgentPoint> Places => logic.Places;
 
-        public void SetGender(GenderType argGender) => logic.SetGender(argGender);
         public void AddSkill(string argName, float argValue = 0f, bool argAddInfo = true) => logic.AddSkill(argName, argValue, argAddInfo);
         public void AddStat(string argName, float argValue = 0f, StatType argStatType = StatType.Normal, bool argAddInfo = true) => logic.AddStat(argName, argValue, argStatType, argAddInfo);
         public void Change(string argName, float argValue) => logic.Change(argName, argValue);
-        public void SetPlace(string argKey, AgentPoint argPlace) => logic.SetPlace(argKey, argPlace);
         public string InfoTxt => logic.InfoTxt;
         public AgentPoint WorkPlace => logic.WorkPlace;
+
+        public void SetWorkPlace(AgentPoint value)
+        {
+            logic.WorkPlace = value;
+        }
+
         public AgentPoint ResidencePlace => logic.ResidencePlace;
+
+        public void SetResidencePlace(AgentPoint value)
+        {
+            logic.ResidencePlace = value;
+        }
 
         public override void InitData()
         {

@@ -16,9 +16,8 @@ namespace Tac.Person_
 		/// <summary>
 		/// Пол (мужской или женский) персонажа
 		/// </summary>
+		[AllowSet]
 		public GenderType Gender = GenderType.Unknow;
-
-		public void SetGender(GenderType argGender) { Gender = argGender; }
 
 		/// <summary>
 		/// Статы (характеристики)
@@ -123,6 +122,7 @@ namespace Tac.Person_
 		/// <summary>
 		/// Место работы
 		/// </summary>
+		[AllowSet]
 		public AgentPoint WorkPlace
 		{
 			get { return (GetPlace("Work")); }
@@ -132,6 +132,7 @@ namespace Tac.Person_
 		/// <summary>
 		/// Место жительства
 		/// </summary>
+		[AllowSet]
 		public AgentPoint ResidencePlace
 		{
 			get { return GetPlace("Residence"); }
@@ -146,7 +147,7 @@ namespace Tac.Person_
 		/// <summary>
 		/// Установить место
 		/// </summary>
-		public void SetPlace(string argKey, AgentPoint argPlace)
+		private void SetPlace(string argKey, AgentPoint argPlace)
 		{
 			if (Places.ContainsKey(argKey))
 			{

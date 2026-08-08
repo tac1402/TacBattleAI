@@ -174,7 +174,7 @@ namespace Tac.Society
 			foreach (Person p in People.Values)
 			{
 				int pointIndex = logic.rnd.Next(0, AllAgentPoint.Count);
-				p.SetPlace("WorkPlace", AllAgentPoint[pointIndex]);
+				p.SetWorkPlace(AllAgentPoint[pointIndex]);
 			}
 		}
 

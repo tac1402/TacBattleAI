@@ -18,6 +18,8 @@ namespace Tac
 
 		private ItemDb itemDb = new ItemDb();
 		public ItemDb item { get { return itemDb; } }
+
+		[Internal]
 		public virtual void InitLogic() { }
 
 		[NotMapped]

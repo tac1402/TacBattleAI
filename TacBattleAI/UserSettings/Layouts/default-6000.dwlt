@@ -273,8 +273,8 @@ MonoBehaviour:
     y: 0
     width: 394
     height: 933
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -690,11 +690,12 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: []
+      m_SelectedIDs:
+      - m_Data: 44470
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -1296
+      - m_Data: -1598
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1406,7 +1407,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_TacLibrary/_EditorMenu
+    - Assets/_TacLibrary/TacAgent/Code/Person
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1416,53 +1417,54 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_TacLibrary/_EditorMenu
+  - Assets/_TacLibrary/TacAgent/Code/Person
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 79}
+    scrollPos: {x: 0, y: 199}
     m_SelectedIDs:
-    - m_Data: 74306
+    - m_Data: 74404
     m_LastClickedID:
-      m_Data: 74306
+      m_Data: 74404
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 74130
-    - m_Data: 74132
-    - m_Data: 74134
-    - m_Data: 74136
-    - m_Data: 74138
-    - m_Data: 74140
-    - m_Data: 74142
-    - m_Data: 74144
-    - m_Data: 74146
-    - m_Data: 74148
-    - m_Data: 74150
-    - m_Data: 74152
-    - m_Data: 74154
-    - m_Data: 74156
-    - m_Data: 74158
-    - m_Data: 74160
-    - m_Data: 74162
-    - m_Data: 74164
-    - m_Data: 74168
-    - m_Data: 74170
-    - m_Data: 74172
-    - m_Data: 74174
-    - m_Data: 74176
-    - m_Data: 74178
     - m_Data: 74180
     - m_Data: 74182
     - m_Data: 74184
     - m_Data: 74186
     - m_Data: 74188
     - m_Data: 74190
-    - m_Data: 74308
-    - m_Data: 74310
-    - m_Data: 74318
+    - m_Data: 74192
+    - m_Data: 74194
+    - m_Data: 74196
+    - m_Data: 74198
+    - m_Data: 74200
+    - m_Data: 74202
+    - m_Data: 74204
+    - m_Data: 74206
+    - m_Data: 74208
+    - m_Data: 74210
+    - m_Data: 74212
+    - m_Data: 74214
+    - m_Data: 74216
+    - m_Data: 74218
+    - m_Data: 74220
+    - m_Data: 74222
+    - m_Data: 74224
+    - m_Data: 74226
+    - m_Data: 74228
+    - m_Data: 74230
+    - m_Data: 74232
+    - m_Data: 74234
+    - m_Data: 74236
+    - m_Data: 74238
+    - m_Data: 74240
+    - m_Data: 74242
+    - m_Data: 74244
+    - m_Data: 74366
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1496,31 +1498,6 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 74130
-    - m_Data: 74132
-    - m_Data: 74134
-    - m_Data: 74136
-    - m_Data: 74138
-    - m_Data: 74140
-    - m_Data: 74142
-    - m_Data: 74144
-    - m_Data: 74146
-    - m_Data: 74148
-    - m_Data: 74150
-    - m_Data: 74152
-    - m_Data: 74154
-    - m_Data: 74156
-    - m_Data: 74158
-    - m_Data: 74160
-    - m_Data: 74162
-    - m_Data: 74164
-    - m_Data: 74166
-    - m_Data: 74168
-    - m_Data: 74170
-    - m_Data: 74172
-    - m_Data: 74174
-    - m_Data: 74176
-    - m_Data: 74178
     - m_Data: 74180
     - m_Data: 74182
     - m_Data: 74184
@@ -1528,6 +1505,32 @@ MonoBehaviour:
     - m_Data: 74188
     - m_Data: 74190
     - m_Data: 74192
+    - m_Data: 74194
+    - m_Data: 74196
+    - m_Data: 74198
+    - m_Data: 74200
+    - m_Data: 74202
+    - m_Data: 74204
+    - m_Data: 74206
+    - m_Data: 74208
+    - m_Data: 74210
+    - m_Data: 74212
+    - m_Data: 74214
+    - m_Data: 74216
+    - m_Data: 74218
+    - m_Data: 74220
+    - m_Data: 74222
+    - m_Data: 74224
+    - m_Data: 74226
+    - m_Data: 74228
+    - m_Data: 74230
+    - m_Data: 74232
+    - m_Data: 74234
+    - m_Data: 74236
+    - m_Data: 74238
+    - m_Data: 74240
+    - m_Data: 74242
+    - m_Data: 74244
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1554,8 +1557,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: []
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs:
+    - m_Data: 44470
+    m_LastClickedInstanceID: 44470
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs:
     - m_Data: 54580
@@ -1593,8 +1597,8 @@ MonoBehaviour:
     - m_Data: 73718
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: PackageBuilder
-      m_OriginalName: PackageBuilder
+      m_Name: PersonLogic
+      m_OriginalName: PersonLogic
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1602,7 +1606,7 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 35730
+        m_Data: 40126
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
