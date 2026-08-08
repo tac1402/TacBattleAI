@@ -12,6 +12,8 @@ nav:
   - Отделение логики: separation.md
   - Линковка с библиотекой: linking.md
   - Standart+Unity: StandartU.md
+  - TacCompiler:
+    - TacCompiler: TacCompiler/TacCompiler.md
   - TacStandartU: 
     - Item: TacStandartU/Item.md
     - BuildItem: TacStandartU/BuildItem.md
