@@ -1,4 +1,4 @@
-using DnaCore;
+п»їusing DnaCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,23 +10,53 @@ using static Tac.Agent_.AgentPointLogic;
 namespace Tac.Agent_
 {
 	
-	public class AgentPoint : Spatial, ICell
+	public class AgentPoint : Spatial
 	{
-		#region logic
-		protected AgentPointLogic logic { get { return baseLogic as AgentPointLogic; } set { baseLogic = value; } }
-		protected override void CreateLogic() { baseLogic = new AgentPointLogic(); }
+        //[TacLogic] AgentPointLogic logic;
+#region Generated Logic
+        protected AgentPointLogic logic
+        {
+            get
+            {
+                return baseLogic as AgentPointLogic;
+            }
 
-		public List<NamedValue> BaseWorkPayment => logic.BaseWorkPayment;
-		public string Title => logic.Title;
-		public GetInfoDelegate GetInfoHandler { set { logic.GetInfoHandler = value; } }
-		public string GetInfo() => logic.GetInfo();
-		public bool IsOpen(int currentTime) => logic.IsOpen(currentTime);
-		public void Tick(GameTime argGameTime, List<Agent> argAllAgent) => logic.Tick(argGameTime, argAllAgent);
-		public void WalkToEnter(GameTime argGameTime, Agent argAgent) => logic.WalkToEnter(argGameTime, argAgent);
-		#endregion
+            set
+            {
+                baseLogic = value;
+            }
+        }
+
+        protected override void CreateLogic()
+        {
+            baseLogic = new AgentPointLogic();
+        }
+
+        public string Title => logic.Title;
+        public LQueue<AgentInPoint> Agents => logic.Agents;
+        public List<NamedValue> BaseWorkPayment => logic.BaseWorkPayment;
+        public GetInfoDelegate GetInfoHandler { set => logic.GetInfoHandler = value; }
+
+        public bool IsOpen(int currentTime) => logic.IsOpen(currentTime);
+        public void Add(Agent argAgent) => logic.Add(argAgent);
+        public Agent Remove() => logic.Remove();
+        public Agent Remove(int argAgentId) => logic.Remove(argAgentId);
+        public void WalkToEnter(GameTime argGameTime, Agent argAgent) => logic.WalkToEnter(argGameTime, argAgent);
+        public void Tick(GameTime argGameTime, List<Agent> argAllAgent) => logic.Tick(argGameTime, argAllAgent);
+        public override void InitData()
+        {
+            base.InitData();
+            logic.AddView = AddView;
+            logic.RemoveView = RemoveView;
+            logic.IsAgentInEnter = IsAgentInEnter;
+            logic.Agents = new LQueue<AgentInPoint>();
+        }
+
+        public string GetInfo() => logic.GetInfo();
+#endregion
 
 		/// <summary>
-		/// Рабочие часы (не находятся в логике, т.к. задаются в Юнити редакторе)
+		/// Р Р°Р±РѕС‡РёРµ С‡Р°СЃС‹ (РЅРµ РЅР°С…РѕРґСЏС‚СЃСЏ РІ Р»РѕРіРёРєРµ, С‚.Рє. Р·Р°РґР°СЋС‚СЃСЏ РІ Р®РЅРёС‚Рё СЂРµРґР°РєС‚РѕСЂРµ)
 		/// </summary>
 		public Vector2 WorkingHours;
 
@@ -35,7 +65,7 @@ namespace Tac.Agent_
 
 		public Vector3_ PointPosition
 		{
-			get { return Point.transform.position.To2().To3().To_(); } // Обнуление высоты
+			get { return Point.transform.position.To2().To3().To_(); } // РћР±РЅСѓР»РµРЅРёРµ РІС‹СЃРѕС‚С‹
 		}
 
 		private Vector3 NearPosition(Vector3 position)
@@ -56,9 +86,7 @@ namespace Tac.Agent_
 		public LayerMask AgentLayer;
 
 
-		public Cell cell { get { return item; } }
-
-		public override void InitData()
+		public override void InitDataCustom()
 		{
 			BuildItem item = GetComponent<BuildItem>();
 			if (item != null)
@@ -66,10 +94,6 @@ namespace Tac.Agent_
 				Id = item.Id;
 			}
 
-			base.InitData();
-			logic.AddView = AddView;
-			logic.RemoveView = RemoveView;
-			logic.IsAgentInEnter = IsAgentInEnter;
 			logic.workingFrom = (int)WorkingHours.x;
 			logic.workingTill = (int)WorkingHours.y;
 		}
@@ -92,7 +116,7 @@ namespace Tac.Agent_
 		}
 
 		/// <summary>
-		/// Находится ли агент на входе
+		/// РќР°С…РѕРґРёС‚СЃСЏ Р»Рё Р°РіРµРЅС‚ РЅР° РІС…РѕРґРµ
 		/// </summary>
 		public bool IsAgentInEnter(int argAgentId)
 		{
@@ -116,20 +140,20 @@ namespace Tac.Agent_
 		{
 			if (Point != null)
 			{
-				// Сохраняем текущую матрицу Gizmos
+				// РЎРѕС…СЂР°РЅСЏРµРј С‚РµРєСѓС‰СѓСЋ РјР°С‚СЂРёС†Сѓ Gizmos
 				Matrix4x4 originalMatrix = Gizmos.matrix;
 
-				// Устанавливаем матрицу с позицией и поворотом
+				// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РјР°С‚СЂРёС†Сѓ СЃ РїРѕР·РёС†РёРµР№ Рё РїРѕРІРѕСЂРѕС‚РѕРј
 				Gizmos.matrix = Matrix4x4.TRS(
-					Point.transform.position,  // позиция
-					Point.transform.rotation,  // поворот (если нужно использовать поворот объекта Point)
-					Vector3.one                // масштаб
+					Point.transform.position,  // РїРѕР·РёС†РёСЏ
+					Point.transform.rotation,  // РїРѕРІРѕСЂРѕС‚ (РµСЃР»Рё РЅСѓР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїРѕРІРѕСЂРѕС‚ РѕР±СЉРµРєС‚Р° Point)
+					Vector3.one                // РјР°СЃС€С‚Р°Р±
 				);
 
 				Gizmos.color = Color.blue;
 				Gizmos.DrawWireCube(Vector3.zero, EnterSize);
 
-				// Восстанавливаем оригинальную матрицу
+				// Р’РѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј РѕСЂРёРіРёРЅР°Р»СЊРЅСѓСЋ РјР°С‚СЂРёС†Сѓ
 				Gizmos.matrix = originalMatrix;
 			}
 		}

@@ -18,7 +18,7 @@ public class WorldLogic : Logic
 	private System.Random rnd = new System.Random();
 
 
-	public void CreateWorld_Logic()
+	internal void CreateWorld_Logic()
 	{
 		List<Person> people1 = Society.AddPerson(1, new Rect_(3400, 2920, 3420, 2940), false);
 		Society.AddAgentPlan(people1[0], true);
@@ -29,7 +29,7 @@ public class WorldLogic : Logic
 		}
 	}
 
-	public void AgentWalkEmulation(GameTime argGameTime)
+	internal void AgentWalkEmulation(GameTime argGameTime)
 	{
 		Society.NextHour(argGameTime);
 

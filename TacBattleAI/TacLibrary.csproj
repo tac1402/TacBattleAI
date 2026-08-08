@@ -107,6 +107,7 @@
     <Compile Include="Assets\_TacLibrary\_TacGameLogic\TacAgent\AgentPointLogic.cs" />
     <Compile Include="Assets\_TacLibrary\TacAgent\UI\Code\HealthBar.cs" />
     <Compile Include="Assets\_TacLibrary\TacAgent\UI\Code\FollowCameraRotation.cs" />
+    <Compile Include="Assets\_TacLibrary\TacSave\DefTacLibrary\AssemblyInfo.cs" />
     <Compile Include="Assets\_TacLibrary\TacAgent\Code\AgentAnimator.cs" />
     <Compile Include="Assets\_TacLibrary\TacSave\Components\SaveUI\Code\DialogBox.cs" />
   </ItemGroup>

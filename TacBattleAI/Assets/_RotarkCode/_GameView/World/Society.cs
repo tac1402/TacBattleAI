@@ -1,28 +1,57 @@
-using DnaCore;
+Ôªøusing DnaCore;
 using System.Collections.Generic;
 using System.Linq;
 using Tac.Agent_;
 using Tac.Person_;
+using Tac.ItemCreate_;
 using Tac.UI;
-using Unity.VisualScripting;
 using UnityEF;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Tac.Society
 {
-	public partial class Society : Flow, ICell
+	public partial class Society : Flow
 	{
-		protected SocietyLogic logic { get { return baseLogic as SocietyLogic; } set { baseLogic = value; } }
-		protected override void CreateLogic() { baseLogic = new SocietyLogic(); }
-		public GDictionary<int, Person_.Person> People => logic.People;
-		public RobotJob RobotJob => logic.RobotJob;
-		public PlayerJob PlayerJob => logic.PlayerJob;
-		private PeopleTable peopleTable => logic.PeopleTable;
-		public List<AgentPoint> AllAgentPoint => logic.AllAgentPoint;
+        //[TacLogic] SocietyLogic logic;
+#region Generated Logic
+        protected SocietyLogic logic
+        {
+            get
+            {
+                return baseLogic as SocietyLogic;
+            }
+
+            set
+            {
+                baseLogic = value;
+            }
+        }
+
+        protected override void CreateLogic()
+        {
+            baseLogic = new SocietyLogic();
+        }
+
+        public GDictionary<int, Person> People => logic.People;
+        public RobotJob RobotJob => logic.RobotJob;
+        public PlayerJob PlayerJob => logic.PlayerJob;
+        public ItemCreate ItemCreate => logic.ItemCreate;
+        public List<AgentPoint> AllAgentPoint => logic.AllAgentPoint;
+
+        public List<Person> AddPerson(int argCount, Rect_ argLocation, List<Person> argFakePerson, bool IsFamily = true) => logic.AddPerson(argCount, argLocation, argFakePerson, IsFamily);
+        public override void InitData()
+        {
+            base.InitData();
+            logic.People = new GDictionary<int, Person>();
+        }
+
+        public Person AddPerson(Person argPerson) => logic.AddPerson(argPerson);
+#endregion
+
 
 		/// <summary>
-		/// »‰ÂÌÚËÙËÍ‡ÚÓ ÔÂÒÓÌ‡Ê‡ Ë„ÓÍ‡
+		/// –ò–¥–µ–Ω—Ç–∏—Ñ–∏–∫–∞—Ç–æ—Ä –ø–µ—Ä—Å–æ–Ω–∞–∂–∞ –∏–≥—Ä–æ–∫–∞
 		/// </summary>
 		public int PlayerPersonId = 0;
 
@@ -33,8 +62,6 @@ namespace Tac.Society
 
 		public GameObject PeoplePanel;
 
-
-		public Cell cell { get { return item; } }
 
 		public void Init()
 		{
@@ -53,13 +80,8 @@ namespace Tac.Society
 			if (PeoplePanel != null)
 			{
 				TableUI tableUI = PeoplePanel.GetComponentInChildren<TableUI>();
-				peopleTable.Assign(tableUI, FindAgent);
+				logic.PeopleTable.Assign(tableUI, FindAgent);
 			}
-		}
-
-		public override void InitData()
-		{
-			logic.People = new GDictionary<int, Person_.Person>();
 		}
 
 
@@ -72,7 +94,7 @@ namespace Tac.Society
 
 			if (key != 0)
 			{
-				if (PeoplePanel != null) { PeoplePanel.SetActive(false); peopleTable.Hide(); }
+				if (PeoplePanel != null) { PeoplePanel.SetActive(false); logic.PeopleTable.Hide(); }
 
 				if (oldKey == key) { showPanel = !showPanel; } else { showPanel = true; }
 
@@ -82,7 +104,7 @@ namespace Tac.Society
 					{
 						case 1:
 							PeoplePanel.SetActive(true);
-							peopleTable.Show();
+							logic.PeopleTable.Show();
 							break;
 					}
 				}
@@ -91,7 +113,7 @@ namespace Tac.Society
 
 		}
 
-		public void AddAgentPlan(Person_.Person argAgent, bool IsPlayer = false)
+		public void AddAgentPlan(Person argAgent, bool IsPlayer = false)
 		{
 			if (IsPlayer)
 			{
@@ -103,9 +125,9 @@ namespace Tac.Society
 				RobotJob.AddPersonPlan(argAgent);
 			}
 		}
-		public List<Person_.Person> AddPerson(int argCount, Rect_ argLocation, bool IsFamily = true)
+		public List<Person> AddPerson(int argCount, Rect_ argLocation, bool IsFamily = true)
 		{
-			List<Person_.Person> fakePerson = new List<Person_.Person>();
+			List<Person> fakePerson = new List<Person>();
 
 			for (int i = 0; i < argCount; i++)
 			{
@@ -115,9 +137,9 @@ namespace Tac.Society
 			return logic.AddPerson(argCount, argLocation, fakePerson, IsFamily);
 		}
 
-		public Person_.Person CreateFakePerson()
+		public Person CreateFakePerson()
 		{
-			Person_.Person person = new Person_.Person();
+			Person person = new Person();
 
 			int isMen = logic.rnd.Next(100);
 			if (isMen > 50)
@@ -149,7 +171,7 @@ namespace Tac.Society
 
 		public void InitWorkPlace()
 		{
-			foreach (Person_.Person p in People.Values)
+			foreach (Person p in People.Values)
 			{
 				int pointIndex = logic.rnd.Next(0, AllAgentPoint.Count);
 				p.SetPlace("WorkPlace", AllAgentPoint[pointIndex]);
@@ -183,7 +205,7 @@ namespace Tac.Society
 			AgentSelection.TopCamera.SetPosition(People[argId].transform.position);
 
 			PeoplePanel.SetActive(false); 
-			peopleTable.Hide();
+			logic.PeopleTable.Hide();
 		}
 
 

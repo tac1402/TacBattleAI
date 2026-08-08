@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tac.ItemCreate
+namespace Tac.ItemCreate_
 {
 	[Component(typeof(ItemCreate))]
 	public class GhostCache : MonoBehaviour

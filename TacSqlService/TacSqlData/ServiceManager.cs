@@ -27,7 +27,7 @@ namespace Tac.Sql
 				try
 				{
 					// 1. Проверяем, существует ли сервис
-					ServiceController? sc = ServiceController.GetServices()
+					ServiceController sc = ServiceController.GetServices()
 						.FirstOrDefault(s => s.ServiceName == PipeConstants.ServiceName);
 
 					if (sc == null)

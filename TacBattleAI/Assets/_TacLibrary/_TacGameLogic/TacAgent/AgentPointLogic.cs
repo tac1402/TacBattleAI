@@ -6,17 +6,16 @@ namespace Tac.Agent_
 {
 	public class AgentPointLogic : Logic
 	{
-
 		public delegate void AddViewDelegate(Agent agent);
 		public delegate void RemoveViewDelegate(Agent agent);
 		public delegate bool IsAgentInEnterDelegate(int agentId);
 
-		public AddViewDelegate AddView;
-		public RemoveViewDelegate RemoveView;
-		public IsAgentInEnterDelegate IsAgentInEnter;
+		internal AddViewDelegate AddView;
+		internal RemoveViewDelegate RemoveView;
+		internal IsAgentInEnterDelegate IsAgentInEnter;
 
 		public string Title;
-		public string Info;
+		protected string Info;
 
 		public LQueue<AgentInPoint> Agents = new LQueue<AgentInPoint>();
 
@@ -42,8 +41,7 @@ namespace Tac.Agent_
 			get { return workingTill; }
 		}
 
-
-		public virtual void Work(GameTime argGameTime) { }
+		protected virtual void Work(GameTime argGameTime) { }
 
 
 		public bool IsOpen(int currentTime)
@@ -60,13 +58,13 @@ namespace Tac.Agent_
 			}
 		}
 
-		public virtual bool CheckAgentToEnter(Agent argAgent)
+		protected virtual bool CheckAgentToEnter(Agent argAgent)
 		{
 			return true;
 		}
 
 
-		public virtual bool CheckAgentToExit(Agent argAgent)
+		protected virtual bool CheckAgentToExit(Agent argAgent)
 		{
 			return false;
 		}
@@ -88,7 +86,7 @@ namespace Tac.Agent_
 		public Agent Remove()
 		{
 			AgentInPoint ap = Agents.Dequeue();
-			RemoveView(ap.Agent);
+			//RemoveView(ap.Agent);
 			ap.Agent.ResetLocated();
 			return ap.Agent;
 		}
@@ -96,7 +94,7 @@ namespace Tac.Agent_
 		public Agent Remove(int argAgentId)
 		{
 			AgentInPoint ap = Agents.Remove(argAgentId);
-			RemoveView(ap.Agent);
+			//RemoveView(ap.Agent);
 			ap.Agent.ResetLocated();
 			return ap.Agent;
 		}
@@ -123,20 +121,13 @@ namespace Tac.Agent_
 			}
 		}
 
-		public bool DebugEnter = false;
-
 		private void CheckEnter(GameTime argGameTime, List<Agent> argAllAgent)
 		{
-			if (DebugEnter)
-			{
-				int a = 1;
-			}
-
 			List<Agent> tmpAgents = argAllAgent.FindAll(x => x.TargetId == Id);
 
 			for (int j = 0; j < tmpAgents.Count; j++)
 			{
-				if (IsAgentInEnter(tmpAgents[j].Id) == true)
+				//if (IsAgentInEnter(tmpAgents[j].Id) == true)
 				{
 					WalkToEnter(argGameTime, tmpAgents[j]);
 				}

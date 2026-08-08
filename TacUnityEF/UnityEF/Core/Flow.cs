@@ -19,19 +19,7 @@ namespace Tac
 		/// <summary>
 		/// Уникальный индентификатор объекта в мире
 		/// </summary>
-		//[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int Id { get { return itemDb.Id; } set { itemDb.Id = value;  } }
-
-		/*public Flow()
-		{
-			SetId();
-		}
-
-		public void SetId()
-		{
-			Logic.IdCounter++;
-			Id = Logic.IdCounter;
-		}*/
 
 		public bool IsValidUnityComponent
 		{
@@ -75,7 +63,7 @@ namespace Tac
 			{
 				baseLogic.InitLogic();
 			}
-			if (initData == false) { InitData(); }
+			if (initData == false) { InitData(); InitDataCustom(); }
 		}
 
 		private Logic innerLogic;
@@ -86,6 +74,9 @@ namespace Tac
 		{
 			initData = true;
 		}
+		public virtual void InitDataCustom() { }
+
+
 
 		[NotMapped]
 		public bool RecoverMode

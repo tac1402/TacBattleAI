@@ -111,7 +111,7 @@ namespace Tac.Sql
 	public class LogDataTable : Message
 	{
 		public List<ColumnInfo> Columns { get; set; }
-		public List<List<string?>> Rows { get; set; }
+		public List<List<string>> Rows { get; set; }
 		public int RecordsAffected { get; set; } = -1; // По умолчанию -1
 	}
 

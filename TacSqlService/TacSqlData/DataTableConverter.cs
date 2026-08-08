@@ -16,7 +16,7 @@ namespace Tac.Sql
 			var logTable = new LogDataTable
 			{
 				Columns = new List<ColumnInfo>(),
-				Rows = new List<List<string?>>()
+				Rows = new List<List<string>>()
 			};
 
 			foreach (DataColumn col in dt.Columns)
@@ -30,7 +30,7 @@ namespace Tac.Sql
 
 			foreach (DataRow row in dt.Rows)
 			{
-				var rowValues = new List<string?>();
+				var rowValues = new List<string>();
 				foreach (var item in row.ItemArray)
 				{
 					rowValues.Add(item == DBNull.Value ? null : item.ToString());

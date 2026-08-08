@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Tac.ItemCreate
+namespace Tac.ItemCreate_
 {
 	public class ItemCreate : MonoBehaviour//, IObject
 	{

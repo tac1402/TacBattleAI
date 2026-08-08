@@ -1,11 +1,11 @@
-using DnaCore;
+п»їusing DnaCore;
 using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Tac;
 using Tac.Agent_;
-using Tac.ItemCreate;
+using Tac.ItemCreate_;
 using Tac.Person_;
 using Tac.Save;
 using Tac.Society;
@@ -15,14 +15,32 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public partial class World : Flow, ICell
+public partial class World : Flow
 {
-	protected WorldLogic logic { get { return baseLogic as WorldLogic; } set { baseLogic = value; } }
-	protected override void CreateLogic() { baseLogic = new WorldLogic(); }
+    //[TacLogic] WorldLogic logic;
+#region Generated Logic
+    protected WorldLogic logic
+    {
+        get
+        {
+            return baseLogic as WorldLogic;
+        }
 
-	private Society Society => logic.Society;
-	private DayNight DayNight => logic.DayNight;
+        set
+        {
+            baseLogic = value;
+        }
+    }
 
+    protected override void CreateLogic()
+    {
+        baseLogic = new WorldLogic();
+    }
+
+    public Society Society => logic.Society;
+    public DayNight DayNight => logic.DayNight;
+
+#endregion
 
 	public List<NavMeshBasic> NavMeshBasic;
 
@@ -31,7 +49,6 @@ public partial class World : Flow, ICell
 	private InfoPanelManager InfoPanelManager;
 	private SaveCatalog SaveCatalog;
 
-	public Cell cell { get { return item; } }
 
 	private void Awake()
 	{
@@ -42,7 +59,7 @@ public partial class World : Flow, ICell
 		context.AddTypes("TacStandartU");
 		context.AddTypes("TacLibrary");
 
-		// Принудительно строим модель – вызовет OnModelCreating
+		// РџСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ СЃС‚СЂРѕРёРј РјРѕРґРµР»СЊ вЂ“ РІС‹Р·РѕРІРµС‚ OnModelCreating
 		var model = context.Model;
 
 		context.DebugModel();

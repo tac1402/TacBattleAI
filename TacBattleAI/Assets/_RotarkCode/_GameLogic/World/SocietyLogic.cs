@@ -1,8 +1,8 @@
 
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Tac.Agent_;
 using Tac.Person_;
+using Tac.ItemCreate_;
 using Tac.UI;
 
 using UnityEF;
@@ -19,15 +19,13 @@ namespace Tac.Society
 
 		public RobotJob RobotJob;
 		public PlayerJob PlayerJob;
-		public ItemCreate.ItemCreate ItemCreate;
-		public PeopleTable PeopleTable = new PeopleTable();
+		public ItemCreate ItemCreate;
+		internal PeopleTable PeopleTable = new PeopleTable();
 		public List<AgentPoint> AllAgentPoint;
 
-
-		public PersonName PersonName = new PersonName();
-		public System.Random rnd = new System.Random();
-		public GameTime oldGameTime;
-
+		internal PersonName PersonName = new PersonName();
+		internal System.Random rnd = new System.Random();
+		internal GameTime oldGameTime;
 
 
 		public List<Person_.Person> AddPerson(int argCount, Rect_ argLocation, List<Person_.Person> argFakePerson, bool IsFamily = true)
