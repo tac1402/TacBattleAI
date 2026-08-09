@@ -49,11 +49,10 @@ title: Rules
 
 ```csharp
 // Для полей и свойств - доступ только для чтения
-public int TargetId => logic.TargetId;
-public bool IsBusy => logic.IsBusy;
-public int LocatedId => logic.LocatedId;
+public GenderType Gender => logic.Gender;
 public bool IsDead => logic.IsDead;
 public float Health => logic.Health;
+public LDictionary_<string, float> Skills => logic.Skills;
 // Для методов
 public void ApplyDamage(float argDamage) => logic.ApplyDamage(argDamage);
 public void SetTarget(int argId) => logic.SetTarget(argId);
