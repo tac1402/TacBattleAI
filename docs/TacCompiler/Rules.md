@@ -9,7 +9,7 @@ title: Rules
 	public partial class Agent : Spatial
 	{
         [TacLogic] AgentLogic logic;
-  }
+	}
 ```
 
 2. Flow по умолчанию не дает полный доступ к своей логике (Logic), она доступна только самой сущности и её наследникам.
@@ -24,7 +24,7 @@ title: Rules
             set { baseLogic = value; }
         }
 #endregion
-  }
+	}
 ```
 
 3. Logic создается через фабрику Flow.CreateLogic() и может быть переопределена в наследниках логикой специфичной для них.
@@ -34,12 +34,16 @@ title: Rules
 #region Generated Logic
         protected override void CreateLogic() { baseLogic = new AgentLogic(); }
 #endregion
-  }
+  	}
 	public partial class Person : Agent
 	{
 #region Generated Logic
         protected override void CreateLogic() { baseLogic = new PersonLogic(); }
 #endregion
-  }
+  	}
+```
+
+4.
+	
 ```
 
