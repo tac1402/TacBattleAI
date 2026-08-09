@@ -77,9 +77,9 @@ public class PersonLogic : AgentLogic
   public int Age;
 }
 // во Flow будет добавлен
-public class PersonLogic : AgentLogic
+public class Person : Agent
 {
-  //[TacLogic] AgentLogic logic;
+  //[TacLogic] PersonLogic logic;
 #region Generated Logic
   ...
   public int Age => logic.Age;
@@ -90,6 +90,8 @@ public class PersonLogic : AgentLogic
 #endregion
 }
 ```
+
+Таким образом, Flow при работе с Logic имеет как бы шлюз с двумя дверьми внутренними и внешними. Не все то, что может изменить Flow в Logic (_внутренняя дверь_) нужно предоставлять другим Flow (_внешняя дверь_). А если нужно в самом Logic решить исходя из природы этой характеристики (свойства, поля) и пометить атрибутом __AllowSet__ .  
 
 ## Делегаты
 
