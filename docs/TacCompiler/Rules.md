@@ -12,6 +12,7 @@ title: Rules
 	}
 ```
 
+
 2. Flow по умолчанию не дает полный доступ к своей логике (Logic), она доступна только самой сущности и её наследникам.
    ```csharp
 	public partial class Agent : Spatial
@@ -27,23 +28,21 @@ title: Rules
 	}
 ```
 
+
 3. Logic создается через фабрику Flow.CreateLogic() и может быть переопределена в наследниках логикой специфичной для них.
    ```csharp
 	public partial class Agent : Spatial
 	{
-#region Generated Logic
         protected override void CreateLogic() { baseLogic = new AgentLogic(); }
-#endregion
   	}
 	public partial class Person : Agent
 	{
-#region Generated Logic
         protected override void CreateLogic() { baseLogic = new PersonLogic(); }
-#endregion
   	}
 ```
 
+
 4.
 	
-```
+
 
