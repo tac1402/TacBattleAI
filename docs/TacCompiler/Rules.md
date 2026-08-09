@@ -127,9 +127,54 @@ private void Sleep()
 
 Эти два метода во Flow, которые можно переопределить. Их вызов обеспечивается при выполнении Unity-метода _Awake()_. Метод InitData() генерируется препроцессором, а метод InitDataCustom() может в ручную использовать разработчик для обеспечения своей дополнительной логики инициализации. Для сгенерированного InitData() есть две цели. Первая связана с созданием словарей, списков и прочих коллекций (LDictionary, LList, LQueue), которые должны быть сохранены в базе данных. Такие коллекции нельзя инициализировать раньше _Awake()_, т.к. контекст к базе данных EntityFramefork`а еще не знает, нужно ли его использования. Если нет коллекции ведут себя буквально аналогично соответствующим им (Dictionary, List, Queue) в памяти. Вторая цель связана с инициализацией делегатов (см. раздел "Использование делегатов").
 
+```csharp
+public class CompanyLogic : AgentPointLogic
+{
+	public Capital Capital;
+	public LDictionary<string, Product> Storage;
+
+	public void AddAllJobRequirements()
+	{
+	  AddJobRequirements(JobType.Worker, new NamedValue("Mathematics", 1), new NamedValue("Logics", 1));
+	  AddJobRequirements(JobType.Agronomist, new NamedValue("Biology", 2), new NamedValue("Chemistry", 1));
+      ...
+	}
+    private void AddJobRequirements(JobType argJobType, params NamedValue[] argSkill)
+	{
+		JobRequirements requirements = new JobRequirements();
+		requirements.JobType = argJobType;
+		for (int i = 0; i < argSkill.Length; i++)
+		{
+			requirements.AddRequirements(argSkill[i].Name, argSkill[i].Value);
+		}
+		JobRequirements.Add(requirements.JobType, requirements);
+	}
+}
+public class Company : AgentPoint
+{
+  // Генерируется
+  public override void InitData()
+  {
+    base.InitData();
+    logic.Storage = new LDictionary<string, Product>();
+  }
+  // Пишет разработчик в ручную
+  public override void InitDataCustom()
+  {
+    base.InitDataCustom();
+	logic.Capital = new Capital();
+	logic.AddAllJobRequirements();
+  }
+}
+```
+
 ## Использование делегатов
 
 Делегаты используются в логике (Logic), чтобы управлять выполнением методов во Flow. В зависимости от модификатора доступа будет сгенерирован разный код. Для _public_ делегата, так же как с полями будет просто предоставлен доступ во вне Flow, чтобы кто угодно мог бы потом назначить нужный метод. Для _internal_ делегата будет выполнен соответствующий поиск подходящего метода (совпадает сигнатура и название) во Flow. И если такой метод будет создан, он будет проинициализирован в методе _InitData()_ (). Если же метод не будет найден, будет создана заготовка-пустышка (stub), и так же проинициализирована в методе _InitData()_. 
+
+```csharp
+
+```
 
 
 
