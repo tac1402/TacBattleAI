@@ -120,6 +120,7 @@ private void Sleep()
 		case 3: Fatigue -= 2; break;
 		case 4: Fatigue -= 1; break;
 	}
+}
 ```
 
 ## Делегаты
