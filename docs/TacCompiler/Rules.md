@@ -173,6 +173,62 @@ public class Company : AgentPoint
 Делегаты используются в логике (Logic), чтобы управлять выполнением методов во Flow. В зависимости от модификатора доступа будет сгенерирован разный код. Для _public_ делегата, так же как с полями будет просто предоставлен доступ во вне Flow, чтобы кто угодно мог бы потом назначить нужный метод. Для _internal_ делегата будет выполнен соответствующий поиск подходящего метода (совпадает сигнатура и название) во Flow. И если такой метод будет создан, он будет проинициализирован в методе _InitData()_ (). Если же метод не будет найден, будет создана заготовка-пустышка (stub), и так же проинициализирована в методе _InitData()_. 
 
 ```csharp
+public class AgentPointLogic : Logic
+{
+  public delegate bool IsAgentInEnterDelegate(int agentId);
+  internal IsAgentInEnterDelegate IsAgentInEnter;
+
+  private void CheckEnter(GameTime argGameTime, List<Agent> argAllAgent)
+  {
+    List<Agent> tmpAgents = argAllAgent.FindAll(x => x.TargetId == Id);
+	for (int j = 0; j < tmpAgents.Count; j++)
+	{
+		if (IsAgentInEnter(tmpAgents[j].Id) == true)
+		{
+			WalkToEnter(argGameTime, tmpAgents[j]);
+		}
+	}
+  }
+
+  public delegate string GetInfoDelegate(int argId);
+  public GetInfoDelegate GetInfoHandler;
+  public string GetInfo()
+  {
+    string ret = "";
+	if (GetInfoHandler != null)
+	{
+		ret += "\n" + GetInfoHandler(Id);
+	}
+	return ret;
+  }
+}
+
+public class AgentPoint : Spatial
+{
+  public GetInfoDelegate GetInfoHandler { set => logic.GetInfoHandler = value; }
+
+  public override void InitData()
+  {
+    base.InitData();
+    logic.IsAgentInEnter = IsAgentInEnter;
+  }
+  /// Находится ли агент на входе
+  public bool IsAgentInEnter(int argAgentId)
+  {
+    bool ret = false;
+	Collider[] c = Physics.OverlapBox(Point.transform.position, EnterSize / 2f, Point.transform.rotation, AgentLayer);
+	for (int j = 0; j < c.Length; j++)
+	{
+	  Agent agent = c[j].gameObject.GetComponent<Agent>();
+  	  if (agent != null && agent.Id == argAgentId && agent.TargetId == Id)
+	  { 
+        ret = true; 
+		break;
+	  }
+	}
+    return ret;
+  }
+}
 
 ```
 
