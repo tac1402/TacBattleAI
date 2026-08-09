@@ -45,7 +45,26 @@ title: Rules
 ```
 
 
-4.
+4. По умолчанию TacCompiler строит публичную проекцию интерфейса логики во Flow. Происходит полное поднятие публичного API Logic на уровень Flow, но Flow делегирует это Logic. Это можно сравнить с наследованием, но формально это агрегация, с последующим делегированием публичных членов логики наружу от Flow.
+
+```csharp
+// Для полей и свойств - доступ только для чтения
+public int TargetId => logic.TargetId;
+public bool IsBusy => logic.IsBusy;
+public int LocatedId => logic.LocatedId;
+public bool IsDead => logic.IsDead;
+public float Health => logic.Health;
+// Для методов
+public void ApplyDamage(float argDamage) => logic.ApplyDamage(argDamage);
+public void SetTarget(int argId) => logic.SetTarget(argId);
+// Для событий - доступ на подписку и отписку
+public event Change ChangeHealth
+{
+    add => logic.ChangeHealth += value;
+    remove => logic.ChangeHealth -= value;
+}
+```
+  
 	
 
 
