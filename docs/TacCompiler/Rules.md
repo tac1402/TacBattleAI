@@ -63,7 +63,11 @@ public event Change ChangeHealth
     remove => logic.ChangeHealth -= value;
 }
 ```
-  
+
+## AllowSet 
+
 	
+
+## Делегаты
 
 
