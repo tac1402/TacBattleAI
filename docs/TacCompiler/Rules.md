@@ -103,7 +103,9 @@ public int SleepTime
 	get { return sleepTime; }
 	set
 	{
+        // При установке 0 сначала засчитывается последний час сна
 		if (value == 0 && sleepTime > 0) { Sleep(); }
+        // Значения > 4 начинают новый 4-часовой цикл
 		if (value > 4) { value = 1; }
 		sleepTime = value;
 		if (sleepTime > 0) { Sleep(); }
@@ -113,14 +115,10 @@ private void Sleep()
 {
 	switch (sleepTime)
 	{
-		case 1:
-			Fatigue -= 1; break;
-		case 2:
-			Fatigue -= 2; break;
-		case 3:
-			Fatigue -= 2; break;
-		case 4:
-			Fatigue -= 1; break;
+		case 1: Fatigue -= 1; break;
+		case 2: Fatigue -= 2; break;
+		case 3: Fatigue -= 2; break;
+		case 4: Fatigue -= 1; break;
 	}
 ```
 
