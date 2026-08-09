@@ -1,5 +1,5 @@
 ---
-title: TacCompiler
+title: Paradigm
 ---
 
 Парадигма пространственно-потоковой логики (ППЛ, Spatial-Flow-Logic (SFL))

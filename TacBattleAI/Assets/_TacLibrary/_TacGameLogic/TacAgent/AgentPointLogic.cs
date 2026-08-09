@@ -86,7 +86,7 @@ namespace Tac.Agent_
 		public Agent Remove()
 		{
 			AgentInPoint ap = Agents.Dequeue();
-			//RemoveView(ap.Agent);
+			RemoveView(ap.Agent);
 			ap.Agent.ResetLocated();
 			return ap.Agent;
 		}
@@ -94,7 +94,7 @@ namespace Tac.Agent_
 		public Agent Remove(int argAgentId)
 		{
 			AgentInPoint ap = Agents.Remove(argAgentId);
-			//RemoveView(ap.Agent);
+			RemoveView(ap.Agent);
 			ap.Agent.ResetLocated();
 			return ap.Agent;
 		}
@@ -127,7 +127,7 @@ namespace Tac.Agent_
 
 			for (int j = 0; j < tmpAgents.Count; j++)
 			{
-				//if (IsAgentInEnter(tmpAgents[j].Id) == true)
+				if (IsAgentInEnter(tmpAgents[j].Id) == true)
 				{
 					WalkToEnter(argGameTime, tmpAgents[j]);
 				}
