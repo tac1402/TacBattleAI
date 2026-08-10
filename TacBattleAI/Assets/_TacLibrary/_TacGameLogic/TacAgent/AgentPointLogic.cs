@@ -17,7 +17,7 @@ namespace Tac.Agent_
 		public string Title;
 		protected string Info;
 
-		public LQueue<AgentInPoint> Agents = new LQueue<AgentInPoint>();
+		public LQueue<AgentInPoint> Agents;
 
 		/// <summary>
 		/// Время последнего обновления

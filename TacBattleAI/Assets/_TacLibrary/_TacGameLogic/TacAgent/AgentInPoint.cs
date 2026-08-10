@@ -8,7 +8,7 @@ namespace Tac.Agent_
 {
 	public class AgentInPoint : Logic
 	{
-		public override int Id
+		/*public override int Id
 		{
 			get 
 			{
@@ -19,7 +19,7 @@ namespace Tac.Agent_
 				return 0;
 			}
 			set { }
-		}
+		}*/
 
 		public Agent Agent;
 		public GameTime EnterTime;

@@ -55,7 +55,7 @@ namespace Tac
 		public ItemDb item { get { return itemDb; } }
 
 
-		private bool initData = false;
+		//private bool initData = false;
 		private void Awake()
 		{
 			CreateLogic();
@@ -63,7 +63,8 @@ namespace Tac
 			{
 				baseLogic.InitLogic();
 			}
-			if (initData == false) { InitData(); InitDataCustom(); }
+			InitData(); 
+			InitDataCustom();
 		}
 
 		private Logic innerLogic;
@@ -72,7 +73,7 @@ namespace Tac
 
 		public virtual void InitData()
 		{
-			initData = true;
+			//initData = true;
 		}
 		public virtual void InitDataCustom() { }
 

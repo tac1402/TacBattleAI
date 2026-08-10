@@ -78,7 +78,7 @@ namespace DnaCore
 				if (typeof(Flow).IsAssignableFrom(type))
 				{
 					// 3. Ищем поле "logic" именно в классе Flow (с учетом приватности)
-					var logicField = typeof(Flow).GetField("logic",
+					var logicField = typeof(Flow).GetField("innerLogic",
 										BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 					if (logicField != null)
 						fields.Add(logicField);
