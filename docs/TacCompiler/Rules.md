@@ -208,7 +208,7 @@ public abstract class Flow : MonoBehaviour
 		InitData(); 
 		InitDataCustom();
 	}
-
+}
 ```
 
 ## Использование делегатов
