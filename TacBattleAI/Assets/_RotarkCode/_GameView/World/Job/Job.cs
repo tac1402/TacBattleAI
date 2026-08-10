@@ -36,15 +36,18 @@ namespace Tac.Society
         public Dictionary<int, PersonPlan> PersonPlans => logic.PersonPlans;
 
         public void AddPersonPlan(Person_.Person argPerson) => logic.AddPersonPlan(argPerson);
-        public void CalcAgentPath() => logic.CalcAgentPath();
 #endregion
 
 		protected NavMeshPathExt pathExt;
+		protected List<Agent> AgentPath = new List<Agent>();
+
+		public override void InitDataCustom()
+		{
+			pathExt = new NavMeshPathExt();
+		}
 
 		private void Start()
 		{
-			pathExt = new NavMeshPathExt();
-			logic.pathCalculator = pathExt.CalculatePath;
 			StartCoroutine(CalcPath());
 		}
 
@@ -52,8 +55,32 @@ namespace Tac.Society
 		{
 			while (true)
 			{
-				logic.CalcAgentPath();
+				CalcAgentPath();
 				yield return new WaitForSeconds(0.1f);
+			}
+		}
+
+		private void CalcAgentPath()
+		{
+			for (int i = AgentPath.Count - 1; i >= 0; i--)
+			{
+				Agent agent = AgentPath[i];
+				if (agent.PathStatus == 1)
+				{
+					NavMeshPath path = pathExt.CalculatePath(agent.Position, agent.TargetPoint);
+					agent.SetPath(path);
+
+
+					if (agent.PathStatus != 2)
+					{
+						break;
+					}
+					else
+					{
+						AgentPath.RemoveAt(i);
+						agent.WalkTeleport();
+					}
+				}
 			}
 		}
 	}

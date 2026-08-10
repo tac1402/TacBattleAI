@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Numerics;
 using Tac.HealthSystem;
-using UnityEngine;
 
 namespace Tac.Agent_
 {
@@ -22,6 +21,7 @@ namespace Tac.Agent_
 		/// </summary>
 		public int LocatedId = 0;
 
+		public int PathStatus = 0; // 0 - нет пути, 1 - нужно посчитать, 2 - путь расчитан
 
 		public bool UseHealthState = false;
 

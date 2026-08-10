@@ -1,18 +1,16 @@
 ﻿// Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
-using DnaCore;
 using System.Collections;
 using System.Collections.Generic;
 using Tac.HealthSystem;
-using Tac.Person_;
 using UnityEF;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Tac.Agent_
 {
-	public partial class Agent : Spatial, ICell
+	public partial class Agent : Spatial
 	{
         //[TacLogic] AgentLogic logic;
 #region Generated Logic
@@ -52,6 +50,12 @@ namespace Tac.Agent_
         public PhysicalSkill Precision => logic.Precision;
 
         public event Change ChangeHealth { add => logic.ChangeHealth += value; remove => logic.ChangeHealth -= value; }
+
+		public override void InitData()
+		{
+			base.InitData();
+			PathPoints = new LList<LVector3>();
+		}
 #endregion
 
 
@@ -98,17 +102,17 @@ namespace Tac.Agent_
 			}
 		}
 
-		public int pathStatus = 0; // 0 - нет пути, 1 - нужно посчитать, 2 - путь расчитан
-
 		public int PathStatus
 		{
-			get { return pathStatus; }
+			get { return logic.PathStatus; }
 			set
 			{
-				pathStatus = value;
+				logic.PathStatus = value;
+
+#if OnlyUnity
 				if (StatusBar != null)
 				{
-					switch (pathStatus)
+					switch (logic.PathStatus)
 					{ 
 						case 0:
 							StatusBar.ChangeMaterial(Color.white);
@@ -121,6 +125,7 @@ namespace Tac.Agent_
 							break;
 					}
 				}
+#endif
 			}
 		}
 
@@ -150,14 +155,6 @@ namespace Tac.Agent_
 		internal StatusBar StatusBar;
 		private LineRenderer PathRender;
 		private float PathHeightOffset = 0.25f;
-		public Cell cell { get { return item; } }
-
-
-		public override void InitData()
-		{
-			base.InitData();
-			PathPoints = new LList<LVector3>();
-		}
 
 
 		public void Init(bool argRecoverMode = false)

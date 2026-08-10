@@ -31,8 +31,6 @@ namespace Tac.Society
 
 		private void Start()
 		{
-			pathExt = new NavMeshPathExt();
-			logic.pathCalculator = pathExt.CalculatePath;
 			StartCoroutine(CalcPath());
 		}
 

@@ -17,6 +17,7 @@ namespace Tac.Agent_
 
 		public void WalkTeleport()
 		{
+#if OnlyUnity
 			if (PathStatus == 2)
 			{
 				divider = new PathDivider();
@@ -31,6 +32,7 @@ namespace Tac.Agent_
 
 				OnCheckDistance += Teleport_OnCheckDistance;
 			}
+#endif
 		}
 
 		/// <summary>

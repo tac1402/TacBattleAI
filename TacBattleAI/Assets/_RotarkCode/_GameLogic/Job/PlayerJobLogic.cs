@@ -8,12 +8,6 @@ namespace Tac.Society
 	public class PlayerJobLogic : JobLogic
 	{
 
-		public PlayerJobLogic() { }
-		public PlayerJobLogic(PathCalculator argPathCalculator)
-		{
-			pathCalculator = argPathCalculator;
-		}
-
 		public void NextHour(GameTime argGameTime)
 		{
 			CheckAgent();

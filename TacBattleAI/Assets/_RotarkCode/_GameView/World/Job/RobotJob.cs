@@ -2,13 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using Tac.Person_;
+
 namespace Tac.Society
 {
 	public class RobotJob : Job
 	{
         //[TacLogic] RobotJobLogic logic;
 #region Generated Logic
-        protected RobotJobLogic logic
+        protected new RobotJobLogic logic
         {
             get
             {
@@ -26,16 +28,25 @@ namespace Tac.Society
             baseLogic = new RobotJobLogic();
         }
 
+        public override void InitData()
+        {
+            base.InitData();
+            logic.AddToCalcPath = AddToCalcPath;
+        }
+
         public void NextHour(GameTime argGameTime) => logic.NextHour(argGameTime);
 #endregion
 
-
 		private void Start()
 		{
-			pathExt = new NavMeshPathExt();
-			logic.pathCalculator = pathExt.CalculatePath;
 			StartCoroutine(CalcPath());
 		}
+
+        public void AddToCalcPath(Person argPerson)
+        {
+			AgentPath.Add(argPerson);
+		}
+
 	}
 }
 

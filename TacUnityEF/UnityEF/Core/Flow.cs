@@ -70,11 +70,7 @@ namespace Tac
 		private Logic innerLogic;
 		protected Logic baseLogic { get { return innerLogic; } set { innerLogic = value; } }
 		protected virtual void CreateLogic() { }
-
-		public virtual void InitData()
-		{
-			//initData = true;
-		}
+		public virtual void InitData() { }
 		public virtual void InitDataCustom() { }
 
 

@@ -2,17 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Tac.Agent_;
+using Tac.Person_;
 
 namespace Tac.Society
 {
 	public class RobotJobLogic : JobLogic
 	{
-		public RobotJobLogic() { }
-		public RobotJobLogic(PathCalculator argPathCalculator)
-		{
-			pathCalculator = argPathCalculator;
-		}
-
+		public delegate void AddToCalcPathDelegate(Person argPerson);
+		internal AddToCalcPathDelegate AddToCalcPath;
 
 		public void NextHour(GameTime argGameTime)
 		{
@@ -32,8 +29,10 @@ namespace Tac.Society
 					{
 						plan.Person.TargetPoint = agentPoint.PointPosition;
 						plan.Person.PathStatus = 1;
-						AgentPath.Add(plan.Person);
-
+						if (AddToCalcPath != null)
+						{
+							AddToCalcPath(plan.Person);
+						}
 						plan.Person.SetTarget(agentPoint.Id);
 					}
 				}
