@@ -176,6 +176,41 @@ public class Company : AgentPoint
 
 Поэтому _InitData()_ — это не просто аналог Unity-метода _Start()_ или набор автоматически сгенерированных присваиваний. Это точка перехода Logic из декларативного состояния в состояние, связанное с конкретной средой исполнения.
 
+## InternalAttribute и InitLogic()
+
+Атрибут __Internal__ применённый к методу в Logic - указывает на то, что для него не нужно строить метод делегирования во Flow. Дело в том, что иногда может быть необходимым, чтобы сам метод оставался с модификатором _public_ (актуально когда Logic и Flow находятся в разных namespace), но при этом это внутренний метод для использования во Flow.
+
+Как раз примером этого может служить служебный метод __InitLogic()__. После создания объекта логики через фабрику CreateLogic() и до вызова __InitData()__ бывает необходимо проинициализировать определенную логику. Особенно это актуально в условия когда Юнити по сути запретило использовать конструкторы для компонентов. В этом случае, Flow выполняет следующую последовательность вызовов во время выполнения Awake(). 
+
+__Внимание!__ Не используйте оригинальный Awake в наследника Flow - это удалит действия по умолчанию.
+
+```csharp
+public abstract class Logic : IItemDb
+{
+	[Internal]
+	public virtual void InitLogic() { }
+}
+public abstract class Flow : MonoBehaviour
+{
+	private Logic innerLogic;
+	protected Logic baseLogic { get { return innerLogic; } set { innerLogic = value; } }
+	protected virtual void CreateLogic() { }
+	public virtual void InitData() { }
+	public virtual void InitDataCustom() { }
+
+	private void Awake()
+	{
+		CreateLogic();
+		if (baseLogic != null)
+		{
+			baseLogic.InitLogic();
+		}
+		InitData(); 
+		InitDataCustom();
+	}
+
+```
+
 ## Использование делегатов
 
 Делегаты используются в Logic для обращения к функциональности Flow, когда необходимое действие не может или не должно быть реализовано непосредственно в Logic. В зависимости от модификатора доступа будет сгенерирован разный код. 
