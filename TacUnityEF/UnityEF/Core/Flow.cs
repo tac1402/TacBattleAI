@@ -1,11 +1,9 @@
 ﻿// Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
-using DnaCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using UnityEF;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using UnityEngine;
 

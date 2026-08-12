@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Tac;
-using UnityEF;
+using DnaCore;
 using UnityEngine;
 
-namespace DnaCore
+namespace UnityEF
 {
 	public interface IItemDb
 	{

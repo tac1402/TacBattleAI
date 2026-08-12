@@ -27,13 +27,13 @@ namespace Tac.Society
 					AgentPoint agentPoint = plan.GetActual();
 					if (agentPoint != null)
 					{
+						plan.Person.SetTarget(agentPoint.Id);
 						plan.Person.TargetPoint = agentPoint.PointPosition;
 						plan.Person.PathStatus = 1;
 						if (AddToCalcPath != null)
 						{
 							AddToCalcPath(plan.Person);
 						}
-						plan.Person.SetTarget(agentPoint.Id);
 					}
 				}
 			}

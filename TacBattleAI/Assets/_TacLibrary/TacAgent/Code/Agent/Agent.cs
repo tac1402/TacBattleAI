@@ -4,9 +4,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Tac.HealthSystem;
+
+#if OnlyUnity
 using UnityEF;
 using UnityEngine;
 using UnityEngine.AI;
+#endif
 
 namespace Tac.Agent_
 {
@@ -56,10 +59,8 @@ namespace Tac.Agent_
 			base.InitData();
 			PathPoints = new LList<LVector3>();
 		}
-#endregion
+		#endregion
 
-
-		public NavMeshAgent agent;
 
 		public string agentName;
 
@@ -69,36 +70,14 @@ namespace Tac.Agent_
 			set
 			{
 				agentName = value;
+
+#if OnlyUnity
 				name = value;
 				if (StatusBar != null)
 				{
 					StatusBar.HealthBar.Text.text = agentName;
 				}
-			}
-		}
-
-		internal float walkDistance;
-
-		public float WalkDistance { get { return walkDistance; } }
-
-		/// <summary>
-		/// Двигается ли юнит к цели
-		/// </summary>
-		public bool isMoving = false;
-		public bool IsMoving
-		{
-			get { return isMoving; }
-			set
-			{
-				isMoving = value;
-				if (isMoving == true)
-				{
-					StatusBar.ChangeMaterial(Color.green);
-				}
-				else
-				{
-					StatusBar.ChangeMaterial(Color.yellow);
-				}
+#endif
 			}
 		}
 
@@ -138,6 +117,34 @@ namespace Tac.Agent_
 		/// Точка на карте куда движется агент
 		/// </summary>
 		public Vector3_ TargetPoint = Vector3_.zero;
+
+#if OnlyUnity
+		public NavMeshAgent agent;
+
+		internal float walkDistance;
+
+		public float WalkDistance { get { return walkDistance; } }
+
+		/// <summary>
+		/// Двигается ли юнит к цели
+		/// </summary>
+		public bool isMoving = false;
+		public bool IsMoving
+		{
+			get { return isMoving; }
+			set
+			{
+				isMoving = value;
+				if (isMoving == true)
+				{
+					StatusBar.ChangeMaterial(Color.green);
+				}
+				else
+				{
+					StatusBar.ChangeMaterial(Color.yellow);
+				}
+			}
+		}
 
 		/// <summary>
 		/// Текущий путь агента
@@ -387,6 +394,7 @@ namespace Tac.Agent_
 				yield return Wait;
 			}
 		}
+#endif
 
 	}
 

@@ -229,6 +229,24 @@ namespace Tac
 
 			logic.Time = new System.TimeSpan(hours, minutes, 0);
 		}
+
+#if OnlyLogic
+		public void Tick(int argHourCount)
+		{
+			for (int i = 0; i < argHourCount; i++)
+			{
+				CurrentTime++;
+				if (CurrentTime > 23)
+				{ 
+					CurrentTime = 0;
+					CurrentDay ++;
+				}
+				logic.UpdateTime(CurrentDay, CurrentTime);
+			}
+		}
+#endif
+
+
 	}
 
 }

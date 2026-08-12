@@ -2,12 +2,8 @@
 // Copyright (C) 2025-26 Sergej Jakovlev
 
 
-using DnaCore;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using UnityEngine;
 
 namespace Tac
 {
