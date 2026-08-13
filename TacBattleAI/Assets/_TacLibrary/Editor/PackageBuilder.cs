@@ -45,13 +45,6 @@ public class PackageBuilder
 		DeleteMeta("com.tac.tacitemcreate", "TacItemCreate");
 	}
 
-	[MenuItem("TacLibrary/TacGameLogic")]
-	public static void BuildTacGameLogic()
-	{
-		BuildPackage("com.tac.tacgamelogic", "_TacGameLogic");
-		DeleteMeta("com.tac.tacgamelogic", "_TacGameLogic");
-	}
-
 	[MenuItem("TacLibrary/TacUI")]
 	public static void BuildTacUI()
 	{

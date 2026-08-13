@@ -61,28 +61,28 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.11f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_RotarkCode\_GameLogic\Job\RobotJobLogic.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameView\World\Job\Job.cs" />
     <Compile Include="Assets\_RotarkCode\BuildingLevel\GameobjectList.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\World.cs" />
     <Compile Include="Assets\_RotarkCode\BuildingLevel\BuildingLevel.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\SocietyLogic.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\Business.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\Society.cs" />
     <Compile Include="Assets\_RotarkCode\AssemblyInfo.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameLogic\World\BusinessLogic.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameView\World\World.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameView\World\Society.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameView\World\Job\RobotJob.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\Job\PlayerJob.cs" />
     <Compile Include="Assets\_RotarkCode\BuildingLevel\BuildingLevelUI.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameLogic\Job\PlayerJobLogic.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameView\World\Business.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameLogic\World\WorldLogic.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\WorldLogic.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\Job\Job.cs" />
     <Compile Include="Assets\BattlePack\Pack\BattleScene\Shaders\Plexus\Plexus.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameLogic\World\SocietyLogic.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameView\World\Job\PlayerJob.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\Job\RobotJobLogic.cs" />
     <Compile Include="Assets\_RotarkPack\Pack\Rotark\_Code\BuildingChange.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameView\UI\RunPanel.cs" />
-    <Compile Include="Assets\_RotarkCode\_GameLogic\Job\JobLogic.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\Job\PlayerJobLogic.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\Job\JobLogic.cs" />
     <Compile Include="Assets\_RotarkPack\Pack\Rotark\_Code\BuildManager.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\UI\RunPanel.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\BusinessLogic.cs" />
     <Compile Include="Assets\_RotarkPack\Pack\Rotark\_Code\Street.cs" />
     <Compile Include="Assets\BattlePack\Main\Cover\_Code\Cover.cs" />
+    <Compile Include="Assets\_RotarkCode\Code\World\Job\RobotJob.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
