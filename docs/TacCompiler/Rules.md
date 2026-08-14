@@ -325,6 +325,7 @@ public partial class Agent : Spatial
 
 В ряде случаев, требуется не только оставить общую сигнатуру метода, а написать ему замену, чтобы сохранить рабочий код, который можно будет запустить в тесте, например, под WinForms.
 
+```csharp
 public class Company : AgentPoint
 {
 #if OnlyUnity
