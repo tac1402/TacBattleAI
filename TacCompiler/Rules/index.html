@@ -1,0 +1,3383 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tac1402.github.io/TacBattleAI/TacCompiler/Rules/">
+      
+      
+        <link rel="prev" href="../Implementation/">
+      
+      
+        <link rel="next" href="../../TacStandartU/Item/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Rules - TacLibrary</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="TacLibrary" class="md-header__button md-logo" aria-label="TacLibrary" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TacLibrary
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Rules
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="TacLibrary" class="md-nav__button md-logo" aria-label="TacLibrary" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TacLibrary
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    О библиотеке
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Архитектура библиотеки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../simplicity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Архитектурная легкость
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Линковка с библиотекой
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../StandartU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Standart+Unity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacCompiler
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacCompiler
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Paradigm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Парадигма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CleanLogic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Чистая логика
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Реализация
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Правила
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Правила
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Основы
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#allowset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AllowSet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initdata-initdatacustom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InitData() и InitDataCustom()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#internalattribute-initlogic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InternalAttribute и InitLogic()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Использование делегатов
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#onlyunity-onlylogic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Разделение проекта и OnlyUnity + OnlyLogic
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Разделение проекта и OnlyUnity + OnlyLogic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Организации условной компиляции в сложном случае
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacStandartU
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacStandartU
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandartU/Item/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Item
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandartU/BuildItem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BuildItem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandartU/EntityType/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EntityType
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandartU/DayNight/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DayNight
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandartU/IObject/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IObject
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandartU/BoundsExt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BoundsExt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacStandart
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacStandart
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandart/Component/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Component
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandart/Vector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandart/GameTime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GameTime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandart/NamedValue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NamedValue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandart/RandomWorld/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RandomWorld
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacStandart/RandomUnique/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RandomUnique
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacItemCreate
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacItemCreate
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacItemCreate/ItemCreate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ItemCreate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacItemCreate/GhostCache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GhostCache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacCamera
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacCamera
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacCamera/TopCamera/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TopCamera
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacCamera/FastController/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FastController
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacWireframe
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacWireframe
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacWireframe/Wireframe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wireframe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacItemMove
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacItemMove
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacItemMove/TurnInfo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TurnInfo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacItemMove/ItemTurn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ItemTurn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacItemMove/TopCamera_/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TopCameraExt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacItemMove/ItemCollision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ItemCollision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacItemMove/ItemBuild/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ItemBuild
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacAgent
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacAgent
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacAgent/Agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacAgent/AgentLogic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AgentLogic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacAgent/AgentAnimator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AgentAnimator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacAgent/Eye/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eye
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacAgent/AgentInPoint/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AgentInPoint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacAgent/AgentPoint/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AgentPoint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacAgent UI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacAgent UI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacAgent/AgentSelection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AgentSelection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacAgent/HealthBar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HealthBar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacAgent/StatusBar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    StatusBar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacHealth
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacHealth
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacHealth/BodyParts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BodyParts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacHealth/PhysicalSkill/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PhysicalSkill
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacHealth/VitalSystems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VitalSystems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacHealth/HealthState/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HealthState
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacPerson
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacPerson
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacPerson/Person/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Person
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacPerson/PersonPlan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PersonPlan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacPerson/PersonNameLogic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PersonNameLogic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacPerson/PersonName/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PersonName
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacUI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_17">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacUI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUI/UI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UI прототипирование
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUI/InfoPanel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    InfoPanel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUI/InfoPanelManager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    InfoPanelManager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUI/TableUI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TableUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacSave
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacSave
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacSave/SaveCatalog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SaveCatalog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacSave/IDayNight/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IDayNight
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        
+          
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TacUnityEF
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TacUnityEF
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUnityEF/UnityEF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Сохранение игры
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUnityEF/IItemDb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IItemDb
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUnityEF/UnityDbContext/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UnityDbContext
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUnityEF/ICollection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ICollection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUnityEF/GDictionary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDictionary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUnityEF/LDictionary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LDictionary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUnityEF/GList/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GList
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUnityEF/LList/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LList
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUnityEF/LQueue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LQueue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUnityEF/SQLite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQLite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TacUnityEF/SQLServer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQLServer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Основы
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#allowset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AllowSet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initdata-initdatacustom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InitData() и InitDataCustom()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#internalattribute-initlogic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InternalAttribute и InitLogic()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Использование делегатов
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#onlyunity-onlylogic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Разделение проекта и OnlyUnity + OnlyLogic
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Разделение проекта и OnlyUnity + OnlyLogic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Организации условной компиляции в сложном случае
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Правила</h1>
+
+<h2 id="_1">Основы</h2>
+<p>`1. Присоединение логики к сущностям (Flow, Spatial) [далее просто Flow, а Spatial это частный случай] выполняется препроцессором если разработчик указал атрибут [TacLogic] с типом логики.</p>
+<pre><code class="language-csharp">    public class Agent : Spatial
+    {
+        [TacLogic] AgentLogic logic;
+    }
+</code></pre>
+<p>`2. Flow по умолчанию не дает полный доступ к своей логике (Logic), она доступна только самой сущности и её наследникам.</p>
+<pre><code class="language-csharp">    public class Agent : Spatial
+    {
+        //[TacLogic] AgentLogic logic;
+#region Generated Logic
+        protected AgentLogic logic 
+        {
+            get { return baseLogic as AgentLogic; }
+            set { baseLogic = value; }
+        }
+#endregion
+    }
+</code></pre>
+<p>`3. Logic создается через фабрику Flow.CreateLogic() и может быть переопределена в наследниках логикой специфичной для них.</p>
+<pre><code class="language-csharp">    public class Agent : Spatial
+    {
+        protected override void CreateLogic() { baseLogic = new AgentLogic(); }
+    }
+    public class Person : Agent
+    {
+        protected override void CreateLogic() { baseLogic = new PersonLogic(); }
+    }
+</code></pre>
+<p>`4. По умолчанию TacCompiler строит публичную проекцию интерфейса Logic во Flow. Происходит полное проецирование публичного API Logic непосредственно во Flow, при этом Flow делегирует реализацию проецируемых членов своей Logic. Это можно сравнить с наследованием, но формально это агрегация, с последующим делегированием публичных членов логики наружу от Flow по особым правилам. Таким образом, с точки зрения внешнего потребителя Flow выглядит так, как будто его публичный интерфейс содержит API Logic непосредственно.</p>
+<pre><code class="language-csharp">// Для полей и свойств - доступ только для чтения
+public GenderType Gender =&gt; logic.Gender;
+public bool IsDead =&gt; logic.IsDead;
+public float Health =&gt; logic.Health;
+public LDictionary_&lt;string, float&gt; Skills =&gt; logic.Skills;
+// Для методов - без in, out, ref в параметрах, но допускают кортежи для выхода
+public void ApplyDamage(float argDamage) =&gt; logic.ApplyDamage(argDamage);
+public void SetTarget(int argId) =&gt; logic.SetTarget(argId);
+public (JobType, int) Contest(Agent argAgent) =&gt; logic.Contest(argAgent);
+// Для событий - доступ на подписку и отписку
+public event Change ChangeHealth
+{
+    add =&gt; logic.ChangeHealth += value;
+    remove =&gt; logic.ChangeHealth -= value;
+}
+</code></pre>
+<h2 id="allowset">AllowSet</h2>
+<p><strong>AllowSet</strong> - это атрибут, который дает явное разрешение нарушить односторонние направление доступа для конкретного состояния. И тут может возникнуть впечатление, что мы вернулись опять к двунаправленной зависимости. Но важно подчеркнуть, что <strong>AllowSet</strong> меняет это точечно, там где разработчик уверен, что это поле или свойство имеет такую природу, что не может изменяться внутри своей логики (как чистой в Logic, так и контекстной во Flow). Например, возраст, усталость, деньги - не меняются самим персонажем, это ответственность других сущностей, например, общества и конкретных предприятий, в которых персонаж работает и получает зарплату. Отделить такие поля от подавляющего числа характеристик, управляемых самим персонажем достаточно полезно. Но синтаксически, важно чтобы это отличалось от прямого присваивания значения. Поэтому препроцессор, формирует метод типа <em>SetAge()</em> вместо сеттера к Age (сеттер остается доступен только внутри Person). Таким образом, TacCompiler навязывает семантически осмысленный стиль доступа вместо машинальной самоинкапсуляции полей.</p>
+<pre><code class="language-csharp">// При указании AllowSet в Logic
+public class PersonLogic : AgentLogic
+{
+  [AllowSet]
+  public int Age;
+}
+// во Flow будет добавлен
+public class Person : Agent
+{
+  //[TacLogic] PersonLogic logic;
+#region Generated Logic
+  ...
+  public int Age =&gt; logic.Age;
+  public void SetAge(int value)
+  {
+    logic.Age = value;
+  }
+#endregion
+}
+</code></pre>
+<p>Таким образом, Flow при работе с Logic имеет как бы шлюз с двумя дверьми внутренними и внешними. Не все то, что может изменить Flow в Logic (<em>внутренняя дверь</em>) нужно предоставлять другим Flow (<em>внешняя дверь</em>). А если нужно, то в самом Logic нужно решить исходя из природы этой характеристики (свойства, поля) и пометить атрибутом <strong>AllowSet</strong> . </p>
+<p>Причем замети, что в основном нужно работать прямо с полями, никакая самоинкапсуляция тут не нужна - она в любом случае будет избыточна, т.к. настоящую инкапсуляцию выполняет этот шлюз. Работать со свойствами нужно в более сложных случаях, когда установка значения порождает немедленные вычисления, уведомление через событие или вызов через делегат обновления UI. В таких случаях, сама природа характеристики такова, что она является частью вычислений, а связанную систему понятий, от которых зависит эта характеристика, нужно синхронизировать в актуальное состояние. Например, как ниже в примере с установкой на основе усталости рекомендаций ко сну.</p>
+<pre><code class="language-csharp">private int sleepTime = 0;
+[AllowSet]
+public int SleepTime
+{
+    get { return sleepTime; }
+    set
+    {
+        // При установке 0 сначала засчитывается последний час сна
+        if (value == 0 &amp;&amp; sleepTime &gt; 0) { Sleep(); }
+        // Значения &gt; 4 начинают новый 4-часовой цикл
+        if (value &gt; 4) { value = 1; }
+        sleepTime = value;
+        if (sleepTime &gt; 0) { Sleep(); }
+    }
+}
+private void Sleep()
+{
+    switch (sleepTime)
+    {
+        case 1: Fatigue -= 1; break;
+        case 2: Fatigue -= 2; break;
+        case 3: Fatigue -= 2; break;
+        case 4: Fatigue -= 1; break;
+    }
+}
+</code></pre>
+<h2 id="initdata-initdatacustom">InitData() и InitDataCustom()</h2>
+<p>Эти два метода во Flow, которые можно переопределить. Их вызов обеспечивается при выполнении Unity-метода <em>Awake()</em>. Метод <em>InitData()</em> генерируется препроцессором, а метод <em>InitDataCustom()</em> может в ручную использовать разработчик для обеспечения своей дополнительной логики инициализации. Для сгенерированного <em>InitData()</em> есть две основные задачи. </p>
+<p>Первая связана с созданием словарей, списков и прочих коллекций (LDictionary, LList, LQueue), которые должны быть сохранены в базе данных. Такие коллекции намеренно не создаются непосредственно при конструировании Logic. На момент создания объекта ещё неизвестно, будет ли конкретный экземпляр работать с базой данных Entity Framework или только в оперативной памяти. Поэтому создание коллекции откладывается до Awake(), когда контекст среды уже определён. Это позволяет одной и той же Logic работать в двух режимах. При наличии соответствующего контекста коллекция может быть связана с механизмом хранения и ORM. При отсутствии такого контекста она функционирует как обычная коллекция в памяти, аналогичная соответствующему Dictionary, List или Queue.</p>
+<p>Вторая задача <em>InitData()</em> связана с инициализацией внутренних делегатов Logic. TacCompiler анализирует объявления делегатов и устанавливает соответствия между требуемыми Logic возможностями и методами Flow. Это позволяет связать уже созданную Logic с конкретной реализацией среды непосредственно в процессе инициализации. (см. раздел "<strong>Использование делегатов</strong>").</p>
+<p><em>InitDataCustom()</em> выполняется после сгенерированной инициализации и предназначен для действий, которые невозможно или нецелесообразно генерировать автоматически. Например, CompanyLogic может объявлять капитал, хранилище продукции и набор требований к профессиям. Создание Storage связано с хранение данных и поэтому попадает в генерируемый <em>InitData()</em>. Напротив, создание Capital и заполнение набора требований к профессиям являются предметной настройкой конкретной компании и выполняются разработчиком в <em>InitDataCustom()</em>.</p>
+<pre><code class="language-csharp">public class CompanyLogic : AgentPointLogic
+{
+    public Capital Capital;
+    public LDictionary&lt;string, Product&gt; Storage;
+
+    public void AddAllJobRequirements()
+    {
+      AddJobRequirements(JobType.Worker, new NamedValue(&quot;Mathematics&quot;, 1), new NamedValue(&quot;Logics&quot;, 1));
+      AddJobRequirements(JobType.Agronomist, new NamedValue(&quot;Biology&quot;, 2), new NamedValue(&quot;Chemistry&quot;, 1));
+      ...
+    }
+    private void AddJobRequirements(JobType argJobType, params NamedValue[] argSkill)
+    {
+        JobRequirements requirements = new JobRequirements();
+        requirements.JobType = argJobType;
+        for (int i = 0; i &lt; argSkill.Length; i++)
+        {
+            requirements.AddRequirements(argSkill[i].Name, argSkill[i].Value);
+        }
+        JobRequirements.Add(requirements.JobType, requirements);
+    }
+}
+public class Company : AgentPoint
+{
+  // Генерируется
+  public override void InitData()
+  {
+    base.InitData();
+    logic.Storage = new LDictionary&lt;string, Product&gt;();
+  }
+  // Пишет разработчик в ручную
+  public override void InitDataCustom()
+  {
+    base.InitDataCustom();
+    logic.Capital = new Capital();
+    logic.AddAllJobRequirements();
+  }
+}
+</code></pre>
+<p>Поэтому <em>InitData()</em> — это не просто аналог Unity-метода <em>Start()</em> или набор автоматически сгенерированных присваиваний. Это точка перехода Logic из декларативного состояния в состояние, связанное с конкретной средой исполнения.</p>
+<h2 id="internalattribute-initlogic">InternalAttribute и InitLogic()</h2>
+<p>Атрибут <strong>[Internal]</strong>, применённый к методу в Logic, указывает TacCompiler, что для данного метода не должна строиться публичная проекция во Flow. При этом сам метод может оставаться public. Такая возможность необходима в тех случаях, когда Logic и Flow находятся в разных пространствах имён или сборках и метод должен быть доступен Flow непосредственно, но при этом не должен становиться частью внешнего API Flow. Таким образом, <strong>[Internal]</strong> и модификатор <strong>internal</strong> решают разные задачи. Модификатор <strong>internal</strong> является стандартным механизмом ограничения доступа C# и используется ППЛ, в частности, для внутренних делегатов (см. раздел "<strong>Использование делегатов</strong>"). <strong>[Internal]</strong> является инструкцией TacCompiler, изменяющей правила проекции публичного API Logic во Flow.</p>
+<p>Типичным примером является служебный метод <strong>InitLogic()</strong>. После создания экземпляра Logic через фабрику <em>CreateLogic()</em> иногда необходимо выполнить дополнительную инициализацию самой Logic до того, как TacCompiler начнёт выполнять InitData(). Это особенно актуально в Unity, где компоненты MonoBehaviour имеют особый жизненный цикл и использование обычных конструкторов для их инициализации не является подходящим механизмом. Поэтому Logic предоставляет специальную точку инициализации InitLogic(). Метод может быть переопределён специализированной Logic, но благодаря [Internal] TacCompiler не проецирует его во Flow как обычный публичный метод Logic. В результате жизненный цикл Flow при выполнении Awake() имеет следующую последовательность: <strong>CreateLogic → Logic.InitLogic → InitData → InitDataCustom</strong></p>
+<p><strong>Внимание! Не используйте оригинальный Awake в наследника Flow.</strong> TacCompiler и базовый Flow используют Awake() для выполнения обязательной последовательности инициализации. Собственная реализация Awake() приведет к тому, что эта последовательность не будет выполнена.</p>
+<pre><code class="language-csharp">public abstract class Logic : IItemDb
+{
+    [Internal]
+    public virtual void InitLogic() { }
+}
+public abstract class Flow : MonoBehaviour
+{
+    private Logic innerLogic;
+    protected Logic baseLogic { get { return innerLogic; } set { innerLogic = value; } }
+    protected virtual void CreateLogic() { }
+    public virtual void InitData() { }
+    public virtual void InitDataCustom() { }
+
+    private void Awake()
+    {
+        CreateLogic();
+        if (baseLogic != null)
+        {
+            baseLogic.InitLogic();
+        }
+        InitData(); 
+        InitDataCustom();
+    }
+}
+</code></pre>
+<h2 id="_2">Использование делегатов</h2>
+<p>Делегаты используются в Logic для обращения к функциональности Flow, когда необходимое действие не может или не должно быть реализовано непосредственно в Logic. В зависимости от модификатора доступа будет сгенерирован разный код. </p>
+<p>Для public делегата TacCompiler формирует публичный доступ к делегату во Flow. В этом случае Flow не обязан содержать метод с определённым именем. Внешний код может самостоятельно назначить необходимую реализацию делегата. Таким образом, публичный делегат является частью внешнего контракта Flow и может быть подключён любым потребителем, имеющим соответствующий доступ.</p>
+<p>Для internal делегата применяется другой механизм. Такой делегат предназначен не для произвольного внешнего назначения, а для автоматического связывания Logic с её собственным Flow. TacCompiler анализирует внутренние делегаты Logic и ищет во Flow метод, соответствующий делегату по имени и сигнатуре. При обнаружении соответствующего метода TacCompiler автоматически формирует инициализацию делегата в InitData(). Таким образом, разработчику не требуется вручную связывать внутренний делегат с методом Flow. Достаточно объявить в Logic требуемую способность и реализовать соответствующий метод в Flow. Если подходящий метод не найден, TacCompiler создаёт диагностическую заготовку — stub — и также устанавливает её при инициализации. Это позволяет сохранить целостность сгенерированного кода и одновременно явно показать разработчику, что требуемая Logic возможность не имеет реализации в соответствующем Flow.</p>
+<pre><code class="language-csharp">public class AgentPointLogic : Logic
+{
+  public delegate bool IsAgentInEnterDelegate(int agentId);
+  internal IsAgentInEnterDelegate IsAgentInEnter;
+
+  private void CheckEnter(GameTime argGameTime, List&lt;Agent&gt; argAllAgent)
+  {
+    List&lt;Agent&gt; tmpAgents = argAllAgent.FindAll(x =&gt; x.TargetId == Id);
+    for (int j = 0; j &lt; tmpAgents.Count; j++)
+    {
+        if (IsAgentInEnter(tmpAgents[j].Id) == true)
+        {
+            WalkToEnter(argGameTime, tmpAgents[j]);
+        }
+    }
+  }
+
+  public delegate string GetInfoDelegate(int argId);
+  public GetInfoDelegate GetInfoHandler;
+  public string GetInfo()
+  {
+    string ret = &quot;&quot;;
+    if (GetInfoHandler != null)
+    {
+        ret += &quot;\n&quot; + GetInfoHandler(Id);
+    }
+    return ret;
+  }
+}
+
+public class AgentPoint : Spatial
+{
+  public GetInfoDelegate GetInfoHandler { set =&gt; logic.GetInfoHandler = value; }
+
+  public override void InitData()
+  {
+    base.InitData();
+    logic.IsAgentInEnter = IsAgentInEnter;
+  }
+  /// Находится ли агент на входе
+  public bool IsAgentInEnter(int argAgentId)
+  {
+    bool ret = false;
+    Collider[] c = Physics.OverlapBox(Point.transform.position, EnterSize / 2f, Point.transform.rotation, AgentLayer);
+    for (int j = 0; j &lt; c.Length; j++)
+    {
+      Agent agent = c[j].gameObject.GetComponent&lt;Agent&gt;();
+      if (agent != null &amp;&amp; agent.Id == argAgentId &amp;&amp; agent.TargetId == Id)
+      { 
+        ret = true; 
+        break;
+      }
+    }
+    return ret;
+  }
+}
+
+</code></pre>
+<p>Таким образом, использование делегатов - это не просто callback в обычном смысле, это декларация в Logic требующая у своего Flow выполнения действия, находящегося за пределами Logic. А internal и public определяют два разных механизма предоставления этой способности.</p>
+<p><strong>Важно! Для Unity.</strong> В Unity по умолчанию TacCompiler не получает доступа к internal членам анализируемых сборок. Поэтому, чтобы TacCompiler мог выполнить поиск реализаций внутренних делегатов, необходимо предоставить ему разрешение для каждой динамической библиотеки (.dll), в которой используются такие делегаты. Если используется стандартная сборка Unity (<strong>Assembly-CSharp</strong>), указанное ниже объявление может располагаться в любом месте исходного кода. Если сборка определена через .asmdef, объявление должно находиться в этой же сборке.</p>
+<pre><code class="language-csharp">// AssemblyInfo.cs
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo(&quot;TacCompiler&quot;)]
+</code></pre>
+<h2 id="onlyunity-onlylogic">Разделение проекта и OnlyUnity + OnlyLogic</h2>
+<p>ППЛ не требует заранее создать две независимые версии проекта. Сначала проект строится как единый объектный мир, затем TacCompiler и архитектурные правила локализуют зависимости, и только после этого условная компиляция позволяет удалить оставшиеся Unity-специфичные фрагменты. То есть переносимость получается не за счёт того, что разработчик с самого начала пишет «кроссплатформенный код», а за счёт того, что граница среды становится видимой и проверяемой.</p>
+<p>Не разделяйте пакет на отдельные физические части: файлы исходного кода в одном пакете, файлы без зависимостей юнити в другом пакете. Складывайте Flow (или Spatial) рядом с Logic в той же директории. Причины этого изложены в разделе "Чистая логика". У вас уже почти всё готово к окончательном разделению: 
+1. Если у вас есть объект Logic без парного ему Flow (например, Capital, Product или Deal) соберите их в отдельную директорию в рамках вашего пакета и пометьте его как YouPack.Logic, например, <strong>Society.Logic</strong>
+2. У вас могут быть исходные классы вообще вне парадигмы SFL, т.е. полностью специфичные под Unity. Например, свзяанyые с UI, анимацией персонажа, нахождением пути и много другое. Соберите их отдельно и пометьте YouPack.Unity, например, <strong>UI.Logic</strong> или даже на вернем уровне <strong>Code.Unity</strong>.
+3. Там где у вас есть парные Flow+Logic соберите вместе, и не давайте специфичных название, просто оставьте YouPack, например, <strong>Code</strong> или <strong>Agent</strong> .
+3.1. В Logic у вас просто не может быть зависимости от Юнити (или другой среды).
+3.2. <strong>!</strong> Все внимание теперь направленно на Flow, в нем технически могут быть <em>public</em> и <em>internal</em> члены доступ к которым возможен <em>"через один этаж"</em>, например, из SocietyLogic к Person.CancelTarget(). При это метод CancelTarget() средо-специфичный и определён прямо в Person (иначе бы он был бы в PersonLogic).</p>
+<p>Именно, в этих пограничных случаях, их сравнительно мало, но они есть, лучше всего применить условную компиляцию с символом препроцессора OnlyUnity. </p>
+<pre><code class="language-csharp">
+#if OnlyUnity
+using UnityEngine;
+using UnityEngine.AI;
+#endif
+
+public partial class Agent : Spatial
+{
+    public void CancelTarget()
+    {
+#if OnlyUnity // Все свойства пространственно специфичны
+        agent.isStopped = true;
+        TargetPoint = Vector3_.zero;
+        walkDistance = 0;
+        currentPathIndex = 0;
+        PathPoints.Clear();
+        PathStatus = 0;
+#endif
+    }
+}
+</code></pre>
+<p>В ряде случаев, требуется не только оставить общую сигнатуру метода, а написать ему замену, чтобы сохранить рабочий код, который можно будет запустить в тесте, например, под WinForms.</p>
+<pre><code class="language-csharp">public class Company : AgentPoint
+{
+#if OnlyUnity
+    /// Если машина на входе - удалить
+    public bool RemoveTruckInEnter(int argTruckId)
+    {
+        bool ret = false;
+        Collider[] c = Physics.OverlapBox(Point.transform.position, EnterSize / 2f, Point.transform.rotation, AgentLayer);
+        for (int j = 0; j &lt; c.Length; j++)
+        {
+                Truck truck = c[j].gameObject.GetComponent&lt;Truck&gt;();
+                if (truck != null &amp;&amp; truck.Id == argTruckId &amp;&amp; truck.TargetId == Id)
+                {
+                    Destroy(truck.gameObject);
+                    ret = true;
+                    break;
+                }
+            }
+        }
+        return ret;
+    }
+#endif
+#if OnlyLogic
+    // Если машина на входе - удалить
+    public bool RemoveTruckInEnter(int argTruckId)
+    {
+        return true;
+    }
+#endif
+}
+</code></pre>
+<p><strong>После такой финальной чистки вы сможете скопировать ваш пакет вне Юнити, под управление например, консоли и WinForms и протестировать или просто запустить вашу игру в другом окружении.</strong></p>
+<h3 id="_3">Организации условной компиляции в сложном случае</h3>
+<p>Хотя в простых случаях допустимо вставлять блоки #if прямо внутрь методов, при разрастании числа таких вставок навигация по файлу становится затруднительной. Чтобы сохранить читаемость, можно воспользоваться механизмом частичных классов и разнести средозависимые реализации по отдельным файлам, помечая каждый из них директивой на весь файл. Это позволяет отделить Unity‑специфичные методы от логических заглушек, не смешивая их визуально в одном документе.</p>
+<p>Основной файл класса остаётся общим и содержит генерируемую TacCompiler «обвязку», а в дополнении к нему создаются файлы с суффиксами .Unity и .Logic. Такой подход даёт чёткую границу: в одном файле гарантированно нет ссылок на UnityEngine, в другом — отсутствуют бизнес‑правила, которые должны оставаться в отдельном классе Logic. Это упрощает ревью кода, снижает риск конфликтов при слиянии веток и облегчает настройку сборки под разные конфигурации.</p>
+<p>Вместе с тем переход к частичным классам стоит рассматривать как эволюционный шаг, а не обязательное требование. Если количество средозависимых методов невелико, проще оставить локальные блоки #if — это избавляет от избыточной файловой структуры. К частичному разделению прибегают, когда таких методов становится больше пяти‑семи, или когда требуется полностью альтернативная реализация для другой платформы. В любом случае условная компиляция остаётся лишь вспомогательным инструментом, а не краеугольным камнем архитектуры, и при необходимости её легко заменить на более формальные паттерны вроде адаптера или стратегии.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
