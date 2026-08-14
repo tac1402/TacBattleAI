@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.17" />
-    <PackageReference Include="Tac.SFL.Compiler" Version="1.0.8" /> 
+    <PackageReference Include="Tac.SFL.Compiler" Version="1.0.9" /> 
 
 	<Reference Include="UnityEngine">
 		  <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.11f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>

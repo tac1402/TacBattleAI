@@ -16,6 +16,10 @@ namespace Tac
 		/// </summary>
 		public virtual int Id { get { return itemDb.Id; } set { itemDb.Id = value; } }
 
+
+		public delegate int GetFlowIdDelegate();
+		public GetFlowIdDelegate GetFlowId;
+
 		private ItemDb itemDb = new ItemDb();
 		public ItemDb item { get { return itemDb; } }
 

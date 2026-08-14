@@ -1,10 +1,8 @@
 using System;
 using Tac;
 using Unity.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Experimental.AI;
-using UnityEngine.LightTransport;
 
 public class NavMeshPathExt : IDisposable
 {

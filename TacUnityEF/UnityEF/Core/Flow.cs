@@ -59,6 +59,7 @@ namespace Tac
 			CreateLogic();
 			if (baseLogic != null)
 			{
+				baseLogic.GetFlowId = GetFlowId;
 				baseLogic.InitLogic();
 			}
 			InitData(); 
@@ -71,6 +72,8 @@ namespace Tac
 		public virtual void InitData() { }
 		public virtual void InitDataCustom() { }
 
+
+		private int GetFlowId() { return Id; }
 
 
 		[NotMapped]
