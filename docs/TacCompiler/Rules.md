@@ -296,7 +296,66 @@ __Важно! Для Unity.__ В Unity по умолчанию TacCompiler не 
 2. У вас могут быть исходные классы вообще вне парадигмы SFL, т.е. полностью специфичные под Unity. Например, свзяанyые с UI, анимацией персонажа, нахождением пути и много другое. Соберите их отдельно и пометьте YouPack.Unity, например, __UI.Logic__ или даже на вернем уровне __Code.Unity__.
 3. Там где у вас есть парные Flow+Logic соберите вместе, и не давайте специфичных название, просто оставьте YouPack, например, __Code__ или __Agent__ .
 3.1. В Logic у вас просто не может быть зависимости от Юнити (или другой среды).
-3.2. __!__ Все внимание теперь направленно на Flow, в нем технически могут быть public 
+3.2. __!__ Все внимание теперь направленно на Flow, в нем технически могут быть _public_ и _internal_ члены доступ к которым возможен _"через один этаж"_, например, из SocietyLogic к Person.CancelTarget(). При это метод CancelTarget() средо-специфичный и определён прямо в Person (иначе бы он был бы в PersonLogic).
 
+Именно, в этих пограничных случаях, их сравнительно мало, но они есть, лучше всего применить условную компиляцию с символом препроцессора OnlyUnity. 
 
+```csharp
+
+#if OnlyUnity
+using UnityEngine;
+using UnityEngine.AI;
+#endif
+
+public partial class Agent : Spatial
+{
+	public void CancelTarget()
+	{
+#if OnlyUnity // Все свойства пространственно специфичны
+		agent.isStopped = true;
+		TargetPoint = Vector3_.zero;
+		walkDistance = 0;
+		currentPathIndex = 0;
+		PathPoints.Clear();
+		PathStatus = 0;
+#endif
+	}
+}
+```
+
+В ряде случаев, требуется не только оставить общую сигнатуру метода, а написать ему замену, чтобы сохранить рабочий код, который можно будет запустить в тесте, например, под WinForms.
+
+public class Company : AgentPoint
+{
+#if OnlyUnity
+	/// Если машина на входе - удалить
+	public bool RemoveTruckInEnter(int argTruckId)
+	{
+		bool ret = false;
+		Collider[] c = Physics.OverlapBox(Point.transform.position, EnterSize / 2f, Point.transform.rotation, AgentLayer);
+		for (int j = 0; j < c.Length; j++)
+		{
+				Truck truck = c[j].gameObject.GetComponent<Truck>();
+				if (truck != null && truck.Id == argTruckId && truck.TargetId == Id)
+				{
+					Destroy(truck.gameObject);
+					ret = true;
+					break;
+				}
+			}
+		}
+		return ret;
+	}
+#endif
+#if OnlyLogic
+	// Если машина на входе - удалить
+	public bool RemoveTruckInEnter(int argTruckId)
+	{
+		return true;
+	}
+#endif
+}
+```
+
+После такой финальной чистки вы сможете скопировать ваш пакет вне Юнити, под управление например, консоли и WinForms и протестировать или просто запустить вашу игру в другом окружении. 
 
