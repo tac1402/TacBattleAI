@@ -4,7 +4,6 @@
   "displayName": "TacUI",
   "description": "UI for Greybox prototyping.",
   "dependencies": {
-    "com.tac.tacgamelogic": "1.0.0",
     "com.tac.taccamera": "1.0.0"
   },
   "author": {

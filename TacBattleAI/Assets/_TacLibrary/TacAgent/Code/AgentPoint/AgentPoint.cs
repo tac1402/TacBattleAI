@@ -1,11 +1,14 @@
-﻿using DnaCore;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using static Tac.Agent_.AgentPointLogic;
+
 using UnityEF;
+
+#if OnlyUnity
 using UnityEngine;
 using UnityEngine.AI;
-using static Tac.Agent_.AgentPointLogic;
+#endif
 
 namespace Tac.Agent_
 {
@@ -53,8 +56,10 @@ namespace Tac.Agent_
         }
 
         public string GetInfo() => logic.GetInfo();
-#endregion
+		#endregion
 
+
+#if OnlyUnity
 		/// <summary>
 		/// Рабочие часы (не находятся в логике, т.к. задаются в Юнити редакторе)
 		/// </summary>
@@ -157,6 +162,41 @@ namespace Tac.Agent_
 				Gizmos.matrix = originalMatrix;
 			}
 		}
+#endif
+#if OnlyLogic
+		protected virtual Vector2_ workingHours() { return new Vector2_(0, 24); }
+		private Vector2_ WorkingHours_
+		{
+			get { return new Vector2_(workingHours().x, workingHours().y); }
+		}
+
+		protected int WorkingFrom { get { int x = (int)WorkingHours_.x; return x; } }
+		protected int WorkingTill { get { int y = (int)WorkingHours_.y; return y; } }
+
+
+		public Vector3_ PointPosition
+		{
+			get { return Vector3_.zero; }
+		}
+		public Vector3_ TruckPointPosition
+		{
+			get { return Vector3_.zero; }
+		}
+
+		public virtual void AddView(Agent argAgent) { }
+		public void RemoveView(Agent argAgent) { }
+
+		protected virtual void CheckTruck() { }
+
+		/// <summary>
+		/// Находится ли агент на входе
+		/// </summary>
+		public bool IsAgentInEnter(int argAgentId)
+		{
+			return true;
+		}
+
+#endif
 
 	}
 

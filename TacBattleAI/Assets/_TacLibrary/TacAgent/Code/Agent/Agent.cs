@@ -5,8 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Tac.HealthSystem;
 
-#if OnlyUnity
 using UnityEF;
+
+#if OnlyUnity
 using UnityEngine;
 using UnityEngine.AI;
 #endif
@@ -54,11 +55,6 @@ namespace Tac.Agent_
 
         public event Change ChangeHealth { add => logic.ChangeHealth += value; remove => logic.ChangeHealth -= value; }
 
-		public override void InitData()
-		{
-			base.InitData();
-			PathPoints = new LList<LVector3>();
-		}
 		#endregion
 
 
@@ -118,6 +114,20 @@ namespace Tac.Agent_
 		/// </summary>
 		public Vector3_ TargetPoint = Vector3_.zero;
 
+		public void CancelTarget()
+		{
+#if OnlyUnity
+			agent.isStopped = true;
+			TargetPoint = Vector3_.zero;
+			walkDistance = 0;
+
+			currentPathIndex = 0;
+			PathPoints.Clear();
+			PathStatus = 0;
+#endif
+		}
+
+
 #if OnlyUnity
 		public NavMeshAgent agent;
 
@@ -162,6 +172,12 @@ namespace Tac.Agent_
 		internal StatusBar StatusBar;
 		private LineRenderer PathRender;
 		private float PathHeightOffset = 0.25f;
+
+
+		public override void InitDataCustom()
+		{
+			PathPoints = new LList<LVector3>();
+		}
 
 
 		public void Init(bool argRecoverMode = false)
@@ -318,17 +334,6 @@ namespace Tac.Agent_
 					break;
 			}
 			return distance;
-		}
-
-		public void CancelTarget()
-		{
-			agent.isStopped = true;
-			TargetPoint = Vector3_.zero;
-			walkDistance = 0;
-
-			currentPathIndex = 0;
-			PathPoints.Clear();
-			PathStatus = 0;
 		}
 
 

@@ -1,13 +1,15 @@
 ﻿// Author: Sergej Jakovlev <tac1402@gmail.com>
 // Copyright (C) 2025-26 Sergej Jakovlev
 
+
+using System;
 using System.Collections;
 
+#if OnlyUnity
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using DnaCore;
-using System;
+#endif
 
 namespace Tac
 {
@@ -65,6 +67,50 @@ namespace Tac
 		/// </summary>
 		public static bool PauseCompleteStop;
 
+
+		/// <summary>
+		/// Текущие время
+		/// </summary>
+		private float currentTime = 6.0f;
+		/// <summary>
+		/// Текущие сутки (номер)
+		/// </summary>
+		private int currentDay = 1;
+
+		/// <summary>
+		/// Текущие время
+		/// </summary>
+		[Mapped]
+		public float CurrentTime
+		{
+			get { return currentTime; }
+			set
+			{
+				currentTime = value;
+#if OnlyUnity
+				ShowTime();
+#endif
+			}
+		}
+
+		/// <summary>
+		/// Текущие сутки (номер)
+		/// </summary>
+		[Mapped]
+		public int CurrentDay
+		{
+			get { return currentDay; }
+			set
+			{
+				currentDay = value;
+#if OnlyUnity
+				gameDays.text = "Day # " + currentDay.ToString();
+#endif
+			}
+		}
+
+
+#if OnlyUnity
 		/// <summary>
 		/// Текстовое поле в UI в котором будет отображаться текущие прошедшие реальное время
 		/// </summary>
@@ -102,44 +148,6 @@ namespace Tac
 			set
 			{
 				if (gameDays != null) { gameDays.text = value; }
-			}
-		}
-
-
-		/// <summary>
-		/// Текущие время
-		/// </summary>
-		private float currentTime = 6.0f;
-		/// <summary>
-		/// Текущие сутки (номер)
-		/// </summary>
-		private int currentDay = 1;
-
-		/// <summary>
-		/// Текущие время
-		/// </summary>
-		[Mapped]
-		public float CurrentTime
-		{
-			get { return currentTime; }
-			set
-			{
-				currentTime = value;
-				ShowTime();
-			}
-		}
-
-		/// <summary>
-		/// Текущие сутки (номер)
-		/// </summary>
-		[Mapped]
-		public int CurrentDay
-		{
-			get { return currentDay; }
-			set
-			{
-				currentDay = value;
-				gameDays.text = "Day # " + currentDay.ToString();
 			}
 		}
 
@@ -229,6 +237,8 @@ namespace Tac
 
 			logic.Time = new System.TimeSpan(hours, minutes, 0);
 		}
+#endif
+
 
 #if OnlyLogic
 		public void Tick(int argHourCount)
@@ -243,6 +253,16 @@ namespace Tac
 				}
 				logic.UpdateTime(CurrentDay, CurrentTime);
 			}
+		}
+		public string GameTime
+		{
+			get { return CurrentTime.ToString(); }
+			set { }
+		}
+		public string GameDays
+		{
+			get { return CurrentDay.ToString(); }
+			set { }
 		}
 #endif
 

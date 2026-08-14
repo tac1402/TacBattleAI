@@ -694,7 +694,7 @@ MonoBehaviour:
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -1310
+      - m_Data: -1322
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1406,7 +1406,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_RotarkCode/_GameLogic
+    - Assets/_TacLibrary/TacAgent
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1416,21 +1416,22 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_RotarkCode/_GameLogic/Job
+  - Assets/_TacLibrary/TacAgent
   m_LastFoldersGridSize: 16
   m_LastProjectPath: P:\_PROGS\_2026\TacBattleAI\TacBattleAI
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 111}
+    scrollPos: {x: 0, y: 130}
     m_SelectedIDs:
-    - m_Data: 74204
+    - m_Data: 74200
     m_LastClickedID:
-      m_Data: 74204
+      m_Data: 74200
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 19910
+    - m_Data: 74140
+    - m_Data: 74142
     - m_Data: 74144
     - m_Data: 74146
     - m_Data: 74148
@@ -1460,8 +1461,6 @@ MonoBehaviour:
     - m_Data: 74196
     - m_Data: 74198
     - m_Data: 74200
-    - m_Data: 74202
-    - m_Data: 74206
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1495,7 +1494,8 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 19910
+    - m_Data: 74140
+    - m_Data: 74142
     - m_Data: 74144
     - m_Data: 74146
     - m_Data: 74148
@@ -1525,9 +1525,6 @@ MonoBehaviour:
     - m_Data: 74196
     - m_Data: 74198
     - m_Data: 74200
-    - m_Data: 74202
-    - m_Data: 74204
-    - m_Data: 74206
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

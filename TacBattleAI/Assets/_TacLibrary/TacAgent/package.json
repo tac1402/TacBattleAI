@@ -2,9 +2,8 @@
   "name": "com.tac.tacagent",
   "version": "1.0.0",
   "displayName": "TacAgent",
-  "description": "A basic agent using NavMesh.",
+  "description": "A basic agent using NavMesh, person witch name and agent point.",
   "dependencies": {
-    "com.tac.tacgamelogic": "1.0.0",
     "com.tac.taccamera": "1.0.0"
   },
   "author": {

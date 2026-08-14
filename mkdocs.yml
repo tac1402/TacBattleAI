@@ -13,6 +13,7 @@ nav:
   - Standart+Unity: StandartU.md
   - TacCompiler:
     - Парадигма: TacCompiler/Paradigm.md
+    - Чистая логика: TacCompiler/CleanLogic.md
     - Реализация: TacCompiler/Implementation.md
     - Правила: TacCompiler/Rules.md
   - TacStandartU: 

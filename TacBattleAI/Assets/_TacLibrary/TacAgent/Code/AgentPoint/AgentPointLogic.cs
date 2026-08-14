@@ -166,6 +166,14 @@ namespace Tac.Agent_
 			return ret;
 		}
 
+#if OnlyLogic
+		protected virtual Vector2_ workingHours() { return new Vector2_(0, 24); }
+		private Vector2_ WorkingHours_
+		{
+			get { return new Vector2_(workingHours().x, workingHours().y); }
+		}
+#endif
+
 
 	}
 
